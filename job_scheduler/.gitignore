@@ -1,6 +1,7 @@
 /build/
 /target/
-/WebContent/bower_components
-/WebContent/vis
-/WebContent/WEB-INF/lib
-/.settings
+/home/
+/WebContent/bower_components/
+/WebContent/vis/
+/WebContent/WEB-INF/lib/
+/.settings/
