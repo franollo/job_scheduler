@@ -1,0 +1,43 @@
+<md-dialog ng-cloak>
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Create new order</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <i class="material-icons md-18">close</i>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <div layout="row">
+          <md-input-container flex>
+            <label>Order name</label>
+            <input type="text" ng-model="dno.orderName" 
+            					ng-change=""
+            					ng-model-options="{debounce: 750}">
+          </md-input-container flex>
+
+          <md-input-container flex>
+            <label>Start time</label>
+            <input type="time" ng-model="dno.startTime">
+          </md-input-container flex>
+          <md-datepicker ng-model="dno.startDate" md-placeholder="Start date">
+          </md-datepicker>
+        </div>
+      </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button class="md-raised md-accent" ng-click="cancel()">
+        cancel
+      </md-button>
+      <md-button class="md-raised md-accent" ng-click="answer(dno.orderNam, dno.startTime, dno.startDate)">
+        create
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

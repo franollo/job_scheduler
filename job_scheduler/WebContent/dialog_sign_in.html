@@ -1,0 +1,39 @@
+<md-dialog ng-cloak>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Sign in</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <i class="material-icons md-18">close</i>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+      <div style="color:red" ng-show="error">
+		Wrong username or password.
+	  </div>
+	  <div style="color:red" ng-show="error">
+		Please try again.
+	  </div>
+      <form role="form" ng-submit="signIn()">
+        <div layout="column">
+          <md-input-container flex>
+            <label for="username">Username:</label> <input type="text"
+			class="form-control" id="username" name="username" ng-model="dsi.credentials.username"/>
+          </md-input-container flex>
+          <md-input-container flex>
+            <label for="password">Password:</label> <input type="password"
+			class="form-control" id="password" name="password" ng-model="dsi.credentials.password"/>
+          </md-input-container flex>
+        </div>
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row" layout-align="center center">
+      <md-button type="submit" class="md-raised md-accent">
+        Sign in
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

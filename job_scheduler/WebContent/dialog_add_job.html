@@ -1,0 +1,114 @@
+<md-dialog ng-cloak>
+  <form>
+    <md-toolbar>
+      <div class="md-toolbar-tools">
+        <h2>Add new Job</h2>
+        <span flex></span>
+        <md-button class="md-icon-button" ng-click="cancel()">
+          <i class="material-icons md-18">close</i>
+        </md-button>
+      </div>
+    </md-toolbar>
+
+    <md-dialog-content>
+      <div class="md-dialog-content">
+        <div layout="row">
+          <md-input-container flex>
+            <label>Job name</label>
+            <input type="text" ng-model="dad.jobName">
+          </md-input-container flex>
+          <md-input-container flex>
+            <label>Color</label>
+            <input type="text" ng-model="dad.jobColor">
+          </md-input-container flex>
+        </div>
+
+        <div layout="row">
+          <md-input-container flex>
+            <label>Start time</label>
+            <input type="time">
+          </md-input-container flex>
+          <md-datepicker ng-model="myDate" md-placeholder="Start date">
+          </md-datepicker>
+        </div>
+
+        <md-toolbar class="md-theme-light md-accent" >
+          <h2 class="md-toolbar-tools">
+            <span>Parameters</span>
+          </h2>
+        </md-toolbar>
+
+        <div layout="row" style="text-align: center;">
+          <div flex="25">
+            <h4>Maschine</h4>
+          </div>
+          <div flex="25">
+            <h4>Order</h4>
+          </div>
+          <div flex="25">
+            <h4>Duration</h4>
+          </div>
+          <div flex="25">
+            <h4>Delay</h4>
+          </div>
+        </div>
+        <div layout="row" ng-repeat="t in dad.tasks" style="text-align: center;">
+         <div id="column">
+              <xx>{{t.content}}</xx>
+          </div>
+          <div id="column">
+            <md-input-container md-no-float class="dialog-input">
+              <input placeholder="00" ng-model="t.job_order" type="number">
+            </md-input-container>
+          </div>
+          <div id="column">
+            <div style="text-align: center;">
+              <md-input-container md-no-float class="dialog-input">
+                <input placeholder="00" ng-model="t.hh_dur" type="number">
+              </md-input-container><!--
+              --><colon>:</colon><!--
+              --><md-input-container md-no-float class="dialog-input">
+                <input placeholder="00" ng-model="t.mm_dur" type="number">
+              </md-input-container><!--
+              --><colon>:</colon><!--
+              --><md-input-container md-no-float class="dialog-input">
+                <input placeholder="00" ng-model="t.ss_dur" type="number">
+              </md-input-container>
+            </div>
+          </div>
+         <div id="column">
+            <div style="text-align: center;">
+              <md-input-container md-no-float class="dialog-input">
+                <input placeholder="00" type="number" step="1" min="0" max="59">
+              </md-input-container><!--
+              --><colon>:</colon><!--
+              --><md-input-container md-no-float class="dialog-input">
+                <input placeholder="00" type="number" step="1" min="0" max="59">
+              </md-input-container><!--
+              --><colon>:</colon><!--
+              --><md-input-container md-no-float class="dialog-input">
+                <input placeholder="00" type="number" step="1" min="0" max="59">
+              </md-input-container>
+            </div>
+          </div>
+        </div>
+      </div>
+
+       <!-- <div layout="row" ng-repeat="m in ctrl.groups">
+          <md-input-container md-no-float class="dialog-input">
+            <input placeholder="0" type="time" step="1">
+          </md-input-container>
+        </div>-->
+    </md-dialog-content>
+
+    <md-dialog-actions layout="row">
+      <span flex></span>
+      <md-button class="md-raised md-accent" ng-click="answer(dad.tasks, dad.jobName)">
+        finished
+      </md-button>
+      <md-button class="md-raised md-accent">
+        add next job
+      </md-button>
+    </md-dialog-actions>
+  </form>
+</md-dialog>

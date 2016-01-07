@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       					http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<bean id="dataSource" 
+      	class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+      	<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+      	<property name="url" value="jdbc:mysql://localhost:3306/scheduler"/>
+      	<property name="username" value="app"/>
+      	<property name="password" value="s3cret"/>
+   	</bean>
+   	
+   	<bean id="machineDAO" class="com.marcin.dao.implementation.JdbcMachineDAO">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="userDAO" class="com.marcin.dao.implementation.JdbcUserDAO">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="orderDAO" class="com.marcin.dao.implementation.JdbcOrderDAO">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<bean id="restAuthenticationEntryPoint" class="com.marcin.security.RestAuthenticationEntryPoint"></bean>
+	
+	<bean id="restBasicAuthenticationEntryPoint" class="com.marcin.security.RestBasicAuthenticationEntryPoint">
+		<constructor-arg value="RealmName" />
+	</bean>
+
+</beans>
