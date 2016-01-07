@@ -1,0 +1,148 @@
+#my-top {
+    position: absolute;
+    background-color: #8dc8fb;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    height: 75px;
+}
+
+#my-sidebar-left {
+    position: absolute;
+    background-color: blue;
+    width: 200px;
+    left: 0px;
+    top: 75px;
+    bottom: 50px;
+}
+
+#my-sidebar-right {
+    position: absolute;
+    background-color: blue;
+    width: 200px;
+    right: 0px;
+    overflow-x: hidden;
+    overflow-y: auto; 
+    top: 75px;
+    bottom: 50px;
+}
+
+#my-bottom {
+    position: absolute;
+    background-color: #8dc8fb;
+  /*  border-width: 1px;
+    border-style: solid;
+    border-top-color: gray;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    border-right-color: transparent; */
+    left: 0px;
+    right: 0px;
+    bottom: 0px;
+    height: 30px;
+}
+
+#my-workspace {
+    position: absolute;
+    background-color: #8dc8fb;
+    left: 0px;
+    right: 0px;
+    bottom: 30px;
+    top: 75px;
+}
+
+#workspace-content {
+    position: absolute;
+    background-color: white;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    top: 2px;
+}
+
+#my-timeline2 {
+    position: absolute;
+    overflow: hidden;
+    left: 2px;
+    right: 2px;
+    bottom: 2px;
+    top: 30px;
+}
+
+#toggle-left {
+    background-color: #8dc8fb; 
+    position: absolute;
+    overflow: hidden;
+    left: 0px;
+    bottom: 0px;
+    top: 0px;
+    width: 70%;
+}
+
+#toggle-right {
+    background-color: #8dc8fb;
+    position: absolute;
+    overflow: hidden;
+    right: 0px;
+    bottom: 0px;
+    top: 0px;
+    width: 30%;
+}
+
+#left-content {
+    background-color: white;
+    border-radius: 6px;
+    border:solid 1px gray;  
+    position: absolute;
+    overflow: hidden;
+    left: 0px;
+    bottom: 0px;
+    top: 0px;
+    right: 5px;
+}
+
+#right-content {
+    background-color: white;
+    border-radius: 6px;
+    border:solid 1px gray; 
+    position: absolute;
+    overflow: hidden;
+    left: 0px;
+    bottom: 0px;
+    top: 0px;
+    right: 0px;
+}
+
+#drag-bar {
+    background-color: LightGray;
+    position: absolute;
+    overflow: hidden;
+    right: 0px;
+    bottom: 0px;
+    top: 0px;
+    width: 5px;
+    cursor: ew-resize;
+}
+
+#main {
+  background-color: BurlyWood;
+  margin-left: 200px;
+  height: 300px;
+}
+
+#sidebar {
+  background-color: IndianRed;
+  width: 350px;
+  float: left;
+  height: 300px;
+}
+
+#split-bar {
+  background-color: black;
+  height: 100%;
+  float: right;
+  width: 6px;
+  cursor: col-resize;
+}
+
+

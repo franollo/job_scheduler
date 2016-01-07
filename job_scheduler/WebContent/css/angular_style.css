@@ -1,0 +1,224 @@
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+.material-icons.black { color: black; }
+
+#page-container {
+  background-color: #f1f1f1;
+  padding: 32px; 
+  position: absolute;
+  /*top: 100px;*/
+  left: 0px;
+  right: 0px;
+  bottom: 20px;
+  -webkit-transition: height 100ms linear;
+  -moz-transition: height 100ms linear;
+  -o-transition: height 100ms linear;
+  -ms-transition: height 100ms linear;
+  transition: height 100ms linear;
+}
+
+xx{
+  position: relative;
+  padding-top: 10px;
+  top: 10px;
+}
+
+input[type="number"] {
+   width:37px;
+}
+
+#column-time {
+  width: 140px;
+  margin-left: 10px;
+}
+
+#column {
+  width: 150px;
+}
+
+colon {
+  margin-top: 5px;
+  display: inline-block;
+}
+/*
+.add-job {
+  height: 600px !important;
+  width: 800px !important;
+}
+*/
+.small {
+  top: 70px;
+}
+
+.big {
+  top: 100px;
+}
+
+#footer {
+  background-color: #33691E;
+  position: absolute;
+  height: 20px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+
+#workspace {
+  background-color: white;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.25);
+  -webkit-border-bottom-right-radius: 2px;
+  -webkit-border-bottom-left-radius: 2px;
+  -moz-border-radius-bottomright: 2px;
+  -moz-border-radius-bottomleft: 2px;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+}
+
+
+
+.tabsdemoStaticTabs md-tabs{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+
+#my-timeline{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+
+#button {
+  height: 22px;
+  width: 22px;
+  background-color: transparent;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  margin-right: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#button:hover {
+  box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.25);
+  cursor: default;
+}
+
+#button:active {
+  box-shadow: inset 0px 1px 2px 1px rgba(0, 0, 0, 0.25);
+  cursor: default;
+}
+
+#button:focus {
+    outline: none;
+    border: 0;
+ }
+
+md-toolbar.my-toolbar {
+  min-height: 30px !important;
+  height: 30px !important;
+}
+
+.my-menu .md-toolbar-tools {
+  font-size: 25px;
+  padding-top: 5px;
+  height: 35px !important;
+}
+
+.my-toolbar .md-toolbar-tools {
+  height: 30px !important;
+  padding-top: 0px;
+}
+
+md-toolbar.md-theme-light{
+  min-height: 30px;
+  height: 30px;
+}
+
+md-datepicker {
+  padding-top: 14px;
+}
+
+.md-datepicker-input-container {
+  margin-left: 0px;
+}
+
+md-menu-bar {
+    height: 35px !important;
+}
+
+md-input-container.dialog-input {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  display: inline-block;
+}
+
+md-menu-bar .md-menu {
+  height: 35px !important;
+}
+
+md-menu-bar button {
+  height: 35px !important;
+}
+
+md-ink-bar {
+    height: 4px;
+}
+
+.tabsdemoStaticTabs md-tab-content:nth-child(1) {
+  background-color: white; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+  
+.tabsdemoStaticTabs md-tab-content:nth-child(2) {
+  background-color: white; 
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+}
+  
+.tabsdemoStaticTabs md-tab-content:nth-child(3) {
+  background-color: white; 
+  display: flex;
+  align-items: center;
+  justify-content: center; 
+}
+
+.vis-item.green {
+  background-color: greenyellow;
+  border-color: green;
+}
+
+.vis-item.red {
+  background-color: red;
+  border-color: darkred;
+}
+
+.vis-item.orange {
+  background-color: gold;
+  border-color: orange;
+}
+
+.vis-item.magenta {
+  background-color: magenta;
+  border-color: purple;
+}
+
+.200 {
+  height: 200px;
+}
