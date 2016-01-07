@@ -54,6 +54,7 @@ public class AjaxController {
 		Date parsedDate = formatter.parse(order.getStartDate());
     	System.out.println(order.getName());
     	System.out.println(parsedDate);    	
+    	System.out.println(parsedDate);
     	return jdbcOrderDAO.createNewOrder(order.getName(), parsedDate);
     }
 }
