@@ -10,104 +10,75 @@
       </div>
     </md-toolbar>
 
-    <md-dialog-content>
-      <div class="md-dialog-content">
-        <div layout="row">
-          <md-input-container flex>
-            <label>Job name</label>
-            <input type="text" ng-model="dad.jobName">
-          </md-input-container flex>
-          <md-input-container flex>
-            <label>Color</label>
-            <input type="text" ng-model="dad.jobColor">
-          </md-input-container flex>
-        </div>
-
-        <div layout="row">
-          <md-input-container flex>
-            <label>Start time</label>
-            <input type="time">
-          </md-input-container flex>
-          <md-datepicker ng-model="myDate" md-placeholder="Start date">
-          </md-datepicker>
-        </div>
-
-        <md-toolbar class="md-theme-light md-accent" >
-          <h2 class="md-toolbar-tools">
-            <span>Parameters</span>
-          </h2>
-        </md-toolbar>
-
-        <div layout="row" style="text-align: center;">
-          <div flex="25">
-            <h4>Maschine</h4>
-          </div>
-          <div flex="25">
-            <h4>Order</h4>
-          </div>
-          <div flex="25">
-            <h4>Duration</h4>
-          </div>
-          <div flex="25">
-            <h4>Delay</h4>
-          </div>
-        </div>
-        <div layout="row" ng-repeat="t in dad.tasks" style="text-align: center;">
-         <div id="column">
-              <xx>{{t.content}}</xx>
-          </div>
-          <div id="column">
-            <md-input-container md-no-float class="dialog-input">
-              <input placeholder="00" ng-model="t.job_order" type="number">
-            </md-input-container>
-          </div>
-          <div id="column">
-            <div style="text-align: center;">
-              <md-input-container md-no-float class="dialog-input">
-                <input placeholder="00" ng-model="t.hh_dur" type="number">
-              </md-input-container><!--
-              --><colon>:</colon><!--
-              --><md-input-container md-no-float class="dialog-input">
-                <input placeholder="00" ng-model="t.mm_dur" type="number">
-              </md-input-container><!--
-              --><colon>:</colon><!--
-              --><md-input-container md-no-float class="dialog-input">
-                <input placeholder="00" ng-model="t.ss_dur" type="number">
-              </md-input-container>
-            </div>
-          </div>
-         <div id="column">
-            <div style="text-align: center;">
-              <md-input-container md-no-float class="dialog-input">
-                <input placeholder="00" type="number" step="1" min="0" max="59">
-              </md-input-container><!--
-              --><colon>:</colon><!--
-              --><md-input-container md-no-float class="dialog-input">
-                <input placeholder="00" type="number" step="1" min="0" max="59">
-              </md-input-container><!--
-              --><colon>:</colon><!--
-              --><md-input-container md-no-float class="dialog-input">
-                <input placeholder="00" type="number" step="1" min="0" max="59">
-              </md-input-container>
-            </div>
-          </div>
-        </div>
-      </div>
-
-       <!-- <div layout="row" ng-repeat="m in ctrl.groups">
-          <md-input-container md-no-float class="dialog-input">
-            <input placeholder="0" type="time" step="1">
-          </md-input-container>
-        </div>-->
+	<md-dialog-content style="max-width:800px;max-height:810px; min-width:400px ">
+		<md-tabs md-dynamic-height md-border-bottom>
+			<md-tab label="general">
+		    	<md-content class="md-padding">
+				   <div layout="row" layout-padding>
+				     <md-content flex layout="column" layout-align="start start">
+				       <md-input-container>
+				         <label>Job name</label>
+				         <input type="text" ng-model="dad.jobName">
+				       </md-input-container>
+				       <md-input-container>
+				         <label>Description</label>
+				         <input type="text" ng-model="dad.jobColor">
+				       </md-input-container>
+				       <md-checkbox ng-model="checked">
+				         Tasks in order
+				      </md-checkbox>
+				     </md-content>
+				     <md-content flex layout="column" layout-align="start start" style="max-height: 300px">
+				       	<md-checkbox ng-repeat="task in dad.tasks">
+				       		{{task.content}}
+				       	</md-checkbox>
+				      </md-content>
+				    	<md-content flex layout="" layout-align="center start" ng-show="checked" style="max-height: 300px">
+				          	<div class="sortable-row" as-sortable="board.dragControlListeners" data-ng-model="dad.tasks" >
+				 				<div ng-repeat="task in dad.tasks" as-sortable-item>
+				 				    <div as-sortable-item-handle class="sortable">
+				    				{{task.content}}
+				    				</div>
+				 				</div>
+							</div>
+				      	</md-content>
+					</div>
+				</md-content>
+			</md-tab>
+			<md-tab label="durations">
+				<!--  <md-content style="max-height: 300px">
+					<md-list>
+						<md-list-item class="md-1-line" ng-repeat="task in dad.tasks">
+					        <div style="padding-bottom: 10px">
+					          	<h4>{{ task.content }}</h4>
+					        </div>
+					        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<md-input-container class="dialog-input" style="max-height:35px">
+        						<input type="time">
+        					</md-input-container>
+        				</md-list-item>
+					</md-list>
+				</md-content>-->
+			    <md-content layout="column" layout-padding ng-repeat="task in dad.tasks">
+			       	<div layout="row">
+			       		<md-content flex>
+			       			{{task.content}}
+			       		</md-content>
+			       		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			       		<md-content flex>
+        					<input type="time" style="border: none;">
+        				</md-content>
+				 	</div>
+					<md-divider ng-if="!$last" style="padding:0px"></md-divider>
+			     </md-content>
+			</md-tab>
+		</md-tabs>
     </md-dialog-content>
 
     <md-dialog-actions layout="row">
       <span flex></span>
       <md-button class="md-raised md-accent" ng-click="answer(dad.tasks, dad.jobName)">
         finished
-      </md-button>
-      <md-button class="md-raised md-accent">
-        add next job
       </md-button>
     </md-dialog-actions>
   </form>

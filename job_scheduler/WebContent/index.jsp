@@ -15,6 +15,8 @@
      <script src="js/main_controller.js"></script>
       <script src="js/auth.js"></script>
       <script src="js/data.js"></script>
+      <script type="text/javascript" src="bower_components/ng-sortable/dist/ng-sortable.min.js"></script>
+<link rel="stylesheet" type="text/css" href="bower_components/ng-sortable/dist/ng-sortable.min.css">
 
     <div ng-controller="DemoBasicCtrl as ctrl" ng-cloak="" ng-app="MyApp">
     <md-toolbar class="md-menu-toolbar my-menu">

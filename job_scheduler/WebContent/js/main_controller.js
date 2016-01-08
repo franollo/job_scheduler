@@ -1,4 +1,4 @@
-var app = angular.module('MyApp', ['ngMaterial', 'auth', 'data'])
+var app = angular.module('MyApp', ['ngMaterial', 'auth', 'data', 'as.sortable',])
   .config(function($mdThemingProvider) {
   $mdThemingProvider.theme('default')
     .primaryPalette('light-green', {'default': '900'})
@@ -162,6 +162,11 @@ app.controller('DemoBasicCtrl', ['$scope',
       }
 
   function DialogController1($scope, $mdDialog, dataToPass) {
+	  this.items =  [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,41, 42, 43, 44];
+	  $scope.dragControlListeners = {
+	          containment: '#board',//optional param.
+	          allowDuplicates: true //optional param allows duplicates to be dropped.
+	  };
     this.tasks = dataToPass;
     this.jobName = '';
     this.jobColor = '';
