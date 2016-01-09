@@ -42,15 +42,18 @@ app.controller('DemoBasicCtrl', ['$scope',
 {       
         $scope.orderTitle = 'NN';
         this.inp;
+        var resources = [];
         
-
+       	
+       	
+       	
         var groups = [
         {id: 1, content: 'Maszyna1', order: 1, hh_dur:3, mm_dur:0, ss_dur:0, job_order: 1},
         {id: 2, content: 'Maszyna2', order: 2,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 2},
         {id: 3, content: 'Maszyna3', order: 3,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 3},
         {id: 4, content: 'Maszyna4', order: 4,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 4},
         {id: 5, content: 'Maszyna5', order: 5,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 5},
-        {id: 6, content: 'Maszyna6', order: 6,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 6},
+        {id: 6, content: 'Maszyna6długakurwa', order: 6,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 6},
         {id: 7, content: 'Maszyna7', order: 7,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 7},
         {id: 8, content: 'Maszyna8', order: 8,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 8},
         {id: 9, content: 'Maszyna9', order: 9,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 9},
@@ -120,7 +123,7 @@ app.controller('DemoBasicCtrl', ['$scope',
 
     $scope.showAddJob = function(ev) {
       $mdDialog.show({
-        locals: {dataToPass: groups},
+        locals: {dataToPass: resources},
         controller: DialogController1,
         controllerAs: 'dad',
         templateUrl: 'dialog_add_job.html',
@@ -128,10 +131,7 @@ app.controller('DemoBasicCtrl', ['$scope',
         targetEvent: ev,
         clickOutsideToClose:true
       }).then(function(answer) {
-          job = answer.jobTasks;
-          jobName = answer.jobName;
-          console.log(answer.jobColor, answer.jobName);
-          insertItems(job, jobName, answer.jobColor);
+    	  console.log(answer);
         });
     }
 
@@ -162,7 +162,6 @@ app.controller('DemoBasicCtrl', ['$scope',
       }
 
   function DialogController1($scope, $mdDialog, dataToPass) {
-	  this.items =  [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,41, 42, 43, 44];
 	  $scope.dragControlListeners = {
 	          containment: '#board',//optional param.
 	          allowDuplicates: true //optional param allows duplicates to be dropped.
@@ -170,14 +169,30 @@ app.controller('DemoBasicCtrl', ['$scope',
     this.tasks = dataToPass;
     this.jobName = '';
     this.jobColor = '';
+    var sth = false;
     $scope.answer = function() {
-      $mdDialog.hide(new dataTransfer(dad.jobName, dad.tasks, dad.jobColor));
+      $mdDialog.hide({"job": $scope.job, "tasks": $scope.selected});
     }
 
     $scope.cancel = function() {
       console.log('cancel');
       $mdDialog.cancel();
     }
+    $scope.log = function() {
+    	sth = !sth;
+    	console.log("klik");
+    	console.log(sth);
+    }
+    $scope.toggle = function (item, list) {
+        var idx = list.indexOf(item);
+        if (idx > -1) list.splice(idx, 1);
+        else list.push(item);
+      };
+      $scope.exists = function (item, list) {
+        return list.indexOf(item) > -1;
+      };
+      $scope.selected = [];
+      $scope.job = {};
   }
 
     doSth = function(){
@@ -264,6 +279,9 @@ app.controller('DemoBasicCtrl', ['$scope',
 		$scope.nam = data.name;
 		$scope.sur = data.surname;
 		});
+		data.getResources().then(function(data){
+       		resources = data.data;
+       	});
 	  }
   });
   

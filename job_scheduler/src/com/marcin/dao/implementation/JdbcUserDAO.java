@@ -20,7 +20,7 @@ public class JdbcUserDAO implements UserDAO {
 	
 	@Override
 	public User getUserByLogin(String login) {
-		String sql = "SELECT login, name, surname FROM users WHERE login = ?";
+		String sql = "SELECT username, first_name, surname FROM users WHERE username = ?";
 		
 		Connection conn = null;
 		
@@ -32,8 +32,8 @@ public class JdbcUserDAO implements UserDAO {
 			ResultSet rs = ps.executeQuery();
 			if (rs.next()) {
 				user = new User(
-					rs.getString("login"),
-					rs.getString("name"), 
+					rs.getString("username"),
+					rs.getString("first_name"), 
 					rs.getString("surname")
 				);
 			}

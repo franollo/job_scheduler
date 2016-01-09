@@ -23,5 +23,12 @@ angular.module('data', []).service('data', function($http) {
 			    	}).error(function(data){
 			    		console.log(data);
 			    	});
-				}
+				};
+				
+				this.getResources = function() {
+					return $http.get("getdata/resources")
+			    	.then(function(data){
+			    		return data;
+			    	});
+				};
 		});

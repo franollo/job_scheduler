@@ -13,7 +13,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.marcin.dao.OrderDAO;
-import com.marcin.model.Machine;
+import com.marcin.model.Resource;
 
 public class JdbcOrderDAO implements OrderDAO{
 

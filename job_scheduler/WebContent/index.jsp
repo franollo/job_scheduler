@@ -83,7 +83,7 @@
         <div id="button" ng-click="isCollapsed = !isCollapsed; isSmall = !isSmall">
           <i class="material-icons md-18">{{isCollapsed ? 'lock_open' : 'lock_outline'}}</i>
         </div>
-        <div id="button">
+        <div id="button" ng-click = "getThem()">
           <i class="material-icons md-18">redo</i>
         </div>
         <div id="button">

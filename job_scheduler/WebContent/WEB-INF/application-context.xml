@@ -7,12 +7,12 @@
 	<bean id="dataSource" 
       	class="org.springframework.jdbc.datasource.DriverManagerDataSource">
       	<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-      	<property name="url" value="jdbc:mysql://localhost:3306/scheduler"/>
+      	<property name="url" value="jdbc:mysql://localhost:3306/scheduler_db"/>
       	<property name="username" value="app"/>
       	<property name="password" value="s3cret"/>
    	</bean>
    	
-   	<bean id="machineDAO" class="com.marcin.dao.implementation.JdbcMachineDAO">
+   	<bean id="resourceDAO" class="com.marcin.dao.implementation.JdbcResourceDAO">
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	

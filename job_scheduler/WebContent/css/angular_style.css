@@ -10,7 +10,7 @@
 	-webkit-border-radius: 6px;
   	-moz-border-radius: 6px;
   	border-radius: 6px;
-  	background-color: #f1f1f1;
+  	background-color: #9E9E9E;
 }
 
 #page-container {
@@ -244,3 +244,8 @@ md-ink-bar {
     overflow: hidden;
     margin-right: 16px;
 }
+
+h6.nobr { 
+	white-space: nowrap; 
+	min-width: 200px;
+	}
