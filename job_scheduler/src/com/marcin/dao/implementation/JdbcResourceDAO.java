@@ -27,9 +27,31 @@ public class JdbcResourceDAO implements ResourceDAO
 	}
 
 	@Override
-	public Resource getByID(int machineID) {
+	public Resource getByID(int resourceId) {
 		String sql = "SELECT * FROM resources WHERE resource_id = ?";
-		return null;
+		Connection conn = null;
+		Resource resource = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			PreparedStatement ps = conn.prepareStatement(sql);
+			ps.setInt(1, resourceId);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				resource = new Resource(rs.getInt("resource_id"), rs.getString("name"), rs.getString("description"));
+			}
+			rs.close();
+			ps.close();
+			return resource;
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+				conn.close();
+				} catch (SQLException e) {}
+			}
+		}
 	}
 
 

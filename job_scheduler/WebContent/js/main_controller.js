@@ -43,8 +43,32 @@ app.controller('DemoBasicCtrl', ['$scope',
         $scope.orderTitle = 'NN';
         this.inp;
         var resources = [];
-        
-       	
+        $scope.jobs = [];
+        $scope.contacts = [{
+            'id': 1,
+            'fullName': 'Maria Guadalupe',
+            'lastName': 'Guadalupe',
+            'title': "CEO, Found"
+          }, {
+            'id': 2,
+            'fullName': 'Gabriel Garca Marquz',
+            'lastName': 'Marquz',
+            'title': "VP Sales & Marketing"
+          }, {
+            'id': 3,
+            'fullName': 'Miguel de Cervantes',
+            'lastName': 'Cervantes',
+            'title': "Manager, Operations"
+          }, {
+            'id': 4,
+            'fullName': 'Pacorro de Castel',
+            'lastName': 'Castel',
+            'title': "Security"
+          }];
+          $scope.selectedIndex = 2;
+          $scope.selectedUser = function() {
+            return $scope.contacts[$scope.selectedIndex].lastName;
+          }
        	
        	
         var groups = [
@@ -52,21 +76,16 @@ app.controller('DemoBasicCtrl', ['$scope',
         {id: 2, content: 'Maszyna2', order: 2,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 2},
         {id: 3, content: 'Maszyna3', order: 3,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 3},
         {id: 4, content: 'Maszyna4', order: 4,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 4},
-        {id: 5, content: 'Maszyna5', order: 5,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 5},
-        {id: 6, content: 'Maszyna6długakurwa', order: 6,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 6},
-        {id: 7, content: 'Maszyna7', order: 7,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 7},
-        {id: 8, content: 'Maszyna8', order: 8,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 8},
-        {id: 9, content: 'Maszyna9', order: 9,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 9},
-        {id: 10, content: 'Maszyna10', order: 10,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 10},
-        {id: 11, content: 'Maszyna11', order: 11,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 11},
-        {id: 12, content: 'Maszyna12',  order: 12,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 12}/*,
-        {id: 13, content: 'Maszyna13',hh_dur:3, mm_dur:0, ss_dur:0},
-        {id: 14, content: 'Maszyna14',hh_dur:3, mm_dur:0, ss_dur:0},
-        {id: 15, content: 'Maszyna15',hh_dur:3, mm_dur:0, ss_dur:0},
-        {id: 16, content: 'Maszyna16',hh_dur:3, mm_dur:0, ss_dur:0},
-        {id: 17, content: 'Maszyna17',hh_dur:3, mm_dur:0, ss_dur:0},
-        {id: 18, content: 'Maszyna18',hh_dur:3, mm_dur:0, ss_dur:0}*/
+        {id: 5, content: 'Maszyna5', order: 5,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 5}
       ];
+        
+        $scope.groups = [
+                      {id: 1, content: 'Maszyna1', order: 1, hh_dur:3, mm_dur:0, ss_dur:0, job_order: 1},
+                      {id: 2, content: 'Maszyna2', order: 2,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 2},
+                      {id: 3, content: 'Maszyna3', order: 3,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 3},
+                      {id: 4, content: 'Maszyna4', order: 4,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 4},
+                      {id: 5, content: 'Maszyna5', order: 5,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 5}
+                    ];
 
       function clearGroups () {
         groups.sort(compare_restore);
@@ -92,7 +111,6 @@ app.controller('DemoBasicCtrl', ['$scope',
        value: new Date()
       };
 
-      //var container = document.getElementById("my-timeline.ng-scope");
       var container;
       var timeline;
       var options;
@@ -110,12 +128,6 @@ app.controller('DemoBasicCtrl', ['$scope',
       timeline = new vis.Timeline(container, items,groups, options);
     }, 10);
 
-  
-    function dataTransfer(name, tasks, color) {
-      this.jobName = name;
-      this.jobTasks = tasks;
-      this.jobColor = color;
-    }
     
     $scope.hide = function() {
       $scope.isSmall = !$scope.isSmall;
@@ -131,7 +143,11 @@ app.controller('DemoBasicCtrl', ['$scope',
         targetEvent: ev,
         clickOutsideToClose:true
       }).then(function(answer) {
-    	  console.log(answer);
+    	  for (var i in answer.job.tasks) {
+    		  delete answer.job.tasks[i].description;
+    		  delete answer.job.tasks[i].name;
+    	  }
+    	  data.newJob(answer.job);
         });
     }
 
@@ -166,38 +182,32 @@ app.controller('DemoBasicCtrl', ['$scope',
 	          containment: '#board',//optional param.
 	          allowDuplicates: true //optional param allows duplicates to be dropped.
 	  };
-    this.tasks = dataToPass;
-    this.jobName = '';
-    this.jobColor = '';
-    var sth = false;
-    $scope.answer = function() {
-      $mdDialog.hide({"job": $scope.job, "tasks": $scope.selected});
-    }
-
-    $scope.cancel = function() {
-      console.log('cancel');
-      $mdDialog.cancel();
-    }
-    $scope.log = function() {
-    	sth = !sth;
-    	console.log("klik");
-    	console.log(sth);
-    }
-    $scope.toggle = function (item, list) {
-        var idx = list.indexOf(item);
-        if (idx > -1) list.splice(idx, 1);
-        else list.push(item);
-      };
-      $scope.exists = function (item, list) {
-        return list.indexOf(item) > -1;
-      };
-      $scope.selected = [];
-      $scope.job = {};
+	this.tasks = dataToPass;
+	var sth = false;
+	$scope.answer = function() {
+		$scope.job.tasks = JSON.parse(JSON.stringify($scope.selected));
+		$mdDialog.hide({"job": $scope.job});
+		$scope.job = {};
+		$scope.selected = [];
+	}
+	
+	$scope.cancel = function() {
+		$scope.job = {};
+		$scope.selected = [];
+		$mdDialog.cancel();
+	}
+	$scope.toggle = function (item, list) {
+	    var idx = list.indexOf(item);
+	    if (idx > -1) list.splice(idx, 1);
+	    else list.push(item);
+	};
+	  $scope.exists = function (item, list) {
+	    return list.indexOf(item) > -1;
+	  };
+	  $scope.selected = [];
+	  $scope.job = {};
   }
 
-    doSth = function(){
-      console.log("dialog");
-    }
 
   /**
    * Create new order
@@ -274,7 +284,6 @@ app.controller('DemoBasicCtrl', ['$scope',
 	  $scope.error = auth.error;
 	  if($scope.authenticated == true) {
 		data.whoAmI().then(function(data) {
-			console.log(data);
 		$scope.log = data.username;
 		$scope.nam = data.name;
 		$scope.sur = data.surname;
@@ -282,9 +291,14 @@ app.controller('DemoBasicCtrl', ['$scope',
 		data.getResources().then(function(data){
        		resources = data.data;
        	});
+		data.getJobs().then(function(data) {
+			$scope.jobs = data.data;
+			console.log(data.data);
+			console.log(jobs);
+		});
 	  }
   });
-  
+ 
   
   $scope.logout = function() {
 	  auth.logout().then(function(){

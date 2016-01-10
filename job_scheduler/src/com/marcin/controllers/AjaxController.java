@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.marcin.dao.implementation.JdbcJobDAO;
 import com.marcin.dao.implementation.JdbcOrderDAO;
+import com.marcin.model.Job;
 import com.marcin.model.Order;
 
 import java.util.Random;
@@ -26,6 +28,9 @@ import java.util.Random;
 public class AjaxController {
 	@Autowired
 	private JdbcOrderDAO jdbcOrderDAO;
+	
+	@Autowired
+	private JdbcJobDAO jdbcJobDAO;
 	
     @RequestMapping(value = "/ajaxtest", method = RequestMethod.GET)
     public @ResponseBody
@@ -52,9 +57,12 @@ public class AjaxController {
     int newOrder(@RequestBody Order order) throws ParseException {
     	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
 		Date parsedDate = formatter.parse(order.getStartDate());
-    	System.out.println(order.getName());
-    	System.out.println(parsedDate);    	
-    	System.out.println(parsedDate);
     	return jdbcOrderDAO.createNewOrder(order.getName(), parsedDate);
+    }
+    
+    @RequestMapping(value = "/newjob", method = RequestMethod.POST)
+    public @ResponseBody
+    void newJob(@RequestBody Job job) throws ParseException {
+    	jdbcJobDAO.createNewJob(job);
     }
 }

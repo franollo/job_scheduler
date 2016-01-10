@@ -1,18 +1,18 @@
 package com.marcin.controllers;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.marcin.dao.implementation.JdbcJobDAO;
 import com.marcin.dao.implementation.JdbcResourceDAO;
 import com.marcin.dao.implementation.JdbcUserDAO;
+import com.marcin.model.Job;
 import com.marcin.model.Resource;
 import com.marcin.model.User;
  
@@ -30,11 +30,8 @@ public class GetDataController {
 	@Autowired
 	private JdbcUserDAO userDAO;
 	
-    @RequestMapping(value = "/operatingpositions", method = RequestMethod.POST)
-    public Resource getMachine(@RequestBody int number) {
-    	System.out.println("Debug Message from /operatingpositions is "+ number + ' ' + new Date().toString());
-    	return resourceDAO.getByID(number);
-    }
+	@Autowired
+	private JdbcJobDAO jobDAO;
     
     @RequestMapping(value = "/resources", method = RequestMethod.GET)
     public List<Resource> getResources() {
@@ -42,6 +39,14 @@ public class GetDataController {
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    String name = auth.getName();
     	return resourceDAO.getUserResources(name);
+    }
+    
+    @RequestMapping(value = "/jobs", method = RequestMethod.GET)
+    public List<Job> getJobs() {
+    	System.out.println("Debug Message from /jobs");
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String name = auth.getName();
+    	return jobDAO.getUserJobs("admin");
     }
     
     @RequestMapping(value = "/userinfo", method = RequestMethod.GET)

@@ -34,36 +34,107 @@
               </button>
               <md-menu-content>
                 <md-menu-item>
-                  <md-menu>
-                    <md-button ng-click="$mdOpenMenu()">New</md-button>
-                    <md-menu-content>
-                      <md-menu-item><md-button ng-click="showNewOrder($event)">Production order</md-button></md-menu-item>
-                    </md-menu-content>
-                  </md-menu>
+					<md-button ng-click="showNewOrder($event)">New order</md-button></md-menu-item>
                 </md-menu-item>
-                <md-menu-item>
-                <i class="material-icons">accessibility</i>
-                  <md-button ng-click="ctrl.sampleAction('Open', $event)">
-                    Open...
-                    <span class="md-alt-text"> {{ 'M-O' | keyboardShortcut }}</span>
-                  </md-button>
+				<md-menu-item>
+					<md-button ng-click="showNewOrder($event)">Open order</md-button></md-menu-item>
                 </md-menu-item>
-                <md-menu-item>
-                <i class="material-icons">code</i>
-                  <md-button disabled="disabled" ng-click="ctrl.sampleAction('Rename', $event)">
-                    Rename
-                  </md-button>
+				<md-menu-item>
+					<md-button ng-click="showNewOrder($event)">Save as</md-button></md-menu-item>
                 </md-menu-item>
-                <md-menu-divider></md-menu-divider>
-                <md-menu-item>
-                  <md-button ng-click="ctrl.sampleAction('Print', $event)">
-                    Print
-                    <span class="md-alt-text">{{ 'M-P' | keyboardShortcut }}</span>
-                  </md-button>
+				<md-menu-item>
+					<md-button ng-click="showNewOrder($event)">Print</md-button></md-menu-item>
                 </md-menu-item>
               </md-menu-content>
             </md-menu>
-       
+            <md-menu>
+              <button ng-click="$mdOpenMenu()">
+                View
+              </button>
+              <md-menu-content>
+                <md-menu-item>
+					<md-button ng-click="showNewOrder($event)">Show toolbar</md-button></md-menu-item>
+                </md-menu-item>
+				<md-menu-item>
+					<md-button ng-click="showNewOrder($event)">Show resources</md-button></md-menu-item>
+                </md-menu-item>
+				<md-menu-item>
+					<md-button ng-click="showNewOrder($event)">Show jobs</md-button></md-menu-item>
+                </md-menu-item>
+				<md-menu-item>
+					<md-button ng-click="showNewOrder($event)">Show timeline</md-button></md-menu-item>
+                </md-menu-item>
+              </md-menu-content>
+            </md-menu>
+			<md-menu>
+              <button ng-click="$mdOpenMenu()">
+                Order
+              </button>
+              <md-menu-content>
+				<md-menu-item>
+					<md-button ng-click="showNewOrder($event)">Edit</md-button></md-menu-item>
+                </md-menu-item>
+				<md-menu-item>
+					<md-button ng-click="showNewOrder($event)">Add job</md-button></md-menu-item>
+                </md-menu-item>
+				<md-menu-item>
+					<md-button ng-click="showNewOrder($event)">Delete job</md-button></md-menu-item>
+                </md-menu-item>
+				<md-menu-item>
+					<md-button ng-click="showNewOrder($event)">Arrange</md-button></md-menu-item>
+                </md-menu-item>
+				<md-menu-item>
+					<md-button ng-click="showNewOrder($event)">Lock</md-button></md-menu-item>
+                </md-menu-item>
+				<md-menu-item>
+					<md-button ng-click="showNewOrder($event)">Share</md-button></md-menu-item>
+                </md-menu-item>
+              </md-menu-content>
+            </md-menu>
+			<md-menu>
+              <button ng-click="$mdOpenMenu()">
+                Resources
+              </button>
+              <md-menu-content>
+				<md-menu-item>
+					<md-button ng-click="showNewOrder($event)">Add</md-button></md-menu-item>
+                </md-menu-item>
+				<md-menu-item>
+					<md-button ng-click="showNewOrder($event)">Delete</md-button></md-menu-item>
+                </md-menu-item>
+				<md-menu-item>
+					<md-button ng-click="showNewOrder($event)">Edit</md-button></md-menu-item>
+                </md-menu-item>
+				<md-menu-item>
+					<md-button ng-click="showNewOrder($event)">Import</md-button></md-menu-item>
+                </md-menu-item>
+				<md-menu-item>
+					<md-button ng-click="showNewOrder($event)">Share</md-button></md-menu-item>
+                </md-menu-item>
+              </md-menu-content>
+            </md-menu>
+			<md-menu>
+              <button ng-click="$mdOpenMenu()">
+                Jobs
+              </button>
+              <md-menu-content>
+				<md-menu-item>
+					<md-button ng-click="showNewOrder($event)">Add</md-button></md-menu-item>
+                </md-menu-item>
+				<md-menu-item>
+					<md-button ng-click="showNewOrder($event)">Delete</md-button></md-menu-item>
+                </md-menu-item>
+				<md-menu-item>
+					<md-button ng-click="showNewOrder($event)">Edit</md-button></md-menu-item>
+                </md-menu-item>
+				<md-menu-item>
+					<md-button ng-click="showNewOrder($event)">Import</md-button></md-menu-item>
+                </md-menu-item>
+				<md-menu-item>
+					<md-button ng-click="showNewOrder($event)">Share</md-button></md-menu-item>
+                </md-menu-item>
+              </md-menu-content>
+            </md-menu>
           </md-menu-bar>
         
         </div>
@@ -107,10 +178,62 @@
         <md-tab id="tab2">
         <md-tab-label>Jobs</md-tab-label>
         <md-tab-body>
-          {{penis}}
+			<div layout="row" layout-fill style="height: 100%;">
+                <div flex="33" style="background-color: blue;">
+                  block1
+                </div>
+                <div flex="33" style="background-color: yellow;">
+                  block2
+                </div>
+                <div flex="33" style="background-color: green;">
+                  block3
+			</div>
+		<!-- <div class="radioDemo2 radioButtondemoMultiColumn">
+		  <h2>Contact List</h2>
+		    <md-divider></md-divider>
+		
+		    <md-radio-group ng-model="selectedIndex">
+		      <div ng-repeat="person in contacts" class="row">
+		        <div flex="" layout="row" layout-padding="" layout-align="center center">
+		        
+					<md-radio-button flex="30" ng-value="person.id" class="md-primary" style="margin:0px">
+		
+		            {{person.fullName}}
+		
+		          </md-radio-button>
+		
+		          <div flex="70"> 
+		            {{person.title}}
+		          </div>
+		
+		        </div>
+		      </div>
+		    </md-radio-group>
+		
+		    <md-divider></md-divider>
+		    <div class="summary" flex="" layout="row" layout-align="space-between center">
+		      <div flex-initial="">
+		        <span class="title">Selected User</span>: <span class="md-checked">{{selectedUser()}}</span>
+		      </div>
+		    </div>
+		</div>-->
+	     <!--    <div layout="row">
+	        	<div flex="20" style="background-color:red"><h4 class="md-title">Name</h4></div>
+	        	<div flex="50" style="background-color:blue"><h4 class="md-title">Description</h4></div>
+	        	<div flex="15" style="background-color:yellow"><h4 class="md-title">Sequence</h4></div>
+	        	<div flex="15" style="background-color:green"><h4 class="md-title">Actions</h4></div>
+	        </div>
+	        <div layout="row" ng-repeat="job in jobs">
+	        	<div flex="20" style="background-color:red;"><h6 class="md-subhead">{{job.name}}</h6></div>
+	        	<div flex="50" style="background-color:blue;"><h6 class="md-subhead">{{job.description}}</h6></div>
+	        	<div flex="10" style="background-color:yellow;"><h6 class="md-subhead">{{job.order}}</h6></div>
+	        	<div flex="20" style="background-color:green;">
+	        	
+	        	</div>
+	        </div>-->
         </md-tab-body>
       </md-tab>
-                       <md-tab id="tab2">
+       <md-tab id="tab2">
         <md-tab-label>Resources</md-tab-label>
         <md-tab-body>
               <h1 class="md-title">Add new job</h1>

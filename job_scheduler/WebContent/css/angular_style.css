@@ -4,6 +4,7 @@
 .material-icons.md-48 { font-size: 48px; }
 .material-icons.black { color: black; }
 
+
 .sortable {
 	padding: 5px;
 	margin: 5px;
@@ -105,6 +106,14 @@ colon {
   top: 0px;
   left: 0px;
   right: 0px;
+  bottom: 0px;
+}
+
+#my-jobs{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 10px;
   bottom: 0px;
 }
 
@@ -248,4 +257,35 @@ md-ink-bar {
 h6.nobr { 
 	white-space: nowrap; 
 	min-width: 200px;
-	}
+}
+
+.radioButtondemoMultiColumn div.radioDemo2 {
+  margin-bottom: 20px; }
+.radioButtondemoMultiColumn h2 {
+  margin-left: 15px; }
+.radioButtondemoMultiColumn p {
+  width: 400px;
+  margin-top: 10px;
+  margin-left: 10px;
+  padding-top: 10px;
+  border-top: 2px solid #ddd; }
+.radioButtondemoMultiColumn .md-checked {
+  background-color: #ECFAFB;
+  border-radius: 2px; }
+.radioButtondemoMultiColumn md-button.md-raised, .radioButtondemoMultiColumn button.md-raised {
+  width: 200px; }
+.radioButtondemoMultiColumn .row {
+  border-bottom: 1px dashed #ddd; }
+.radioButtondemoMultiColumn div.row:last-child {
+  border-bottom: 0px dashed #ddd; }
+.radioButtondemoMultiColumn .summary {
+  width: 100%;
+  padding-top: 10px;
+  margin-left: 25px;
+  margin-top: 20px;
+  margin-bottom: -5px; }
+.radioButtondemoMultiColumn .title {
+  font-weight: bolder; }
+.radioButtondemoMultiColumn .selectedUser .md-checked {
+  padding: 8px;
+  width: 100px; }
