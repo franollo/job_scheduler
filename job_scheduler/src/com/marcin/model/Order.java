@@ -1,10 +1,13 @@
 package com.marcin.model;
 
+import java.util.List;
+
 public class Order {
 	private String name;
 	private String description;
 	private String startDate;
 	private String endDate;
+	private List<Job> jobs;
 	
 	public String getName() {
 		return name;
@@ -29,5 +32,11 @@ public class Order {
 	}
 	public void setEndDate(String endDate) {
 		this.endDate = endDate;
+	}
+	public List<Job> getJobs() {
+		return jobs;
+	}
+	public void setJobs(List<Job> jobs) {
+		this.jobs = jobs;
 	}
 }

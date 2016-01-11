@@ -12,6 +12,10 @@ public class Resource
 		this.setName(name);
 		this.setDescription(description);
 	}
+	
+	public Resource() {
+		
+	}
 
 	public int getResourceId() {
 		return resourceId;

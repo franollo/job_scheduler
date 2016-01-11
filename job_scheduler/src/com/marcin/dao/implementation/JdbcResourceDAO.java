@@ -2,8 +2,14 @@ package com.marcin.dao.implementation;
 
 import javax.sql.DataSource;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 import com.marcin.dao.ResourceDAO;
 import com.marcin.model.Resource;
+import com.marcin.model.Task;
+
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -19,12 +25,7 @@ public class JdbcResourceDAO implements ResourceDAO
 		this.dataSource = dataSource;
 	}
    
-	
-	@Override
-	public void insert(Resource machine) {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 	@Override
 	public Resource getByID(int resourceId) {
@@ -87,6 +88,37 @@ public class JdbcResourceDAO implements ResourceDAO
 				} catch (SQLException e) {}
 			}
 		}
+	}
+
+
+
+	@Override
+	public void createNewResource(Resource resource) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String name = auth.getName(); //get logged in username
+		String procedure = "{ call create_resource(?,?,?,?) }";
+		Connection conn = null;
+		
+		try {
+			conn = dataSource.getConnection();
+			CallableStatement ps = conn.prepareCall(procedure);
+			ps.setString("resource_name", resource.getName());
+			ps.setString("description", resource.getDescription());
+			ps.setString("username", name);
+			ps.registerOutParameter(4, java.sql.Types.INTEGER);
+			ps.executeQuery();
+			int resourceId = ps.getInt(4);
+			ps.close();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			if (conn != null) {
+				try {
+				conn.close();
+				} catch (SQLException e) {}
+			}
+		}
+		
 	}
 
 }

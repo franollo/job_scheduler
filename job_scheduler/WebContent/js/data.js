@@ -39,6 +39,20 @@ angular.module('data', []).service('data', function($http) {
 			    	});
 				};
 				
+				this.newResource = function(resource) {
+					$http({
+			    		method: 'POST',
+			    		dataType: 'json',
+			    		url: "ajax/newresource",
+			    		data: JSON.stringify(resource) 
+			    	})
+			    	.success(function(data){
+			    		console.log(data);
+			    	}).error(function(data){
+			    		console.log(data);
+			    	});
+				};
+				
 				this.getResources = function() {
 					return $http.get("getdata/resources")
 			    	.then(function(data){

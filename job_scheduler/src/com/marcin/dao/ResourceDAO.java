@@ -6,7 +6,7 @@ import com.marcin.model.Resource;
 
 public interface ResourceDAO 
 {
-	public void insert(Resource machine);
-	public Resource getByID(int machineID);
+	public void createNewResource(Resource resource);
+	public Resource getByID(int resourceID);
 	public List<Resource> getUserResources(String username);
 }

@@ -23,13 +23,13 @@ public class JdbcOrderDAO implements OrderDAO{
 		this.dataSource = dataSource;
 	}
 	
-	@SuppressWarnings("deprecation")
 	@Override
 	public int createNewOrder(String orderName, Date startDate) {
 		java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		String sqlDate = formater.format(startDate);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    String name = auth.getName(); //get logged in username
+	    System.out.println("To jest użytkownik: " + name);
 		String procedure = "{ call create_order(?,?,?,?) }";
 		Connection conn = null;
 		

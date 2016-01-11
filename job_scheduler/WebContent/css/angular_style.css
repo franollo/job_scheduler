@@ -14,11 +14,18 @@
   	background-color: #9E9E9E;
 }
 
+#footer {
+  background-color: #33691E;
+  position: absolute;
+  height: 20px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+
 #page-container {
   background-color: #f1f1f1;
-  padding: 32px; 
   position: absolute;
-  /*top: 100px;*/
   left: 0px;
   right: 0px;
   bottom: 20px;
@@ -29,6 +36,131 @@
   transition: height 100ms linear;
 }
 
+.small {
+  top: 70px;
+}
+
+.big {
+  top: 100px;
+}
+
+#workspace {
+  background-color: white;
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.25);
+  -webkit-border-bottom-right-radius: 2px;
+  -webkit-border-bottom-left-radius: 2px;
+  -moz-border-radius-bottomright: 2px;
+  -moz-border-radius-bottomleft: 2px;
+  border-bottom-right-radius: 2px;
+  border-bottom-left-radius: 2px;
+}
+
+#my-timeline{
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+}
+
+md-tabs.main-tabs {
+	position: static !important;
+}
+
+#button {
+  height: 22px;
+  width: 22px;
+  background-color: transparent;
+  -webkit-border-radius: 2px;
+  -moz-border-radius: 2px;
+  border-radius: 2px;
+  margin-right: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#button:hover {
+  box-shadow: 0px 1px 2px 1px rgba(0, 0, 0, 0.25);
+  cursor: default;
+}
+
+#button:active {
+  box-shadow: inset 0px 1px 2px 1px rgba(0, 0, 0, 0.25);
+  cursor: default;
+}
+
+#button:focus {
+    outline: none;
+    border: 0;
+}
+
+md-menu-bar {
+    height: 35px !important;
+}
+
+
+md-menu-bar .md-menu {
+  height: 35px !important;
+}
+
+md-menu-bar button {
+  height: 35px !important;
+}
+
+md-toolbar.my-toolbar {
+  min-height: 30px !important;
+  height: 30px !important;
+}
+
+md-toolbar.my-bottom-toolbar {
+  position:absolute;
+  bottom:0px;
+  min-height: 20px !important;
+  height: 20px !important;
+}
+
+.my-menu .md-toolbar-tools {
+  font-size: 25px;
+  padding-top: 5px;
+  height: 35px !important;
+}
+
+md-datepicker {
+  padding-top: 14px;
+}
+
+.radioButtondemoMultiColumn .md-checked {
+  background-color: #ECFAFB;
+  border-radius: 2px; }
+.radioButtondemoMultiColumn .row {
+  border-bottom: 1px dashed #ddd; }
+.radioButtondemoMultiColumn div.row:last-child {
+  border-bottom: 0px dashed #ddd; }
+  
+.no-margin {
+	margin:0px;}  
+
+.md-button.md-fab.md-mini {
+      line-height: 3rem;
+      width: 35px;
+      height: 34px;
+      padding-left: 5px;
+      padding-right: 5px;
+      padding-top: 1px;
+}
+
+.sub-list {
+	-webkit-box-shadow: inset 0px -1px 2px 1px rgba(0,0,0,0.35);
+	-moz-box-shadow: inset 0px -1px 2px 1px rgba(0,0,0,0.35);
+	box-shadow: inset 0px -1px 2px 1px rgba(0,0,0,0.35);
+}
+/*
 xx{
   position: relative;
   padding-top: 10px;
@@ -52,12 +184,12 @@ colon {
   margin-top: 5px;
   display: inline-block;
 }
-/*
+
 .add-job {
   height: 600px !important;
   width: 800px !important;
 }
-*/
+
 .small {
   top: 70px;
 }
@@ -143,7 +275,7 @@ colon {
 #button:focus {
     outline: none;
     border: 0;
- }
+}
 
 md-toolbar.my-toolbar {
   min-height: 30px !important;
@@ -259,33 +391,4 @@ h6.nobr {
 	min-width: 200px;
 }
 
-.radioButtondemoMultiColumn div.radioDemo2 {
-  margin-bottom: 20px; }
-.radioButtondemoMultiColumn h2 {
-  margin-left: 15px; }
-.radioButtondemoMultiColumn p {
-  width: 400px;
-  margin-top: 10px;
-  margin-left: 10px;
-  padding-top: 10px;
-  border-top: 2px solid #ddd; }
-.radioButtondemoMultiColumn .md-checked {
-  background-color: #ECFAFB;
-  border-radius: 2px; }
-.radioButtondemoMultiColumn md-button.md-raised, .radioButtondemoMultiColumn button.md-raised {
-  width: 200px; }
-.radioButtondemoMultiColumn .row {
-  border-bottom: 1px dashed #ddd; }
-.radioButtondemoMultiColumn div.row:last-child {
-  border-bottom: 0px dashed #ddd; }
-.radioButtondemoMultiColumn .summary {
-  width: 100%;
-  padding-top: 10px;
-  margin-left: 25px;
-  margin-top: 20px;
-  margin-bottom: -5px; }
-.radioButtondemoMultiColumn .title {
-  font-weight: bolder; }
-.radioButtondemoMultiColumn .selectedUser .md-checked {
-  padding: 8px;
-  width: 100px; }
+*/

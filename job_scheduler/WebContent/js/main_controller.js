@@ -40,35 +40,11 @@ app.controller('DemoBasicCtrl', ['$scope',
                                  'data',
                                  function($scope, $mdDialog, $mdMedia, $http, auth, data) 
 {       
-        $scope.orderTitle = 'NN';
+        $scope.orderTitle = '';
         this.inp;
-        var resources = [];
+        $scope.resources = [];
         $scope.jobs = [];
-        $scope.contacts = [{
-            'id': 1,
-            'fullName': 'Maria Guadalupe',
-            'lastName': 'Guadalupe',
-            'title': "CEO, Found"
-          }, {
-            'id': 2,
-            'fullName': 'Gabriel Garca Marquz',
-            'lastName': 'Marquz',
-            'title': "VP Sales & Marketing"
-          }, {
-            'id': 3,
-            'fullName': 'Miguel de Cervantes',
-            'lastName': 'Cervantes',
-            'title': "Manager, Operations"
-          }, {
-            'id': 4,
-            'fullName': 'Pacorro de Castel',
-            'lastName': 'Castel',
-            'title': "Security"
-          }];
-          $scope.selectedIndex = 2;
-          $scope.selectedUser = function() {
-            return $scope.contacts[$scope.selectedIndex].lastName;
-          }
+        $scope.selectedIndex = 2;
        	
        	
         var groups = [
@@ -128,14 +104,13 @@ app.controller('DemoBasicCtrl', ['$scope',
       timeline = new vis.Timeline(container, items,groups, options);
     }, 10);
 
-    
     $scope.hide = function() {
       $scope.isSmall = !$scope.isSmall;
     }
 
     $scope.showAddJob = function(ev) {
       $mdDialog.show({
-        locals: {dataToPass: resources},
+        locals: {dataToPass: $scope.resources},
         controller: DialogController1,
         controllerAs: 'dad',
         templateUrl: 'dialog_add_job.html',
@@ -150,9 +125,23 @@ app.controller('DemoBasicCtrl', ['$scope',
     	  data.newJob(answer.job);
         });
     }
+    
+    $scope.showAddResource = function(ev) {
+        $mdDialog.show({
+            controller: DialogController4,
+            controllerAs: 'dar',
+            templateUrl: 'dialog_new_resource.html',
+            parent: angular.element(document.body),
+            targetEvent: ev,
+            clickOutsideToClose:true
+          }).then(function(answer) {
+              console.log(answer);
+            });
+      }
 
     $scope.showNewOrder = function(ev) {
       $mdDialog.show({
+    	locals: {dataToPass: $scope.jobs},
         controller: DialogController2,
         controllerAs: 'dno',
         templateUrl: 'dialog_new_order.html',
@@ -177,6 +166,11 @@ app.controller('DemoBasicCtrl', ['$scope',
         });
       }
 
+    
+    /**
+     * Create new job controller
+     */
+    
   function DialogController1($scope, $mdDialog, dataToPass) {
 	  $scope.dragControlListeners = {
 	          containment: '#board',//optional param.
@@ -214,9 +208,12 @@ app.controller('DemoBasicCtrl', ['$scope',
    */  
     
     
-  function DialogController2($scope, $mdDialog) {
+  function DialogController2($scope, $mdDialog, dataToPass) {
 	var parentThis = this;
+	this.jobs = dataToPass;
 	this.orderName = "";
+	this.description = "";
+	this.selected = [];
 	this.startTime = new Date();
 	this.startDate = new Date();
 	this.startTime.setMilliseconds(0);
@@ -228,15 +225,24 @@ app.controller('DemoBasicCtrl', ['$scope',
     	  			"startTime": start, 
     	  			"startDate": parentThis.startDate});
       data.newOrder({"name": parentThis.orderName, 
-    		  		"description": "to sa testy", 
+    		  		"description": parentThis.description, 
     		  		"startDate": start,
-    		  		"endDate": parentThis.startTime});
+    		  		"endDate": parentThis.startTime,
+    		  		"jobs": parentThis.selected});
     }
 
     $scope.cancel = function() {
       console.log('cancel');
       $mdDialog.cancel();
     }
+    $scope.toggle = function (item, list) {
+	    var idx = list.indexOf(item);
+	    if (idx > -1) list.splice(idx, 1);
+	    else list.push(item);
+	};
+	  $scope.exists = function (item, list) {
+	    return list.indexOf(item) > -1;
+	  };
   }
   
   /** 
@@ -274,10 +280,23 @@ app.controller('DemoBasicCtrl', ['$scope',
   }
 
 
-
-
-
-
+/**
+ * New resource
+ */
+  function DialogController4($scope, $mdDialog) {
+		var parentThis = this;
+		this.resourceName = "";
+		this.description = "";
+	    $scope.answer = function() {
+	      $mdDialog.hide();
+	      data.newResource({"name": parentThis.resourceName, 
+	  			"description": parentThis.description});
+	    }
+	    $scope.cancel = function() {
+	      console.log('cancel');
+	      $mdDialog.cancel();
+	    }
+	  }
   
   auth.authenticate({"username": "admin", "password": "admin"}).then(function() {
 	  $scope.authenticated = auth.authenticated;
@@ -289,7 +308,7 @@ app.controller('DemoBasicCtrl', ['$scope',
 		$scope.sur = data.surname;
 		});
 		data.getResources().then(function(data){
-       		resources = data.data;
+       		$scope.resources = data.data;
        	});
 		data.getJobs().then(function(data) {
 			$scope.jobs = data.data;
