@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.marcin.dao.implementation.JdbcJobDAO;
 import com.marcin.dao.implementation.JdbcResourceDAO;
+import com.marcin.dao.implementation.JdbcTaskDAO;
 import com.marcin.dao.implementation.JdbcUserDAO;
 import com.marcin.model.Job;
 import com.marcin.model.Resource;
+import com.marcin.model.Task;
 import com.marcin.model.User;
  
 /**
@@ -33,6 +35,9 @@ public class GetDataController {
 	@Autowired
 	private JdbcJobDAO jobDAO;
     
+	@Autowired
+	private JdbcTaskDAO taskDAO;
+	
     @RequestMapping(value = "/resources", method = RequestMethod.GET)
     public List<Resource> getResources() {
     	System.out.println("Debug Message from /resources");
@@ -46,7 +51,15 @@ public class GetDataController {
     	System.out.println("Debug Message from /jobs");
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    String name = auth.getName();
-    	return jobDAO.getUserJobs("admin");
+    	List<Job> jobs = jobDAO.getUserJobs(name);
+    	for (Job job : jobs) {
+    		List<Task> tasks = taskDAO.getTasksByJobId(job.getJobId());
+    		for (Task task : tasks) {
+    			task.setResource(resourceDAO.getByID(task.getResourceId()));
+    		}
+    		job.setTasks(tasks);
+    	}
+    	return jobs;	
     }
     
     @RequestMapping(value = "/userinfo", method = RequestMethod.GET)

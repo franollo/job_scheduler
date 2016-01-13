@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,11 +18,15 @@ import com.marcin.dao.implementation.JdbcItemDAO;
 import com.marcin.dao.implementation.JdbcJobDAO;
 import com.marcin.dao.implementation.JdbcOrderDAO;
 import com.marcin.dao.implementation.JdbcResourceDAO;
+import com.marcin.dao.implementation.JdbcTaskDAO;
 import com.marcin.model.Item;
 import com.marcin.model.Job;
 import com.marcin.model.Order;
 import com.marcin.model.Resource;
 import com.marcin.model.Task;
+import com.marcin.model.VisContent;
+import com.marcin.model.VisGroup;
+import com.marcin.model.VisItem;
 
 import java.util.Random;
 
@@ -45,6 +51,9 @@ public class AjaxController {
 	@Autowired
 	private JdbcItemDAO jdbcItemDAO;
 	
+	@Autowired
+	private JdbcTaskDAO jdbcTaskDAO;
+	
     @RequestMapping(value = "/ajaxtest", method = RequestMethod.GET)
     public @ResponseBody
     String getTime() {
@@ -65,9 +74,12 @@ public class AjaxController {
     	return result;
     }
     
+    /* TU COŚ ŚMIERDZI!*/
+    
     @RequestMapping(value = "/neworder", method = RequestMethod.POST)
     public @ResponseBody
-    int newOrder(@RequestBody Order order) throws ParseException {
+    VisContent newOrder(@RequestBody Order order) throws ParseException {
+    	String colors[] = {"red", "gold", "magneta", "red", "grey", "blue", "lightpink"};
     	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
 		Date parsedDate = formatter.parse(order.getStartDate());
 		int orderId = jdbcOrderDAO.createNewOrder(order.getName(), parsedDate);
@@ -76,22 +88,39 @@ public class AjaxController {
 		for (Job job : order.getJobs()) {
 			for (Task task : job.getTasks()) {
 				parsedDate = item.convertFromTask(task, job, parsedDate);
-				jdbcItemDAO.insert(item, orderId, i);
+				item.setColor(colors[item.getJob().getJobId() % 6]);
+				jdbcItemDAO.createNewItem(item, orderId, i);
 				i++;
 			}
 		}
-    	return orderId;
+		List<VisItem> items = jdbcItemDAO.getOrderItems(orderId);
+		List<VisGroup> groups = jdbcResourceDAO.getOrderGroups(orderId);
+		return new VisContent(items, groups);
     }
     
     @RequestMapping(value = "/newresource", method = RequestMethod.POST)
     public @ResponseBody
     void newResource(@RequestBody Resource resource) throws ParseException {
-    	jdbcResourceDAO.createNewResource(resource);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String name = auth.getName();
+    	jdbcResourceDAO.createNewResource(resource, name);
     }
     
     @RequestMapping(value = "/newjob", method = RequestMethod.POST)
     public @ResponseBody
     void newJob(@RequestBody Job job) throws ParseException {
-    	jdbcJobDAO.createNewJob(job);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String name = auth.getName();
+    	int jobId = jdbcJobDAO.createNewJob(job, name);
+    	int i = 1;
+    	for (Task task : job.getTasks()) {
+			try {
+				task.convertTimeToSeconds();
+				jdbcTaskDAO.createNewTask(task, jobId, i);
+				i++;
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
     }
 }

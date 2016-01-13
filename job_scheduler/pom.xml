@@ -43,7 +43,7 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>4.0.3.RELEASE</version>
 		</dependency>
- 
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>

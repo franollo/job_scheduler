@@ -12,16 +12,16 @@ angular.module('data', []).service('data', function($http) {
 				};
 				
 				this.newOrder = function(order) {
-					$http({
+					console.log(order);
+					return $http({
 			    		method: 'POST',
 			    		dataType: 'json',
 			    		url: "ajax/neworder",
 			    		data: JSON.stringify(order)
 			    	})
-			    	.success(function(data){
+			    	.then(function(data){
 			    		console.log(data);
-			    	}).error(function(data){
-			    		console.log(data);
+			    		return data.data;
 			    	});
 				};
 				
@@ -63,6 +63,7 @@ angular.module('data', []).service('data', function($http) {
 				this.getJobs = function() {
 					return $http.get("getdata/jobs")
 			    	.then(function(data){
+			    		console.log(data.data);
 			    		return data;
 			    	});
 				}

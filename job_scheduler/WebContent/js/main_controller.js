@@ -46,33 +46,21 @@ app.controller('DemoBasicCtrl', ['$scope',
         $scope.jobs = [];
         $scope.selectedIndex = 2;
        	
-       	
-        var groups = [
+       	var items = [];
+       	var groups = [];
+      /*  var groups = [
         {id: 1, content: 'Maszyna1', order: 1, hh_dur:3, mm_dur:0, ss_dur:0, job_order: 1},
         {id: 2, content: 'Maszyna2', order: 2,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 2},
         {id: 3, content: 'Maszyna3', order: 3,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 3},
         {id: 4, content: 'Maszyna4', order: 4,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 4},
-        {id: 5, content: 'Maszyna5', order: 5,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 5}
-      ];
+        {id: 5, content: 'Maszyna5', order: 5,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 5},
+        {id: 6, content: 'Maszyna6', order: 1, hh_dur:3, mm_dur:0, ss_dur:0, job_order: 1},
+        {id: 7, content: 'Maszyna7', order: 2,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 2},
+        {id: 8, content: 'Maszyna8', order: 3,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 3},
+        {id: 9, content: 'Maszyna9', order: 4,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 4},
+        {id: 10, content: 'Maszyna10', order: 5,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 5}
+      ];*/
         
-        $scope.groups = [
-                      {id: 1, content: 'Maszyna1', order: 1, hh_dur:3, mm_dur:0, ss_dur:0, job_order: 1},
-                      {id: 2, content: 'Maszyna2', order: 2,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 2},
-                      {id: 3, content: 'Maszyna3', order: 3,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 3},
-                      {id: 4, content: 'Maszyna4', order: 4,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 4},
-                      {id: 5, content: 'Maszyna5', order: 5,hh_dur:3, mm_dur:0, ss_dur:0, job_order: 5}
-                    ];
-
-      function clearGroups () {
-        groups.sort(compare_restore);
-        for (i=0; i<groups.length; i++) {
-          groups[i].hh_dur = 3;
-          groups[i].mm_dur = 0;
-          groups[i].ss_dur = 0;
-          groups[i].job_order = i+1;
-          groups[i].order = i+1;
-        }
-      }
 
       var dataSet = new vis.DataSet();
       var job;
@@ -141,7 +129,7 @@ app.controller('DemoBasicCtrl', ['$scope',
 
     $scope.showNewOrder = function(ev) {
       $mdDialog.show({
-    	locals: {dataToPass: $scope.jobs},
+    	locals: {dataToPass: $scope.jobs, dataToPass2: timeline},
         controller: DialogController2,
         controllerAs: 'dno',
         templateUrl: 'dialog_new_order.html',
@@ -208,8 +196,9 @@ app.controller('DemoBasicCtrl', ['$scope',
    */  
     
     
-  function DialogController2($scope, $mdDialog, dataToPass) {
+  function DialogController2($scope, $mdDialog, dataToPass, dataToPass2) {
 	var parentThis = this;
+	var timelinePointer = dataToPass2;
 	this.jobs = dataToPass;
 	this.orderName = "";
 	this.description = "";
@@ -228,7 +217,10 @@ app.controller('DemoBasicCtrl', ['$scope',
     		  		"description": parentThis.description, 
     		  		"startDate": start,
     		  		"endDate": parentThis.startTime,
-    		  		"jobs": parentThis.selected});
+    		  		"jobs": parentThis.selected}).then(function(data) {
+    		  			timelinePointer.setGroups(data.groups);
+    		  			timelinePointer.setItems(data.items);
+    		  		})
     }
 
     $scope.cancel = function() {

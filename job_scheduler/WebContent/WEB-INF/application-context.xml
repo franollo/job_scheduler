@@ -12,8 +12,13 @@
       	<property name="password" value="s3cret"/>
    	</bean>
    	
+   	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+   		<constructor-arg ref="dataSource" />
+   	</bean>
+   	
    	<bean id="resourceDAO" class="com.marcin.dao.implementation.JdbcResourceDAO">
 		<property name="dataSource" ref="dataSource" />
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
 	
 	<bean id="userDAO" class="com.marcin.dao.implementation.JdbcUserDAO">
@@ -26,16 +31,17 @@
 	
 	<bean id="jobDAO" class="com.marcin.dao.implementation.JdbcJobDAO">
 		<property name="dataSource" ref="dataSource" />
-		<property name="taskDAO" ref="taskDAO" />
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
 	
 	<bean id="taskDAO" class="com.marcin.dao.implementation.JdbcTaskDAO">
 		<property name="dataSource" ref="dataSource" />
-		<property name="resourceDAO" ref="resourceDAO" />
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
 	
 	<bean id="itemDAO" class="com.marcin.dao.implementation.JdbcItemDAO">
 		<property name="dataSource" ref="dataSource" />
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
 	
 	<bean id="restAuthenticationEntryPoint" class="com.marcin.security.RestAuthenticationEntryPoint"></bean>
