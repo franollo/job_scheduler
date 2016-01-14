@@ -1,4 +1,4 @@
-angular.module('data', []).service('data', function($http) {
+angular.module('MyApp').service('data', function($http) {
 
 				var user = {};			
 				this.whoAmI = function() {
@@ -63,8 +63,24 @@ angular.module('data', []).service('data', function($http) {
 				this.getJobs = function() {
 					return $http.get("getdata/jobs")
 			    	.then(function(data){
-			    		console.log(data.data);
 			    		return data;
 			    	});
-				}
+				};
+				
+				this.getOrders = function() {
+					return $http.get("getdata/orders")
+			    	.then(function(data){
+			    		return data.data;
+			    	});
+				};
+				
+				this.openOrder = function(orderId) {
+					return $http({
+			    		method: 'POST',
+			    		url: "getdata/order",
+			    		data: orderId
+			    	}).then(function(data){
+			    		return data.data;
+			    	})
+				};
 		});

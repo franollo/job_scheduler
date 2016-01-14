@@ -177,6 +177,36 @@ md-datepicker {
   border-bottom: 1px dashed #ddd; }
 .radioButtondemoMultiColumn div.row:last-child {
   border-bottom: 0px dashed #ddd; }
+ 
+.custom {
+	background-color: #fff;
+-webkit-box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.35);
+-moz-box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.35);
+box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.35);
+cursor:default;
+}
+
+.selected {
+	background-color: green;
+-webkit-box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.35);
+-moz-box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.35);
+box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.35);
+cursor:default;
+}
+
+
+.radioButtondemoMultiColumn md-grid-tile figure:active {
+	background-color: green;
+	outline: none;
+    border: 0;
+}
+
+.radioButtondemoMultiColumn md-grid-tile:focus {
+	outline: none;
+    border: 0;
+}
+
+
   
 .no-margin {
 	margin:0px;}  

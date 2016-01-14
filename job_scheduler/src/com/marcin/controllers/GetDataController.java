@@ -5,18 +5,25 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.marcin.dao.implementation.JdbcItemDAO;
 import com.marcin.dao.implementation.JdbcJobDAO;
+import com.marcin.dao.implementation.JdbcOrderDAO;
 import com.marcin.dao.implementation.JdbcResourceDAO;
 import com.marcin.dao.implementation.JdbcTaskDAO;
 import com.marcin.dao.implementation.JdbcUserDAO;
 import com.marcin.model.Job;
+import com.marcin.model.Order;
 import com.marcin.model.Resource;
 import com.marcin.model.Task;
 import com.marcin.model.User;
+import com.marcin.model.VisContent;
+import com.marcin.model.VisGroup;
+import com.marcin.model.VisItem;
  
 /**
  * @author Marcin Frankowski
@@ -37,6 +44,20 @@ public class GetDataController {
     
 	@Autowired
 	private JdbcTaskDAO taskDAO;
+	
+	@Autowired
+	private JdbcOrderDAO orderDAO;
+	
+	@Autowired
+	private JdbcItemDAO itemDAO;
+	
+    @RequestMapping(value = "/orders", method = RequestMethod.GET)
+    public List<Order> getOrders() {
+    	System.out.println("Debug Message from /orders");
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String name = auth.getName();
+    	return orderDAO.getUserOrders(name);
+    }
 	
     @RequestMapping(value = "/resources", method = RequestMethod.GET)
     public List<Resource> getResources() {
@@ -68,6 +89,16 @@ public class GetDataController {
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    String name = auth.getName();
     	return userDAO.getUserByLogin(name);
+    }
+    
+    @RequestMapping(value = "/order", method = RequestMethod.POST)
+    public VisContent getOrder(@RequestBody int orderId) {
+    	System.out.println("Debug Message from /order");
+    	//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    //String name = auth.getName();
+    	List<VisItem> items = itemDAO.getOrderItems(orderId);
+		List<VisGroup> groups = resourceDAO.getOrderGroups(orderId);
+		return new VisContent(items, groups);
     }
 }
 

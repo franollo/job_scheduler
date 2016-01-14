@@ -16,5 +16,4 @@ public class TaskMapper implements RowMapper<Task>{
 		task.setSecondsDuration(resultSet.getInt(resultSet.findColumn("duration")));
 		return task;
 	}
-
 }

@@ -27,6 +27,7 @@
 	
 	<bean id="orderDAO" class="com.marcin.dao.implementation.JdbcOrderDAO">
 		<property name="dataSource" ref="dataSource" />
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
 	
 	<bean id="jobDAO" class="com.marcin.dao.implementation.JdbcJobDAO">

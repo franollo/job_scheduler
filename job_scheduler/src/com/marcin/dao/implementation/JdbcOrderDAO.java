@@ -5,23 +5,25 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Types;
 import java.util.Date;
+import java.util.List;
 
 import javax.sql.DataSource;
 
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import com.marcin.dao.DAO;
 import com.marcin.dao.OrderDAO;
+import com.marcin.dao.mappers.OrderMapper;
+import com.marcin.dao.mappers.ResourceMapper;
+import com.marcin.model.Order;
 import com.marcin.model.Resource;
 
-public class JdbcOrderDAO implements OrderDAO{
+public class JdbcOrderDAO extends DAO implements OrderDAO{
 
-	private DataSource dataSource;
-	
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-	}
 	
 	@Override
 	public int createNewOrder(String orderName, Date startDate) {
@@ -55,6 +57,18 @@ public class JdbcOrderDAO implements OrderDAO{
 			}
 		}
 		
+	}
+
+	@Override
+	public List<Order> getUserOrders(String username) {
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+		parameters.addValue("username", username, Types.VARCHAR);
+		String sql = "select o.* "
+				+ "from orders o, users_orders uo "
+				+ "where o.order_id = uo.order_id "
+				+ "and uo.user_id in "
+				+ "(select user_id from users where username = :username)";
+		return jdbcTemplate.query(sql, parameters, new OrderMapper());
 	}
 
 }

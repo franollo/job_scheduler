@@ -5,6 +5,7 @@
 	    <link href="vis/vis.css" rel="stylesheet" type="text/css"/>
 	    <link rel="stylesheet" href="css/angular_style.css">
 	    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+	    <link rel="stylesheet" type="text/css" href="bower_components/ng-sortable/dist/ng-sortable.min.css">
   	</head>
 	<body>
 		<script src="bower_components/angular/angular.js"></script>
@@ -13,12 +14,12 @@
 		<script src="bower_components/angular-material/angular-material.js"></script>
 		<script src="vis/vis.js"></script>
 		<script src="js/main_controller.js"></script>
+		<script src="js/dialogs.js"></script>
 		<script src="js/auth.js"></script>
 		<script src="js/data.js"></script>
 		<script type="text/javascript" src="bower_components/ng-sortable/dist/ng-sortable.min.js"></script>
-		<link rel="stylesheet" type="text/css" href="bower_components/ng-sortable/dist/ng-sortable.min.css">
 
-	    <div ng-controller="DemoBasicCtrl as ctrl" ng-cloak="" ng-app="MyApp">
+	    <div id="cialo" style="overflow:hidden" ng-controller="DemoBasicCtrl as ctrl" ng-cloak="" ng-app="MyApp">
 		    <md-toolbar class="md-menu-toolbar my-menu">
 		      <div layout="row">
 		        <md-toolbar-filler layout="" layout-align="center center">
@@ -37,7 +38,7 @@
 							<md-button ng-click="showNewOrder($event)">New order</md-button></md-menu-item>
 		                </md-menu-item>
 						<md-menu-item>
-							<md-button ng-click="showNewOrder($event)">Open order</md-button></md-menu-item>
+							<md-button ng-click="openOrder($event)">Open order</md-button></md-menu-item>
 		                </md-menu-item>
 						<md-menu-item>
 							<md-button ng-click="showNewOrder($event)">Save as</md-button></md-menu-item>

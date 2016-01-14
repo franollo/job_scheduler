@@ -3,6 +3,7 @@ package com.marcin.model;
 import java.util.List;
 
 public class Order {
+	private int orderId;
 	private String name;
 	private String description;
 	private String startDate;
@@ -38,5 +39,11 @@ public class Order {
 	}
 	public void setJobs(List<Job> jobs) {
 		this.jobs = jobs;
+	}
+	public int getOrderId() {
+		return orderId;
+	}
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
 	}
 }
