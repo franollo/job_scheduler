@@ -23,6 +23,7 @@
 	
 	<bean id="userDAO" class="com.marcin.dao.implementation.JdbcUserDAO">
 		<property name="dataSource" ref="dataSource" />
+		<property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
 	
 	<bean id="orderDAO" class="com.marcin.dao.implementation.JdbcOrderDAO">

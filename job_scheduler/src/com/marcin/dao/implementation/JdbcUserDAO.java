@@ -4,19 +4,20 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 
 import javax.sql.DataSource;
 
+import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.jdbc.core.namedparam.SqlParameterSource;
+import org.springframework.jdbc.core.simple.SimpleJdbcCall;
+
+import com.marcin.dao.DAO;
 import com.marcin.dao.UserDAO;
 import com.marcin.model.User;
 
-public class JdbcUserDAO implements UserDAO {
+public class JdbcUserDAO extends DAO implements UserDAO {
 
-	private DataSource dataSource;
-	
-	public void setDataSource(DataSource dataSource) {
-		this.dataSource = dataSource;
-	}
 	
 	@Override
 	public User getUserByLogin(String login) {
@@ -54,6 +55,16 @@ public class JdbcUserDAO implements UserDAO {
 				}
 			}
 		}
+	}
+
+	@Override
+	public int setOrderInUse(String username, int orderId) {
+		SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("set_in_use");
+		SqlParameterSource in = new MapSqlParameterSource()
+				.addValue("username", username)
+				.addValue("order_id", orderId);
+		jdbcCall.execute(in);
+		return 1;
 	}
 
 }

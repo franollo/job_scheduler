@@ -152,15 +152,21 @@
 		    </md-toolbar>
 		    <md-toolbar class="my-toolbar" ng-hide="isSmall">
 			    <div class="md-toolbar-tools">
-				    <div id="button" ng-click="isCollapsed = !isCollapsed; isSmall = !isSmall">
-				      <i class="material-icons md-18">{{isCollapsed ? 'lock_open' : 'lock_outline'}}</i>
-				    </div>
 				    <div id="button" ng-click = "getThem()">
-				      <i class="material-icons md-18">redo</i>
-				    </div>
-				    <div id="button">
 				      <i class="material-icons md-18">undo</i>
 				    </div>
+				    <div id="button">
+				      <i class="material-icons md-18">redo</i>
+				    </div>
+					<div id="button" ng-click="lockTimeline()">
+				      <i class="material-icons md-18">{{timelineLocked ? 'lock_outline' : 'lock_open'}}</i>
+				    </div>
+				    <div id="button" ng-click = "focusTimeline()">
+				    	<md-tooltip md-direction="bottom" md-delay="1000">
+          				Fit content
+        				</md-tooltip>
+				      <i class="material-icons md-18-90deg">vertical_align_center</i>
+				    </div> 
 				    <div id="button" ng-click="showAddJob($event)">
 				      <i class="material-icons md-18">add</i>
 				    </div>

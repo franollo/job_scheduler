@@ -9,7 +9,6 @@ public class VisItem {
 	private String start;
 	private String title;
 	private String type;
-	private boolean editable;
 	
 	public String getClassName() {
 		return className;
@@ -60,11 +59,4 @@ public class VisItem {
 	public void setType(String type) {
 		this.type = type;
 	}
-	public boolean isEditable() {
-		return editable;
-	}
-	public void setEditable(boolean editable) {
-		this.editable = editable;
-	}
-
 }

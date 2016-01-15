@@ -1,4 +1,4 @@
-angular.module('MyApp').service('dialogs',['$http','data',function($http,data) {
+angular.module('MyApp').service('dialogs',['$http','data','auth',function($http,data, auth) {
 
 		this.DialogController1 = function ($scope, $mdDialog, dataToPass) {
 		  $scope.dragControlListeners = {

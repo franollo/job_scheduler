@@ -73,8 +73,7 @@ public class AjaxController {
     	String result = Float.toString(tmp);
     	return result;
     }
-    
-    /* TU COŚ ŚMIERDZI!*/
+
     
     @RequestMapping(value = "/neworder", method = RequestMethod.POST)
     public @ResponseBody

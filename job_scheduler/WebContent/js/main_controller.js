@@ -75,7 +75,7 @@ app.controller('DemoBasicCtrl', ['$scope',
       container = document.getElementById("my-timeline");
       options = {
         height: '100%',
-        editable: {remove: true, updateTime: true},
+        editable: true,
         orientation: 'top',
         margin: 0,
         stack: false
@@ -204,6 +204,19 @@ app.controller('DemoBasicCtrl', ['$scope',
   		$scope.authenticated = auth.authenticated;
 	  });
 	}
+  
+  $scope.timelineLocked = false;
+  
+  $scope.lockTimeline = function() {
+	  $scope.timelineLocked = !$scope.timelineLocked;
+	  console.log($scope.timelineLocked);
+	  timeline.setOptions({editable: !$scope.timelineLocked});
+  }
+  
+  $scope.focusTimeline = function() {
+	  timeline.fit({animation: true});
+  }
+  
   
   var createOrder = function() {
 	  

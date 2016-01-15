@@ -20,7 +20,6 @@ public class VisItemMapper implements RowMapper<VisItem>{
 		item.setTitle(resultSet.getString(resultSet.findColumn("name")));
 		item.setContent(" ");
 		item.setType("range");
-		item.setEditable(true);
 		return item;
 	}
 

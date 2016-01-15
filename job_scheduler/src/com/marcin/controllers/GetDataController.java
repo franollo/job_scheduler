@@ -94,8 +94,9 @@ public class GetDataController {
     @RequestMapping(value = "/order", method = RequestMethod.POST)
     public VisContent getOrder(@RequestBody int orderId) {
     	System.out.println("Debug Message from /order");
-    	//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	    //String name = auth.getName();
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String name = auth.getName();
+    	userDAO.setOrderInUse(name, orderId);
     	List<VisItem> items = itemDAO.getOrderItems(orderId);
 		List<VisGroup> groups = resourceDAO.getOrderGroups(orderId);
 		return new VisContent(items, groups);
