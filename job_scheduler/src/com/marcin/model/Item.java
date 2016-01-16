@@ -15,21 +15,16 @@ public class Item {
 		
 	}
 	
-	public Date convertFromTask(Task task, Job job, Date startDate) {
-		java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		System.out.println(task.getResourceId() + "   " + job.getJobId());
-		System.out.println(startDate);
-		this.startDate = formater.format(startDate);
-		System.out.println(this.startDate);
+	public Date convertFromTask(Task task, Job job, Date startDate, Long diff) {
 		Calendar calendar = Calendar.getInstance();
 		calendar.setTime(startDate);
+		calendar.add(Calendar.MILLISECOND, (int)-diff);
+		Date start = calendar.getTime();
+		java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		this.startDate = formater.format(start);
 		calendar.add(Calendar.SECOND, task.getSecondsDuration());
-		System.out.println(task.getSecondsDuration());
-		System.out.println(calendar.getTime());
 		Date end = calendar.getTime();
-		System.out.println(end);
 		this.endDate = formater.format(end);
-		System.out.println(endDate);
 		this.resource = task.getResource();
 		this.job = job;
 		return end;

@@ -152,10 +152,10 @@
 		    </md-toolbar>
 		    <md-toolbar class="my-toolbar" ng-hide="isSmall">
 			    <div class="md-toolbar-tools">
-				    <div id="button" ng-click = "getThem()">
+				    <div id="button" ng-click = "undo()">
 				      <i class="material-icons md-18">undo</i>
 				    </div>
-				    <div id="button">
+				    <div id="button" ng-click = "redo()">
 				      <i class="material-icons md-18">redo</i>
 				    </div>
 					<div id="button" ng-click="lockTimeline()">

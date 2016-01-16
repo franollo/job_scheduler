@@ -32,9 +32,8 @@ angular.module('MyApp').service('dialogs',['$http','data','auth',function($http,
 	  }
 		
 	
-  this.DialogController2 = function($scope, $mdDialog, dataToPass, dataToPass2) {
+  this.DialogController2 = function($scope, $mdDialog, dataToPass, timeline, items, groups) {
 		var parentThis = this;
-		var timelinePointer = dataToPass2;
 		this.jobs = dataToPass;
 		this.orderName = "";
 		this.description = "";
@@ -54,8 +53,8 @@ angular.module('MyApp').service('dialogs',['$http','data','auth',function($http,
 	    		  		"startDate": start,
 	    		  		"endDate": parentThis.startTime,
 	    		  		"jobs": parentThis.selected}).then(function(data) {
-	    		  			timelinePointer.setGroups(data.groups);
-	    		  			timelinePointer.setItems(data.items);
+	    		  			items.add(data.items);
+	    		  			groups.add(data.groups);
 	    		  			timeline.fit({animation: true});
 	    		  		})
 	    }
@@ -120,7 +119,7 @@ angular.module('MyApp').service('dialogs',['$http','data','auth',function($http,
 	    }
 	  }
   
-  this.openOrderController = function($scope, $mdDialog, timeline) {
+  this.openOrderController = function($scope, $mdDialog, timeline, items, groups) {
 	  var parentThis = this;
 	  $scope.orders = [];
 	  $scope.selectedOrderId;
@@ -137,9 +136,9 @@ angular.module('MyApp').service('dialogs',['$http','data','auth',function($http,
 	  $scope.answer = function() {
 		  $mdDialog.hide({"orderName": parentThis.orderName});
 		  data.openOrder($scope.selectedOrderId).then(function(data) {
-		  			timeline.setGroups(data.groups);
-		  			timeline.setItems(data.items);
-		  			timeline.fit({animation: true});
+	  			items.add(data.items);
+	  			groups.add(data.groups);
+	  			timeline.fit({animation: true});
 		  });
 	  }
 	  $scope.cancel = function() {

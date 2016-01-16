@@ -25,7 +25,22 @@ angular.module('MyApp').service('data', function($http) {
 			    	});
 				};
 				
+				this.updateItem = function(item) {
+					console.log(item);
+					return $http({
+			    		method: 'POST',
+			    		dataType: 'json',
+			    		url: "ajax/updateitem",
+			    		data: JSON.stringify(item)
+			    	})
+			    	.then(function(data){
+			    		console.log(data);
+			    		return data.data;
+			    	});
+				};
+				
 				this.newJob = function(job) {
+					Console.log(job);
 					$http({
 			    		method: 'POST',
 			    		dataType: 'json',

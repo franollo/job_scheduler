@@ -48,39 +48,35 @@ app.controller('DemoBasicCtrl', ['$scope',
         $scope.resources = [];
         $scope.jobs = [];
         $scope.selectedIndex = 2;
-       	
-       	var items = [];
-       	var groups = [];
-
+       	var parentThis = this;
         
-
-      var dataSet = new vis.DataSet();
-      var job;
-      var id_index = 0;
-      var jobs = [];
-
-      this.newDate = {
-       value: new Date(1970, 0, 1, 0, 0, 0)
-      };
-
-      this.CurrentDate = {
-       value: new Date()
-      };
+       	var groups = new vis.DataSet();
+       	var items = new vis.DataSet();
+       	var previousItem;
+       	
+        var showItems = function(item, callback) {
+      	  console.log(items);
+        }
 
       var container;
       var timeline;
-      var options;
+      var  options = {
+    	        height: '100%',
+    	        editable: true,
+    	        orientation: 'top',
+    	        margin: 0,
+    	        stack: false,
+    	        onMove: function(item, callback) {
+    	        	undo_buffer.push(items.get(item.id))
+    	        	undo_buffer = undo_buffer.slice(undo_buffer.length - 10, undo_buffer.length);
+    	        	callback(item);
+    	        	console.log(item);
+    	        	data.updateItem(item);
+    	        }
+    	      }; 
 
     setTimeout(function(){
       container = document.getElementById("my-timeline");
-      options = {
-        height: '100%',
-        editable: true,
-        orientation: 'top',
-        margin: 0,
-        stack: false
-      };
-      var items = new vis.DataSet();
       timeline = new vis.Timeline(container, items,groups, options);
     }, 10);
 
@@ -121,7 +117,7 @@ app.controller('DemoBasicCtrl', ['$scope',
 
     $scope.showNewOrder = function(ev) {
       $mdDialog.show({
-    	locals: {dataToPass: $scope.jobs, dataToPass2: timeline},
+    	locals: {dataToPass: $scope.jobs, timeline: timeline, items: items, groups: groups},
         controller: dialogs.DialogController2,
         controllerAs: 'dno',
         templateUrl: 'dialog_new_order.html',
@@ -136,7 +132,7 @@ app.controller('DemoBasicCtrl', ['$scope',
     
     $scope.openOrder = function(ev) {
         $mdDialog.show({
-      	locals: {timeline: timeline},
+      	locals: {timeline: timeline, items: items, groups: groups},
           controller: dialogs.openOrderController,
           controllerAs: 'NOC',
           templateUrl: 'dialog_open_order.html',
@@ -188,8 +184,6 @@ app.controller('DemoBasicCtrl', ['$scope',
        	});
 		data.getJobs().then(function(data) {
 			$scope.jobs = data.data;
-			console.log(data.data);
-			console.log(jobs);
 		});
 	  }
   });
@@ -218,115 +212,54 @@ app.controller('DemoBasicCtrl', ['$scope',
   }
   
   
-  var createOrder = function() {
-	  
+  $scope.undo = function() {
+	  var item = undo_buffer.pop();
+	  if (item != undefined) {
+		  redo_buffer.push(items.get(item.id));
+		  redo_buffer = redo_buffer.slice(redo_buffer.length - 10, redo_buffer.length);
+		  items.update(item);
+	  }
+  }
+  
+  $scope.redo = function() {
+	  var item = redo_buffer.pop();
+	  if (item != undefined) {
+		  undo_buffer.push(items.get(item.id))
+		  undo_buffer = undo_buffer.slice(undo_buffer.length - 10, undo_buffer.length);
+		  items.update(item);
+	  }
+  }
+  
+  var undo_buffer = new Array();
+  var redo_buffer = new Array();
+  
+  var read = -1;
+  var save = 0;
+  var bufferSize = 0
+  
+  var push = function(item) {
+	  undo_buffer[save] = item;
+	  if(bufferSize<10) {
+		  bufferSize++;  
+	  }
+	  save = (save+1) % 10;
+	  read = (read+1) % 10;
+  }
+  
+  var pop = function() {
+	  bufferSize--;
+	  if(bufferSize = 0) {
+		  read = -1;
+		  save = 0;
+	  }
+	  save = (save-1) % 10;
+	  read = (read-1) % 10;
+	  return
   }
   
   
 }]);
 
 
-
-
-/**
-* Spaghetti!!
-*/
-
-  function insertItems(jobTasks, jobName, jobColor) {
-    var startTime;
-    var endTime;
-    var jobsIds = [];
-    var id_index_tmp = id_index;
-    var min = Number.POSITIVE_INFINITY;
-
-    if(dataSet.length == 0) {
-      endTime = new Date();
-      jobTasks.sort(compare);
-      for (i=1, j=0; i<=jobTasks.length; i++, j++) {
-        if (jobTasks[j].hh_dur > 0 || jobTasks[j].mm_dur > 0 || jobTasks[j].ss_dur > 0) {
-          startTime = new Date(endTime.getTime());
-          endTime = new Date(startTime.getTime());
-          endTime.setMinutes(endTime.getMinutes() + jobTasks[j].mm_dur);
-          endTime.setHours(endTime.getHours() + jobTasks[j].hh_dur);
-          endTime.setSeconds(endTime.getSeconds() + jobTasks[j].ss_dur);
-          endTime.setMilliseconds(0);
-          startTime.setMilliseconds(0);
-          jobsIds.push({id: id_index, start: startTime, end: endTime, order: jobTasks[j].order, group: jobTasks[j].id});
-          dataSet.add({id: id_index, content: jobName, start: startTime, end: endTime, group: jobTasks[j].id});
-          id_index++;
-        }
-        else {
-          jobsIds.push({id: -1, start: startTime, end: endTime});
-        }
-      }
-      jobs.push(jobsIds);
-    }
-    else {
-
-      endTime = dataSet.max('end').end;
-
-      jobTasks.sort(compare);
-      for (i=1, j=0; i<=jobTasks.length; i++, j++) {
-        if (jobTasks[j].hh_dur > 0 || jobTasks[j].mm_dur > 0 || jobTasks[j].ss_dur > 0) {
-          startTime = new Date(endTime.getTime());
-          endTime = new Date(startTime.getTime());
-          endTime.setMinutes(endTime.getMinutes() + jobTasks[j].mm_dur);
-          endTime.setHours(endTime.getHours() + jobTasks[j].hh_dur);
-          endTime.setSeconds(endTime.getSeconds() + jobTasks[j].ss_dur);
-          endTime.setMilliseconds(0);
-          startTime.setMilliseconds(0);
-          jobsIds.push({id: id_index, start: startTime, end: endTime, order: jobTasks[j].order, group: jobTasks[j].id});
-          id_index++;
-        }
-        else {
-          jobsIds.push({id: -1, start: startTime, end: endTime});
-        }
-      }
-
-      jobsIds.sort(compare_restore);
-      jobs.push(jobsIds);
-
-      for (i=1, j=0; i<=jobTasks.length; i++, j++) {
-        if(jobs[jobs.length-1][j].id >= 0 && jobs[jobs.length-2][j].id >= 0) {
-          var min_tmp = Math.abs(jobs[jobs.length-2][j].end - jobs[jobs.length-1][j].start);
-          if (min_tmp < min) {
-            min = min_tmp;
-          }
-        }
-      }
-
-      for (i=0, j=1; i<jobsIds.length; j++, i++){
-        if (jobsIds[i].id >= 0) {
-          jobsIds[i].start.setMilliseconds(jobsIds[i].start.getMilliseconds() - min);
-          jobsIds[i].end.setMilliseconds(jobsIds[i].end.getMilliseconds() - min);
-          dataSet.add({
-            id: jobsIds[i].id, 
-            content: jobName, 
-            start: jobsIds[i].start, 
-            end: jobsIds[i].end, 
-            group: jobsIds[i].group, 
-            className: jobColor});
-        }
-      }
-    }
-    timeline.setItems(dataSet);
-    clearGroups();
-  }
-
-  function compare(a,b) {
-    if (a.job_order < b.job_order)
-      return -1;
-    if (a.job_order > b.job_order)
-      return 1;
-    return 0;
-  }
-
-  function compare_restore(a,b) {
-    if (a.order < b.order)
-      return -1;
-    if (a.order > b.order)
-      return 1;
-    return 0;
-  }
 
 

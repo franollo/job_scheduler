@@ -11,6 +11,9 @@
     transform: rotate(90deg);
 }
 
+md-tooltip .md-content {
+	background-color: rgba(70,70,70,0.90);
+}
 
 .vis-item.red {
   background-color: red;
