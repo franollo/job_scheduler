@@ -5,10 +5,12 @@ import java.util.List;
 public class VisContent {
 	private List<VisItem> items;
 	private List<VisGroup> groups;
+	private Order order;
 	
-	public VisContent(List<VisItem> items, List<VisGroup> groups) {
+	public VisContent(List<VisItem> items, List<VisGroup> groups, Order order) {
 		this.items = items;
 		this.groups = groups;
+		this.order = order;
 	}
 	
 	public List<VisItem> getItems() {
@@ -22,5 +24,13 @@ public class VisContent {
 	}
 	public void setGroups(List<VisGroup> groups) {
 		this.groups = groups;
+	}
+
+	public Order getOrder() {
+		return order;
+	}
+
+	public void setOrder(Order order) {
+		this.order = order;
 	}
 }

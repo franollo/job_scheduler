@@ -20,7 +20,19 @@ angular.module('MyApp').service('data', function($http) {
 			    		data: JSON.stringify(order)
 			    	})
 			    	.then(function(data){
-			    		console.log(data);
+			    		return data.data;
+			    	});
+				};
+				
+				this.updateOrder = function(order) {
+					console.log(order);
+					return $http({
+			    		method: 'POST',
+			    		dataType: 'json',
+			    		url: "ajax/updateorder",
+			    		data: JSON.stringify(order)
+			    	})
+			    	.then(function(data){
 			    		return data.data;
 			    	});
 				};

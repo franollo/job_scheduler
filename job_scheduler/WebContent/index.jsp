@@ -6,12 +6,14 @@
 	    <link rel="stylesheet" href="css/angular_style.css">
 	    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	    <link rel="stylesheet" type="text/css" href="bower_components/ng-sortable/dist/ng-sortable.min.css">
+	    <link rel="stylesheet" type="text/css" href="bower_components/angularPrint/angularPrint.css">
   	</head>
 	<body>
 		<script src="bower_components/angular/angular.js"></script>
 		<script src="bower_components/angular-animate/angular-animate.js"></script>
 		<script src="bower_components/angular-aria/angular-aria.js"></script>
 		<script src="bower_components/angular-material/angular-material.js"></script>
+		<script src="bower_components/angularPrint/angularPrint.js"></script>
 		<script src="vis/vis.js"></script>
 		<script src="js/main_controller.js"></script>
 		<script src="js/dialogs.js"></script>
@@ -27,7 +29,7 @@
 		        </md-toolbar-filler>
 		
 		        <div>
-		          <div class="md-toolbar-tools">{{orderTitle}}</div>
+		          <div class="md-toolbar-tools">{{order.name}}</div>
 		          <md-menu-bar>
 		            <md-menu>
 		              <button ng-click="$mdOpenMenu()">
@@ -44,7 +46,7 @@
 							<md-button ng-click="showNewOrder($event)">Save as</md-button></md-menu-item>
 		                </md-menu-item>
 						<md-menu-item>
-							<md-button ng-click="showNewOrder($event)">Print</md-button></md-menu-item>
+							<md-button print-btn>Print</md-button></md-menu-item>
 		                </md-menu-item>
 		              </md-menu-content>
 		            </md-menu>
@@ -73,7 +75,7 @@
 		              </button>
 		              <md-menu-content>
 						<md-menu-item>
-							<md-button ng-click="showNewOrder($event)">Edit</md-button></md-menu-item>
+							<md-button ng-click="editOrder()">Edit</md-button></md-menu-item>
 		                </md-menu-item>
 						<md-menu-item>
 							<md-button ng-click="showAddJob($event)">Add job</md-button></md-menu-item>
@@ -167,8 +169,8 @@
         				</md-tooltip>
 				      <i class="material-icons md-18-90deg">vertical_align_center</i>
 				    </div> 
-				    <div id="button" ng-click="showAddJob($event)">
-				      <i class="material-icons md-18">add</i>
+				    <div id="button" ng-click="setSnapping()">
+				      <i class="material-icons md-18">keyboard_tab</i>
 				    </div>
 			   	</div>
 		   	</md-toolbar>
@@ -178,7 +180,7 @@
 			        	<md-tab id="tab1">
 				     		<md-tab-label>Timeline</md-tab-label>
 				     		<md-tab-body>
-				       			<div id="my-timeline"></div>
+				       			<div id="my-timeline" print-section></div>
 				    		</md-tab-body>
 			   			</md-tab>
 			     		<md-tab id="tab2">

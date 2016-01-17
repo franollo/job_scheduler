@@ -32,11 +32,9 @@ angular.module('MyApp').service('dialogs',['$http','data','auth',function($http,
 	  }
 		
 	
-  this.DialogController2 = function($scope, $mdDialog, dataToPass, timeline, items, groups) {
+  this.newOrderController = function($scope, $mdDialog, dataToPass) {
 		var parentThis = this;
 		this.jobs = dataToPass;
-		this.orderName = "";
-		this.description = "";
 		this.selected = [];
 		this.startTime = new Date();
 		this.startDate = new Date();
@@ -45,18 +43,10 @@ angular.module('MyApp').service('dialogs',['$http','data','auth',function($http,
 	    $scope.answer = function() {
 	      var start = new Date(parentThis.startDate.getFullYear(), parentThis.startDate.getMonth(), parentThis.startDate.getDate(), 
 	    		  parentThis.startTime.getHours(), parentThis.startTime.getMinutes(), parentThis.startTime.getSeconds());
-	      $mdDialog.hide({"orderName": parentThis.orderName, 
-	    	  			"startTime": start, 
-	    	  			"startDate": parentThis.startDate});
-	      data.newOrder({"name": parentThis.orderName, 
-	    		  		"description": parentThis.description, 
-	    		  		"startDate": start,
-	    		  		"endDate": parentThis.startTime,
-	    		  		"jobs": parentThis.selected}).then(function(data) {
-	    		  			items.add(data.items);
-	    		  			groups.add(data.groups);
-	    		  			timeline.fit({animation: true});
-	    		  		})
+	      $scope.order.startDate = start;
+	      $scope.order.endDate = start;
+	      $scope.order.jobs = parentThis.selected;
+	      $mdDialog.hide($scope.order);
 	    }
 
 	    $scope.cancel = function() {
@@ -71,6 +61,24 @@ angular.module('MyApp').service('dialogs',['$http','data','auth',function($http,
 		  $scope.exists = function (item, list) {
 		    return list.indexOf(item) > -1;
 		};
+	  }
+  
+  this.editOrderController = function($scope, $mdDialog, dataToPass) {
+		var parentThis = this;
+		$scope.order = dataToPass;
+		console.log($scope.order);
+		this.startTime = new Date($scope.order.startDate);
+		this.startDate = new Date($scope.order.startDate);
+	    $scope.answer = function() {
+	      var start = new Date(parentThis.startDate.getFullYear(), parentThis.startDate.getMonth(), parentThis.startDate.getDate(), 
+	    		  parentThis.startTime.getHours(), parentThis.startTime.getMinutes(), parentThis.startTime.getSeconds());
+	      $scope.order.startDate = start;
+	      $mdDialog.hide($scope.order);
+	    }
+
+	    $scope.cancel = function() {
+	      $mdDialog.cancel();
+	    }
 	  }
   
   
@@ -119,7 +127,7 @@ angular.module('MyApp').service('dialogs',['$http','data','auth',function($http,
 	    }
 	  }
   
-  this.openOrderController = function($scope, $mdDialog, timeline, items, groups) {
+  this.openOrderController = function($scope, $mdDialog) {
 	  var parentThis = this;
 	  $scope.orders = [];
 	  $scope.selectedOrderId;
@@ -134,13 +142,9 @@ angular.module('MyApp').service('dialogs',['$http','data','auth',function($http,
 		  console.log($scope.orders);
 	  });
 	  $scope.answer = function() {
-		  $mdDialog.hide({"orderName": parentThis.orderName});
-		  data.openOrder($scope.selectedOrderId).then(function(data) {
-	  			items.add(data.items);
-	  			groups.add(data.groups);
-	  			timeline.fit({animation: true});
-		  });
+		  $mdDialog.hide($scope.selectedOrderId);
 	  }
+	  
 	  $scope.cancel = function() {
 		  $mdDialog.cancel();
 	  }
@@ -152,6 +156,5 @@ angular.module('MyApp').service('dialogs',['$http','data','auth',function($http,
 	  $scope.select = function(id) {
 		  $scope.selectedOrderId = id;
 	  }
-	  
   }
 }]);

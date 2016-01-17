@@ -22,8 +22,6 @@ import com.marcin.model.Resource;
 import com.marcin.model.Task;
 import com.marcin.model.User;
 import com.marcin.model.VisContent;
-import com.marcin.model.VisGroup;
-import com.marcin.model.VisItem;
  
 /**
  * @author Marcin Frankowski
@@ -97,9 +95,9 @@ public class GetDataController {
     	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    String name = auth.getName();
     	userDAO.setOrderInUse(name, orderId);
-    	List<VisItem> items = itemDAO.getOrderItems(orderId);
-		List<VisGroup> groups = resourceDAO.getOrderGroups(orderId);
-		return new VisContent(items, groups);
+		return new VisContent(itemDAO.getOrderItems(orderId), 
+							resourceDAO.getOrderGroups(orderId), 
+							orderDAO.getOrder(orderId));
     }
 }
 

@@ -1,4 +1,4 @@
-var app = angular.module('MyApp', ['ngMaterial', 'auth', 'as.sortable',])
+var app = angular.module('MyApp', ['ngMaterial', 'auth', 'as.sortable', 'AngularPrint'])
   .config(function($mdThemingProvider) {
   $mdThemingProvider.theme('default')
     .primaryPalette('light-green', {'default': '900'})
@@ -41,39 +41,30 @@ app.controller('DemoBasicCtrl', ['$scope',
                                  'auth',
                                  'data',
                                  'dialogs',
-                                 function($scope, $mdDialog, $mdToast, $mdMedia, $document, $http, auth, data, dialogs) 
-{       
-        $scope.orderTitle = '';
-        this.inp;
-        $scope.resources = [];
-        $scope.jobs = [];
-        $scope.selectedIndex = 2;
-       	var parentThis = this;
-        
-       	var groups = new vis.DataSet();
-       	var items = new vis.DataSet();
-       	var previousItem;
-       	
-        var showItems = function(item, callback) {
-      	  console.log(items);
-        }
+                                 function($scope, $mdDialog, $mdToast, $mdMedia, $document, $http, auth, data, dialogs) {       
+	$scope.resources = [];
+	$scope.jobs = [];
+	$scope.selectedIndex = 1;
+	$scope.order = {};
 
-      var container;
-      var timeline;
-      var  options = {
-    	        height: '100%',
-    	        editable: true,
-    	        orientation: 'top',
-    	        margin: 0,
-    	        stack: false,
-    	        onMove: function(item, callback) {
-    	        	undo_buffer.push(items.get(item.id))
-    	        	undo_buffer = undo_buffer.slice(undo_buffer.length - 10, undo_buffer.length);
-    	        	callback(item);
-    	        	console.log(item);
-    	        	data.updateItem(item);
-    	        }
-    	      }; 
+	var groups = new vis.DataSet();
+	var items = new vis.DataSet();
+	var container;
+	var timeline;
+	var  options = {
+		height: '100%',
+	    editable: {add: true, updateTime: true, updateGroup: false, remove: true},
+	    orientation: 'top',
+	    margin: 0,
+	    stack: false,
+	    onMove: function(item, callback) {
+	    	undo_buffer.push(items.get(item.id))
+	    	undo_buffer = undo_buffer.slice(undo_buffer.length - 10, undo_buffer.length);
+	    	callback(item);
+	    	console.log(item);
+	    	data.updateItem(item);
+	    }
+	}; 
 
     setTimeout(function(){
       container = document.getElementById("my-timeline");
@@ -117,35 +108,68 @@ app.controller('DemoBasicCtrl', ['$scope',
 
     $scope.showNewOrder = function(ev) {
       $mdDialog.show({
-    	locals: {dataToPass: $scope.jobs, timeline: timeline, items: items, groups: groups},
-        controller: dialogs.DialogController2,
+    	locals: {dataToPass: $scope.jobs},
+        controller: dialogs.newOrderController,
         controllerAs: 'dno',
         templateUrl: 'dialog_new_order.html',
         parent: angular.element(document.body),
         targetEvent: ev,
         clickOutsideToClose:true
       }).then(function(answer) {
-          $scope.orderTitle = answer.orderName;
-          console.log(answer);
+    	  data.newOrder(answer).then(function(data) {
+    		  	console.log(data);
+    		  	items.clear();
+    		  	groups.clear();
+	  			items.add(data.items);
+	  			groups.add(data.groups);
+	  			timeline.fit({animation: true});
+	  			$scope.order = data.order;
+    	  });
         });
     }
     
+    $scope.editOrder = function(ev) {
+        $mdDialog.show({
+      	locals: {dataToPass: $scope.order},
+          controller: dialogs.editOrderController,
+          controllerAs: 'DEO',
+          templateUrl: 'dialog_edit_order.html',
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          clickOutsideToClose:true
+        }).then(function(answer) {
+      	  data.updateOrder(answer).then(function(data) {
+      		  	items.clear();
+      		  	groups.clear();
+  	  			items.add(data.items);
+  	  			groups.add(data.groups);
+  	  			timeline.fit({animation: true});
+  	  			$scope.order = data.order;
+      	  });
+          });
+      }
+
+    
     $scope.openOrder = function(ev) {
         $mdDialog.show({
-      	locals: {timeline: timeline, items: items, groups: groups},
           controller: dialogs.openOrderController,
           controllerAs: 'NOC',
           templateUrl: 'dialog_open_order.html',
           parent: angular.element(document.body),
-
           targetEvent: ev,
           clickOutsideToClose:true
         }).then(function(answer) {
-            $scope.orderTitle = answer.orderName;
-            console.log(answer);
-            showSimpleToast();
-          });
-      }
+  		  data.openOrder(answer).then(function(data) {
+  		  	console.log(data);
+		  	items.clear();
+		  	groups.clear();
+  			items.add(data.items);
+  			groups.add(data.groups);
+  			timeline.fit({animation: true});
+  			$scope.order = data.order;
+  		  });
+        });
+    }
     
     $scope.showSignIn = function(ev) {
         $mdDialog.show({
@@ -157,16 +181,16 @@ app.controller('DemoBasicCtrl', ['$scope',
           targetEvent: ev,
           clickOutsideToClose:true
         });
-      }
+    }
     
     var showSimpleToast = function() {
     	  $mdToast.show({
-    	      templateUrl: 'toast-template.html',
-    	      parent: angular.element(document.body),
-    	      hideDelay: 3000,
-    	      position: 'top right'
-    	    });
-      };
+		      templateUrl: 'toast-template.html',
+		      parent: angular.element(document.body),
+		      hideDelay: 3000,
+		      position: 'top right'
+    	});
+    };
 
     
   
@@ -204,8 +228,24 @@ app.controller('DemoBasicCtrl', ['$scope',
   $scope.lockTimeline = function() {
 	  $scope.timelineLocked = !$scope.timelineLocked;
 	  console.log($scope.timelineLocked);
-	  timeline.setOptions({editable: !$scope.timelineLocked});
+	  timeline.setOptions({editable:  {add: !$scope.timelineLocked, updateTime: !$scope.timelineLocked, updateGroup: false, remove: !$scope.timelineLocked}});
   }
+  
+  var snapping = true;
+  $scope.setSnapping = function() {
+	  snapping = !snapping;
+	  if(snapping == false) {
+		  timeline.setOptions({snap: null})
+	  }
+	  else {
+		  timeline.setOptions({snap: function (date, scale, step) {
+			  		var hour = 60 * 1000;
+			  		return Math.round(date / hour) * hour;
+		  		}
+		  })
+	  }
+  }
+  
   
   $scope.focusTimeline = function() {
 	  timeline.fit({animation: true});
@@ -229,7 +269,7 @@ app.controller('DemoBasicCtrl', ['$scope',
 		  items.update(item);
 	  }
   }
-  
+    
   var undo_buffer = new Array();
   var redo_buffer = new Array();
   

@@ -5,7 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +27,7 @@ import com.marcin.model.Order;
 import com.marcin.model.Resource;
 import com.marcin.model.Task;
 import com.marcin.model.VisContent;
-import com.marcin.model.VisGroup;
 import com.marcin.model.VisItem;
-
-import java.util.Random;
 
  
 /**
@@ -56,35 +52,18 @@ public class AjaxController {
 	
 	@Autowired
 	private JdbcTaskDAO jdbcTaskDAO;
-	
-    @RequestMapping(value = "/ajaxtest", method = RequestMethod.GET)
-    public @ResponseBody
-    String getTime() {
- 
-        Random rand = new Random();
-        float r = rand.nextFloat() * 100;
-        String result = Float.toString(r);
-        System.out.println("Debug Message from /ajaxtest.." + new Date().toString());
-        return result;
-    }
-    @RequestMapping(value = "/ajaxposttest", method = RequestMethod.POST)
-    public @ResponseBody
-    String doMath(@RequestBody String number) {
-    	float r = 2;
-    	float tmp = Float.parseFloat(number);
-    	tmp = tmp * r;
-    	String result = Float.toString(tmp);
-    	return result;
-    }
-
     
     @RequestMapping(value = "/neworder", method = RequestMethod.POST)
     public @ResponseBody
     VisContent newOrder(@RequestBody Order order) throws ParseException {
+    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String name = auth.getName();
     	String colors[] = {"red", "gold", "magneta", "red", "grey", "blue", "lightpink"};
     	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+    	java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 		Date parsedDate = formatter.parse(order.getStartDate());
-		int orderId = jdbcOrderDAO.createNewOrder(order.getName(), parsedDate);
+		order.setStartDate(formater.format(parsedDate));
+		int orderId = jdbcOrderDAO.createNewOrder(order, name);
 		Map<Integer, Date> endDates = new HashMap<Integer, Date>();
 		Map<Integer, Date> startDates = new HashMap<Integer, Date>();
 		Item item = new Item();
@@ -123,9 +102,9 @@ public class AjaxController {
 			}
 			startDates.clear();
 		}
-		List<VisItem> items = jdbcItemDAO.getOrderItems(orderId);
-		List<VisGroup> groups = jdbcResourceDAO.getOrderGroups(orderId);
-		return new VisContent(items, groups);
+		return new VisContent(jdbcItemDAO.getOrderItems(orderId), 
+							jdbcResourceDAO.getOrderGroups(orderId), 
+							jdbcOrderDAO.getOrder(orderId));
     }
     
     @RequestMapping(value = "/newresource", method = RequestMethod.POST)
@@ -134,6 +113,18 @@ public class AjaxController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    String name = auth.getName();
     	jdbcResourceDAO.createNewResource(resource, name);
+    }
+    
+    @RequestMapping(value = "/updateorder", method = RequestMethod.POST)
+    public @ResponseBody
+    void updateOrder(@RequestBody Order order) throws ParseException {
+    	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+    	java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		Date parsedDate = formatter.parse(order.getStartDate());
+		order.setStartDate(formater.format(parsedDate));
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    String name = auth.getName();
+    	jdbcOrderDAO.updateOrder(order, name);
     }
     
     @RequestMapping(value = "/newjob", method = RequestMethod.POST)

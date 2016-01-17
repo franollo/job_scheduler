@@ -2,7 +2,7 @@
   <form>
     <md-toolbar>
       <div class="md-toolbar-tools">
-        <h2>Create new order</h2>
+        <h2>Edit order</h2>
         <span flex></span>
         <md-button class="md-icon-button" ng-click="cancel()">
           <i class="material-icons md-18">close</i>
@@ -30,16 +30,12 @@
         	<div layout="row">
 		        <md-input-container flex>
 		          <label>Start time</label>
-		          <input type="time" ng-model="dno.startTime">
+		          <input type="time" step="1" ng-model="DEO.startTime">
 		        </md-input-container flex>
-		        <md-datepicker ng-model="dno.startDate" md-placeholder="Start date">
+		        <md-datepicker ng-model="DEO.startDate" md-placeholder="Start date">
 		        </md-datepicker>
         	</div>
-			<div ng-repeat="job in dno.jobs">
-		       	<md-checkbox ng-checked="exists(job, dno.selected)" ng-click="toggle(job, dno.selected)">
-		       		{{job.name}}
-		       	</md-checkbox>
-			</div>
+		
 		</div>
       </div>
     </md-dialog-content>
@@ -49,7 +45,7 @@
       <md-button class="md-raised md-accent" ng-click="cancel()">
         cancel
       </md-button>
-      <md-button class="md-raised md-accent" ng-click="answer(dno.orderNam, dno.startTime, dno.startDate)">
+      <md-button class="md-raised md-accent" ng-click="answer()">
         create
       </md-button>
     </md-dialog-actions>
