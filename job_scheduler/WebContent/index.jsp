@@ -78,7 +78,7 @@
 							<md-button ng-click="editOrder()">Edit</md-button></md-menu-item>
 		                </md-menu-item>
 						<md-menu-item>
-							<md-button ng-click="showAddJob($event)">Add job</md-button></md-menu-item>
+							<md-button ng-click="addJobsToOrder()">Add jobs</md-button></md-menu-item>
 		                </md-menu-item>
 						<md-menu-item>
 							<md-button ng-click="showNewOrder($event)">Delete job</md-button></md-menu-item>
@@ -155,22 +155,46 @@
 		    <md-toolbar class="my-toolbar" ng-hide="isSmall">
 			    <div class="md-toolbar-tools">
 				    <div id="button" ng-click = "undo()">
+						<md-tooltip md-direction="bottom" md-delay="1000">
+          				Undo
+        				</md-tooltip>
 				      <i class="material-icons md-18">undo</i>
 				    </div>
 				    <div id="button" ng-click = "redo()">
+				    	<md-tooltip md-direction="bottom" md-delay="1000">
+          				Redo
+        				</md-tooltip>
 				      <i class="material-icons md-18">redo</i>
 				    </div>
 					<div id="button" ng-click="lockTimeline()">
+				    	<md-tooltip md-direction="bottom" md-delay="1000">
+          				Lock timeline
+        				</md-tooltip>
 				      <i class="material-icons md-18">{{timelineLocked ? 'lock_outline' : 'lock_open'}}</i>
 				    </div>
 				    <div id="button" ng-click = "focusTimeline()">
 				    	<md-tooltip md-direction="bottom" md-delay="1000">
-          				Fit content
+          				Fit timeline
         				</md-tooltip>
 				      <i class="material-icons md-18-90deg">vertical_align_center</i>
 				    </div> 
 				    <div id="button" ng-click="setSnapping()">
+				    	<md-tooltip md-direction="bottom" md-delay="1000">
+          				Snap to time
+        				</md-tooltip>
 				      <i class="material-icons md-18">keyboard_tab</i>
+				    </div>
+					<div id="button" ng-click="showCurrentTime()">
+				    	<md-tooltip md-direction="bottom" md-delay="1000">
+          				Current time
+        				</md-tooltip>
+				      <i class="material-icons md-18">access_time</i>
+				    </div>
+					<div id="button" ng-click="addJobsToOrder()">
+				    	<md-tooltip md-direction="bottom" md-delay="1000">
+          				Add job to order
+        				</md-tooltip>
+				      <i class="material-icons md-18">add</i>
 				    </div>
 			   	</div>
 		   	</md-toolbar>
@@ -196,7 +220,7 @@
 								    <md-radio-group ng-model="selectedIndex" >
 									<div ng-repeat='job in jobs' class="row" layout-align="center start">
 										<div layout="column"> 
-											<div layout='row' layout-padding layout-align="start center" >
+											<div layout='row' layout-padding layout-align="start center" ng-hide="job.jobId==editIndex" >
 												<md-radio-button flex="30" ng-value="job.jobId" class="md-primary" style="margin:0px" >
 											       {{job.name}}
 												</md-radio-button>
@@ -207,10 +231,10 @@
 											    	{{job.order}}
 											  	</div>
 												<div flex="15" ng-show="job.jobId==selectedIndex">
-												    <md-button class="md-fab md-primary md-mini">
+												    <md-button class="md-fab md-primary md-mini" ng-click="editIndex=selectedIndex">
 														<i class="material-icons md-24">mode_edit</i>
 													</md-button>
-													<md-button class="md-fab md-primary md-mini">
+													<md-button class="md-fab md-primary md-mini" ng-click="deleteJob(job)">
 														<i class="material-icons md-24">delete</i>
 													</md-button>
 													<md-button class="md-fab md-primary md-mini" ng-click="job.showMore=true" ng-hide="job.showMore">
@@ -221,6 +245,22 @@
 													</md-button>
 											  	</div>
 											</div>
+											<div layout='row' layout-padding layout-align="start center" ng-show="job.jobId==editIndex" >
+													<md-input-container flex="30">
+											            <label>Job name</label>
+											            <input type="text" ng-model="job.name" >
+										          	</md-input-container flex>
+										
+													<md-input-container flex="65">
+														<label>Description</label>
+														<input type="text" ng-model="job.description">
+													</md-input-container flex>	
+													<div flex="5">
+													    <md-button class="md-fab md-primary md-mini" ng-click="editIndex=nic; updateJob(job)">
+															<i class="material-icons md-24">done</i>
+														</md-button>
+												  	</div>
+												</div>
 											<div class="sub-list">
 												<div layout='row' 
 													layout-padding 
@@ -254,7 +294,7 @@
 								    <md-radio-group ng-model="selectedIndex2" >
 										<div ng-repeat='res in resources' class="row" layout-align="center start">
 											<div layout="column"> 
-												<div layout='row' layout-padding layout-align="start center" >
+												<div layout='row' layout-padding layout-align="start center" ng-hide="res.resourceId==editIndex" >
 													<md-radio-button flex="30" ng-value="res.resourceId" class="md-primary" style="margin:0px" >
 												       {{res.name}}
 													</md-radio-button>
@@ -262,11 +302,27 @@
 												    	{{res.description}}
 												  	</div>
 													<div flex="10" ng-show="res.resourceId==selectedIndex2">
-													    <md-button class="md-fab md-primary md-mini">
+													    <md-button class="md-fab md-primary md-mini" ng-click="editIndex=selectedIndex2">
 															<i class="material-icons md-24">mode_edit</i>
 														</md-button>
-														<md-button class="md-fab md-primary md-mini">
+														<md-button class="md-fab md-primary md-mini" ng-click="deleteResource(res)">
 															<i class="material-icons md-24">delete</i>
+														</md-button>
+												  	</div>
+												</div>
+												<div layout='row' layout-padding layout-align="start center" ng-show="res.resourceId==editIndex" >
+													<md-input-container flex="30">
+											            <label>Resource name</label>
+											            <input type="text" ng-model="res.name" >
+										          	</md-input-container flex>
+										
+													<md-input-container flex="65">
+														<label>Description</label>
+														<input type="text" ng-model="res.description">
+													</md-input-container flex>	
+													<div flex="5">
+													    <md-button class="md-fab md-primary md-mini" ng-click="editIndex=nic; updateResource(res)">
+															<i class="material-icons md-24">done</i>
 														</md-button>
 												  	</div>
 												</div>

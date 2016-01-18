@@ -18,7 +18,7 @@ public class JdbcTaskDAO extends DAO implements TaskDAO{
 	public List<Task> getTasksByJobId(int jobId) {
 		MapSqlParameterSource parameters = new MapSqlParameterSource();
 		parameters.addValue("job_id", jobId, Types.INTEGER);
-		String sql = "select resource_id, duration from tasks where job_id = :job_id";
+		String sql = "select resource_id, duration from tasks where job_id = :job_id order by `order`";
 		return jdbcTemplate.query(sql, parameters, new TaskMapper());
 	}
 

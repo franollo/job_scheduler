@@ -57,6 +57,8 @@ app.controller('DemoBasicCtrl', ['$scope',
 	    orientation: 'top',
 	    margin: 0,
 	    stack: false,
+	    multiselect: true,
+	    groupEditable: true,
 	    onMove: function(item, callback) {
 	    	undo_buffer.push(items.get(item.id))
 	    	undo_buffer = undo_buffer.slice(undo_buffer.length - 10, undo_buffer.length);
@@ -74,6 +76,24 @@ app.controller('DemoBasicCtrl', ['$scope',
     $scope.hide = function() {
       $scope.isSmall = !$scope.isSmall;
     }
+    
+    $scope.deleteJob = function(job) {
+    	data.deleteJob(job);
+    	$scope.jobs.splice($scope.jobs.indexOf(job), 1);
+    }
+    
+    $scope.deleteResource = function(resource) {
+    	data.deleteResource(resource);
+    	$scope.resources.splice($scope.resources.indexOf(resource), 1);
+    }
+    
+    $scope.updateJob = function(job) {
+    	data.updateJob(job);
+    }
+    
+    $scope.updateResource = function(resource) {
+    	data.updateResource(resource);
+    }
 
     $scope.showAddJob = function(ev) {
       $mdDialog.show({
@@ -89,7 +109,11 @@ app.controller('DemoBasicCtrl', ['$scope',
     		  delete answer.job.tasks[i].description;
     		  delete answer.job.tasks[i].name;
     	  }
-    	  data.newJob(answer.job);
+    	  data.newJob(answer.job).then(function() {
+    			data.getJobs().then(function(data) {
+    				$scope.jobs = data.data;
+    			});
+    	  })
         });
     }
     
@@ -102,7 +126,11 @@ app.controller('DemoBasicCtrl', ['$scope',
             targetEvent: ev,
             clickOutsideToClose:true
           }).then(function(answer) {
-              console.log(answer);
+        	  data.newResource(answer).then(function() {
+      			data.getResources().then(function(data) {
+      				$scope.resources = data.data;
+      			});
+        	  })
             });
       }
 
@@ -128,6 +156,28 @@ app.controller('DemoBasicCtrl', ['$scope',
         });
     }
     
+    $scope.addJobsToOrder = function(ev) {
+        $mdDialog.show({
+      	locals: {dataToPass: $scope.jobs},
+          controller: dialogs.addJobOrderController,
+          controllerAs: 'dno',
+          templateUrl: 'dialog_add_job_order.html',
+          parent: angular.element(document.body),
+          targetEvent: ev,
+          clickOutsideToClose:true
+        }).then(function(answer) {
+      	  data.addJobOrder(answer[0]).then(function(data) {
+      		  	console.log(data);
+      		  	items.clear();
+      		  	groups.clear();
+  	  			items.add(data.items);
+  	  			groups.add(data.groups);
+  	  			timeline.fit({animation: true});
+  	  			$scope.order = data.order;
+      	  });
+          });
+      }
+    
     $scope.editOrder = function(ev) {
         $mdDialog.show({
       	locals: {dataToPass: $scope.order},
@@ -139,12 +189,14 @@ app.controller('DemoBasicCtrl', ['$scope',
           clickOutsideToClose:true
         }).then(function(answer) {
       	  data.updateOrder(answer).then(function(data) {
+      		  	console.log(data);
       		  	items.clear();
       		  	groups.clear();
   	  			items.add(data.items);
   	  			groups.add(data.groups);
   	  			timeline.fit({animation: true});
   	  			$scope.order = data.order;
+  	  			
       	  });
           });
       }
@@ -167,6 +219,7 @@ app.controller('DemoBasicCtrl', ['$scope',
   			groups.add(data.groups);
   			timeline.fit({animation: true});
   			$scope.order = data.order;
+  			showSimpleToast2('Order opened!');
   		  });
         });
     }
@@ -191,6 +244,16 @@ app.controller('DemoBasicCtrl', ['$scope',
 		      position: 'top right'
     	});
     };
+    
+    var showSimpleToast2 = function(text) {
+        $mdToast.show(
+          $mdToast.simple()
+            .textContent(text)
+            .position('top right')
+            .hideDelay(3000)
+            .parent(angular.element(document.body))
+        );
+      };
 
     
   
@@ -224,11 +287,16 @@ app.controller('DemoBasicCtrl', ['$scope',
 	}
   
   $scope.timelineLocked = false;
+  $scope.timelineCurrentTime = true;
   
   $scope.lockTimeline = function() {
 	  $scope.timelineLocked = !$scope.timelineLocked;
-	  console.log($scope.timelineLocked);
 	  timeline.setOptions({editable:  {add: !$scope.timelineLocked, updateTime: !$scope.timelineLocked, updateGroup: false, remove: !$scope.timelineLocked}});
+  }
+  
+  $scope.showCurrentTime = function() {
+	  $scope.timelineCurrentTime = !$scope.timelineCurrentTime;
+	  timeline.setOptions({showCurrentTime: $scope.timelineCurrentTime});
   }
   
   var snapping = true;
@@ -257,7 +325,10 @@ app.controller('DemoBasicCtrl', ['$scope',
 	  if (item != undefined) {
 		  redo_buffer.push(items.get(item.id));
 		  redo_buffer = redo_buffer.slice(redo_buffer.length - 10, redo_buffer.length);
+		  item.start = new Date(item.start);
+		  item.end = new Date(item.end);
 		  items.update(item);
+		  data.updateItem(item);
 	  }
   }
   
@@ -266,7 +337,10 @@ app.controller('DemoBasicCtrl', ['$scope',
 	  if (item != undefined) {
 		  undo_buffer.push(items.get(item.id))
 		  undo_buffer = undo_buffer.slice(undo_buffer.length - 10, undo_buffer.length);
+		  item.start = new Date(item.start);
+		  item.end = new Date(item.end);
 		  items.update(item);
+		  data.updateItem(item);
 	  }
   }
     

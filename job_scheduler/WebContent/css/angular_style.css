@@ -161,6 +161,7 @@ md-menu-bar button {
 md-toolbar.my-toolbar {
   min-height: 30px !important;
   height: 30px !important;
+  padding-left: 55px;
 }
 
 md-toolbar.my-bottom-toolbar {
@@ -197,7 +198,7 @@ cursor:default;
 }
 
 .selected {
-	background-color: green;
+	background-color: #33691E;
 -webkit-box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.35);
 -moz-box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.35);
 box-shadow: 1px 1px 5px 0px rgba(0,0,0,0.35);
@@ -206,7 +207,7 @@ cursor:default;
 
 
 .radioButtondemoMultiColumn md-grid-tile figure:active {
-	background-color: green;
+	background-color: #33691E;
 	outline: none;
     border: 0;
 }

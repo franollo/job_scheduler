@@ -1,6 +1,6 @@
 angular.module('MyApp').service('dialogs',['$http','data','auth',function($http,data, auth) {
 
-		this.DialogController1 = function ($scope, $mdDialog, dataToPass) {
+	this.DialogController1 = function ($scope, $mdDialog, dataToPass) {
 		  $scope.dragControlListeners = {
 		          containment: '#board',//optional param.
 		          allowDuplicates: true //optional param allows duplicates to be dropped.
@@ -47,6 +47,28 @@ angular.module('MyApp').service('dialogs',['$http','data','auth',function($http,
 	      $scope.order.endDate = start;
 	      $scope.order.jobs = parentThis.selected;
 	      $mdDialog.hide($scope.order);
+	    }
+
+	    $scope.cancel = function() {
+	      console.log('cancel');
+	      $mdDialog.cancel();
+	    }
+	    $scope.toggle = function (item, list) {
+		    var idx = list.indexOf(item);
+		    if (idx > -1) list.splice(idx, 1);
+		    else list.push(item);
+		};
+		  $scope.exists = function (item, list) {
+		    return list.indexOf(item) > -1;
+		};
+	  }
+  
+  this.addJobOrderController = function($scope, $mdDialog, dataToPass) {
+		var parentThis = this;
+		this.jobs = dataToPass;
+		this.selected = [];
+	    $scope.answer = function() {
+	      $mdDialog.hide(parentThis.selected);
 	    }
 
 	    $scope.cancel = function() {
@@ -117,12 +139,10 @@ angular.module('MyApp').service('dialogs',['$http','data','auth',function($http,
 		this.resourceName = "";
 		this.description = "";
 	    $scope.answer = function() {
-	      $mdDialog.hide();
-	      data.newResource({"name": parentThis.resourceName, 
+	      $mdDialog.hide({"name": parentThis.resourceName, 
 	  			"description": parentThis.description});
 	    }
 	    $scope.cancel = function() {
-	      console.log('cancel');
 	      $mdDialog.cancel();
 	    }
 	  }

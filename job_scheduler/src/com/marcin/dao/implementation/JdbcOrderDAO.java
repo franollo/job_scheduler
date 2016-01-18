@@ -1,6 +1,7 @@
 package com.marcin.dao.implementation;
 
 import java.sql.Types;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -51,14 +52,31 @@ public class JdbcOrderDAO extends DAO implements OrderDAO{
 
 	@Override
 	public void updateOrder(Order order, String username) {
-		SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("create_order");
+		SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("update_order");
 		SqlParameterSource in = new MapSqlParameterSource()
-				.addValue("order_name", order.getName())
+				.addValue("order_id", order.getOrderId())
+				.addValue("name", order.getName())
 				.addValue("description", order.getDescription())
 				.addValue("start_date", order.getStartDate())
 				.addValue("username", username);
 		jdbcCall.execute(in);
 		
+	}
+
+	@Override
+	public int getOrderInUseId(String name) {
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+		parameters.addValue("username", name);  
+		String sql = "select in_use from users where username = :username";
+		return jdbcTemplate.queryForObject(sql, parameters, Integer.class);
+	}
+
+	@Override
+	public Date getStartDate(String name) {
+		MapSqlParameterSource parameters = new MapSqlParameterSource();
+		parameters.addValue("username", name);  
+		String sql = "select start_date from orders where order_id in (select in_use from users where username = :username)";
+		return jdbcTemplate.queryForObject(sql, parameters, Date.class);
 	}
 
 }

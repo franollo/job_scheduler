@@ -59,4 +59,25 @@ public class JdbcResourceDAO extends DAO implements ResourceDAO
 		return jdbcTemplate.query(sql, parameters, new VisGroupMapper());
 	}
 
+	@Override
+	public void deleteResource(Resource resource, String name) {
+		SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("delete_resource");
+		SqlParameterSource in = new MapSqlParameterSource()
+				.addValue("resource_id", resource.getResourceId())
+				.addValue("username", name);
+		jdbcCall.execute(in);
+	}
+
+	@Override
+	public void updateResource(Resource resource, String name) {
+		SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("update_resource");
+		SqlParameterSource in = new MapSqlParameterSource()
+				.addValue("resource_id", resource.getResourceId())
+				.addValue("name", resource.getName())
+				.addValue("description", resource.getDescription())
+				.addValue("username", name);
+		jdbcCall.execute(in);
+		
+	}
+
 }

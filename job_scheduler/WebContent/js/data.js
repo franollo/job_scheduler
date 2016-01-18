@@ -52,11 +52,22 @@ angular.module('MyApp').service('data', function($http) {
 				};
 				
 				this.newJob = function(job) {
-					Console.log(job);
-					$http({
+					return $http({
 			    		method: 'POST',
 			    		dataType: 'json',
 			    		url: "ajax/newjob",
+			    		data: JSON.stringify(job)
+			    	})
+			    	.then(function(data){
+			    		console.log(data);
+			    	});
+				};
+				
+				this.deleteJob = function(job) {
+					$http({
+			    		method: 'POST',
+			    		dataType: 'json',
+			    		url: "ajax/deletejob",
 			    		data: JSON.stringify(job)
 			    	})
 			    	.success(function(data){
@@ -64,18 +75,71 @@ angular.module('MyApp').service('data', function($http) {
 			    	}).error(function(data){
 			    		console.log(data);
 			    	});
+				}
+				
+				this.updateJob = function(job) {
+					$http({
+			    		method: 'POST',
+			    		dataType: 'json',
+			    		url: "ajax/updatejob",
+			    		data: JSON.stringify(job)
+			    	})
+			    	.success(function(data){
+			    		console.log(data);
+			    	}).error(function(data){
+			    		console.log(data);
+			    	});
+				}
+				
+				this.deleteResource = function(resource) {
+					$http({
+			    		method: 'POST',
+			    		dataType: 'json',
+			    		url: "ajax/deleteresource",
+			    		data: JSON.stringify(resource)
+			    	})
+			    	.success(function(data){
+			    		console.log(data);
+			    	}).error(function(data){
+			    		console.log(data);
+			    	});
+				}
+				
+				this.updateResource = function(resource) {
+					$http({
+			    		method: 'POST',
+			    		dataType: 'json',
+			    		url: "ajax/updateresource",
+			    		data: JSON.stringify(resource)
+			    	})
+			    	.success(function(data){
+			    		console.log(data);
+			    	}).error(function(data){
+			    		console.log(data);
+			    	});
+				}
+				
+				this.addJobOrder = function(job) {
+					return $http({
+			    		method: 'POST',
+			    		dataType: 'json',
+			    		url: "ajax/addjob",
+			    		data: JSON.stringify(job)
+			    	})
+			    	.then(function(data){
+			    		console.log(data.data);
+			    		return data.data;
+			    	})
 				};
 				
 				this.newResource = function(resource) {
-					$http({
+					return $http({
 			    		method: 'POST',
 			    		dataType: 'json',
 			    		url: "ajax/newresource",
 			    		data: JSON.stringify(resource) 
 			    	})
-			    	.success(function(data){
-			    		console.log(data);
-			    	}).error(function(data){
+			    	.then(function(data){
 			    		console.log(data);
 			    	});
 				};

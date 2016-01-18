@@ -40,4 +40,25 @@ public class JdbcJobDAO extends DAO implements JobDAO{
 				+ "and uj.user_id in (select user_id from users where username = :username)";
 		return jdbcTemplate.query(sql, parameters, new JobMapper());
 	}
+
+	@Override
+	public void deleteJob(Job job, String username) {
+		SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("delete_job");
+		SqlParameterSource in = new MapSqlParameterSource()
+				.addValue("job_id", job.getJobId())
+				.addValue("username", username);
+		jdbcCall.execute(in);
+	}
+
+	@Override
+	public void updateJob(Job job, String name) {
+		SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("update_job");
+		SqlParameterSource in = new MapSqlParameterSource()
+				.addValue("job_id", job.getJobId())
+				.addValue("name", job.getName())
+				.addValue("description", job.getDescription())
+				.addValue("username", name);
+		jdbcCall.execute(in);
+		
+	}
 }
