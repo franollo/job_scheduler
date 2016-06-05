@@ -147,6 +147,7 @@ angular.module('MyApp').service('data', function($http) {
 				this.getResources = function() {
 					return $http.get("getdata/resources")
 			    	.then(function(data){
+			    		console.log("no elo")
 			    		return data;
 			    	});
 				};

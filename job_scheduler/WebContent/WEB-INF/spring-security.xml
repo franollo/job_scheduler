@@ -6,10 +6,17 @@
 	http://www.springframework.org/schema/security
 	http://www.springframework.org/schema/security/spring-security-4.0.xsd">
 
+	
 	<http auto-config="true" 
 		use-expressions="true" 
 		disable-url-rewriting="true" 
 		entry-point-ref="restAuthenticationEntryPoint">
+    	<intercept-url pattern="/login.jsp" access="permitAll" />
+    	<intercept-url pattern="/css/**" access="permitAll" />
+    	<intercept-url pattern="/js/**" access="permitAll" />
+    	<intercept-url pattern="/vis/**" access="permitAll" />
+    	<intercept-url pattern="/bower_components/**" access="permitAll" />
+    	<intercept-url pattern="/**" access="isAuthenticated()" />
 		<csrf disabled="true"/>
 		<http-basic entry-point-ref="restBasicAuthenticationEntryPoint" />
 	</http>

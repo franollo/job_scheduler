@@ -257,24 +257,24 @@ app.controller('DemoBasicCtrl', ['$scope',
 
     
   
-  auth.authenticate({"username": "admin", "password": "admin"}).then(function() {
-	  $scope.authenticated = auth.authenticated;
-	  $scope.error = auth.error;
-	  if($scope.authenticated == true) {
-		data.whoAmI().then(function(data) {
-		$scope.log = data.username;
-		$scope.nam = data.name;
-		$scope.sur = data.surname;
-		});
-		data.getResources().then(function(data){
-       		$scope.resources = data.data;
-       	});
-		data.getJobs().then(function(data) {
-			$scope.jobs = data.data;
-		});
-	  }
-  });
- 
+//  auth.authenticate({"username": "admin", "password": "admin"}).then(function() {
+//	  $scope.authenticated = auth.authenticated;
+//	  $scope.error = auth.error;
+//	  if($scope.authenticated == true) {
+//		data.whoAmI().then(function(data) {
+//		$scope.log = data.username;
+//		$scope.nam = data.name;
+//		$scope.sur = data.surname;
+//		});
+//		data.getResources().then(function(data){
+//       		$scope.resources = data.data;
+//       	});
+//		data.getJobs().then(function(data) {
+//			$scope.jobs = data.data;
+//		});
+//	  }
+//  });
+// 
   
   $scope.logout = function() {
 	  auth.logout().then(function(){

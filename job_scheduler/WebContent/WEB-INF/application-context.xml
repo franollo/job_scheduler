@@ -46,7 +46,8 @@
 		<property name="jdbcTemplate" ref="jdbcTemplate" />
 	</bean>
 	
-	<bean id="restAuthenticationEntryPoint" class="com.marcin.security.RestAuthenticationEntryPoint"></bean>
+	<bean id="restAuthenticationEntryPoint" class="com.marcin.security.RestAuthenticationEntryPoint">
+	</bean>
 	
 	<bean id="restBasicAuthenticationEntryPoint" class="com.marcin.security.RestBasicAuthenticationEntryPoint">
 		<constructor-arg value="RealmName" />
