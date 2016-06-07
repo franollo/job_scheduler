@@ -16,7 +16,7 @@ angular.module('MyApp').service('data', function($http) {
 					return $http({
 			    		method: 'POST',
 			    		dataType: 'json',
-			    		url: "ajax/neworder",
+			    		url: "data/neworder",
 			    		data: JSON.stringify(order)
 			    	})
 			    	.then(function(data){
@@ -29,7 +29,7 @@ angular.module('MyApp').service('data', function($http) {
 					return $http({
 			    		method: 'POST',
 			    		dataType: 'json',
-			    		url: "ajax/updateorder",
+			    		url: "data/updateorder",
 			    		data: JSON.stringify(order)
 			    	})
 			    	.then(function(data){
@@ -42,7 +42,7 @@ angular.module('MyApp').service('data', function($http) {
 					return $http({
 			    		method: 'POST',
 			    		dataType: 'json',
-			    		url: "ajax/updateitem",
+			    		url: "data/updateitem",
 			    		data: JSON.stringify(item)
 			    	})
 			    	.then(function(data){
@@ -55,7 +55,7 @@ angular.module('MyApp').service('data', function($http) {
 					return $http({
 			    		method: 'POST',
 			    		dataType: 'json',
-			    		url: "ajax/newjob",
+			    		url: "data/newjob",
 			    		data: JSON.stringify(job)
 			    	})
 			    	.then(function(data){
@@ -67,7 +67,7 @@ angular.module('MyApp').service('data', function($http) {
 					$http({
 			    		method: 'POST',
 			    		dataType: 'json',
-			    		url: "ajax/deletejob",
+			    		url: "data/deletejob",
 			    		data: JSON.stringify(job)
 			    	})
 			    	.success(function(data){
@@ -81,7 +81,7 @@ angular.module('MyApp').service('data', function($http) {
 					$http({
 			    		method: 'POST',
 			    		dataType: 'json',
-			    		url: "ajax/updatejob",
+			    		url: "data/updatejob",
 			    		data: JSON.stringify(job)
 			    	})
 			    	.success(function(data){
@@ -95,7 +95,7 @@ angular.module('MyApp').service('data', function($http) {
 					$http({
 			    		method: 'POST',
 			    		dataType: 'json',
-			    		url: "ajax/deleteresource",
+			    		url: "data/deleteresource",
 			    		data: JSON.stringify(resource)
 			    	})
 			    	.success(function(data){
@@ -109,7 +109,7 @@ angular.module('MyApp').service('data', function($http) {
 					$http({
 			    		method: 'POST',
 			    		dataType: 'json',
-			    		url: "ajax/updateresource",
+			    		url: "data/updateresource",
 			    		data: JSON.stringify(resource)
 			    	})
 			    	.success(function(data){
@@ -123,7 +123,7 @@ angular.module('MyApp').service('data', function($http) {
 					return $http({
 			    		method: 'POST',
 			    		dataType: 'json',
-			    		url: "ajax/addjob",
+			    		url: "data/addjob",
 			    		data: JSON.stringify(job)
 			    	})
 			    	.then(function(data){
@@ -136,7 +136,7 @@ angular.module('MyApp').service('data', function($http) {
 					return $http({
 			    		method: 'POST',
 			    		dataType: 'json',
-			    		url: "ajax/newresource",
+			    		url: "data/newresource",
 			    		data: JSON.stringify(resource) 
 			    	})
 			    	.then(function(data){
