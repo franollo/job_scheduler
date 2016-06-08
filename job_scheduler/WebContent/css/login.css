@@ -1,7 +1,15 @@
 #login-container {
     position: absolute;
-    top: 0;
+    top: 64px;
     bottom: 0;
     left: 0;
     right: 0;
+    background-image: url(../common/background.jpg);
+    background-size: cover;
 }
+
+#login-frame {
+    width: 350px;
+    background-color: white;
+}
+

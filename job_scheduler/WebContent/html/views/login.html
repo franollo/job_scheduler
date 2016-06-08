@@ -3,13 +3,25 @@
   	<head>
 		<link rel="stylesheet" href="../../libs/angular-material/angular-material.css">
         <link rel="stylesheet" href="../../css/login.css">
+        <link rel="stylesheet" href="../../css/icons.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   	</head>
 	<body>
         <div ng-app="app" ng-controller="loginController as lCtrl" ng-cloak="" >
+            <md-toolbar>
+                <div layout="row">
+                    <md-toolbar-filler layout="" layout-align="center center">
+                        <i class="material-icons md-48">sort</i>
+                    </md-toolbar-filler>
+                    <h4>
+                        JOB SCHEDULER
+                    </h4>
+                </div>
+            </md-toolbar>
             <div id="login-container" layout="column" layout-align="center center" ng-cloak>
-                <div md-whiteframe="12" layout="column">
-                    <md-toolbar class="md-hue-2" layout-align="center center">
-                        <h2>Sign in</h2>
+                <div id="login-frame" md-whiteframe="12" layout="column">
+                    <md-toolbar layout-align="center center">
+                        <h4>Sign in</h4>
                     </md-toolbar>
                     <div layout="column" layout-padding>
                         <md-input-container>
@@ -20,6 +32,9 @@
                             <label>Password</label>
                             <input ng-model="lCtrl.password">
                         </md-input-container>
+                        <md-checkbox>
+                            Remember me
+                        </md-checkbox>
                         <md-button class="md-raised md-primary" ng-click="lCtrl.signIn()">
                             Sign in
                         </md-button>
