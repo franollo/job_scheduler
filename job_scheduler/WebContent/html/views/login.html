@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  	<head>
+		<link rel="stylesheet" href="../../libs/angular-material/angular-material.css">
+        <link rel="stylesheet" href="../../css/login.css">
+  	</head>
+	<body>
+        <div ng-app="app" ng-controller="loginController as lCtrl" ng-cloak="" >
+            <div id="login-container" layout="column" layout-align="center center" ng-cloak>
+                <div md-whiteframe="12" layout="column">
+                    <md-toolbar class="md-hue-2" layout-align="center center">
+                        <h2>Sign in</h2>
+                    </md-toolbar>
+                    <div layout="column" layout-padding>
+                        <md-input-container>
+                            <label>Yout Login</label>
+                            <input ng-model="lCtrl.login">
+                        </md-input-container>
+                        <md-input-container>
+                            <label>Password</label>
+                            <input ng-model="lCtrl.password">
+                        </md-input-container>
+                        <md-button class="md-raised md-primary" ng-click="lCtrl.signIn()">
+                            Sign in
+                        </md-button>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<script src="../../libs/angular/angular.js"></script>
+		<script src="../../libs/angular-animate/angular-animate.js"></script>
+		<script src="../../libs/angular-aria/angular-aria.js"></script>
+		<script src="../../libs/angular-material/angular-material.js"></script>
+        <script src="../../js/app.module.js"></script>
+        <script src="../../js/controllers/login.controller.js"></script>
+    </body>
+</html>

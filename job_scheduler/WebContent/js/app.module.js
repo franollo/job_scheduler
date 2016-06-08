@@ -1,6 +1,4 @@
-var app = angular.module('app', ['ngMaterial']);
-
-app.config(function($mdThemingProvider) {
+angular.module('app', ['ngMaterial']).config(function($mdThemingProvider) {
     $mdThemingProvider.theme('default')
         .primaryPalette('light-green', {'default': '900'})
         .accentPalette('grey', {'default': '500'})
