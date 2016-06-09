@@ -11,5 +11,13 @@
 #login-frame {
     width: 350px;
     background-color: white;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+}
+
+.radius-inherit {
+    border-top-left-radius: inherit;
+    border-top-right-radius: inherit;
 }
 

@@ -1,5 +1,7 @@
 angular.module('app').service('dataService', function($http) {
     var user = {};
+
+
     this.whoAmI = function() {
         return $http.get("getdata/userinfo").then(function(data) {
             user.username = data.data.login;

@@ -1,4 +1,4 @@
-angular.module('app').service('dialogs',['$http','data','auth',function($http,data, auth) {
+angular.module('app').service('dialogsService',['$http','dataService','authService',function($http,dataService, authService) {
 
     this.DialogController1 = function ($scope, $mdDialog, dataToPass) {
         $scope.dragControlListeners = {
@@ -116,10 +116,10 @@ angular.module('app').service('dialogs',['$http','data','auth',function($http,da
         }
 
         $scope.signIn = function() {
-            auth.authenticate(parent_this.credentials, function() {}).then(function() {
-                parentScope.authenticated = auth.authenticated;
+            authService.authenticate(parent_this.credentials, function() {}).then(function() {
+                parentScope.authenticated = authService.authenticated;
                 if (parentScope.authenticated == true) {
-                    $scope.error = auth.error;
+                    $scope.error = authService.error;
                     $mdDialog.hide();
                     data.whoAmI().then(function(data) {
                         parentScope.log = data.username;

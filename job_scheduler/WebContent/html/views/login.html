@@ -8,7 +8,7 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
   	</head>
 	<body>
-        <div ng-app="app" ng-controller="loginController as lCtrl" ng-cloak="" >
+        <div ng-app="app" ng-controller="loginController as ctrl" ng-cloak="" >
             <md-toolbar>
                 <div layout="row">
                     <md-toolbar-filler layout="" layout-align="center center">
@@ -21,22 +21,22 @@
             </md-toolbar>
             <div id="login-container" layout="column" layout-align="center center" ng-cloak>
                 <div id="login-frame" md-whiteframe="12" layout="column">
-                    <md-toolbar layout-align="center center">
+                    <md-toolbar class="radius-inherit" layout-align="center center">
                         <h4>Sign in</h4>
                     </md-toolbar>
                     <div layout="column" layout-margin layout-padding>
                         <md-input-container>
-                            <label>Yout Login</label>
-                            <input ng-model="lCtrl.login">
+                            <label  md-colors="{color: 'accent-500'}">Your Login</label>
+                            <input ng-model="ctrl.login">
                         </md-input-container>
                         <md-input-container>
-                            <label>Password</label>
-                            <input ng-model="lCtrl.password">
+                            <label  md-colors="{color: 'accent-500'}">Password</label>
+                            <input ng-model="ctrl.password">
                         </md-input-container>
                         <md-checkbox style="margin-left: 8px">
                             Remember me
                         </md-checkbox>
-                        <md-button class="md-raised md-primary" ng-click="lCtrl.signIn()">
+                        <md-button class="md-raised md-primary" ng-click="ctrl.signIn()">
                             Sign in
                         </md-button>
                     </div>
