@@ -33,7 +33,7 @@ function mainController($scope, $document, $mdDialog, $mdToast, authService, dat
         };
 
         setTimeout(function(){
-            container = document.getElementById("my-timeline");
+            container = document.getElementById("js-timeline");
             timeline = new vis.Timeline(container, items,groups, options);
         }, 10);
 

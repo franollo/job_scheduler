@@ -152,7 +152,7 @@
 		      	</div>
 		      </div>
 		    </md-toolbar>
-		    <md-toolbar class="my-toolbar" ng-hide="isSmall">
+		    <md-toolbar class="js-toolbar" ng-hide="isSmall">
 			    <div class="md-toolbar-tools">
 				    <div id="button" ng-click = "undo()">
 						<md-tooltip md-direction="bottom" md-delay="1000">
@@ -198,13 +198,13 @@
 				    </div>
 			   	</div>
 		   	</md-toolbar>
-			<div id="page-container" ng-class="{'small':isSmall, 'big':!isSmall}">
-			   	<div id="workspace" class="tabsdemoStaticTabs">
+			<div id="js-page-container" ng-class="{'small':isSmall, 'big':!isSmall}">
+			   	<div id="js-workspace" class="tabsdemoStaticTabs">
 			       	<md-tabs class="md-accent main-tabs" md-align-tabs="bottom" md-stretch-tabs='always'>
 			        	<md-tab id="tab1">
 				     		<md-tab-label>Timeline</md-tab-label>
 				     		<md-tab-body>
-				       			<div id="my-timeline" print-section></div>
+				       			<div id="js-timeline" print-section></div>
 				    		</md-tab-body>
 			   			</md-tab>
 			     		<md-tab id="tab2">
@@ -336,7 +336,7 @@
 					</md-tabs>
 				</div>
 			</div>
-<			<md-toolbar class="my-bottom-toolbar">
+<			<md-toolbar class="js-bottom-toolbar">
 	    		<div ng-hide="authenticated">
 	    			<h5 class="no-margin">You are not logged in</h5>
 	    		</div>
