@@ -1,6 +1,10 @@
-angular.module('app').service('dataService', function($http) {
+angular.module('app').service('dataService', function ($http) {
     var vm = this;
     var httpError;
+    var user;
+    var resources;
+    var jobs;
+    var orders;
     vm.whoAmI = whoAmI;
     vm.newOrder = newOrder;
     vm.updateOrder = updateOrder;
@@ -19,13 +23,25 @@ angular.module('app').service('dataService', function($http) {
     vm.errorTest = errorTest;
     vm.getErrors = getErrors;
     vm.flushErrors = flushErrors;
-    var user;
-    var resources;
-    var jobs;
+    vm.serviceGetResources = serviceGetResources;
+    vm.serviceGetJobs = serviceGetJobs;
+    vm.serviceGetOrders = serviceGetOrders;
+    vm.serviceGetUser = serviceGetUser;
 
+    function serviceGetOrders() {
+        return orders;
+    }
 
-    function whoAmI() {
-        user = get("getdata/userinfo");
+    function serviceGetJobs() {
+        return jobs;
+    }
+
+    function serviceGetResources() {
+        return resources;
+    }
+
+    function serviceGetUser() {
+        return user;
     }
 
     function newOrder(order) {
@@ -69,15 +85,19 @@ angular.module('app').service('dataService', function($http) {
     }
 
     function getResources() {
-        return get("getdata/resources");
+        resources = get("getdata/resources");
     }
 
     function getJobs() {
-        return get("getdata/jobs");
+        jobs = get("getdata/jobs");
     }
 
     function getOrders() {
-        return get("getdata/orders");
+        orders = get("getdata/orders");
+    }
+
+    function whoAmI() {
+        user = get("getdata/userinfo");
     }
 
     function openOrder(orderId) {
@@ -94,11 +114,10 @@ angular.module('app').service('dataService', function($http) {
             dataType: 'json',
             url: URL,
             data: JSON.stringify(data)
-        }).then(function(data){
+        }).then(function (data) {
             return data.data;
-        }).catch(function(error) {
-            var RetHttpError = {code: error.status, text: error.statusText};
-            httpError = RetHttpError;
+        }).catch(function (error) {
+            httpError = {code: error.status, text: error.statusText};
             return undefined;
         })
     }
@@ -107,11 +126,10 @@ angular.module('app').service('dataService', function($http) {
         return $http({
             method: 'GET',
             url: URL,
-        }).then(function(data){
+        }).then(function (data) {
             return data.data;
-        }).catch(function(error) {
-            var RetHttpError = {code: error.status, text: error.statusText};
-            httpError = RetHttpError;
+        }).catch(function (error) {
+            httpError = {code: error.status, text: error.statusText};
             return undefined;
         })
     }
