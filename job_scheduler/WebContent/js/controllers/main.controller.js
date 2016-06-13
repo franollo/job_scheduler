@@ -6,10 +6,12 @@ mainController.$inject = ['$scope', '$document', '$mdDialog', '$mdToast', 'authS
 
 function mainController($scope, $document, $mdDialog, $mdToast, authService, dataService, dialogsService) {
     var vm = this;
+    var emp;
     vm.resources = [];
     vm.jobs = [];
     vm.selectedIndex = 1;
     vm.order = {};
+    $scope.service = dataService;
 
         var groups = new vis.DataSet();
         var items = new vis.DataSet();
@@ -31,6 +33,19 @@ function mainController($scope, $document, $mdDialog, $mdToast, authService, dat
                 dataService.updateItem(item);
             }
         };
+
+        $scope.$watch('service.getErrors()', function(newVal, oldVal) {
+            if(newVal !== oldVal && angular.isDefined(newVal)) {
+                console.log('error popup');
+                dataService.flushErrors();
+            }
+        })
+
+        vm.errorTest = function() {
+            dataService.errorTest().then(function(data) {
+                console.log(data);
+            })
+        }
 
         setTimeout(function(){
             container = document.getElementById("js-timeline");
