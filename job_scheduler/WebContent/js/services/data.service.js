@@ -1,10 +1,5 @@
 angular.module('app').service('dataService', function ($http) {
     var vm = this;
-    var httpError;
-    var user;
-    var resources;
-    var jobs;
-    var orders;
     vm.whoAmI = whoAmI;
     vm.newOrder = newOrder;
     vm.updateOrder = updateOrder;
@@ -21,28 +16,6 @@ angular.module('app').service('dataService', function ($http) {
     vm.getOrders = getOrders;
     vm.openOrder = openOrder;
     vm.errorTest = errorTest;
-    vm.getErrors = getErrors;
-    vm.flushErrors = flushErrors;
-    vm.serviceGetResources = serviceGetResources;
-    vm.serviceGetJobs = serviceGetJobs;
-    vm.serviceGetOrders = serviceGetOrders;
-    vm.serviceGetUser = serviceGetUser;
-
-    function serviceGetOrders() {
-        return orders;
-    }
-
-    function serviceGetJobs() {
-        return jobs;
-    }
-
-    function serviceGetResources() {
-        return resources;
-    }
-
-    function serviceGetUser() {
-        return user;
-    }
 
     function newOrder(order) {
         return post("data/neworder", order);
@@ -61,7 +34,7 @@ angular.module('app').service('dataService', function ($http) {
     }
 
     function deleteJob(job) {
-        return post("data/deletejob", job);
+        post("data/deletejob", job);
     }
 
     function updateJob(job) {
@@ -69,7 +42,7 @@ angular.module('app').service('dataService', function ($http) {
     }
 
     function deleteResource(resource) {
-        return post("data/deleteresource", resource);
+        post("data/deleteresource", resource);
     }
 
     function updateResource(resource) {
@@ -85,27 +58,27 @@ angular.module('app').service('dataService', function ($http) {
     }
 
     function getResources() {
-        resources = get("getdata/resources");
+        return get("getdata/resources");
     }
 
     function getJobs() {
-        jobs = get("getdata/jobs");
+        return get("getdata/jobs");
     }
 
     function getOrders() {
-        orders = get("getdata/orders");
+        return get("getdata/orders");
     }
 
     function whoAmI() {
-        user = get("getdata/userinfo");
+        return get("getdata/userinfo");
     }
 
     function openOrder(orderId) {
-        return post("getdata/order", orderId);
+        return get("getdata/order?" + orderId);
     }
 
     function errorTest() {
-        return get("http://localhost:3000/posts/1");
+        return get("http://localhost:3000/posts/2");
     }
 
     function post(URL, data) {
@@ -117,28 +90,18 @@ angular.module('app').service('dataService', function ($http) {
         }).then(function (data) {
             return data.data;
         }).catch(function (error) {
-            httpError = {code: error.status, text: error.statusText};
-            return undefined;
+            throw error;
         })
     }
 
     function get(URL) {
         return $http({
             method: 'GET',
-            url: URL,
+            url: URL
         }).then(function (data) {
             return data.data;
         }).catch(function (error) {
-            httpError = {code: error.status, text: error.statusText};
-            return undefined;
+            throw error;
         })
-    }
-
-    function getErrors() {
-        return httpError;
-    }
-
-    function flushErrors() {
-        httpError = undefined;
     }
 });
