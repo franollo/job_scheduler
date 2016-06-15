@@ -34,7 +34,7 @@ angular.module('app').service('dataService', function ($http) {
     }
 
     function deleteJob(job) {
-        post("data/deletejob", job);
+        return post("data/deletejob", job);
     }
 
     function updateJob(job) {
@@ -42,7 +42,7 @@ angular.module('app').service('dataService', function ($http) {
     }
 
     function deleteResource(resource) {
-        post("data/deleteresource", resource);
+        return post("data/deleteresource", resource);
     }
 
     function updateResource(resource) {

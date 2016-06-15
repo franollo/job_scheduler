@@ -2,18 +2,29 @@ angular
     .module('app')
     .controller('mainController', mainController);
 
-mainController.$inject = ['$scope', '$document', '$mdDialog', '$mdToast', 'authService', 'dataService', 'dialogsService'];
+mainController.$inject = ['$scope', '$document', '$mdDialog', '$mdToast', 'authService', 'dataService', 'bufferService', 'dialogsService'];
 
-function mainController($scope, $document, $mdDialog, $mdToast, authService, dataService, dialogsService) {
+function mainController($scope, $document, $mdDialog, $mdToast, authService, dataService, bufferService, dialogsService) {
     var vm = this;
+    var snapping = true;
+    vm.timelineLocked = false;
+    vm.timelineCurrentTime = true;
     vm.hide = hide;
     vm.deleteJob = deleteJob;
     vm.deleteResource = deleteResource;
+    vm.updateJob = updateJob;
+    vm.updateResource = updateResource;
+    vm.focusTimeline = focusTimeline;
+    vm.setSnapping = setSnapping;
+    vm.showCurrentTime = showCurrentTime;
+    vm.lockTimeline = lockTimeline;
+    vm.logout = logout;
+    vm.undo = undo;
+    vm.redo = redo;
     vm.resources = [];
     vm.jobs = [];
     vm.orders = [];
     vm.user = {};
-    vm.test = [];
     vm.selectedIndex = 1;
     vm.isSmall = true;
 
@@ -46,10 +57,8 @@ function mainController($scope, $document, $mdDialog, $mdToast, authService, dat
         multiselect: true,
         groupEditable: true,
         onMove: function (item, callback) {
-            undo_buffer.push(items.get(item.id));
-            undo_buffer = undo_buffer.slice(undo_buffer.length - 10, undo_buffer.length);
+            bufferService.push(items.get(item.id));
             callback(item);
-            console.log(item);
             dataService.updateItem(item);
         }
     };
@@ -60,31 +69,30 @@ function mainController($scope, $document, $mdDialog, $mdToast, authService, dat
     }, 10);
 
 
-    vm.errorTest = function () {
-        dataService.errorTest()
-            .then(saveTest)
-            .catch(fireError)
-    };
-
-
     function hide() {
         vm.isSmall = !vm.isSmall;
     }
 
     function deleteJob(job) {
-        dataService.deleteJob(job);
+        spliceJobs(job);
+        dataService.deleteJob(job)
+            .catch(fireError);
     }
 
     function deleteResource(resource) {
-        dataService.deleteResource(resource);
+        spliceResources(resource);
+        dataService.deleteResource(resource)
+            .catch(fireError);
     }
 
-    vm.updateJob = function (job) {
-        dataService.updateJob(job);
+    function updateJob(job) {
+        dataService.updateJob(job)
+            .catch(fireError);
     }
 
-    vm.updateResource = function (resource) {
-        dataService.updateResource(resource);
+    function updateResource(resource) {
+        dataService.updateResource(resource)
+            .catch(fireError);
     }
 
     vm.showAddJob = function () {
@@ -210,7 +218,7 @@ function mainController($scope, $document, $mdDialog, $mdToast, authService, dat
                 groups.add(dataService.groups);
                 timeline.fit({animation: true});
                 vm.order = dataService.order;
-                showSimpleToast2('Order opened!');
+                showSimpleToast('Order opened!');
             });
         });
     }
@@ -226,25 +234,6 @@ function mainController($scope, $document, $mdDialog, $mdToast, authService, dat
             clickOutsideToClose: true
         });
     }
-
-    var showSimpleToast = function () {
-        $mdToast.show({
-            templateUrl: 'toast-template.html',
-            parent: angular.element(document.body),
-            hideDelay: 3000,
-            position: 'top right'
-        });
-    };
-
-    var showSimpleToast2 = function (text) {
-        $mdToast.show(
-            $mdToast.simple()
-                .textContent(text)
-                .position('top right')
-                .hideDelay(3000)
-                .parent(angular.element(document.body))
-        );
-    };
 
 
 //  authService.authenticate({"username": "admin", "password": "admin"}).then(function() {
@@ -266,7 +255,7 @@ function mainController($scope, $document, $mdDialog, $mdToast, authService, dat
 //  });
 //
 
-    vm.logout = function () {
+    function logout() {
         authService.logout().then(function () {
             vm.log = "";
             vm.nam = "";
@@ -276,10 +265,18 @@ function mainController($scope, $document, $mdDialog, $mdToast, authService, dat
         });
     }
 
-    vm.timelineLocked = false;
-    vm.timelineCurrentTime = true;
 
-    vm.lockTimeline = function () {
+    function showSimpleToast(text) {
+        $mdToast.show(
+            $mdToast.simple()
+                .textContent(text)
+                .position('top right')
+                .hideDelay(3000)
+                .parent(angular.element(document.body))
+        );
+    }
+
+    function lockTimeline() {
         vm.timelineLocked = !vm.timelineLocked;
         timeline.setOptions({
             editable: {
@@ -291,13 +288,12 @@ function mainController($scope, $document, $mdDialog, $mdToast, authService, dat
         });
     }
 
-    vm.showCurrentTime = function () {
+    function showCurrentTime() {
         vm.timelineCurrentTime = !vm.timelineCurrentTime;
         timeline.setOptions({showCurrentTime: vm.timelineCurrentTime});
     }
 
-    var snapping = true;
-    vm.setSnapping = function () {
+    function setSnapping() {
         snapping = !snapping;
         if (snapping == false) {
             timeline.setOptions({snap: null})
@@ -312,8 +308,7 @@ function mainController($scope, $document, $mdDialog, $mdToast, authService, dat
         }
     }
 
-
-    vm.focusTimeline = function () {
+    function focusTimeline() {
         timeline.fit({animation: true});
     }
 
@@ -333,67 +328,39 @@ function mainController($scope, $document, $mdDialog, $mdToast, authService, dat
         vm.user = data;
     }
 
+    function spliceJobs(job) {
+        vm.jobs.splice(vm.jobs.indexOf(job), 1);
+    }
+
+    function spliceResources(resource) {
+        vm.resources.splice(vm.resources.indexOf(resource), 1);
+    }
+
     function fireError(error) {
         console.error("AN ERROR OCCURED");
         console.log(error);
     }
 
-    function saveTest(data) {
-        vm.test = data;
-        console.log(data);
+    function undo() {
+        bufferService.undo(items);
     }
 
-
-    vm.undo = function () {
-        var item = undo_buffer.pop();
-        if (item != undefined) {
-            redo_buffer.push(items.get(item.id));
-            redo_buffer = redo_buffer.slice(redo_buffer.length - 10, redo_buffer.length);
-            item.start = new Date(item.start);
-            item.end = new Date(item.end);
-            items.update(item);
-            dataService.updateItem(item);
-        }
+    function redo() {
+        bufferService.redo(items);
     }
 
-    vm.redo = function () {
-        var item = redo_buffer.pop();
-        if (item != undefined) {
-            undo_buffer.push(items.get(item.id))
-            undo_buffer = undo_buffer.slice(undo_buffer.length - 10, undo_buffer.length);
-            item.start = new Date(item.start);
-            item.end = new Date(item.end);
-            items.update(item);
-            dataService.updateItem(item);
-        }
-    }
+    //    vm.test = [];
 
-    var undo_buffer = new Array();
-    var redo_buffer = new Array();
+    // function saveTest(data) {
+    //     vm.test = data;
+    //     console.log(data);
+    // }
 
-    var read = -1;
-    var save = 0;
-    var bufferSize = 0
-
-    var push = function (item) {
-        undo_buffer[save] = item;
-        if (bufferSize < 10) {
-            bufferSize++;
-        }
-        save = (save + 1) % 10;
-        read = (read + 1) % 10;
-    }
-
-    var pop = function () {
-        bufferSize--;
-        if (bufferSize = 0) {
-            read = -1;
-            save = 0;
-        }
-        save = (save - 1) % 10;
-        read = (read - 1) % 10;
-        return
-    }
+    // vm.errorTest = function () {
+    //     dataService.errorTest()
+    //         .then(saveTest)
+    //         .catch(fireError)
+    // };
 
 
 };
