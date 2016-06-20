@@ -1,4 +1,6 @@
-angular.module('app').service('dialogsService',['$http','dataService','authService',function($http,dataService, authService) {
+angular
+    .module('app')
+    .service('dialogsService',['$http','dataService','authService',function($http,dataService, authService) {
 
     this.DialogController1 = function ($scope, $mdDialog, dataToPass) {
         $scope.dragControlListeners = {
@@ -100,37 +102,6 @@ angular.module('app').service('dialogsService',['$http','dataService','authServi
 
         $scope.cancel = function() {
             $mdDialog.cancel();
-        }
-    }
-
-
-    this.DialogController3 = function($scope, $mdDialog, parentScope) {
-        var parent_this = this;
-        this.credentials = {};
-        $scope.answer = function() {
-            $mdDialog.hide(answer);
-        }
-
-        $scope.cancel = function() {
-            $mdDialog.cancel();
-        }
-
-        $scope.signIn = function() {
-            authService.authenticate(parent_this.credentials, function() {}).then(function() {
-                parentScope.authenticated = authService.authenticated;
-                if (parentScope.authenticated == true) {
-                    $scope.error = authService.error;
-                    $mdDialog.hide();
-                    data.whoAmI().then(function(data) {
-                        parentScope.log = data.username;
-                        parentScope.nam = data.name;
-                        parentScope.sur = data.surname;
-                    });
-                }
-                else {
-                    $scope.error = true;
-                }
-            });
         }
     }
 

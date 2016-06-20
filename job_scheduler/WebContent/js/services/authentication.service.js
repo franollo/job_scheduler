@@ -1,9 +1,16 @@
 angular.module('app').service('authService', function($http) {
+    var vm = this;
     var authenticated = false;
     var error = false;
+    vm.authenticate = authenticate;
 
-    this.authenticate = function(credentials) {
-        var headers = credentials && credentials.username ? {
+    function authenticate(credentials){
+        //temp mock:
+
+        console.log(credentials);
+        return true;
+
+        /*var headers = credentials && credentials.username ? {
             authorization: "Basic "
             + btoa(credentials.username + ":"
                 + credentials.password)
@@ -20,7 +27,7 @@ angular.module('app').service('authService', function($http) {
                 authenticated = false;
                 error = true;
             }
-        });
+        });*/
     }
 
     this.logout = function() {

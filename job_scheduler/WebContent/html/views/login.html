@@ -27,11 +27,11 @@
                     <div layout="column" layout-margin layout-padding>
                         <md-input-container>
                             <label  md-colors="{color: 'accent-500'}">Your Login</label>
-                            <input ng-model="ctrl.login">
+                            <input ng-model="ctrl.credentials.login">
                         </md-input-container>
                         <md-input-container>
                             <label  md-colors="{color: 'accent-500'}">Password</label>
-                            <input ng-model="ctrl.password">
+                            <input ng-model="ctrl.credentials.password">
                         </md-input-container>
                         <md-checkbox style="margin-left: 8px">
                             Remember me
@@ -49,5 +49,6 @@
 		<script src="../../libs/angular-material/angular-material.js"></script>
         <script src="../../js/app.module.js"></script>
         <script src="../../js/controllers/login.controller.js"></script>
+        <script src="../../js/services/authentication.service.js"></script>
     </body>
 </html>

@@ -91,7 +91,7 @@
                         </button>
                         <md-menu-content>
                             <md-menu-item>
-                                <md-button ng-click="ctrl.showAddResource($event)">Add</md-button>
+                                <md-button ng-click="ctrl.dialogAddResource()">Add</md-button>
                             </md-menu-item>
                             <md-menu-item>
                                 <md-button ng-click="ctrl.showNewOrder($event)">Delete</md-button>
@@ -113,7 +113,7 @@
                         </button>
                         <md-menu-content>
                             <md-menu-item>
-                                <md-button ng-click="ctrl.showAddJob()">Add</md-button>
+                                <md-button ng-click="ctrl.dialogAddJob()">Add</md-button>
                             </md-menu-item>
                             <md-menu-item>
                                 <md-button ng-click="ctrl.showNewOrder($event)">Delete</md-button>
@@ -155,7 +155,7 @@
             </md-tooltip>
             <i class="material-icons md-18">redo</i>
         </div>
-        <div class="js-button" ng-click="ctrl.lockTimeline()">
+        <div class="js-button" ng-click="ctrl.toggleLockTimeline()">
             <md-tooltip md-direction="bottom" md-delay="1000">
                 Lock timeline
             </md-tooltip>
@@ -167,7 +167,7 @@
             </md-tooltip>
             <i class="material-icons md-18-90deg">vertical_align_center</i>
         </div>
-        <div class="js-button" ng-click="ctrl.setSnapping()">
+        <div class="js-button" ng-click="ctrl.toggleSnappingTimeline()">
             <md-tooltip md-direction="bottom" md-delay="1000">
                 Snap to time
             </md-tooltip>
@@ -363,5 +363,6 @@
 <script src="../../js/services/data.service.js"></script>
 <script src="../../js/services/dialogs.service.js"></script>
 <script src="../../js/services/buffer.service.js"></script>
+<script src="../../js/services/timeline.service.js"></script>
 </body>
 </html>

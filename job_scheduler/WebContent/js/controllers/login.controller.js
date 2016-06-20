@@ -1,11 +1,17 @@
-angular.module('app').controller('loginController', loginController);
+angular
+    .module('app')
+    .controller('loginController', loginController);
 
-function loginController() {
+loginController.$inject = ['authService'];
+
+function loginController(authService) {
     var vm = this;
-    vm.login = "";
-    vm.password = "";
+    vm.credentials = {};
     vm.signIn = signIn;
 
     function signIn() {
+        if (authService.authenticate(vm.credentials) == true) {
+            window.location = 'index.html';
+        }
     }
 }
