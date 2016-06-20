@@ -1,4 +1,10 @@
-angular.module('app').service('bufferService', ['dataService', function (dataService) {
+angular
+    .module('app')
+    .service('bufferService', bufferService);
+
+bufferService.$inject = ['dataService'];
+
+function bufferService(dataService) {
     var vm = this;
     var undo_buffer = [];
     var redo_buffer = [];
@@ -34,4 +40,4 @@ angular.module('app').service('bufferService', ['dataService', function (dataSer
             dataService.updateItem(item);
         }
     }
-}]);
+}

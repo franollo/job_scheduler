@@ -1,7 +1,8 @@
 angular
     .module('app')
-    .service('dialogsService',['$http','dataService','authService',function($http,dataService, authService) {
+    .service('dialogsService', dialogsService);
 
+function dialogsService() {
     this.DialogController1 = function ($scope, $mdDialog, dataToPass) {
         $scope.dragControlListeners = {
             containment: '#board',//optional param.
@@ -9,14 +10,14 @@ angular
         };
         this.tasks = dataToPass;
         var sth = false;
-        $scope.answer = function() {
+        $scope.answer = function () {
             $scope.job.tasks = JSON.parse(JSON.stringify($scope.selected));
             $mdDialog.hide({"job": $scope.job});
             $scope.job = {};
             $scope.selected = [];
         }
 
-        $scope.cancel = function() {
+        $scope.cancel = function () {
             $scope.job = {};
             $scope.selected = [];
             $mdDialog.cancel();
@@ -34,7 +35,7 @@ angular
     }
 
 
-    this.newOrderController = function($scope, $mdDialog, dataToPass) {
+    this.newOrderController = function ($scope, $mdDialog, dataToPass) {
         var parentThis = this;
         this.jobs = dataToPass;
         this.selected = [];
@@ -42,7 +43,7 @@ angular
         this.startDate = new Date();
         this.startTime.setMilliseconds(0);
         this.startDate.setMilliseconds(0);
-        $scope.answer = function() {
+        $scope.answer = function () {
             var start = new Date(parentThis.startDate.getFullYear(), parentThis.startDate.getMonth(), parentThis.startDate.getDate(),
                 parentThis.startTime.getHours(), parentThis.startTime.getMinutes(), parentThis.startTime.getSeconds());
             $scope.order.startDate = start;
@@ -51,7 +52,7 @@ angular
             $mdDialog.hide($scope.order);
         }
 
-        $scope.cancel = function() {
+        $scope.cancel = function () {
             console.log('cancel');
             $mdDialog.cancel();
         }
@@ -65,15 +66,15 @@ angular
         };
     }
 
-    this.addJobOrderController = function($scope, $mdDialog, dataToPass) {
+    this.addJobOrderController = function ($scope, $mdDialog, dataToPass) {
         var parentThis = this;
         this.jobs = dataToPass;
         this.selected = [];
-        $scope.answer = function() {
+        $scope.answer = function () {
             $mdDialog.hide(parentThis.selected);
         }
 
-        $scope.cancel = function() {
+        $scope.cancel = function () {
             console.log('cancel');
             $mdDialog.cancel();
         }
@@ -87,42 +88,44 @@ angular
         };
     }
 
-    this.editOrderController = function($scope, $mdDialog, dataToPass) {
+    this.editOrderController = function ($scope, $mdDialog, dataToPass) {
         var parentThis = this;
         $scope.order = dataToPass;
         console.log($scope.order);
         this.startTime = new Date($scope.order.startDate);
         this.startDate = new Date($scope.order.startDate);
-        $scope.answer = function() {
+        $scope.answer = function () {
             var start = new Date(parentThis.startDate.getFullYear(), parentThis.startDate.getMonth(), parentThis.startDate.getDate(),
                 parentThis.startTime.getHours(), parentThis.startTime.getMinutes(), parentThis.startTime.getSeconds());
             $scope.order.startDate = start;
             $mdDialog.hide($scope.order);
         }
 
-        $scope.cancel = function() {
+        $scope.cancel = function () {
             $mdDialog.cancel();
         }
     }
 
-    this.DialogController4 = function($scope, $mdDialog) {
+    this.DialogController4 = function ($scope, $mdDialog) {
         var parentThis = this;
         this.resourceName = "";
         this.description = "";
-        $scope.answer = function() {
-            $mdDialog.hide({"name": parentThis.resourceName,
-                "description": parentThis.description});
+        $scope.answer = function () {
+            $mdDialog.hide({
+                "name": parentThis.resourceName,
+                "description": parentThis.description
+            });
         }
-        $scope.cancel = function() {
+        $scope.cancel = function () {
             $mdDialog.cancel();
         }
     }
 
-    this.openOrderController = function($scope, $mdDialog) {
+    this.openOrderController = function ($scope, $mdDialog) {
         var parentThis = this;
         $scope.orders = [];
         $scope.selectedOrderId;
-        data.getOrders().then(function(data) {
+        data.getOrders().then(function (data) {
             for (var i = 0; i < data.length; i++) {
                 if (!$scope.$$phase) {
                     logic(data[i]);
@@ -132,11 +135,11 @@ angular
             }
             console.log($scope.orders);
         });
-        $scope.answer = function() {
+        $scope.answer = function () {
             $mdDialog.hide($scope.selectedOrderId);
         }
 
-        $scope.cancel = function() {
+        $scope.cancel = function () {
             $mdDialog.cancel();
         }
 
@@ -144,8 +147,8 @@ angular
             $scope.orders.push(item);
         }
 
-        $scope.select = function(id) {
+        $scope.select = function (id) {
             $scope.selectedOrderId = id;
         }
     }
-}]);
+}

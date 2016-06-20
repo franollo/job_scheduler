@@ -1,4 +1,8 @@
-angular.module('app').service('dataService', function ($http) {
+angular
+    .module('app')
+    .service('dataService', dataService);
+
+function dataService($http) {
     var vm = this;
     vm.whoAmI = whoAmI;
     vm.newOrder = newOrder;
@@ -104,4 +108,4 @@ angular.module('app').service('dataService', function ($http) {
             throw error;
         })
     }
-});
+}

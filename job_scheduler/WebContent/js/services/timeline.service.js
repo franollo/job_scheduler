@@ -1,4 +1,8 @@
-angular.module('app').service('timelineService', function () {
+angular
+    .module('app')
+    .service('timelineService', timelineService);
+
+function timelineService() {
     var vm = this;
     vm.init = init;
     vm.lock = lock;
@@ -86,5 +90,5 @@ angular.module('app').service('timelineService', function () {
     function getGroups() {
         return groups;
     }
-});
+}
 
