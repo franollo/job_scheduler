@@ -1,17 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Job scheduler</title>
-    <link rel="stylesheet" href="../../libs/ng-sortable/dist/ng-sortable.min.css">
-    <link rel="stylesheet" href="../../libs/angularPrint/angularPrint.css">
-    <link rel="stylesheet" href="../../libs/angular-material/angular-material.min.css">
-    <link rel="stylesheet" href="../../libs/vis/dist/vis.min.css">
-    <link rel="stylesheet" href="../../css/layout.css">
-    <link rel="stylesheet" href="../../css/icons.css">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-</head>
-<body>
-<div id="js-body" ng-app="app" ng-controller="mainController as ctrl" ng-cloak="">
+<script type="text/javascript">
+    if(typeof appModule === 'undefined'){
+        document.location.href="/";
+    }
+</script>
+<div id="js-body" ng-cloak="">
     <md-toolbar class="md-menu-toolbar">
         <div layout="row">
             <md-toolbar-filler layout="" layout-align="center center">
@@ -23,7 +15,7 @@
                 </div>
                 <md-menu-bar>
                     <md-menu>
-                        <button ng-click="$mdOpenMenu()">
+                        <button class="menu-button" ng-click="$mdOpenMenu()">
                             File
                         </button>
                         <md-menu-content>
@@ -42,7 +34,7 @@
                         </md-menu-content>
                     </md-menu>
                     <md-menu>
-                        <button ng-click="$mdOpenMenu()">
+                        <button class="menu-button" ng-click="$mdOpenMenu()">
                             View
                         </button>
                         <md-menu-content>
@@ -61,7 +53,7 @@
                         </md-menu-content>
                     </md-menu>
                     <md-menu>
-                        <button ng-click="$mdOpenMenu()">
+                        <button class="menu-button" ng-click="$mdOpenMenu()">
                             Order
                         </button>
                         <md-menu-content>
@@ -86,7 +78,7 @@
                         </md-menu-content>
                     </md-menu>
                     <md-menu>
-                        <button ng-click="$mdOpenMenu()">
+                        <button class="menu-button" ng-click="$mdOpenMenu()">
                             Resources
                         </button>
                         <md-menu-content>
@@ -108,7 +100,7 @@
                         </md-menu-content>
                     </md-menu>
                     <md-menu>
-                        <button ng-click="$mdOpenMenu()">
+                        <button class="menu-button" ng-click="$mdOpenMenu()">
                             Jobs
                         </button>
                         <md-menu-content>
@@ -350,19 +342,3 @@
         </div>
     </md-toolbar>
 </div>
-<script src="../../libs/angular/angular.min.js"></script>
-<script src="../../libs/angular-animate/angular-animate.min.js"></script>
-<script src="../../libs/angular-aria/angular-aria.min.js"></script>
-<script src="../../libs/angular-material/angular-material.min.js"></script>
-<script src="../../libs/angularPrint/angularPrint.js"></script>
-<script src="../../libs/ng-sortable/dist/ng-sortable.min.js"></script>
-<script src="../../libs/vis/dist/vis.min.js"></script>
-<script src="../../js/app.module.js"></script>
-<script src="../../js/controllers/main.controller.js"></script>
-<script src="../../js/services/authentication.service.js"></script>
-<script src="../../js/services/data.service.js"></script>
-<script src="../../js/services/dialogs.service.js"></script>
-<script src="../../js/services/buffer.service.js"></script>
-<script src="../../js/services/timeline.service.js"></script>
-</body>
-</html>

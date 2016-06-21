@@ -4,21 +4,19 @@ angular
 
 authService.$inject = ['$http'];
 
-//https://discuss.zendesk.com/hc/en-us/articles/202653598-Performing-an-AJAX-login-with-Spring-Security-3-0-2002229-#sample
-
 function authService($http) {
     var vm = this;
     var authenticated = false;
-    vm.authenticate = authenticate;
+    vm.authenticate = sendRequest;
     vm.logout = logout;
     vm.isAuthenticated = isAuthenticated;
 
-    function authenticate(username, password) {
+    function authenticate() {
         //temp mock:
 
-        // console.log(credentials);
-        // return true;
-
+        console.log();
+        return true;
+/*
         if (username != undefined && password != undefined) {
             return $http.get('user', {
                 'headers': {authorization: "Basic " + btoa(username + ":" + password)}
@@ -30,7 +28,19 @@ function authService($http) {
                 console.log(error);
                 authenticated = false;
             })
-        }
+        }*/
+    }
+
+    function sendRequest() {
+        return $http({
+            method: 'GET',
+            url: '/performLogin',
+            params: {'remember-me' : 'true', 'no-elo' : 'wartosc' }
+        }).then(function (data) {
+            return data.data;
+        }).catch(function (error) {
+            throw error;
+        })
     }
 
     function logout() {

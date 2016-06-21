@@ -1,54 +1,40 @@
-<!DOCTYPE html>
-<html>
-  	<head>
-        <title>Job scheduler - sign in</title>
-		<link rel="stylesheet" href="../../libs/angular-material/angular-material.css">
-        <link rel="stylesheet" href="../../css/login.css">
-        <link rel="stylesheet" href="../../css/icons.css">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-  	</head>
-	<body>
-        <div ng-app="app" ng-controller="loginController as ctrl" ng-cloak="" >
-            <md-toolbar>
-                <div layout="row">
-                    <md-toolbar-filler layout="" layout-align="center center">
-                        <i class="material-icons md-48">sort</i>
-                    </md-toolbar-filler>
-                    <h4>
-                        JOB SCHEDULER
-                    </h4>
-                </div>
+<script type="text/javascript">
+    if(typeof appModule === 'undefined'){
+        document.location.href="/";
+    }
+</script>
+<div ng-cloak="">
+    <md-toolbar>
+        <div layout="row">
+            <md-toolbar-filler layout="" layout-align="center center">
+                <i class="material-icons md-48">sort</i>
+            </md-toolbar-filler>
+            <h4>
+                JOB SCHEDULER
+            </h4>
+        </div>
+    </md-toolbar>
+    <div id="login-container" layout="column" layout-align="center center" ng-cloak>
+        <div id="login-frame" md-whiteframe="12" layout="column">
+            <md-toolbar class="radius-inherit" layout-align="center center">
+                <h4>Sign in</h4>
             </md-toolbar>
-            <div id="login-container" layout="column" layout-align="center center" ng-cloak>
-                <div id="login-frame" md-whiteframe="12" layout="column">
-                    <md-toolbar class="radius-inherit" layout-align="center center">
-                        <h4>Sign in</h4>
-                    </md-toolbar>
-                    <div layout="column" layout-margin layout-padding>
-                        <md-input-container>
-                            <label  md-colors="{color: 'accent-500'}">Your Login</label>
-                            <input ng-model="ctrl.credentials.login">
-                        </md-input-container>
-                        <md-input-container>
-                            <label  md-colors="{color: 'accent-500'}">Password</label>
-                            <input ng-model="ctrl.credentials.password">
-                        </md-input-container>
-                        <md-checkbox style="margin-left: 8px">
-                            Remember me
-                        </md-checkbox>
-                        <md-button class="md-raised md-primary" ng-click="ctrl.signIn()">
-                            Sign in
-                        </md-button>
-                    </div>
-                </div>
+            <div layout="column" layout-margin layout-padding>
+                <md-input-container>
+                    <label md-colors="{color: 'accent-500'}">Your Login</label>
+                    <input ng-model="ctrl.credentials.login">
+                </md-input-container>
+                <md-input-container>
+                    <label md-colors="{color: 'accent-500'}">Password</label>
+                    <input ng-model="ctrl.credentials.password">
+                </md-input-container>
+                <md-checkbox style="margin-left: 8px">
+                    Remember me
+                </md-checkbox>
+                <md-button class="md-raised md-primary" ng-click="ctrl.signIn()">
+                    Sign in
+                </md-button>
             </div>
         </div>
-		<script src="../../libs/angular/angular.js"></script>
-		<script src="../../libs/angular-animate/angular-animate.js"></script>
-		<script src="../../libs/angular-aria/angular-aria.js"></script>
-		<script src="../../libs/angular-material/angular-material.js"></script>
-        <script src="../../js/app.module.js"></script>
-        <script src="../../js/controllers/login.controller.js"></script>
-        <script src="../../js/services/authentication.service.js"></script>
-    </body>
-</html>
+    </div>
+</div>

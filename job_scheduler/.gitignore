@@ -5,5 +5,7 @@
 /WebContent/vis/
 /WebContent/WEB-INF/lib/
 /.settings/
+/.idea/
 /WebContent/.idea/
 /WebContent/libs/
+/job_scheduler.iml
