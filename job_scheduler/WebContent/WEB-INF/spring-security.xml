@@ -16,8 +16,8 @@
         <intercept-url pattern="/js/**" access="permitAll"/>
         <intercept-url pattern="/libs/**" access="permitAll"/>
         <intercept-url pattern="/common/**" access="permitAll"/>
-        <intercept-url pattern="/html/views/app.html" access="isAuthenticated()"/>
-        <!--<intercept-url pattern="/**" access="isAuthenticated()"/>-->
+        <!--<intercept-url pattern="/html/views/app.html" access="isAuthenticated()"/>-->
+        <intercept-url pattern="/**" access="permitAll"/>
         <csrf disabled="true"/>
         <http-basic entry-point-ref="restBasicAuthenticationEntryPoint"/>
     </http>

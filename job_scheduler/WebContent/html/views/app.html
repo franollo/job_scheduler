@@ -20,13 +20,13 @@
                         </button>
                         <md-menu-content>
                             <md-menu-item>
-                                <md-button ng-click="ctrl.showNewOrder($event)">New order</md-button>
+                                <md-button ng-click="ctrl.dialogNewOrder()">New order</md-button>
                             </md-menu-item>
                             <md-menu-item>
-                                <md-button ng-click="ctrl.openOrder($event)">Open order</md-button>
+                                <md-button ng-click="ctrl.dialogOpenOrder()">Open order</md-button>
                             </md-menu-item>
                             <md-menu-item>
-                                <md-button ng-click="ctrl.showNewOrder($event)">Save as</md-button>
+                                <md-button ng-click="ctrl.showNewOrder()">Save as</md-button>
                             </md-menu-item>
                             <md-menu-item>
                                 <md-button print-btn>Print</md-button>
@@ -39,7 +39,7 @@
                         </button>
                         <md-menu-content>
                             <md-menu-item>
-                                <md-button ng-click="ctrl.showNewOrder($event)">Show toolbar</md-button>
+                                <md-button ng-click="ctrl.toggleToolbar()">Show toolbar</md-button>
                             </md-menu-item>
                             <md-menu-item>
                                 <md-button ng-click="ctrl.errorTest()">Show resources</md-button>
@@ -58,10 +58,10 @@
                         </button>
                         <md-menu-content>
                             <md-menu-item>
-                                <md-button ng-click="ctrl.editOrder()">Edit</md-button>
+                                <md-button ng-click="ctrl.dialogEditOrder()">Edit</md-button>
                             </md-menu-item>
                             <md-menu-item>
-                                <md-button ng-click="ctrl.addJobsToOrder()">Add jobs</md-button>
+                                <md-button ng-click="ctrl.dialogAddJobsToOrder()">Add jobs</md-button>
                             </md-menu-item>
                             <md-menu-item>
                                 <md-button ng-click="ctrl.showNewOrder($event)">Delete job</md-button>
@@ -134,7 +134,7 @@
             </div>
         </div>
     </md-toolbar>
-    <md-toolbar class="js-toolbar" layout="row" ng-hide="isSmall">
+    <md-toolbar class="js-toolbar" layout="row" ng-show="ctrl.showToolbar">
         <div class="js-button" ng-click="ctrl.undo()">
             <md-tooltip md-direction="bottom" md-delay="1000">
                 Undo
@@ -178,7 +178,7 @@
             <i class="material-icons md-18">add</i>
         </div>
     </md-toolbar>
-    <div id="js-page-container" ng-class="{'small':ctrl.isSmall, 'big':!ctrl.isSmall}">
+    <div id="js-page-container" ng-class="{'big':ctrl.showToolbar, 'small':!ctrl.showToolbar}">
         <div id="js-workspace" class="tabsdemoStaticTabs">
             <md-tabs class="md-accent main-tabs" md-align-tabs="bottom" md-stretch-tabs='always'>
                 <md-tab>

@@ -24,7 +24,7 @@ function mainController($document,
     vm.snapping = true;
     vm.timelineLocked = false;
     vm.timelineCurrentTime = true;
-    vm.hide = hide;
+    vm.toggleToolbar = toggleToolbar;
     vm.deleteJob = deleteJob;
     vm.deleteResource = deleteResource;
     vm.updateJob = updateJob;
@@ -47,12 +47,12 @@ function mainController($document,
     vm.orders = [];
     vm.user = {};
     vm.selectedIndex = 1;
-    vm.isSmall = false;
+    vm.showToolbar = true;
 
     timelineService.init("js-timeline");
 
-    function hide() {
-        vm.isSmall = !vm.isSmall;
+    function toggleToolbar() {
+        vm.showToolbar = !vm.showToolbar;
     }
 
     function deleteJob(job) {
@@ -208,7 +208,7 @@ function mainController($document,
             locals: {dataToPass: vm.resources},
             controller: dialogsService.DialogController1,
             controllerAs: 'ctrl',
-            templateUrl: '../dialogs/add_job.html',
+            templateUrl: 'html/dialogs/add_job.html',
             parent: angular.element(document.body),
             clickOutsideToClose: true
         }).then(function (answer) {
@@ -222,7 +222,7 @@ function mainController($document,
         $mdDialog.show({
             controller: dialogsService.DialogController4,
             controllerAs: 'ctrl',
-            templateUrl: '../dialogs/new_resource.html',
+            templateUrl: 'html/dialogs/new_resource.html',
             parent: angular.element(document.body),
             clickOutsideToClose: true
         }).then(function (answer) {
@@ -237,7 +237,7 @@ function mainController($document,
             locals: {dataToPass: vm.jobs},
             controller: dialogsService.newOrderController,
             controllerAs: 'ctrl',
-            templateUrl: '../dialogs/new_order.html',
+            templateUrl: 'html/dialogs/new_order.html',
             parent: angular.element(document.body),
             clickOutsideToClose: true
         }).then(function (answer) {
@@ -252,7 +252,7 @@ function mainController($document,
             locals: {dataToPass: vm.jobs},
             controller: dialogsService.addJobOrderController,
             controllerAs: 'ctrl',
-            templateUrl: '../dialogs/add_job_order.html',
+            templateUrl: 'html/dialogs/add_job_order.html',
             parent: angular.element(document.body),
             clickOutsideToClose: true
         }).then(function (answer) {
@@ -267,7 +267,7 @@ function mainController($document,
             locals: {dataToPass: vm.order},
             controller: dialogsService.editOrderController,
             controllerAs: 'ctrl',
-            templateUrl: '../dialogs/edit_order.html',
+            templateUrl: 'html/dialogs/edit_order.html',
             parent: angular.element(document.body),
             clickOutsideToClose: true
         }).then(function (answer) {
@@ -281,7 +281,7 @@ function mainController($document,
         $mdDialog.show({
             controller: dialogsService.openOrderController,
             controllerAs: 'ctrl',
-            templateUrl: '../dialogs/open_order.html',
+            templateUrl: 'html/dialogs/open_order.html',
             parent: angular.element(document.body),
             clickOutsideToClose: true
         }).then(function (answer) {
