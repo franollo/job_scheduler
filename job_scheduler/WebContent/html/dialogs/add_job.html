@@ -1,79 +1,81 @@
 <md-dialog ng-cloak>
     <md-toolbar>
-      <div class="md-toolbar-tools">
-        <h2>Add new Job</h2>
-        <span flex></span>
-        <md-button class="md-icon-button" ng-click="cancel()">
-          <i class="material-icons md-18">close</i>
-        </md-button>
-      </div>
+        <div class="md-toolbar-tools">
+            <h2>Add new Job</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="cancel()">
+                <i class="material-icons md-18">close</i>
+            </md-button>
+        </div>
     </md-toolbar>
 
-	<md-dialog-content style="max-width:800px;max-height:810px; min-width:550px ">
-		<md-tabs md-dynamic-height md-border-bottom>
-			<md-tab label="general">
-		    	<md-content flex layout-padding>
-					<div flex layout="row" layout-align="center center" >
-				    	<h6 flex="50" class="md-subhead" style="margin:0px; text-align: center;">info</h6>
-				     	<h6 flex="50"class="md-subhead" style="margin:0px; text-align: center;">select resources</h6>
-				     	<h6 flex="50" ng-show="job.order" class="md-subhead" style="margin:0px; text-align: center;">order resources</h6>
-					</div>
-					<md-divider style="padding:0px"></md-divider>
-				   <div flex layout="row" layout-padding>
-				     <md-content flex="50" layout="column" layout-align="start start">
-				       <md-input-container>
-				         <label>Job name</label>
-				         <input type="text" ng-model="job.name">
-				       </md-input-container>
-				       <md-input-container>
-				         <label>Description</label>
-				         <input type="text" ng-model="job.description">
-				       </md-input-container>
-				       <md-checkbox ng-model="job.order">
-				         Tasks in order
-				      </md-checkbox>
-				     </md-content>
-				     <md-content flex="50" layout="column" layout-align="start start" style="max-height: 273px">
-				     	<div ng-repeat="task in dad.tasks">
-					       	<md-checkbox ng-checked="exists(task, selected)" ng-click="toggle(task, selected)">
-					       		{{task.name}}
-					       	</md-checkbox>
-					 	</div>
-				      </md-content>
-				    	<md-content flex="50" layout="column" layout-align="center center" ng-show="job.order" style="max-height: 273x">
-				          	<div class="sortable-row" as-sortable="board.dragControlListeners" data-ng-model="selected" >
-				 				<div ng-repeat="task in selected" as-sortable-item>
-				 				    <div as-sortable-item-handle class="sortable">
-				 				    <h6 class="md-subhead" style="margin:0px; text-align: center;">
-				    				{{task.name}}
-				    				</h6>
-				    				</div>
-				 				</div>
-							</div>
-				      	</md-content>
-					</div>
-				</md-content>
-			</md-tab>
-			<md-tab label="durations">
-			    <md-content layout="column" layout-padding ng-repeat="task in selected">
-			       	<div layout="row">
-			       		<md-content flex>
-			       			{{task.name}}
-			       		</md-content>
-			       		<md-content flex>
-        					<input type="time" step="1" ng-model="task.duration" style="border: none;">
-        				</md-content>
-				 	</div>
-					<md-divider ng-if="!$last" style="padding:0px"></md-divider>
-			     </md-content>
-			</md-tab>
-		</md-tabs>
+    <md-dialog-content style="max-width:800px;max-height:810px; min-width:550px ">
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="general">
+                <md-content flex layout-padding>
+                    <div flex layout="row" layout-align="center center">
+                        <h6 flex="50" class="md-subhead" style="margin:0px; text-align: center;">info</h6>
+                        <h6 flex="50" class="md-subhead" style="margin:0px; text-align: center;">select resources</h6>
+                        <h6 flex="50" ng-show="job.order" class="md-subhead" style="margin:0px; text-align: center;">
+                            order resources</h6>
+                    </div>
+                    <md-divider style="padding:0px"></md-divider>
+                    <div flex layout="row" layout-padding>
+                        <md-content flex="50" layout="column" layout-align="start start">
+                            <md-input-container>
+                                <label>Job name</label>
+                                <input type="text" ng-model="job.name">
+                            </md-input-container>
+                            <md-input-container>
+                                <label>Description</label>
+                                <input type="text" ng-model="job.description">
+                            </md-input-container>
+                            <md-checkbox ng-model="job.order">
+                                Tasks in order
+                            </md-checkbox>
+                        </md-content>
+                        <md-content flex="50" layout="column" layout-align="start start" style="max-height: 273px">
+                            <div ng-repeat="task in dad.tasks">
+                                <md-checkbox ng-checked="exists(task, selected)" ng-click="toggle(task, selected)">
+                                    {{task.name}}
+                                </md-checkbox>
+                            </div>
+                        </md-content>
+                        <md-content flex="50" layout="column" layout-align="center center" ng-show="job.order"
+                                    style="max-height: 273x">
+                            <div class="sortable-row" as-sortable="board.dragControlListeners" data-ng-model="selected">
+                                <div ng-repeat="task in selected" as-sortable-item>
+                                    <div as-sortable-item-handle class="sortable">
+                                        <h6 class="md-subhead" style="margin:0px; text-align: center;">
+                                            {{task.name}}
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </md-content>
+                    </div>
+                </md-content>
+            </md-tab>
+            <md-tab label="durations">
+                <md-content layout="column" layout-padding ng-repeat="task in selected">
+                    <div layout="row">
+                        <md-content flex>
+                            {{task.name}}
+                        </md-content>
+                        <md-content flex>
+                            <input type="time" step="1" ng-model="task.duration" style="border: none;">
+                        </md-content>
+                    </div>
+                    <md-divider ng-if="!$last" style="padding:0px"></md-divider>
+                </md-content>
+            </md-tab>
+        </md-tabs>
     </md-dialog-content>
 
     <md-dialog-actions layout="row">
-      <span flex></span>
-      <md-button class="md-raised md-accent" ng-click="answer(dad.tasks, dad.jobName)">
-        finished
-      </md-button>
+        <span flex></span>
+        <md-button class="md-raised md-accent" ng-click="answer(dad.tasks, dad.jobName)">
+            finished
+        </md-button>
     </md-dialog-actions>
 </md-dialog>

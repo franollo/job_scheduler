@@ -4,53 +4,53 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans 
        					http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
 
-	<bean id="dataSource" 
-      	class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-      	<property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-      	<property name="url" value="jdbc:mysql://localhost:3306/scheduler_db"/>
-      	<property name="username" value="app"/>
-      	<property name="password" value="s3cret"/>
-   	</bean>
-   	
-   	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
-   		<constructor-arg ref="dataSource" />
-   	</bean>
-   	
-   	<bean id="resourceDAO" class="com.marcin.dao.implementation.JdbcResourceDAO">
-		<property name="dataSource" ref="dataSource" />
-		<property name="jdbcTemplate" ref="jdbcTemplate" />
-	</bean>
-	
-	<bean id="userDAO" class="com.marcin.dao.implementation.JdbcUserDAO">
-		<property name="dataSource" ref="dataSource" />
-		<property name="jdbcTemplate" ref="jdbcTemplate" />
-	</bean>
-	
-	<bean id="orderDAO" class="com.marcin.dao.implementation.JdbcOrderDAO">
-		<property name="dataSource" ref="dataSource" />
-		<property name="jdbcTemplate" ref="jdbcTemplate" />
-	</bean>
-	
-	<bean id="jobDAO" class="com.marcin.dao.implementation.JdbcJobDAO">
-		<property name="dataSource" ref="dataSource" />
-		<property name="jdbcTemplate" ref="jdbcTemplate" />
-	</bean>
-	
-	<bean id="taskDAO" class="com.marcin.dao.implementation.JdbcTaskDAO">
-		<property name="dataSource" ref="dataSource" />
-		<property name="jdbcTemplate" ref="jdbcTemplate" />
-	</bean>
-	
-	<bean id="itemDAO" class="com.marcin.dao.implementation.JdbcItemDAO">
-		<property name="dataSource" ref="dataSource" />
-		<property name="jdbcTemplate" ref="jdbcTemplate" />
-	</bean>
-	
-	<bean id="restAuthenticationEntryPoint" class="com.marcin.security.RestAuthenticationEntryPoint">
-	</bean>
-	
-	<bean id="restBasicAuthenticationEntryPoint" class="com.marcin.security.RestBasicAuthenticationEntryPoint">
-		<constructor-arg value="RealmName" />
-	</bean>
+    <bean id="dataSource"
+          class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/scheduler_db"/>
+        <property name="username" value="app"/>
+        <property name="password" value="s3cret"/>
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
+        <constructor-arg ref="dataSource"/>
+    </bean>
+
+    <bean id="resourceDAO" class="com.marcin.dao.implementation.JdbcResourceDAO">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+
+    <bean id="userDAO" class="com.marcin.dao.implementation.JdbcUserDAO">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+
+    <bean id="orderDAO" class="com.marcin.dao.implementation.JdbcOrderDAO">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+
+    <bean id="jobDAO" class="com.marcin.dao.implementation.JdbcJobDAO">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+
+    <bean id="taskDAO" class="com.marcin.dao.implementation.JdbcTaskDAO">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+
+    <bean id="itemDAO" class="com.marcin.dao.implementation.JdbcItemDAO">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jdbcTemplate" ref="jdbcTemplate"/>
+    </bean>
+
+    <bean id="restAuthenticationEntryPoint" class="com.marcin.security.RestAuthenticationEntryPoint">
+    </bean>
+
+    <bean id="restBasicAuthenticationEntryPoint" class="com.marcin.security.RestBasicAuthenticationEntryPoint">
+        <constructor-arg value="RealmName"/>
+    </bean>
 
 </beans>

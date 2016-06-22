@@ -1,35 +1,35 @@
 <md-dialog ng-cloak>
-  <form>
-    <md-toolbar>
-      <div class="md-toolbar-tools">
-        <h2>Add jobs to order</h2>
-        <span flex></span>
-        <md-button class="md-icon-button" ng-click="cancel()">
-          <i class="material-icons md-18">close</i>
-        </md-button>
-      </div>
-    </md-toolbar>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Add jobs to order</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <i class="material-icons md-18">close</i>
+                </md-button>
+            </div>
+        </md-toolbar>
 
-    <md-dialog-content>
-      <div class="md-dialog-content">
-		<div layout="column">
-			<div ng-repeat="job in dno.jobs">
-		       	<md-checkbox ng-checked="exists(job, dno.selected)" ng-click="toggle(job, dno.selected)">
-		       		{{job.name}}
-		       	</md-checkbox>
-			</div>
-		</div>
-      </div>
-    </md-dialog-content>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <div layout="column">
+                    <div ng-repeat="job in dno.jobs">
+                        <md-checkbox ng-checked="exists(job, dno.selected)" ng-click="toggle(job, dno.selected)">
+                            {{job.name}}
+                        </md-checkbox>
+                    </div>
+                </div>
+            </div>
+        </md-dialog-content>
 
-    <md-dialog-actions layout="row">
-      <span flex></span>
-      <md-button class="md-raised md-accent" ng-click="cancel()">
-        cancel
-      </md-button>
-      <md-button class="md-raised md-accent" ng-click="answer(dno.orderNam, dno.startTime, dno.startDate)">
-        add
-      </md-button>
-    </md-dialog-actions>
-  </form>
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button class="md-raised md-accent" ng-click="cancel()">
+                cancel
+            </md-button>
+            <md-button class="md-raised md-accent" ng-click="answer(dno.orderNam, dno.startTime, dno.startDate)">
+                add
+            </md-button>
+        </md-dialog-actions>
+    </form>
 </md-dialog>

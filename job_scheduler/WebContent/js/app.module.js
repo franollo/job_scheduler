@@ -2,7 +2,7 @@ var appModule = angular
     .module('app', ['ngMaterial', 'ngRoute'])
     .config(app);
 
-function app($mdThemingProvider, $routeProvider, $httpProvider, $interpolateProvider) {
+function app($mdThemingProvider, $routeProvider, $httpProvider) {
     $mdThemingProvider
         .theme('default')
         .primaryPalette('light-green', {'default': '900'})

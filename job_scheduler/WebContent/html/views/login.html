@@ -1,6 +1,6 @@
 <script type="text/javascript">
-    if(typeof appModule === 'undefined'){
-        document.location.href="/";
+    if (typeof appModule === 'undefined') {
+        document.location.href = "/";
     }
 </script>
 <div ng-cloak="">
@@ -22,15 +22,18 @@
             <div layout="column" layout-margin layout-padding>
                 <md-input-container>
                     <label md-colors="{color: 'accent-500'}">Your Login</label>
-                    <input ng-model="ctrl.credentials.login">
+                    <input ng-model="ctrl.credentials.username">
                 </md-input-container>
                 <md-input-container>
                     <label md-colors="{color: 'accent-500'}">Password</label>
                     <input ng-model="ctrl.credentials.password">
                 </md-input-container>
-                <md-checkbox style="margin-left: 8px">
+                <md-checkbox ng-model="ctrl.rememberMe" style="margin-left: 8px">
                     Remember me
                 </md-checkbox>
+                <h4 ng-show="ctrl.badCredentials" md-colors="{color: 'red'}">
+                    Bad username or password
+                </h4>
                 <md-button class="md-raised md-primary" ng-click="ctrl.signIn()">
                     Sign in
                 </md-button>

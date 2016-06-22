@@ -1,53 +1,53 @@
 <md-dialog ng-cloak>
-  <form>
-    <md-toolbar>
-      <div class="md-toolbar-tools">
-        <h2>Edit order</h2>
-        <span flex></span>
-        <md-button class="md-icon-button" ng-click="cancel()">
-          <i class="material-icons md-18">close</i>
-        </md-button>
-      </div>
-    </md-toolbar>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Edit order</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="cancel()">
+                    <i class="material-icons md-18">close</i>
+                </md-button>
+            </div>
+        </md-toolbar>
 
-    <md-dialog-content>
-      <div class="md-dialog-content">
-		<div layout="column">
-			<div layout="row">
-		        <md-input-container flex>
-		          <label>Order name</label>
-		          <input type="text" ng-model="order.name" 
-		          					ng-change=""
-		          					ng-model-options="{debounce: 750}">
-		        </md-input-container flex>
-				<md-input-container flex>
-		          <label>Description</label>
-		          <input type="text" ng-model="order.description" 
-		          					ng-change=""
-		          					ng-model-options="{debounce: 750}">
-		        </md-input-container flex>
-        	</div>
-        	<div layout="row">
-		        <md-input-container flex>
-		          <label>Start time</label>
-		          <input type="time" step="1" ng-model="DEO.startTime">
-		        </md-input-container flex>
-		        <md-datepicker ng-model="DEO.startDate" md-placeholder="Start date">
-		        </md-datepicker>
-        	</div>
-		
-		</div>
-      </div>
-    </md-dialog-content>
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <div layout="column">
+                    <div layout="row">
+                        <md-input-container flex>
+                            <label>Order name</label>
+                            <input type="text" ng-model="order.name"
+                                   ng-change=""
+                                   ng-model-options="{debounce: 750}">
+                        </md-input-container flex>
+                        <md-input-container flex>
+                            <label>Description</label>
+                            <input type="text" ng-model="order.description"
+                                   ng-change=""
+                                   ng-model-options="{debounce: 750}">
+                        </md-input-container flex>
+                    </div>
+                    <div layout="row">
+                        <md-input-container flex>
+                            <label>Start time</label>
+                            <input type="time" step="1" ng-model="DEO.startTime">
+                        </md-input-container flex>
+                        <md-datepicker ng-model="DEO.startDate" md-placeholder="Start date">
+                        </md-datepicker>
+                    </div>
 
-    <md-dialog-actions layout="row">
-      <span flex></span>
-      <md-button class="md-raised md-accent" ng-click="cancel()">
-        cancel
-      </md-button>
-      <md-button class="md-raised md-accent" ng-click="answer()">
-        create
-      </md-button>
-    </md-dialog-actions>
-  </form>
+                </div>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button class="md-raised md-accent" ng-click="cancel()">
+                cancel
+            </md-button>
+            <md-button class="md-raised md-accent" ng-click="answer()">
+                create
+            </md-button>
+        </md-dialog-actions>
+    </form>
 </md-dialog>

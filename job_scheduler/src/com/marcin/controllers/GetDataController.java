@@ -1,7 +1,7 @@
 package com.marcin.controllers;
 
-import java.util.List;
-
+import com.marcin.dao.implementation.*;
+import com.marcin.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,96 +12,84 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.marcin.dao.implementation.JdbcItemDAO;
-import com.marcin.dao.implementation.JdbcJobDAO;
-import com.marcin.dao.implementation.JdbcOrderDAO;
-import com.marcin.dao.implementation.JdbcResourceDAO;
-import com.marcin.dao.implementation.JdbcTaskDAO;
-import com.marcin.dao.implementation.JdbcUserDAO;
-import com.marcin.model.Job;
-import com.marcin.model.Order;
-import com.marcin.model.Resource;
-import com.marcin.model.Task;
-import com.marcin.model.User;
-import com.marcin.model.VisContent;
- 
+import java.util.List;
+
 /**
  * @author Marcin Frankowski
- * 
  */
- 
+
 @RestController
 @RequestMapping("/getdata")
 public class GetDataController {
-	@Autowired
-	private JdbcResourceDAO resourceDAO;
-	
-	@Autowired
-	private JdbcUserDAO userDAO;
-	
-	@Autowired
-	private JdbcJobDAO jobDAO;
-    
-	@Autowired
-	private JdbcTaskDAO taskDAO;
-	
-	@Autowired
-	private JdbcOrderDAO orderDAO;
-	
-	@Autowired
-	private JdbcItemDAO itemDAO;
-	
+    @Autowired
+    private JdbcResourceDAO resourceDAO;
+
+    @Autowired
+    private JdbcUserDAO userDAO;
+
+    @Autowired
+    private JdbcJobDAO jobDAO;
+
+    @Autowired
+    private JdbcTaskDAO taskDAO;
+
+    @Autowired
+    private JdbcOrderDAO orderDAO;
+
+    @Autowired
+    private JdbcItemDAO itemDAO;
+
     @RequestMapping(value = "/orders", method = RequestMethod.GET)
     public List<Order> getOrders() {
-    	System.out.println("Debug Message from /orders");
-    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	    String name = auth.getName();
-    	return orderDAO.getUserOrders(name);
+        System.out.println("Debug Message from /orders");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        return orderDAO.getUserOrders(name);
     }
-	
+
     @RequestMapping(value = "/resources", method = RequestMethod.GET)
     public List<Resource> getResources() {
-    	System.out.println("Debug Message from /resources");
-    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	    String name = auth.getName();
-	    System.out.println(name);
-    	return resourceDAO.getUserResources(name);
+        System.out.println("Debug Message from /resources");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        System.out.println(name);
+        return resourceDAO.getUserResources(name);
     }
-    
+
     @RequestMapping(value = "/jobs", method = RequestMethod.GET)
     public List<Job> getJobs() {
-    	System.out.println("Debug Message from /jobs");
-    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	    String name = auth.getName();
-    	List<Job> jobs = jobDAO.getUserJobs(name);
-    	for (Job job : jobs) {
-    		List<Task> tasks = taskDAO.getTasksByJobId(job.getJobId());
-    		for (Task task : tasks) {
-    			task.setResource(resourceDAO.getByID(task.getResourceId()));
-    		}
-    		job.setTasks(tasks);
-    	}
-    	return jobs;	
+        System.out.println("Debug Message from /jobs");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        List<Job> jobs = jobDAO.getUserJobs(name);
+        for (Job job : jobs) {
+            List<Task> tasks = taskDAO.getTasksByJobId(job.getJobId());
+            for (Task task : tasks) {
+                task.setResource(resourceDAO.getByID(task.getResourceId()));
+            }
+            job.setTasks(tasks);
+        }
+        return jobs;
     }
-    
+
     @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
     public ResponseEntity<User> getUser() {
-    	System.out.println("Debug Message from /userinfo");
-    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	    String name = SecurityContextHolder.getContext().getAuthentication().getName();
-	    HttpStatus status = name != "anonymousUser" ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
-	    return new ResponseEntity<User>(userDAO.getUserByLogin(name), status);
+        System.out.println("Debug Message from /userinfo");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+        HttpStatus status = name != "anonymousUser" ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
+        return new ResponseEntity<User>(userDAO.getUserByLogin(name), status);
     }
-    
+
     @RequestMapping(value = "/order", method = RequestMethod.POST)
     public VisContent getOrder(@RequestBody int orderId) {
-    	System.out.println("Debug Message from /order");
-    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-	    String name = auth.getName();
-    	userDAO.setOrderInUse(name, orderId);
-		return new VisContent(itemDAO.getOrderItems(orderId), 
-							resourceDAO.getOrderGroups(orderId), 
-							orderDAO.getOrder(orderId));
+        System.out.println("Debug Message from /order");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        userDAO.setOrderInUse(name, orderId);
+        return new VisContent(itemDAO.getOrderItems(orderId),
+                resourceDAO.getOrderGroups(orderId),
+                orderDAO.getOrder(orderId));
     }
 }
 
