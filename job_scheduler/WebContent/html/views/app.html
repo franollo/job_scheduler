@@ -135,6 +135,9 @@
         </div>
     </md-toolbar>
     <md-toolbar class="js-toolbar" layout="row" ng-show="ctrl.showToolbar">
+        <div class="js-button" ng-click="ctrl.newPerson()">
+            <i class="material-icons md-18">undo</i>
+        </div>
         <div class="js-button" ng-click="ctrl.undo()">
             <md-tooltip md-direction="bottom" md-delay="1000">
                 Undo

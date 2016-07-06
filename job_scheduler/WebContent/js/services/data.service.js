@@ -20,9 +20,13 @@ function dataService($http) {
     vm.getOrders = getOrders;
     vm.openOrder = openOrder;
     vm.errorTest = errorTest;
-
+    vm.newPerson = newPerson;
     function newOrder(order) {
         return post("data/neworder", order);
+    }
+
+    function newPerson(order) {
+        return post("data/person", order);
     }
 
     function updateOrder(order) {

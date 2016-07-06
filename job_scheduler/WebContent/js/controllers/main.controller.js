@@ -42,6 +42,7 @@ function mainController($document,
     vm.logout = logout;
     vm.undo = undo;
     vm.redo = redo;
+    vm.newPerson = newPerson;
     vm.resources = [];
     vm.jobs = [];
     vm.orders = [];
@@ -53,6 +54,11 @@ function mainController($document,
 
     function toggleToolbar() {
         vm.showToolbar = !vm.showToolbar;
+    }
+    
+    function newPerson() {
+        var person = {id: null, name: 'Marcin', email: 'mail@mail'};
+        dataService.newPerson(person);
     }
 
     function deleteJob(job) {

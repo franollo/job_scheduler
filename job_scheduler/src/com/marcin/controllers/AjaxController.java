@@ -1,5 +1,6 @@
 package com.marcin.controllers;
 
+import com.marcin.dao.PersonDao;
 import com.marcin.dao.implementation.*;
 import com.marcin.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,11 @@ import java.util.Map;
  */
 
 @Controller
-@RequestMapping("/ajax")
+@RequestMapping("/data")
 public class AjaxController {
+    @Autowired
+    private PersonDao personDao;
+
     @Autowired
     private JdbcOrderDAO jdbcOrderDAO;
 
@@ -240,5 +244,15 @@ public class AjaxController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         jdbcItemDAO.updateItem(item, name);
+    }
+
+    @RequestMapping(value = "/person", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    void deleteResource(@RequestBody Person person) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        personDao.insert(person);
+       // personDao.sayHey();
     }
 }
