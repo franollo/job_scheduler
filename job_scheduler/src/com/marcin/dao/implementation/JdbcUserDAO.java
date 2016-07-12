@@ -4,9 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Map;
-
-import javax.sql.DataSource;
 
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
@@ -14,13 +11,13 @@ import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 
 import com.marcin.dao.DAO;
 import com.marcin.dao.UserDAO;
-import com.marcin.model.User;
+import com.marcin.model.UserOld;
 
 public class JdbcUserDAO extends DAO implements UserDAO {
 
 
     @Override
-    public User getUserByLogin(String login) {
+    public UserOld getUserByLogin(String login) {
         String sql = "SELECT username, first_name, surname FROM users WHERE username = ?";
 
         Connection conn = null;
@@ -29,10 +26,10 @@ public class JdbcUserDAO extends DAO implements UserDAO {
             conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, login);
-            User user = null;
+            UserOld user = null;
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                user = new User(
+                user = new UserOld(
                         rs.getString("username"),
                         rs.getString("first_name"),
                         rs.getString("surname")

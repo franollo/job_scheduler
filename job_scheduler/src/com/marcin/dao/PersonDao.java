@@ -21,6 +21,7 @@ public class PersonDao {
 //        this.entityManager = entityManager;
 //    }
 
+
     public void insert(Person person) {
         entityManager.persist(person);
     }

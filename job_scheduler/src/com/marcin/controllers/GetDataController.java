@@ -73,12 +73,12 @@ public class GetDataController {
     }
 
     @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
-    public ResponseEntity<User> getUser() {
+    public ResponseEntity<UserOld> getUser() {
         System.out.println("Debug Message from /userinfo");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = SecurityContextHolder.getContext().getAuthentication().getName();
         HttpStatus status = name != "anonymousUser" ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
-        return new ResponseEntity<User>(userDAO.getUserByLogin(name), status);
+        return new ResponseEntity<UserOld>(userDAO.getUserByLogin(name), status);
     }
 
     @RequestMapping(value = "/order", method = RequestMethod.POST)

@@ -1,38 +1,54 @@
 package com.marcin.model;
 
+import javax.persistence.*;
+
+/**
+ * Created by Marcin Frankowski on 12.07.2016.
+ */
+
+@Entity
+@Table(name = "USERS")
 public class User {
-    private String login;
-    private String name;
-    private String surname;
+    private int userId;
+    private String username;
+    private String firstName;
+    private String lastName;
 
-    public User(String login, String name, String surname) {
-        this.login = login;
-        this.name = name;
-        this.surname = surname;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "USERS")
+    public int getUserId() {
+        return userId;
     }
 
-
-    public String getLogin() {
-        return login;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    @Column(name = "USERNAME")
+    public String getUsername() {
+        return username;
     }
 
-    public String getName() {
-        return name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    @Column(name = "FIRST_NAME")
+    public String getFirstName() {
+        return firstName;
     }
 
-    public String getSurname() {
-        return surname;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    @Column(name = "LAST_NAME")
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
     }
 }
