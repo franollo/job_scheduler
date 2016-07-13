@@ -55,11 +55,6 @@
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
     </bean>
 
-    <bean id="userDAO" class="com.marcin.dao.implementation.JdbcUserDAO">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="jdbcTemplate" ref="jdbcTemplate"/>
-    </bean>
-
     <bean id="orderDAO" class="com.marcin.dao.implementation.JdbcOrderDAO">
         <property name="dataSource" ref="dataSource"/>
         <property name="jdbcTemplate" ref="jdbcTemplate"/>
@@ -89,4 +84,6 @@
     <bean id="personDao" class="com.marcin.dao.PersonDao" />
 
     <bean id="productOperationDAO" class="com.marcin.dao.ProductOperationDAO" />
+
+    <bean id="userDAO" class="com.marcin.dao.implementation.HibernateUserDAO" />
 </beans>

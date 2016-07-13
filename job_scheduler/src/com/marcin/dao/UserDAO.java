@@ -1,9 +1,7 @@
 package com.marcin.dao;
 
-import com.marcin.model.UserOld;
+import com.marcin.model.User;
 
 public interface UserDAO {
-    public UserOld getUserByLogin(String login);
-
-    public int setOrderInUse(String username, int orderId);
+    public User getUserByLogin(String login);
 }

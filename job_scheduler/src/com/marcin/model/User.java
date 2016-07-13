@@ -14,9 +14,10 @@ public class User {
     private String firstName;
     private String lastName;
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "USERS")
+    @Column(name = "USER_ID")
     public int getUserId() {
         return userId;
     }

@@ -25,9 +25,6 @@ public class GetDataController {
     private JdbcResourceDAO resourceDAO;
 
     @Autowired
-    private JdbcUserDAO userDAO;
-
-    @Autowired
     private JdbcJobDAO jobDAO;
 
     @Autowired
@@ -72,21 +69,21 @@ public class GetDataController {
         return jobs;
     }
 
-    @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
-    public ResponseEntity<UserOld> getUser() {
-        System.out.println("Debug Message from /userinfo");
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = SecurityContextHolder.getContext().getAuthentication().getName();
-        HttpStatus status = name != "anonymousUser" ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
-        return new ResponseEntity<UserOld>(userDAO.getUserByLogin(name), status);
-    }
+//    @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
+//    public ResponseEntity<UserOld> getUser() {
+//        System.out.println("Debug Message from /userinfo");
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        String name = SecurityContextHolder.getContext().getAuthentication().getName();
+//        HttpStatus status = name != "anonymousUser" ? HttpStatus.OK : HttpStatus.UNAUTHORIZED;
+//        return new ResponseEntity<UserOld>(userDAO.getUserByLogin(name), status);
+//    }
 
     @RequestMapping(value = "/order", method = RequestMethod.POST)
     public VisContent getOrder(@RequestBody int orderId) {
         System.out.println("Debug Message from /order");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
-        userDAO.setOrderInUse(name, orderId);
+       // userDAO.setOrderInUse(name, orderId);
         return new VisContent(itemDAO.getOrderItems(orderId),
                 resourceDAO.getOrderGroups(orderId),
                 orderDAO.getOrder(orderId));

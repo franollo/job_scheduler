@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import com.marcin.model.User;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.jdbc.core.namedparam.SqlParameterSource;
 import org.springframework.jdbc.core.simple.SimpleJdbcCall;
@@ -17,7 +18,7 @@ public class JdbcUserDAO extends DAO implements UserDAO {
 
 
     @Override
-    public UserOld getUserByLogin(String login) {
+    public User getUserByLogin(String login) {
         String sql = "SELECT username, first_name, surname FROM users WHERE username = ?";
 
         Connection conn = null;
@@ -26,13 +27,13 @@ public class JdbcUserDAO extends DAO implements UserDAO {
             conn = dataSource.getConnection();
             PreparedStatement ps = conn.prepareStatement(sql);
             ps.setString(1, login);
-            UserOld user = null;
+            User user = null;
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
-                user = new UserOld(
-                        rs.getString("username"),
-                        rs.getString("first_name"),
-                        rs.getString("surname")
+                user = new User(
+//                        rs.getString("username"),
+//                        rs.getString("first_name"),
+//                        rs.getString("surname")
                 );
             }
             rs.close();
@@ -50,15 +51,4 @@ public class JdbcUserDAO extends DAO implements UserDAO {
             }
         }
     }
-
-    @Override
-    public int setOrderInUse(String username, int orderId) {
-        SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("set_in_use");
-        SqlParameterSource in = new MapSqlParameterSource()
-                .addValue("username", username)
-                .addValue("order_id", orderId);
-        jdbcCall.execute(in);
-        return 1;
-    }
-
 }

@@ -59,6 +59,7 @@ public class LoginController {
             SecurityContextHolder.getContext().setAuthentication(auth);
             rememberMeServices.loginSuccess(request, response, auth);
         } catch (BadCredentialsException e) {
+            e.printStackTrace();
             response.setStatus(422);
         }
     }

@@ -5,6 +5,7 @@ import com.marcin.dao.ProductOperationDAO;
 import com.marcin.dao.implementation.*;
 import com.marcin.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.dao.SystemWideSaltSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -48,6 +49,9 @@ public class AjaxController {
 
     @Autowired
     private JdbcTaskDAO jdbcTaskDAO;
+
+    @Autowired
+    private HibernateUserDAO userDAO;
 
     @RequestMapping(value = "/neworder", method = RequestMethod.POST)
     public
@@ -256,20 +260,21 @@ public class AjaxController {
     void deleteResource(@RequestBody Person person) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
-        Product product = new Product();
-        ResourceType resourceType = new ResourceType();
-        ProductOperation productOperation = new ProductOperation();
-        product.setProductId(1);
-        product.setName("rower");
-        product.setDescription("rower szosowy");
-        resourceType.setResourceTypeId(1);
-        resourceType.setName("tokarki");
-        productOperation.setName("spring");
-        productOperation.setDescription("test JPA");
-        productOperation.setDuration(10);
-        productOperation.setProduct(product);
-        productOperation.setResourceType(resourceType);
-        productOperationDAO.insert(productOperation);
+        User user = userDAO.getUserByLogin(name);
+//        Product product = new Product();
+//        ResourceType resourceType = new ResourceType();
+//        ProductOperation productOperation = new ProductOperation();
+//        product.setProductId(1);
+//        product.setName("rower");
+//        product.setDescription("rower szosowy");
+//        resourceType.setResourceTypeId(1);
+//        resourceType.setName("tokarki");
+//        productOperation.setName("spring");
+//        productOperation.setDescription("test JPA");
+//        productOperation.setDuration(10);
+//        productOperation.setProduct(product);
+//        productOperation.setResourceType(resourceType);
+//        productOperationDAO.insert(productOperation);
        // personDao.sayHey();
     }
 }
