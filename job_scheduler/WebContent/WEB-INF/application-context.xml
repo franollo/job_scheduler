@@ -15,7 +15,7 @@
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/scheduler_db"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/db_scheduler"/>
         <property name="username" value="app"/>
         <property name="password" value="s3cret"/>
     </bean>
@@ -88,4 +88,5 @@
 
     <bean id="personDao" class="com.marcin.dao.PersonDao" />
 
+    <bean id="productOperationDAO" class="com.marcin.dao.ProductOperationDAO" />
 </beans>

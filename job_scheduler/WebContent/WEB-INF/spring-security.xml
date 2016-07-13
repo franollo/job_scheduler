@@ -29,7 +29,9 @@
                                users-by-username-query=
                                        "select username, password, enabled from users where username = ?"
                                authorities-by-username-query=
-                                       "select username, role from user_roles where username = ?"/>
+                                       "select u.username, ur.role
+                                       from user_roles ur inner join users u on ur.user_id = u.user_id
+                                       where u.username = ?"/>
         </authentication-provider>
     </authentication-manager>
 

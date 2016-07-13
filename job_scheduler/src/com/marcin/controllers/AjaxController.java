@@ -1,6 +1,7 @@
 package com.marcin.controllers;
 
 import com.marcin.dao.PersonDao;
+import com.marcin.dao.ProductOperationDAO;
 import com.marcin.dao.implementation.*;
 import com.marcin.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,9 @@ import java.util.Map;
 public class AjaxController {
     @Autowired
     private PersonDao personDao;
+
+    @Autowired
+    private ProductOperationDAO productOperationDAO;
 
     @Autowired
     private JdbcOrderDAO jdbcOrderDAO;
@@ -252,7 +256,20 @@ public class AjaxController {
     void deleteResource(@RequestBody Person person) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
-        personDao.insert(person);
+        Product product = new Product();
+        ResourceType resourceType = new ResourceType();
+        ProductOperation productOperation = new ProductOperation();
+        product.setProductId(1);
+        product.setName("rower");
+        product.setDescription("rower szosowy");
+        resourceType.setResourceTypeId(1);
+        resourceType.setName("tokarki");
+        productOperation.setName("spring");
+        productOperation.setDescription("test JPA");
+        productOperation.setDuration(10);
+        productOperation.setProduct(product);
+        productOperation.setResourceType(resourceType);
+        productOperationDAO.insert(productOperation);
        // personDao.sayHey();
     }
 }

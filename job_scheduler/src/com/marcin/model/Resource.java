@@ -11,7 +11,6 @@ public class Resource {
     private String description;
     private int costPerHour;
     private int efficiency;
-    private boolean usagePlot;
     private Set<ProductOperation> productOperations;
 
     @Id
@@ -61,16 +60,7 @@ public class Resource {
         this.efficiency = efficiency;
     }
 
-    @Column(name = "USAGE_PLOT")
-    public boolean getUsagePlot() {
-        return usagePlot;
-    }
-
-    public void setUsagePlot(boolean usagePlot) {
-        this.usagePlot = usagePlot;
-    }
-
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "resource")
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "resourceType")
     public Set<ProductOperation> getProductOperations() {
         return productOperations;
     }

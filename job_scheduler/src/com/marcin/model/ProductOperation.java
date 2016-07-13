@@ -1,7 +1,6 @@
 package com.marcin.model;
 
 import javax.persistence.*;
-import java.time.*;
 
 /**
  * Created by Marcin Frankowski on 12.07.2016.
@@ -12,9 +11,10 @@ public class ProductOperation {
     private int productOperationId;
     private int operationNumber;
     private String name;
-    private Duration duration;
-    private Duration preparationDuration;
-    private Resource resource;
+    private String description;
+    private int duration;
+    private int preparationDuration;
+    private ResourceType resourceType;
     private Product product;
 
     @Id
@@ -46,31 +46,40 @@ public class ProductOperation {
         this.name = name;
     }
 
+    @Column(name = "DESCRIPTION")
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @Column(name = "DURATION")
-    public Duration getDuration() {
+    public int getDuration() {
         return duration;
     }
 
-    public void setDuration(Duration duration) {
+    public void setDuration(int duration) {
         this.duration = duration;
     }
 
     @Column(name = "PREPARATION_DURATION")
-    public Duration getPreparationDuration() {
+    public int getPreparationDuration() {
         return preparationDuration;
     }
 
-    public void setPreparationDuration(Duration preparationDuration) {
+    public void setPreparationDuration(int preparationDuration) {
         this.preparationDuration = preparationDuration;
     }
 
     @ManyToOne
-    public Resource getResource() {
-        return resource;
+    public ResourceType getResourceType() {
+        return resourceType;
     }
 
-    public void setResource(Resource resource) {
-        this.resource = resource;
+    public void setResourceType(ResourceType resourceType) {
+        this.resourceType = resourceType;
     }
 
     @ManyToOne
