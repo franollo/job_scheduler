@@ -13,6 +13,7 @@ public class User {
     private String username;
     private String firstName;
     private String lastName;
+    private int groupId;
 
 
     @Id
@@ -51,5 +52,14 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    @Column(name = "GROUP_ID")
+    public int getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
     }
 }

@@ -257,24 +257,26 @@ public class AjaxController {
     @RequestMapping(value = "/person", method = RequestMethod.POST)
     public
     @ResponseBody
-    void deleteResource(@RequestBody Person person) {
+    void deleteResource() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         User user = userDAO.getUserByLogin(name);
-//        Product product = new Product();
-//        ResourceType resourceType = new ResourceType();
-//        ProductOperation productOperation = new ProductOperation();
-//        product.setProductId(1);
-//        product.setName("rower");
-//        product.setDescription("rower szosowy");
-//        resourceType.setResourceTypeId(1);
-//        resourceType.setName("tokarki");
-//        productOperation.setName("spring");
-//        productOperation.setDescription("test JPA");
-//        productOperation.setDuration(10);
-//        productOperation.setProduct(product);
-//        productOperation.setResourceType(resourceType);
-//        productOperationDAO.insert(productOperation);
+        int groupId = user.getGroupId();
+
+        Product product = new Product();
+        ResourceType resourceType = new ResourceType();
+        ProductOperation productOperation = new ProductOperation();
+        product.setProductId(1);
+        product.setName("rower");
+        product.setDescription("rower szosowy");
+        resourceType.setResourceTypeId(1);
+        resourceType.setName("tokarki");
+        productOperation.setName("spring");
+        productOperation.setDescription("test JPA");
+        productOperation.setDuration(10);
+        productOperation.setProduct(product);
+        productOperation.setResourceType(resourceType);
+        productOperationDAO.insert(productOperation);
        // personDao.sayHey();
     }
 }

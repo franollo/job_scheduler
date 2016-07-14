@@ -1,6 +1,7 @@
 package com.marcin.model;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
@@ -11,7 +12,9 @@ public class Resource {
     private String description;
     private int costPerHour;
     private int efficiency;
-    private Set<ProductOperation> productOperations;
+    private LocalDateTime createdOn;
+    private LocalDateTime editedOn;
+    private Set<Item> items;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,12 +63,30 @@ public class Resource {
         this.efficiency = efficiency;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "resourceType")
-    public Set<ProductOperation> getProductOperations() {
-        return productOperations;
+    @Column(name = "CREATED_ON")
+    public LocalDateTime getCreatedOn() {
+        return createdOn;
     }
 
-    public void setProductOperations(Set<ProductOperation> productOperations) {
-        this.productOperations = productOperations;
+    public void setCreatedOn(LocalDateTime createdOn) {
+        this.createdOn = createdOn;
+    }
+
+    @Column(name = "EDITED_ON")
+    public LocalDateTime getEditedOn() {
+        return editedOn;
+    }
+
+    public void setEditedOn(LocalDateTime editedOn) {
+        this.editedOn = editedOn;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "resource")
+    public Set<Item> getItems() {
+        return items;
+    }
+
+    public void setItems(Set<Item> items) {
+        this.items = items;
     }
 }

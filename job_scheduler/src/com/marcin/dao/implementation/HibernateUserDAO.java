@@ -16,12 +16,17 @@ public class HibernateUserDAO implements UserDAO {
     private EntityManager entityManager;
 
     @Override
-    public User getUserByLogin(String login) {
+    public User getUserByLogin(String username) {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<User> criteriaQuery = criteriaBuilder.createQuery(User.class);
         Root<User> userRoot = criteriaQuery.from(User.class);
-        criteriaQuery.select(userRoot).where(criteriaBuilder.equal(userRoot.get("username"), login));
+        criteriaQuery.select(userRoot).where(criteriaBuilder.equal(userRoot.get("username"), username));
         TypedQuery<User> query = entityManager.createQuery(criteriaQuery);
         return query.getSingleResult();
+    }
+
+    @Override
+    public boolean isUsersObject(Object object, String username) {
+        return false;
     }
 }

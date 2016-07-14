@@ -13,6 +13,7 @@ public class Product {
     private String attribute2;
     private String attribute3;
     private Set<ProductOperation> productOperations;
+    private Set<OrderProduct> orderProducts;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -77,5 +78,14 @@ public class Product {
 
     public void setProductOperations(Set<ProductOperation> productOperations) {
         this.productOperations = productOperations;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
+    public Set<OrderProduct> getOrderProducts() {
+        return orderProducts;
+    }
+
+    public void setOrderProducts(Set<OrderProduct> orderProducts) {
+        this.orderProducts = orderProducts;
     }
 }

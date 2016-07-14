@@ -22,7 +22,7 @@ public class JdbcOrderDAO extends DAO implements OrderDAO {
         SqlParameterSource in = new MapSqlParameterSource()
                 .addValue("order_name", order.getName())
                 .addValue("description", order.getDescription())
-                .addValue("start_date", order.getStartDate())
+                //.addValue("start_date", order.getStart())
                 .addValue("username", username);
         Map<String, Object> out = jdbcCall.execute(in);
         return (int) out.get("order_id");
@@ -57,7 +57,7 @@ public class JdbcOrderDAO extends DAO implements OrderDAO {
                 .addValue("order_id", order.getOrderId())
                 .addValue("name", order.getName())
                 .addValue("description", order.getDescription())
-                .addValue("start_date", order.getStartDate())
+                //.addValue("start_date", order.getStartDate())
                 .addValue("username", username);
         jdbcCall.execute(in);
 

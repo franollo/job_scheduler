@@ -7,10 +7,10 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="PRODUCT_OPERATIONS")
-@AssociationOverrides({
-        @AssociationOverride(name = "resourceType", joinColumns = @JoinColumn(name = "RESOURCE_TYPE_ID")),
-        @AssociationOverride(name = "product", joinColumns = @JoinColumn(name = "PRODUCT_ID"))
-})
+//@AssociationOverrides({
+//        @AssociationOverride(name = "resourceType", joinColumns = @JoinColumn(name = "RESOURCE_TYPE_ID")),
+//        @AssociationOverride(name = "product", joinColumns = @JoinColumn(name = "PRODUCT_ID"))
+//})
 public class ProductOperation {
     private int productOperationId;
     private int operationNumber;
@@ -78,6 +78,7 @@ public class ProductOperation {
     }
 
     @ManyToOne
+    @JoinColumn(name = "RESOURCE_TYPE_ID")
     public ResourceType getResourceType() {
         return resourceType;
     }
@@ -87,6 +88,7 @@ public class ProductOperation {
     }
 
     @ManyToOne
+    @JoinColumn(name = "PRODUCT_ID")
     public Product getProduct() {
         return product;
     }

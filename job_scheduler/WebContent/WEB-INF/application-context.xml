@@ -83,7 +83,7 @@
 
     <bean id="personDao" class="com.marcin.dao.PersonDao" />
 
-    <bean id="productOperationDAO" class="com.marcin.dao.ProductOperationDAO" />
+    <bean id="productOperationDAO" class="com.marcin.dao.implementation.HibernateProductOperationDAO" />
 
     <bean id="userDAO" class="com.marcin.dao.implementation.HibernateUserDAO" />
 </beans>
