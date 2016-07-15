@@ -1,6 +1,7 @@
 package com.marcin.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * Created by Marcin Frankowski on 14.07.2016.
@@ -8,7 +9,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "ORDER_PRODUCTS")
-public class OrderProduct {
+public class OrderProduct implements Serializable{
     private Order order;
     private Product product;
     private int amount;

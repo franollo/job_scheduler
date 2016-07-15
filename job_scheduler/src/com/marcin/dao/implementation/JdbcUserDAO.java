@@ -12,7 +12,6 @@ import org.springframework.jdbc.core.simple.SimpleJdbcCall;
 
 import com.marcin.dao.DAO;
 import com.marcin.dao.UserDAO;
-import com.marcin.model.UserOld;
 
 public class JdbcUserDAO extends DAO implements UserDAO {
 
@@ -50,5 +49,10 @@ public class JdbcUserDAO extends DAO implements UserDAO {
                 }
             }
         }
+    }
+
+    @Override
+    public boolean isUsersObject(Object object, String username) {
+        return false;
     }
 }

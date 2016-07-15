@@ -24,12 +24,12 @@ public class JdbcItemDAO extends DAO implements ItemDAO {
     public void createNewItem(Item item, int orderId, int itemId) {
         MapSqlParameterSource parameters = new MapSqlParameterSource();
         parameters.addValue("item_id", itemId);
-        parameters.addValue("start_date", item.getStartDate());
-        parameters.addValue("end_date", item.getEndDate());
+        //parameters.addValue("start_date", item.getStartDate());
+        //parameters.addValue("end_date", item.getEndDate());
         parameters.addValue("resource_id", item.getResource().getResourceId());
-        parameters.addValue("job_id", item.getJob().getJobId());
+        //parameters.addValue("job_id", item.getJob().getJobId());
         parameters.addValue("order_id", orderId);
-        parameters.addValue("color", item.getColor());
+        //parameters.addValue("color", item.getColor());
         String sql = "insert into items values(:item_id, :start_date, :end_date, :resource_id, :job_id, :order_id, :color)";
         jdbcTemplate.update(sql, parameters);
     }
@@ -38,12 +38,12 @@ public class JdbcItemDAO extends DAO implements ItemDAO {
     public void createNewItem(Item item, int orderId) {
         SimpleJdbcCall jdbcCall = new SimpleJdbcCall(dataSource).withProcedureName("create_item");
         SqlParameterSource in = new MapSqlParameterSource()
-                .addValue("start_date", item.getStartDate())
-                .addValue("end_date", item.getEndDate())
+                //.addValue("start_date", item.getStartDate())
+                //.addValue("end_date", item.getEndDate())
                 .addValue("resource_id", item.getResource().getResourceId())
-                .addValue("job_id", item.getJob().getJobId())
-                .addValue("order_id", orderId)
-                .addValue("color", item.getColor());
+                //.addValue("job_id", item.getJob().getJobId())
+                .addValue("order_id", orderId);
+                //.addValue("color", item.getColor());
         jdbcCall.execute(in);
 
     }

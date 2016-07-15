@@ -36,7 +36,7 @@
     <bean id="entityManagerFactory"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="persistenceXmlLocation" value="classpath:META-INF/persistence.xml" />
-        <property name="persistenceUnitName" value="personPersistenceUnit" />
+        <property name="persistenceUnitName" value="applicationPersistenceUnit" />
         <property name="dataSource" ref="dataSource" />
         <property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
         <property name="jpaDialect" ref="jpaDialect" />
@@ -81,9 +81,7 @@
         <constructor-arg value="RealmName"/>
     </bean>
 
-    <bean id="personDao" class="com.marcin.dao.PersonDao" />
-
     <bean id="productOperationDAO" class="com.marcin.dao.implementation.HibernateProductOperationDAO" />
 
-    <bean id="userDAO" class="com.marcin.dao.implementation.HibernateUserDAO" />
+    <bean id="hibernateUserDAO" class="com.marcin.dao.implementation.HibernateUserDAO" />
 </beans>

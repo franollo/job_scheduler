@@ -1,6 +1,5 @@
 package com.marcin.controllers;
 
-import com.marcin.dao.PersonDao;
 import com.marcin.dao.ProductOperationDAO;
 import com.marcin.dao.implementation.*;
 import com.marcin.model.*;
@@ -29,8 +28,8 @@ import java.util.Map;
 @Controller
 @RequestMapping("/data")
 public class AjaxController {
-    @Autowired
-    private PersonDao personDao;
+//    @Autowired
+ //   private PersonDao personDao;
 
     @Autowired
     private ProductOperationDAO productOperationDAO;
@@ -53,109 +52,109 @@ public class AjaxController {
     @Autowired
     private HibernateUserDAO userDAO;
 
-    @RequestMapping(value = "/neworder", method = RequestMethod.POST)
-    public
-    @ResponseBody
-    VisContent newOrder(@RequestBody Order order) throws ParseException {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName();
-        String colors[] = {"red", "gold", "magenta", "red", "grey", "blue", "lightpink"};
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-        java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date parsedDate = formatter.parse(order.getStartDate());
-        order.setStartDate(formater.format(parsedDate));
-        int orderId = jdbcOrderDAO.createNewOrder(order, name);
-        Map<Integer, Date> endDates = new HashMap<Integer, Date>();
-        Map<Integer, Date> startDates = new HashMap<Integer, Date>();
-        Item item = new Item();
-        for (Job job : order.getJobs()) {
-            for (Task task : job.getTasks()) {
-                if (!endDates.containsKey(task.getResourceId())) {
-                    endDates.put(task.getResourceId(), parsedDate);
-                }
-            }
-        }
-        int i = 1;
-        for (Job job : order.getJobs()) {
-            for (Task task : job.getTasks()) {
-                startDates.put(task.getResourceId(), parsedDate);
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(parsedDate);
-                calendar.add(Calendar.SECOND, task.getSecondsDuration());
-                parsedDate = calendar.getTime();
-            }
-            Long diff = Long.MAX_VALUE;
-            for (Map.Entry<Integer, Date> entry : endDates.entrySet()) {
-                if (startDates.containsKey(entry.getKey())) {
-                    Long diffTmp = startDates.get(entry.getKey()).getTime() - entry.getValue().getTime();
-                    if (diffTmp < diff) {
-                        diff = diffTmp;
-                    }
-                }
-            }
-            for (Task task : job.getTasks()) {
-                parsedDate = startDates.get(task.getResourceId());
-                parsedDate = item.convertFromTask(task, job, parsedDate, diff);
-                endDates.put(task.getResourceId(), parsedDate);
-                item.setColor(colors[item.getJob().getJobId() % 6]);
-                jdbcItemDAO.createNewItem(item, orderId, i);
-                i++;
-            }
-            startDates.clear();
-        }
-        return new VisContent(jdbcItemDAO.getOrderItems(orderId),
-                jdbcResourceDAO.getOrderGroups(orderId),
-                jdbcOrderDAO.getOrder(orderId));
-    }
+//    @RequestMapping(value = "/neworder", method = RequestMethod.POST)
+//    public
+//    @ResponseBody
+//    VisContent newOrder(@RequestBody Order order) throws ParseException {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        String name = auth.getName();
+//        String colors[] = {"red", "gold", "magenta", "red", "grey", "blue", "lightpink"};
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+//        java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        Date parsedDate = formatter.parse(order.getStartDate());
+//        order.setStartDate(formater.format(parsedDate));
+//        int orderId = jdbcOrderDAO.createNewOrder(order, name);
+//        Map<Integer, Date> endDates = new HashMap<Integer, Date>();
+//        Map<Integer, Date> startDates = new HashMap<Integer, Date>();
+//        Item item = new Item();
+//        for (Job job : order.getJobs()) {
+//            for (Task task : job.getTasks()) {
+//                if (!endDates.containsKey(task.getResourceId())) {
+//                    endDates.put(task.getResourceId(), parsedDate);
+//                }
+//            }
+//        }
+//        int i = 1;
+//        for (Job job : order.getJobs()) {
+//            for (Task task : job.getTasks()) {
+//                startDates.put(task.getResourceId(), parsedDate);
+//                Calendar calendar = Calendar.getInstance();
+//                calendar.setTime(parsedDate);
+//                calendar.add(Calendar.SECOND, task.getSecondsDuration());
+//                parsedDate = calendar.getTime();
+//            }
+//            Long diff = Long.MAX_VALUE;
+//            for (Map.Entry<Integer, Date> entry : endDates.entrySet()) {
+//                if (startDates.containsKey(entry.getKey())) {
+//                    Long diffTmp = startDates.get(entry.getKey()).getTime() - entry.getValue().getTime();
+//                    if (diffTmp < diff) {
+//                        diff = diffTmp;
+//                    }
+//                }
+//            }
+//            for (Task task : job.getTasks()) {
+//                parsedDate = startDates.get(task.getResourceId());
+//                parsedDate = item.convertFromTask(task, job, parsedDate, diff);
+//                endDates.put(task.getResourceId(), parsedDate);
+//                item.setColor(colors[item.getJob().getJobId() % 6]);
+//                jdbcItemDAO.createNewItem(item, orderId, i);
+//                i++;
+//            }
+//            startDates.clear();
+//        }
+//        return new VisContent(jdbcItemDAO.getOrderItems(orderId),
+//                jdbcResourceDAO.getOrderGroups(orderId),
+//                jdbcOrderDAO.getOrder(orderId));
+//    }
 
-    @RequestMapping(value = "/addjob", method = RequestMethod.POST)
-    public
-    @ResponseBody
-    VisContent addJob(@RequestBody Job job) throws ParseException {
-        String colors[] = {"red", "gold", "magneta", "red", "grey", "blue", "lightpink"};
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName();
-        Map<Integer, Date> endDates = jdbcItemDAO.getEndDates(name);
-        Map<Integer, Date> startDates = new HashMap<Integer, Date>();
-        Date parsedDate = jdbcItemDAO.getMaxDate(name);
-        Date startDate = jdbcOrderDAO.getStartDate(name);
-        Item item = new Item();
-        int orderId = jdbcOrderDAO.getOrderInUseId(name);
-
-        for (Task task : job.getTasks()) {
-            if (!endDates.containsKey(task.getResourceId())) {
-                endDates.put(task.getResourceId(), startDate);
-            }
-        }
-
-        for (Task task : job.getTasks()) {
-            startDates.put(task.getResourceId(), parsedDate);
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(parsedDate);
-            calendar.add(Calendar.SECOND, task.getSecondsDuration());
-            parsedDate = calendar.getTime();
-        }
-
-        Long diff = Long.MAX_VALUE;
-        for (Map.Entry<Integer, Date> entry : endDates.entrySet()) {
-            if (startDates.containsKey(entry.getKey())) {
-                Long diffTmp = startDates.get(entry.getKey()).getTime() - entry.getValue().getTime();
-                if (diffTmp < diff) {
-                    diff = diffTmp;
-                }
-            }
-        }
-        for (Task task : job.getTasks()) {
-            parsedDate = startDates.get(task.getResourceId());
-            parsedDate = item.convertFromTask(task, job, parsedDate, diff);
-            endDates.put(task.getResourceId(), parsedDate);
-            item.setColor(colors[item.getJob().getJobId() % 6]);
-            jdbcItemDAO.createNewItem(item, orderId);
-        }
-        return new VisContent(jdbcItemDAO.getOrderItems(orderId),
-                jdbcResourceDAO.getOrderGroups(orderId),
-                jdbcOrderDAO.getOrder(orderId));
-    }
+//    @RequestMapping(value = "/addjob", method = RequestMethod.POST)
+//    public
+//    @ResponseBody
+//    VisContent addJob(@RequestBody Job job) throws ParseException {
+//        String colors[] = {"red", "gold", "magneta", "red", "grey", "blue", "lightpink"};
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        String name = auth.getName();
+//        Map<Integer, Date> endDates = jdbcItemDAO.getEndDates(name);
+//        Map<Integer, Date> startDates = new HashMap<Integer, Date>();
+//        Date parsedDate = jdbcItemDAO.getMaxDate(name);
+//        Date startDate = jdbcOrderDAO.getStartDate(name);
+//        Item item = new Item();
+//        int orderId = jdbcOrderDAO.getOrderInUseId(name);
+//
+//        for (Task task : job.getTasks()) {
+//            if (!endDates.containsKey(task.getResourceId())) {
+//                endDates.put(task.getResourceId(), startDate);
+//            }
+//        }
+//
+//        for (Task task : job.getTasks()) {
+//            startDates.put(task.getResourceId(), parsedDate);
+//            Calendar calendar = Calendar.getInstance();
+//            calendar.setTime(parsedDate);
+//            calendar.add(Calendar.SECOND, task.getSecondsDuration());
+//            parsedDate = calendar.getTime();
+//        }
+//
+//        Long diff = Long.MAX_VALUE;
+//        for (Map.Entry<Integer, Date> entry : endDates.entrySet()) {
+//            if (startDates.containsKey(entry.getKey())) {
+//                Long diffTmp = startDates.get(entry.getKey()).getTime() - entry.getValue().getTime();
+//                if (diffTmp < diff) {
+//                    diff = diffTmp;
+//                }
+//            }
+//        }
+//        for (Task task : job.getTasks()) {
+//            parsedDate = startDates.get(task.getResourceId());
+//            parsedDate = item.convertFromTask(task, job, parsedDate, diff);
+//            endDates.put(task.getResourceId(), parsedDate);
+//            item.setColor(colors[item.getJob().getJobId() % 6]);
+//            jdbcItemDAO.createNewItem(item, orderId);
+//        }
+//        return new VisContent(jdbcItemDAO.getOrderItems(orderId),
+//                jdbcResourceDAO.getOrderGroups(orderId),
+//                jdbcOrderDAO.getOrder(orderId));
+//    }
 
     @RequestMapping(value = "/newresource", method = RequestMethod.POST)
     public
@@ -166,21 +165,21 @@ public class AjaxController {
         jdbcResourceDAO.createNewResource(resource, name);
     }
 
-    @RequestMapping(value = "/updateorder", method = RequestMethod.POST)
-    public
-    @ResponseBody
-    VisContent updateOrder(@RequestBody Order order) throws ParseException {
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-        java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date parsedDate = formatter.parse(order.getStartDate());
-        order.setStartDate(formater.format(parsedDate));
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName();
-        jdbcOrderDAO.updateOrder(order, name);
-        return new VisContent(jdbcItemDAO.getOrderItems(order.getOrderId()),
-                jdbcResourceDAO.getOrderGroups(order.getOrderId()),
-                jdbcOrderDAO.getOrder(order.getOrderId()));
-    }
+//    @RequestMapping(value = "/updateorder", method = RequestMethod.POST)
+//    public
+//    @ResponseBody
+//    VisContent updateOrder(@RequestBody Order order) throws ParseException {
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+//        java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        Date parsedDate = formatter.parse(order.getStartDate());
+//        order.setStartDate(formater.format(parsedDate));
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        String name = auth.getName();
+//        jdbcOrderDAO.updateOrder(order, name);
+//        return new VisContent(jdbcItemDAO.getOrderItems(order.getOrderId()),
+//                jdbcResourceDAO.getOrderGroups(order.getOrderId()),
+//                jdbcOrderDAO.getOrder(order.getOrderId()));
+//    }
 
     @RequestMapping(value = "/newjob", method = RequestMethod.POST)
     public
@@ -260,23 +259,25 @@ public class AjaxController {
     void deleteResource() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
+        System.out.println("spring: " + name);
         User user = userDAO.getUserByLogin(name);
+        System.out.println("imię: " + user.getFirstName());
         int groupId = user.getGroupId();
 
-        Product product = new Product();
-        ResourceType resourceType = new ResourceType();
-        ProductOperation productOperation = new ProductOperation();
-        product.setProductId(1);
-        product.setName("rower");
-        product.setDescription("rower szosowy");
-        resourceType.setResourceTypeId(1);
-        resourceType.setName("tokarki");
-        productOperation.setName("spring");
-        productOperation.setDescription("test JPA");
-        productOperation.setDuration(10);
-        productOperation.setProduct(product);
-        productOperation.setResourceType(resourceType);
-        productOperationDAO.insert(productOperation);
+//        Product product = new Product();
+//        ResourceType resourceType = new ResourceType();
+//        ProductOperation productOperation = new ProductOperation();
+//        product.setProductId(1);
+//        product.setName("rower");
+//        product.setDescription("rower szosowy");
+//        resourceType.setResourceTypeId(1);
+//        resourceType.setName("tokarki");
+//        productOperation.setName("spring");
+//        productOperation.setDescription("test JPA");
+//        productOperation.setDuration(10);
+//        productOperation.setProduct(product);
+//        productOperation.setResourceType(resourceType);
+//        productOperationDAO.insert(productOperation);
        // personDao.sayHey();
     }
 }
