@@ -20,6 +20,7 @@ public class ProductOperation {
     private int preparationDuration;
     private ResourceType resourceType;
     private Product product;
+    private Group group;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -95,6 +96,16 @@ public class ProductOperation {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "GROUP_ID")
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 }
 

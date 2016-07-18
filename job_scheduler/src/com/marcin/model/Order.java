@@ -14,6 +14,7 @@ public class Order {
     private LocalDateTime dueDate;
     private LocalDateTime createdOn;
     private LocalDateTime editedOn;
+    private Group group;
     private ProductionPlan productionPlan;
     private Set<OrderProduct> orderProducts;
 
@@ -71,6 +72,16 @@ public class Order {
 
     public void setEditedOn(LocalDateTime editedOn) {
         this.editedOn = editedOn;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "GROUP_ID")
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
     @ManyToOne

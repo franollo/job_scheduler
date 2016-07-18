@@ -19,7 +19,7 @@ public class Group {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "USER_ID")
+    @Column(name = "GROUP_ID")
     public int getGroupId() {
         return groupId;
     }
@@ -28,6 +28,7 @@ public class Group {
         this.groupId = groupId;
     }
 
+    @Column(name = "NAME")
     public String getName() {
         return name;
     }
@@ -36,6 +37,7 @@ public class Group {
         this.name = name;
     }
 
+    @Column(name = "CREATED_ON")
     public LocalDateTime getCreatedOn() {
         return createdOn;
     }
@@ -44,6 +46,7 @@ public class Group {
         this.createdOn = createdOn;
     }
 
+    @Column(name = "EDITED_ON")
     public LocalDateTime getEditedOn() {
         return editedOn;
     }

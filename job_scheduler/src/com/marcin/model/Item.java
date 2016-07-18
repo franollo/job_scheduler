@@ -18,6 +18,7 @@ public class Item {
     private LocalDateTime preparationStart;
     private LocalDateTime createdOn;
     private LocalDateTime editedOn;
+    private int groupId;
     private Resource resource;
     private ProductionPlan productionPlan;
 
@@ -77,6 +78,15 @@ public class Item {
         this.editedOn = editedOn;
     }
 
+    @Column(name = "GROUP_ID")
+    public int getGroupId() {
+        return groupId;
+    }
+
+    public void setGroupId(int groupId) {
+        this.groupId = groupId;
+    }
+
     @ManyToOne
     @JoinColumn(name = "RESOURCE_ID")
     public Resource getResource() {
@@ -96,21 +106,4 @@ public class Item {
     public void setProductionPlan(ProductionPlan productionPlan) {
         this.productionPlan = productionPlan;
     }
-
-    public Date convertFromTask(Task task, Job job, Date startDate, Long diff) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(startDate);
-        calendar.add(Calendar.MILLISECOND, (int) -diff);
-        Date start = calendar.getTime();
-        java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        // this.startDate = formater.format(start);
-        calendar.add(Calendar.SECOND, task.getSecondsDuration());
-        Date end = calendar.getTime();
-//        this.endDate = formater.format(end);
-//        this.resource = task.getResource();
-//        this.job = job;
-        return end;
-    }
-
-
 }

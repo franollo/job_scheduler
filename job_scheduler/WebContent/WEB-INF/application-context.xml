@@ -50,30 +50,30 @@
 
     <tx:annotation-driven transaction-manager="transactionManager" />
 
-    <bean id="resourceDAO" class="com.marcin.dao.implementation.JdbcResourceDAO">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="jdbcTemplate" ref="jdbcTemplate"/>
-    </bean>
+    <!--<bean id="resourceDAO" class="com.marcin.dao.implementation.JdbcResourceDAO">-->
+        <!--<property name="dataSource" ref="dataSource"/>-->
+        <!--<property name="jdbcTemplate" ref="jdbcTemplate"/>-->
+    <!--</bean>-->
 
-    <bean id="orderDAO" class="com.marcin.dao.implementation.JdbcOrderDAO">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="jdbcTemplate" ref="jdbcTemplate"/>
-    </bean>
+    <!--<bean id="orderDAO" class="com.marcin.dao.implementation.JdbcOrderDAO">-->
+        <!--<property name="dataSource" ref="dataSource"/>-->
+        <!--<property name="jdbcTemplate" ref="jdbcTemplate"/>-->
+    <!--</bean>-->
 
-    <bean id="jobDAO" class="com.marcin.dao.implementation.JdbcJobDAO">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="jdbcTemplate" ref="jdbcTemplate"/>
-    </bean>
+    <!--<bean id="jobDAO" class="com.marcin.dao.implementation.JdbcJobDAO">-->
+        <!--<property name="dataSource" ref="dataSource"/>-->
+        <!--<property name="jdbcTemplate" ref="jdbcTemplate"/>-->
+    <!--</bean>-->
 
-    <bean id="taskDAO" class="com.marcin.dao.implementation.JdbcTaskDAO">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="jdbcTemplate" ref="jdbcTemplate"/>
-    </bean>
+    <!--<bean id="taskDAO" class="com.marcin.dao.implementation.JdbcTaskDAO">-->
+        <!--<property name="dataSource" ref="dataSource"/>-->
+        <!--<property name="jdbcTemplate" ref="jdbcTemplate"/>-->
+    <!--</bean>-->
 
-    <bean id="itemDAO" class="com.marcin.dao.implementation.JdbcItemDAO">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="jdbcTemplate" ref="jdbcTemplate"/>
-    </bean>
+    <!--<bean id="itemDAO" class="com.marcin.dao.implementation.JdbcItemDAO">-->
+        <!--<property name="dataSource" ref="dataSource"/>-->
+        <!--<property name="jdbcTemplate" ref="jdbcTemplate"/>-->
+    <!--</bean>-->
 
     <bean id="restAuthenticationEntryPoint" class="com.marcin.security.RestAuthenticationEntryPoint" />
 
@@ -81,7 +81,7 @@
         <constructor-arg value="RealmName"/>
     </bean>
 
-    <bean id="productOperationDAO" class="com.marcin.dao.implementation.HibernateProductOperationDAO" />
+    <bean id="productOperationDAO" class="com.marcin.dao.implementation.JPAProductOperationDAO" />
 
-    <bean id="hibernateUserDAO" class="com.marcin.dao.implementation.HibernateUserDAO" />
+    <bean id="hibernateUserDAO" class="com.marcin.dao.implementation.JPAUserDAO" />
 </beans>

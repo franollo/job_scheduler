@@ -1,6 +1,7 @@
 package com.marcin.controllers;
 
 import com.marcin.dao.ProductOperationDAO;
+import com.marcin.dao.UserDAO;
 import com.marcin.dao.implementation.*;
 import com.marcin.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,29 +29,27 @@ import java.util.Map;
 @Controller
 @RequestMapping("/data")
 public class AjaxController {
-//    @Autowired
- //   private PersonDao personDao;
-
     @Autowired
     private ProductOperationDAO productOperationDAO;
 
     @Autowired
-    private JdbcOrderDAO jdbcOrderDAO;
+    private UserDAO userDAO;
 
-    @Autowired
-    private JdbcJobDAO jdbcJobDAO;
+//    @Autowired
+//    private JdbcOrderDAO jdbcOrderDAO;
+//
+//    @Autowired
+//    private JdbcJobDAO jdbcJobDAO;
+//
+//    @Autowired
+//    private JdbcResourceDAO jdbcResourceDAO;
+//
+//    @Autowired
+//    private JdbcItemDAO jdbcItemDAO;
+//
+//    @Autowired
+//    private JdbcTaskDAO jdbcTaskDAO;
 
-    @Autowired
-    private JdbcResourceDAO jdbcResourceDAO;
-
-    @Autowired
-    private JdbcItemDAO jdbcItemDAO;
-
-    @Autowired
-    private JdbcTaskDAO jdbcTaskDAO;
-
-    @Autowired
-    private HibernateUserDAO userDAO;
 
 //    @RequestMapping(value = "/neworder", method = RequestMethod.POST)
 //    public
@@ -156,14 +155,14 @@ public class AjaxController {
 //                jdbcOrderDAO.getOrder(orderId));
 //    }
 
-    @RequestMapping(value = "/newresource", method = RequestMethod.POST)
-    public
-    @ResponseBody
-    void newResource(@RequestBody Resource resource) throws ParseException {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName();
-        jdbcResourceDAO.createNewResource(resource, name);
-    }
+//    @RequestMapping(value = "/newresource", method = RequestMethod.POST)
+//    public
+//    @ResponseBody
+//    void newResource(@RequestBody Resource resource) throws ParseException {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        String name = auth.getName();
+//        jdbcResourceDAO.createNewResource(resource, name);
+//    }
 
 //    @RequestMapping(value = "/updateorder", method = RequestMethod.POST)
 //    public
@@ -180,78 +179,78 @@ public class AjaxController {
 //                jdbcResourceDAO.getOrderGroups(order.getOrderId()),
 //                jdbcOrderDAO.getOrder(order.getOrderId()));
 //    }
-
-    @RequestMapping(value = "/newjob", method = RequestMethod.POST)
-    public
-    @ResponseBody
-    void newJob(@RequestBody Job job) throws ParseException {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName();
-        int jobId = jdbcJobDAO.createNewJob(job, name);
-        int i = 1;
-        for (Task task : job.getTasks()) {
-            try {
-                task.convertTimeToSeconds();
-                jdbcTaskDAO.createNewTask(task, jobId, i);
-                i++;
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    @RequestMapping(value = "/deletejob", method = RequestMethod.POST)
-    public
-    @ResponseBody
-    void deleteJob(@RequestBody Job job) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName();
-        jdbcJobDAO.deleteJob(job, name);
-    }
-
-    @RequestMapping(value = "/updatejob", method = RequestMethod.POST)
-    public
-    @ResponseBody
-    void updateJob(@RequestBody Job job) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName();
-        jdbcJobDAO.updateJob(job, name);
-    }
-
-    @RequestMapping(value = "/deleteresource", method = RequestMethod.POST)
-    public
-    @ResponseBody
-    void deleteResource(@RequestBody Resource resource) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName();
-        jdbcResourceDAO.deleteResource(resource, name);
-    }
-
-    @RequestMapping(value = "/updateresource", method = RequestMethod.POST)
-    public
-    @ResponseBody
-    void updateResource(@RequestBody Resource resource) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName();
-        jdbcResourceDAO.updateResource(resource, name);
-    }
-
-    @RequestMapping(value = "/updateitem", method = RequestMethod.POST)
-    public
-    @ResponseBody
-    void updateItem(@RequestBody VisItem item) throws ParseException {
-        System.out.println(item.getStart());
-        System.out.println(item.getEnd());
-        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
-        java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date startDate = formatter.parse(item.getStart());
-        Date endDate = formatter.parse(item.getEnd());
-        item.setStart(formater.format(startDate));
-        item.setEnd(formater.format(endDate));
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName();
-        jdbcItemDAO.updateItem(item, name);
-    }
+//
+//    @RequestMapping(value = "/newjob", method = RequestMethod.POST)
+//    public
+//    @ResponseBody
+//    void newJob(@RequestBody Job job) throws ParseException {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        String name = auth.getName();
+//        int jobId = jdbcJobDAO.createNewJob(job, name);
+//        int i = 1;
+//        for (Task task : job.getTasks()) {
+//            try {
+//                task.convertTimeToSeconds();
+//                jdbcTaskDAO.createNewTask(task, jobId, i);
+//                i++;
+//            } catch (ParseException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
+//
+//    @RequestMapping(value = "/deletejob", method = RequestMethod.POST)
+//    public
+//    @ResponseBody
+//    void deleteJob(@RequestBody Job job) {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        String name = auth.getName();
+//        jdbcJobDAO.deleteJob(job, name);
+//    }
+//
+//    @RequestMapping(value = "/updatejob", method = RequestMethod.POST)
+//    public
+//    @ResponseBody
+//    void updateJob(@RequestBody Job job) {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        String name = auth.getName();
+//        jdbcJobDAO.updateJob(job, name);
+//    }
+//
+//    @RequestMapping(value = "/deleteresource", method = RequestMethod.POST)
+//    public
+//    @ResponseBody
+//    void deleteResource(@RequestBody Resource resource) {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        String name = auth.getName();
+//        jdbcResourceDAO.deleteResource(resource, name);
+//    }
+//
+//    @RequestMapping(value = "/updateresource", method = RequestMethod.POST)
+//    public
+//    @ResponseBody
+//    void updateResource(@RequestBody Resource resource) {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        String name = auth.getName();
+//        jdbcResourceDAO.updateResource(resource, name);
+//    }
+//
+//    @RequestMapping(value = "/updateitem", method = RequestMethod.POST)
+//    public
+//    @ResponseBody
+//    void updateItem(@RequestBody VisItem item) throws ParseException {
+//        System.out.println(item.getStart());
+//        System.out.println(item.getEnd());
+//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
+//        java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+//        Date startDate = formatter.parse(item.getStart());
+//        Date endDate = formatter.parse(item.getEnd());
+//        item.setStart(formater.format(startDate));
+//        item.setEnd(formater.format(endDate));
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        String name = auth.getName();
+//        jdbcItemDAO.updateItem(item, name);
+//    }
 
     @RequestMapping(value = "/person", method = RequestMethod.POST)
     public
@@ -263,21 +262,25 @@ public class AjaxController {
         User user = userDAO.getUserByLogin(name);
         System.out.println("imię: " + user.getFirstName());
         int groupId = user.getGroupId();
-
-//        Product product = new Product();
-//        ResourceType resourceType = new ResourceType();
-//        ProductOperation productOperation = new ProductOperation();
-//        product.setProductId(1);
-//        product.setName("rower");
-//        product.setDescription("rower szosowy");
-//        resourceType.setResourceTypeId(1);
-//        resourceType.setName("tokarki");
-//        productOperation.setName("spring");
-//        productOperation.setDescription("test JPA");
-//        productOperation.setDuration(10);
-//        productOperation.setProduct(product);
-//        productOperation.setResourceType(resourceType);
-//        productOperationDAO.insert(productOperation);
+        Group group = new Group();
+        group.setGroupId(2);
+        Product product = new Product();
+        ResourceType resourceType = new ResourceType();
+        ProductOperation productOperation = new ProductOperation();
+        product.setProductId(1);
+        product.setName("rower");
+        product.setDescription("rower szosowy");
+        resourceType.setResourceTypeId(1);
+        resourceType.setName("tokarki");
+        productOperation.setName("spring");
+        productOperation.setDescription("test JPA");
+        productOperation.setDuration(10);
+        productOperation.setProduct(product);
+        productOperation.setResourceType(resourceType);
+        productOperation.setGroup(group);
+        productOperationDAO.insert(productOperation);
+        System.out.println("id: " + productOperation.getProductOperationId());
+        System.out.println("czyje to: " + productOperationDAO.checkGroupId(productOperation.getProductOperationId(),2));
        // personDao.sayHey();
     }
 }
