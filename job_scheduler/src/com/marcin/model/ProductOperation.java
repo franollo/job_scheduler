@@ -1,5 +1,7 @@
 package com.marcin.model;
 
+import com.marcin.model.common.GroupObject;
+
 import javax.persistence.*;
 
 /**
@@ -7,11 +9,7 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="PRODUCT_OPERATIONS")
-//@AssociationOverrides({
-//        @AssociationOverride(name = "resourceType", joinColumns = @JoinColumn(name = "RESOURCE_TYPE_ID")),
-//        @AssociationOverride(name = "product", joinColumns = @JoinColumn(name = "PRODUCT_ID"))
-//})
-public class ProductOperation {
+public class ProductOperation extends GroupObject {
     private int productOperationId;
     private int operationNumber;
     private String name;
@@ -20,7 +18,6 @@ public class ProductOperation {
     private int preparationDuration;
     private ResourceType resourceType;
     private Product product;
-    private Group group;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -96,16 +93,6 @@ public class ProductOperation {
 
     public void setProduct(Product product) {
         this.product = product;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "GROUP_ID")
-    public Group getGroup() {
-        return group;
-    }
-
-    public void setGroup(Group group) {
-        this.group = group;
     }
 }
 

@@ -1,7 +1,10 @@
-package com.marcin.dao.implementation;
+package com.marcin.dao.jpa;
 
-import com.marcin.dao.ItemDAO;
+import com.marcin.dao.model.ItemDAO;
 import com.marcin.model.Item;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
@@ -9,6 +12,9 @@ import javax.persistence.TypedQuery;
 /**
  * Created by Marcin Frankowski on 15.07.16.
  */
+
+@Repository("itemDAO")
+@Transactional(propagation = Propagation.REQUIRED)
 public class JPAItemDAO extends JPADAO implements ItemDAO{
     @Override
     public void insert(Item item) {

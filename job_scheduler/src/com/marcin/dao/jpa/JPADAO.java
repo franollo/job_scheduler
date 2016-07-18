@@ -1,4 +1,4 @@
-package com.marcin.dao.implementation;
+package com.marcin.dao.jpa;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

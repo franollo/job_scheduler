@@ -1,25 +1,15 @@
 package com.marcin.controllers;
 
-import com.marcin.dao.ProductOperationDAO;
-import com.marcin.dao.UserDAO;
-import com.marcin.dao.implementation.*;
+import com.marcin.dao.model.ProductOperationDAO;
+import com.marcin.dao.model.UserDAO;
 import com.marcin.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.dao.SystemWideSaltSource;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 
 /**
@@ -261,9 +251,8 @@ public class AjaxController {
         System.out.println("spring: " + name);
         User user = userDAO.getUserByLogin(name);
         System.out.println("imię: " + user.getFirstName());
-        int groupId = user.getGroupId();
         Group group = new Group();
-        group.setGroupId(2);
+        group.setGroupId(1);
         Product product = new Product();
         ResourceType resourceType = new ResourceType();
         ProductOperation productOperation = new ProductOperation();
@@ -280,7 +269,7 @@ public class AjaxController {
         productOperation.setGroup(group);
         productOperationDAO.insert(productOperation);
         System.out.println("id: " + productOperation.getProductOperationId());
-        System.out.println("czyje to: " + productOperationDAO.checkGroupId(productOperation.getProductOperationId(),2));
+        System.out.println("czyje to: " + productOperationDAO.checkGroupId(productOperation.getProductOperationId(),1));
        // personDao.sayHey();
     }
 }

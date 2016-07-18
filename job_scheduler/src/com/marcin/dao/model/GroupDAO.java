@@ -1,4 +1,4 @@
-package com.marcin.dao;
+package com.marcin.dao.model;
 
 /**
  * Created by Marcin Frankowski on 15.07.16.

@@ -1,6 +1,6 @@
-package com.marcin.dao.implementation;
+package com.marcin.dao.jpa;
 
-import com.marcin.dao.ProductOperationDAO;
+import com.marcin.dao.model.ProductOperationDAO;
 import com.marcin.model.ProductOperation;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -12,6 +12,7 @@ import javax.persistence.TypedQuery;
 /**
  * Created by Marcin Frankowski on 14.07.2016.
  */
+
 @Repository("productOperationDAO")
 @Transactional(propagation = Propagation.REQUIRED)
 public class JPAProductOperationDAO extends JPADAO implements ProductOperationDAO {

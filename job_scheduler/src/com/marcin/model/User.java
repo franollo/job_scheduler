@@ -1,5 +1,7 @@
 package com.marcin.model;
 
+import com.marcin.model.common.GroupObject;
+
 import javax.persistence.*;
 
 /**
@@ -8,13 +10,11 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "USERS")
-public class User {
+public class User extends GroupObject{
     private int userId;
     private String username;
     private String firstName;
     private String lastName;
-    private int groupId;
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -52,14 +52,5 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
-    }
-
-    @Column(name = "GROUP_ID")
-    public int getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(int groupId) {
-        this.groupId = groupId;
     }
 }

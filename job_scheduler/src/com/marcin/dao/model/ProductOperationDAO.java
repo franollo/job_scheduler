@@ -1,4 +1,4 @@
-package com.marcin.dao;
+package com.marcin.dao.model;
 
 import com.marcin.model.ProductOperation;
 

@@ -1,11 +1,16 @@
-package com.marcin.dao.implementation;
+package com.marcin.dao.jpa;
 
-import com.marcin.dao.UserDAO;
+import com.marcin.dao.model.UserDAO;
 import com.marcin.model.User;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
 
-
+@Repository("userDAO")
+@Transactional(propagation = Propagation.REQUIRED)
 public class JPAUserDAO extends JPADAO implements UserDAO {
 
     @Override

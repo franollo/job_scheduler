@@ -1,24 +1,17 @@
 package com.marcin.model;
 
+import com.marcin.model.common.GroupObject;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Calendar;
-import java.util.Date;
 
 @Entity
 @Table(name = "ITEMS")
-//@AssociationOverrides({
-//        @AssociationOverride(name = "productionPlan", joinColumns = @JoinColumn(name = "PRODUCTION_PLAN")),
-//        @AssociationOverride(name = "resource", joinColumns = @JoinColumn(name = "RESOURCES"))
-//})
-public class Item {
+public class Item extends GroupObject {
     private int itemId;
     private LocalDateTime start;
     private LocalDateTime end;
     private LocalDateTime preparationStart;
-    private LocalDateTime createdOn;
-    private LocalDateTime editedOn;
-    private int groupId;
     private Resource resource;
     private ProductionPlan productionPlan;
 
@@ -58,33 +51,6 @@ public class Item {
 
     public void setPreparationStart(LocalDateTime preparationStart) {
         this.preparationStart = preparationStart;
-    }
-
-    @Column(name = "CREATED_ON")
-    public LocalDateTime getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(LocalDateTime createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    @Column(name = "EDITED_ON")
-    public LocalDateTime getEditedOn() {
-        return editedOn;
-    }
-
-    public void setEditedOn(LocalDateTime editedOn) {
-        this.editedOn = editedOn;
-    }
-
-    @Column(name = "GROUP_ID")
-    public int getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(int groupId) {
-        this.groupId = groupId;
     }
 
     @ManyToOne

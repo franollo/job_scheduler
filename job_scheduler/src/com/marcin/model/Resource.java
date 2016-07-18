@@ -1,19 +1,18 @@
 package com.marcin.model;
 
+import com.marcin.model.common.GroupObject;
+
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @Entity
 @Table(name = "RESOURCES")
-public class Resource {
+public class Resource extends GroupObject {
     private int resourceId;
     private String name;
     private String description;
     private int costPerHour;
     private int efficiency;
-    private LocalDateTime createdOn;
-    private LocalDateTime editedOn;
     private Set<Item> items;
 
     @Id
@@ -61,24 +60,6 @@ public class Resource {
 
     public void setEfficiency(int efficiency) {
         this.efficiency = efficiency;
-    }
-
-    @Column(name = "CREATED_ON")
-    public LocalDateTime getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(LocalDateTime createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    @Column(name = "EDITED_ON")
-    public LocalDateTime getEditedOn() {
-        return editedOn;
-    }
-
-    public void setEditedOn(LocalDateTime editedOn) {
-        this.editedOn = editedOn;
     }
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "resource")

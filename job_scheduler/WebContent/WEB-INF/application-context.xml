@@ -40,6 +40,7 @@
         <property name="dataSource" ref="dataSource" />
         <property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
         <property name="jpaDialect" ref="jpaDialect" />
+        <property name="packagesToScan" value="com.marcin.model" />
     </bean>
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
@@ -50,38 +51,13 @@
 
     <tx:annotation-driven transaction-manager="transactionManager" />
 
-    <!--<bean id="resourceDAO" class="com.marcin.dao.implementation.JdbcResourceDAO">-->
-        <!--<property name="dataSource" ref="dataSource"/>-->
-        <!--<property name="jdbcTemplate" ref="jdbcTemplate"/>-->
-    <!--</bean>-->
-
-    <!--<bean id="orderDAO" class="com.marcin.dao.implementation.JdbcOrderDAO">-->
-        <!--<property name="dataSource" ref="dataSource"/>-->
-        <!--<property name="jdbcTemplate" ref="jdbcTemplate"/>-->
-    <!--</bean>-->
-
-    <!--<bean id="jobDAO" class="com.marcin.dao.implementation.JdbcJobDAO">-->
-        <!--<property name="dataSource" ref="dataSource"/>-->
-        <!--<property name="jdbcTemplate" ref="jdbcTemplate"/>-->
-    <!--</bean>-->
-
-    <!--<bean id="taskDAO" class="com.marcin.dao.implementation.JdbcTaskDAO">-->
-        <!--<property name="dataSource" ref="dataSource"/>-->
-        <!--<property name="jdbcTemplate" ref="jdbcTemplate"/>-->
-    <!--</bean>-->
-
-    <!--<bean id="itemDAO" class="com.marcin.dao.implementation.JdbcItemDAO">-->
-        <!--<property name="dataSource" ref="dataSource"/>-->
-        <!--<property name="jdbcTemplate" ref="jdbcTemplate"/>-->
-    <!--</bean>-->
-
     <bean id="restAuthenticationEntryPoint" class="com.marcin.security.RestAuthenticationEntryPoint" />
 
     <bean id="restBasicAuthenticationEntryPoint" class="com.marcin.security.RestBasicAuthenticationEntryPoint">
         <constructor-arg value="RealmName"/>
     </bean>
 
-    <bean id="productOperationDAO" class="com.marcin.dao.implementation.JPAProductOperationDAO" />
+    <bean id="productOperationDAO" class="com.marcin.dao.jpa.JPAProductOperationDAO" />
 
-    <bean id="hibernateUserDAO" class="com.marcin.dao.implementation.JPAUserDAO" />
+    <bean id="hibernateUserDAO" class="com.marcin.dao.jpa.JPAUserDAO" />
 </beans>

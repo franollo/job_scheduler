@@ -1,15 +1,16 @@
 package com.marcin.model;
 
+import com.marcin.model.common.GroupObject;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "RESOURCE_TYPES")
-public class ResourceType {
+public class ResourceType extends GroupObject {
     private int resourceTypeId;
     private String name;
     private Set<ProductOperation> productOperations;
-    private int groupId;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,14 +39,5 @@ public class ResourceType {
 
     public void setProductOperations(Set<ProductOperation> productOperations) {
         this.productOperations = productOperations;
-    }
-
-    @Column(name = "GROUP_ID")
-    public int getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(int groupId) {
-        this.groupId = groupId;
     }
 }

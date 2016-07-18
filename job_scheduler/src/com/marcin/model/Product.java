@@ -1,11 +1,13 @@
 package com.marcin.model;
 
+import com.marcin.model.common.GroupObject;
+
 import javax.persistence.*;
 import java.util.Set;
 
 @Entity
 @Table(name = "PRODUCTS")
-public class Product {
+public class Product extends GroupObject {
     private int productId;
     private String name;
     private String description;

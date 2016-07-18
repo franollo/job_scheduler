@@ -1,20 +1,18 @@
 package com.marcin.model;
 
+import com.marcin.model.common.GroupObject;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Set;
 
 @Entity
 @Table(name = "ORDERS")
-public class Order {
+public class Order extends GroupObject {
     private int orderId;
     private String name;
     private String description;
     private LocalDateTime dueDate;
-    private LocalDateTime createdOn;
-    private LocalDateTime editedOn;
-    private Group group;
     private ProductionPlan productionPlan;
     private Set<OrderProduct> orderProducts;
 
@@ -54,34 +52,6 @@ public class Order {
 
     public void setDueDate(LocalDateTime dueDate) {
         this.dueDate = dueDate;
-    }
-
-    @Column(name = "CREATED_ON")
-    public LocalDateTime getCreatedOn() {
-        return createdOn;
-    }
-
-    public void setCreatedOn(LocalDateTime createdOn) {
-        this.createdOn = createdOn;
-    }
-
-    @Column(name = "EDITED_ON")
-    public LocalDateTime getEditedOn() {
-        return editedOn;
-    }
-
-    public void setEditedOn(LocalDateTime editedOn) {
-        this.editedOn = editedOn;
-    }
-
-    @ManyToOne
-    @JoinColumn(name = "GROUP_ID")
-    public Group getGroup() {
-        return group;
-    }
-
-    public void setGroup(Group group) {
-        this.group = group;
     }
 
     @ManyToOne

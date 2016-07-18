@@ -1,7 +1,10 @@
-package com.marcin.dao.implementation;
+package com.marcin.dao.jpa;
 
-import com.marcin.dao.OrderDAO;
+import com.marcin.dao.model.OrderDAO;
 import com.marcin.model.Order;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
@@ -9,6 +12,9 @@ import javax.persistence.TypedQuery;
 /**
  * Created by Marcin Frankowski on 15.07.16.
  */
+
+@Repository("orderDAO")
+@Transactional(propagation = Propagation.REQUIRED)
 public class JPAOrderDAO extends JPADAO implements OrderDAO {
     @Override
     public void insert(Order order) {
