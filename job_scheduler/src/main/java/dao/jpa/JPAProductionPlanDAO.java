@@ -1,6 +1,8 @@
 package main.java.dao.jpa;
 
 import main.java.dao.model.ProductionPlanDAO;
+import main.java.model.Product;
+import main.java.model.ProductOperation;
 import main.java.model.ProductionPlan;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;

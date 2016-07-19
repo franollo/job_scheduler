@@ -7,8 +7,8 @@ import main.java.model.ProductOperation;
  */
 
 public interface ProductOperationDAO {
-    public void insert(ProductOperation productOperation);
+    public ProductOperation insert(ProductOperation productOperation);
     public void update(ProductOperation productOperation);
     public void delete(ProductOperation productOperation);
-//    public boolean checkGroupId(int productOperationId, int groupId);
+    public ProductOperation find(ProductOperation productOperation);
 }

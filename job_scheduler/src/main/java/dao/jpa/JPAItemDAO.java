@@ -18,7 +18,7 @@ import javax.persistence.TypedQuery;
 public class JPAItemDAO extends JPADAO implements ItemDAO {
     @Override
     public void insert(Item item) {
-        entityManager.persist(item);
+        entityManager.merge(item);
     }
 
     @Override

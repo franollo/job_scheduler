@@ -7,6 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "RESOURCE_TYPES")
+@AttributeOverride(name = "id", column = @Column(name = "RESOURCE_TYPE_ID"))
 public class ResourceType extends GroupObject {
   //  private int resourceTypeId;
     private String name;

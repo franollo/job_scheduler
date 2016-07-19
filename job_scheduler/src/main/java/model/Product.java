@@ -7,6 +7,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "PRODUCTS")
+@AttributeOverride(name = "id", column = @Column(name = "PRODUCT_ID"))
 public class Product extends GroupObject {
  //   private int productId;
     private String name;

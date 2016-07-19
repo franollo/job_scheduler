@@ -1,6 +1,7 @@
 package main.java.model.common;
 
 import main.java.model.Group;
+import main.java.utils.LocalDateTimeAttributeConverter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -36,7 +37,7 @@ public abstract class GroupObject {
         this.group = group;
     }
 
-    @Column(name = "CREATED_ON")
+    @Column(name = "CREATED_ON", insertable = false, updatable = false)
     public LocalDateTime getCreatedOn() {
         return createdOn;
     }
@@ -45,7 +46,7 @@ public abstract class GroupObject {
         this.createdOn = createdOn;
     }
 
-    @Column(name = "EDITED_ON")
+    @Column(name = "EDITED_ON", insertable = false, updatable = false)
     public LocalDateTime getEditedOn() {
         return editedOn;
     }

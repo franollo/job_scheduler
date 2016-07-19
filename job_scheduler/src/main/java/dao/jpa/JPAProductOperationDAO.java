@@ -18,8 +18,8 @@ import javax.persistence.TypedQuery;
 public class JPAProductOperationDAO extends JPADAO implements ProductOperationDAO {
 
     @Override
-    public void insert(ProductOperation productOperation) {
-        entityManager.persist(productOperation);
+    public ProductOperation insert(ProductOperation productOperation) {
+        return entityManager.merge(productOperation);
     }
 
     @Override
@@ -31,22 +31,9 @@ public class JPAProductOperationDAO extends JPADAO implements ProductOperationDA
     public void delete(ProductOperation productOperation) {
         entityManager.remove(productOperation);
     }
-//
-//    @Override
-//    public boolean checkGroupId(int productOperationId, int groupId) {
-//        String queryString = "SELECT po.id " +
-//                "FROM ProductOperation po " +
-//                "WHERE po.id = :productOperationId " +
-//                "AND po.group.groupId = :groupId";
-//        TypedQuery<Integer> query = entityManager.createQuery(queryString, Integer.class);
-//        try {
-//             query.setParameter("productOperationId", productOperationId)
-//                     .setParameter("groupId", groupId)
-//                     .getSingleResult();
-//        }
-//        catch(NoResultException e) {
-//            return false;
-//        }
-//        return true;
-//    }
+
+    @Override
+    public ProductOperation find(ProductOperation productOperation) {
+        return entityManager.find(ProductOperation.class, productOperation.getId());
+    }
 }

@@ -46,7 +46,7 @@ public class AjaxController {
 //    @Autowired
 //    private JdbcTaskDAO jdbcTaskDAO;
 
-    @RequestMapping(value = "/new/order", method = RequestMethod.POST)
+    @RequestMapping(value = "/order", method = RequestMethod.POST)
     public @ResponseBody void newOrder(@RequestBody Order order,
                                        HttpServletResponse response) throws ParseException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

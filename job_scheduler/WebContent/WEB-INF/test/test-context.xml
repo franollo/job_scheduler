@@ -35,7 +35,7 @@
         <property name="dataSource" ref="dataSource" />
         <property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
         <property name="jpaDialect" ref="jpaDialect" />
-        <property name="packagesToScan" value="main.java.model" />
+        <property name="packagesToScan" value="main.java.*" />
     </bean>
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">

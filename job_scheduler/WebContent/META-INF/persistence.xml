@@ -2,5 +2,6 @@
 <persistence xmlns="http://java.sun.com/xml/ns/persistence"
              version="1.0">
     <persistence-unit name="applicationPersistenceUnit" transaction-type="RESOURCE_LOCAL" >
+        <class>main.java.utils.LocalDateTimeAttributeConverter</class>
     </persistence-unit>
 </persistence>
