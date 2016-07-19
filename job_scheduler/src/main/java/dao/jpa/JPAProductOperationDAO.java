@@ -31,22 +31,22 @@ public class JPAProductOperationDAO extends JPADAO implements ProductOperationDA
     public void delete(ProductOperation productOperation) {
         entityManager.remove(productOperation);
     }
-
-    @Override
-    public boolean checkGroupId(int productOperationId, int groupId) {
-        String queryString = "SELECT po.productOperationId " +
-                "FROM ProductOperation po " +
-                "WHERE po.productOperationId = :productOperationId " +
-                "AND po.group.groupId = :groupId";
-        TypedQuery<Integer> query = entityManager.createQuery(queryString, Integer.class);
-        try {
-             query.setParameter("productOperationId", productOperationId)
-                     .setParameter("groupId", groupId)
-                     .getSingleResult();
-        }
-        catch(NoResultException e) {
-            return false;
-        }
-        return true;
-    }
+//
+//    @Override
+//    public boolean checkGroupId(int productOperationId, int groupId) {
+//        String queryString = "SELECT po.id " +
+//                "FROM ProductOperation po " +
+//                "WHERE po.id = :productOperationId " +
+//                "AND po.group.groupId = :groupId";
+//        TypedQuery<Integer> query = entityManager.createQuery(queryString, Integer.class);
+//        try {
+//             query.setParameter("productOperationId", productOperationId)
+//                     .setParameter("groupId", groupId)
+//                     .getSingleResult();
+//        }
+//        catch(NoResultException e) {
+//            return false;
+//        }
+//        return true;
+//    }
 }

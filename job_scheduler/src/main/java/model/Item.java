@@ -8,23 +8,23 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "ITEMS")
 public class Item extends GroupObject {
-    private int itemId;
+//    private int itemId;
     private LocalDateTime start;
     private LocalDateTime end;
     private LocalDateTime preparationStart;
     private Resource resource;
     private ProductionPlan productionPlan;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ITEM_ID")
-    public int getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(int itemId) {
-        this.itemId = itemId;
-    }
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "ITEM_ID")
+//    public int getItemId() {
+//        return itemId;
+//    }
+//
+//    public void setItemId(int itemId) {
+//        this.itemId = itemId;
+//    }
 
     @Column(name = "START")
     public LocalDateTime getStart() {

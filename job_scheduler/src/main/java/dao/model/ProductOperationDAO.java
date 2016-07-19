@@ -10,5 +10,5 @@ public interface ProductOperationDAO {
     public void insert(ProductOperation productOperation);
     public void update(ProductOperation productOperation);
     public void delete(ProductOperation productOperation);
-    public boolean checkGroupId(int productOperationId, int groupId);
+//    public boolean checkGroupId(int productOperationId, int groupId);
 }

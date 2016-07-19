@@ -6,7 +6,7 @@ public interface ResourceDAO {
     public void insert(Resource resource);
     public void update(Resource resource);
     public void delete(Resource resource);
-    public boolean checkGroupId(int resourceId, int groupId);
+ //   public boolean checkGroupId(int resourceId, int groupId);
 
 //    public Resource getByID(int resourceID);
 //

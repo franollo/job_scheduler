@@ -8,20 +8,20 @@ import java.util.Set;
 @Entity
 @Table(name = "RESOURCE_TYPES")
 public class ResourceType extends GroupObject {
-    private int resourceTypeId;
+  //  private int resourceTypeId;
     private String name;
     private Set<ProductOperation> productOperations;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "RESOURCE_TYPE_ID")
-    public int getResourceTypeId() {
-        return resourceTypeId;
-    }
-
-    public void setResourceTypeId(int resourceTypeId) {
-        this.resourceTypeId = resourceTypeId;
-    }
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "RESOURCE_TYPE_ID")
+//    public int getResourceTypeId() {
+//        return resourceTypeId;
+//    }
+//
+//    public void setResourceTypeId(int resourceTypeId) {
+//        this.resourceTypeId = resourceTypeId;
+//    }
 
     @Column(name = "NAME")
     public String getName() {

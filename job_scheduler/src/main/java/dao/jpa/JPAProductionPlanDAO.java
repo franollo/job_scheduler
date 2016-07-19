@@ -31,21 +31,21 @@ public class JPAProductionPlanDAO extends JPADAO implements ProductionPlanDAO {
         entityManager.remove(productionPlan);
     }
 
-    @Override
-    public boolean checkGroupId(int productionPlanId, int groupId) {
-        String queryString = "SELECT pp.productionPlanId " +
-                "FROM ProductionPlan pp " +
-                "WHERE pp.productionPlanId = :productionPlanId " +
-                "AND pp.group.groupId = :groupId";
-        TypedQuery<Integer> query = entityManager.createQuery(queryString, Integer.class);
-        try {
-            query.setParameter("productionPlanId", productionPlanId)
-                    .setParameter("groupId", groupId)
-                    .getSingleResult();
-        }
-        catch(NoResultException e) {
-            return false;
-        }
-        return true;
-    }
+//    @Override
+//    public boolean checkGroupId(int productionPlanId, int groupId) {
+//        String queryString = "SELECT pp.productionPlanId " +
+//                "FROM ProductionPlan pp " +
+//                "WHERE pp.productionPlanId = :productionPlanId " +
+//                "AND pp.group.groupId = :groupId";
+//        TypedQuery<Integer> query = entityManager.createQuery(queryString, Integer.class);
+//        try {
+//            query.setParameter("productionPlanId", productionPlanId)
+//                    .setParameter("groupId", groupId)
+//                    .getSingleResult();
+//        }
+//        catch(NoResultException e) {
+//            return false;
+//        }
+//        return true;
+//    }
 }

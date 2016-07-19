@@ -11,21 +11,21 @@ import javax.persistence.*;
 @Entity
 @Table(name = "USERS")
 public class User extends GroupObject {
-    private int userId;
+   // private int userId;
     private String username;
     private String firstName;
     private String lastName;
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "USER_ID")
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "USER_ID")
+//    public int getUserId() {
+//        return userId;
+//    }
+//
+//    public void setUserId(int userId) {
+//        this.userId = userId;
+//    }
 
     @Column(name = "USERNAME")
     public String getUsername() {

@@ -9,8 +9,8 @@ import javax.persistence.*;
  */
 @Entity
 @Table(name="PRODUCT_OPERATIONS")
+@AttributeOverride(name = "id", column = @Column(name = "PRODUCT_OPERATION_ID"))
 public class ProductOperation extends GroupObject {
-    private int productOperationId;
     private int operationNumber;
     private String name;
     private String description;
@@ -18,17 +18,6 @@ public class ProductOperation extends GroupObject {
     private int preparationDuration;
     private ResourceType resourceType;
     private Product product;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "PRODUCT_OPERATION_ID")
-    public int getProductOperationId() {
-        return productOperationId;
-    }
-
-    public void setProductOperationId(int productOperationId) {
-        this.productOperationId = productOperationId;
-    }
 
     @Column(name = "OPERATION_NUMBER")
     public int getOperationNumber() {

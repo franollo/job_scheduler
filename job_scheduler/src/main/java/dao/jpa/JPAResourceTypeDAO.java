@@ -31,21 +31,21 @@ public class JPAResourceTypeDAO extends JPADAO implements ResourceDAO {
         entityManager.remove(resource);
     }
 
-    @Override
-    public boolean checkGroupId(int resourceTypeId, int groupId) {
-        String queryString = "SELECT rt.resourceTypeId " +
-                "FROM ResourceType rt " +
-                "WHERE rt.resourceTypeId = :resourceTypeId " +
-                "AND rt.group.groupId = :groupId";
-        TypedQuery<Integer> query = entityManager.createQuery(queryString, Integer.class);
-        try {
-            query.setParameter("resourceTypeId", resourceTypeId)
-                    .setParameter("groupId", groupId)
-                    .getSingleResult();
-        }
-        catch(NoResultException e) {
-            return false;
-        }
-        return true;
-    }
+//    @Override
+//    public boolean checkGroupId(int resourceTypeId, int groupId) {
+//        String queryString = "SELECT rt.resourceTypeId " +
+//                "FROM ResourceType rt " +
+//                "WHERE rt.resourceTypeId = :resourceTypeId " +
+//                "AND rt.group.groupId = :groupId";
+//        TypedQuery<Integer> query = entityManager.createQuery(queryString, Integer.class);
+//        try {
+//            query.setParameter("resourceTypeId", resourceTypeId)
+//                    .setParameter("groupId", groupId)
+//                    .getSingleResult();
+//        }
+//        catch(NoResultException e) {
+//            return false;
+//        }
+//        return true;
+//    }
 }

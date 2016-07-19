@@ -9,5 +9,5 @@ public interface ResourceTypeDAO {
     public void insert(ResourceType resourceType);
     public void update(ResourceType resourceType);
     public void delete(ResourceType resourceType);
-    public boolean checkGroupId(int resourceTypeId, int groupId);
+ //   public boolean checkGroupId(int resourceTypeId, int groupId);
 }

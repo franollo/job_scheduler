@@ -9,5 +9,5 @@ public interface ProductDAO {
     public void insert(Product product);
     public void update(Product product);
     public void delete(Product product);
-    public boolean checkGroupId(int productId, int groupId);
+   // public boolean checkGroupId(int productId, int groupId);
 }

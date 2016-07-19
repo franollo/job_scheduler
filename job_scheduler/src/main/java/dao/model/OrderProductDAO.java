@@ -9,5 +9,5 @@ public interface OrderProductDAO {
     public void insert(OrderProduct orderProduct);
     public void update(OrderProduct orderProduct);
     public void delete(OrderProduct orderProduct);
-    public boolean checkGroupId(int orderProductId, int groupId);
+//    public boolean checkGroupId(int orderProductId, int groupId);
 }

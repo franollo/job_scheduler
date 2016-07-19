@@ -30,22 +30,22 @@ public class JPAOrderDAO extends JPADAO implements OrderDAO {
     public void delete(Order order) {
         entityManager.remove(order);
     }
-
-    @Override
-    public boolean checkGroupId(int orderId, int groupId) {
-        String queryString = "SELECT o.orderId " +
-                "FROM Order o " +
-                "WHERE o.orderId = :orderId " +
-                "AND o.group.groupId = :groupId";
-        TypedQuery<Integer> query = entityManager.createQuery(queryString, Integer.class);
-        try {
-            query.setParameter("orderId", orderId)
-                    .setParameter("groupId", groupId)
-                    .getSingleResult();
-        }
-        catch(NoResultException e) {
-            return false;
-        }
-        return true;
-    }
+//
+//    @Override
+//    public boolean checkGroupId(int orderId, int groupId) {
+//        String queryString = "SELECT o.orderId " +
+//                "FROM Order o " +
+//                "WHERE o.orderId = :orderId " +
+//                "AND o.group.groupId = :groupId";
+//        TypedQuery<Integer> query = entityManager.createQuery(queryString, Integer.class);
+//        try {
+//            query.setParameter("orderId", orderId)
+//                    .setParameter("groupId", groupId)
+//                    .getSingleResult();
+//        }
+//        catch(NoResultException e) {
+//            return false;
+//        }
+//        return true;
+//    }
 }

@@ -28,8 +28,8 @@ public class JPAOrderProductDAO extends JPADAO implements OrderProductDAO {
         entityManager.persist(orderProduct);
     }
 
-    @Override
-    public boolean checkGroupId(int orderProductId, int groupId) {
-        return false;
-    }
+//    @Override
+//    public boolean checkGroupId(int orderProductId, int groupId) {
+//        return false;
+//    }
 }

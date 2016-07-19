@@ -2,10 +2,7 @@ package main.java.model.common;
 
 import main.java.model.Group;
 
-import javax.persistence.Column;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
@@ -13,10 +10,21 @@ import java.time.LocalDateTime;
  */
 
 @MappedSuperclass
-public class GroupObject {
+public abstract class GroupObject {
+    private int id;
     private Group group;
     private LocalDateTime createdOn;
     private LocalDateTime editedOn;
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     @ManyToOne
     @JoinColumn(name = "GROUP_ID")

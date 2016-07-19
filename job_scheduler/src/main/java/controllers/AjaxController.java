@@ -1,24 +1,30 @@
 package main.java.controllers;
 
+import main.java.dao.model.OrderDAO;
 import main.java.dao.model.ProductOperationDAO;
 import main.java.dao.model.UserDAO;
 import main.java.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.ParseException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
  * @author Marcin Frankowski
  */
 
-@Controller
-@RequestMapping("/data")
+@RestController
+@RequestMapping("/save")
 public class AjaxController {
+
+    @Autowired
+    private OrderDAO orderDAO;
+
     @Autowired
     private ProductOperationDAO productOperationDAO;
 
@@ -40,6 +46,18 @@ public class AjaxController {
 //    @Autowired
 //    private JdbcTaskDAO jdbcTaskDAO;
 
+    @RequestMapping(value = "/new/order", method = RequestMethod.POST)
+    public @ResponseBody void newOrder(@RequestBody Order order,
+                                       HttpServletResponse response) throws ParseException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userDAO.getUserByLogin(auth.getName());
+        if(userDAO.hasPermission(order, user)) {
+            orderDAO.insert(order);
+        }
+        else {
+            response.setStatus(401);
+        }
+    }
 
 //    @RequestMapping(value = "/neworder", method = RequestMethod.POST)
 //    public
@@ -256,10 +274,10 @@ public class AjaxController {
         Product product = new Product();
         ResourceType resourceType = new ResourceType();
         ProductOperation productOperation = new ProductOperation();
-        product.setProductId(1);
+        product.setId(1);
         product.setName("rower");
         product.setDescription("rower szosowy");
-        resourceType.setResourceTypeId(1);
+        resourceType.setId(1);
         resourceType.setName("tokarki");
         productOperation.setName("spring");
         productOperation.setDescription("test JPA");
@@ -268,8 +286,7 @@ public class AjaxController {
         productOperation.setResourceType(resourceType);
         productOperation.setGroup(group);
         productOperationDAO.insert(productOperation);
-        System.out.println("id: " + productOperation.getProductOperationId());
-        System.out.println("czyje to: " + productOperationDAO.checkGroupId(productOperation.getProductOperationId(),1));
+        System.out.println("id: " + productOperation.getId());
        // personDao.sayHey();
     }
 }

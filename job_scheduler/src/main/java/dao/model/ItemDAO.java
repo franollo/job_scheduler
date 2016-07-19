@@ -6,7 +6,7 @@ public interface ItemDAO {
     public void insert(Item item);
     public void update(Item item);
     public void delete(Item item);
-    public boolean checkGroupId(int itemId, int groupId);
+  //  public boolean checkGroupId(int itemId, int groupId);
 
 //    public void createNewItem(Item item, int orderId, int itemId);
 //
