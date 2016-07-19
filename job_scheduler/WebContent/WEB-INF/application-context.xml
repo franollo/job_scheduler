@@ -10,7 +10,7 @@
                             http://www.springframework.org/schema/context
                             http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="com.marcin.controllers.*" />
+    <context:component-scan base-package="main.java.controllers.*" />
 
     <bean id="dataSource"
           class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -40,7 +40,7 @@
         <property name="dataSource" ref="dataSource" />
         <property name="jpaVendorAdapter" ref="jpaVendorAdapter" />
         <property name="jpaDialect" ref="jpaDialect" />
-        <property name="packagesToScan" value="com.marcin.model" />
+        <property name="packagesToScan" value="main.java.model" />
     </bean>
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
@@ -51,13 +51,13 @@
 
     <tx:annotation-driven transaction-manager="transactionManager" />
 
-    <bean id="restAuthenticationEntryPoint" class="com.marcin.security.RestAuthenticationEntryPoint" />
+    <bean id="restAuthenticationEntryPoint" class="main.java.security.RestAuthenticationEntryPoint" />
 
-    <bean id="restBasicAuthenticationEntryPoint" class="com.marcin.security.RestBasicAuthenticationEntryPoint">
+    <bean id="restBasicAuthenticationEntryPoint" class="main.java.security.RestBasicAuthenticationEntryPoint">
         <constructor-arg value="RealmName"/>
     </bean>
 
-    <bean id="productOperationDAO" class="com.marcin.dao.jpa.JPAProductOperationDAO" />
+    <bean id="productOperationDAO" class="main.java.dao.jpa.JPAProductOperationDAO" />
 
-    <bean id="hibernateUserDAO" class="com.marcin.dao.jpa.JPAUserDAO" />
+    <bean id="hibernateUserDAO" class="main.java.dao.jpa.JPAUserDAO" />
 </beans>
