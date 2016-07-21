@@ -2,11 +2,14 @@ package main.java.dao.jpa;
 
 import main.java.dao.model.ProductOperationDAO;
 import main.java.model.ProductOperation;
+import org.hibernate.JDBCException;
+import org.hibernate.exception.GenericJDBCException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
+import javax.persistence.RollbackException;
 import javax.persistence.TypedQuery;
 
 /**

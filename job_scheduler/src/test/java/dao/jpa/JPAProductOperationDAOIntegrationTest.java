@@ -1,20 +1,13 @@
 package test.java.dao.jpa;
 
 import main.java.dao.model.ProductOperationDAO;
-import main.java.dao.model.UserDAO;
 import main.java.model.*;
-import main.java.utils.LocalDateTimeAttributeConverter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.Commit;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -45,11 +38,19 @@ public class JPAProductOperationDAOIntegrationTest {
         productOperation.setName("test");
         productOperation.setDescription("test");
         productOperation.setDuration(10);
+        productOperation.setOperationNumber(1);
         productOperation.setProduct(product);
         productOperation.setResourceType(resourceType);
         productOperation.setGroup(group);
-        ProductOperation po = productOperationDAO.insert(productOperation);
-        assertNotNull(po.getId());
-        assertTrue(po.getId() > 0);
+        ProductOperation insertedPO = productOperationDAO.find(productOperationDAO.insert(productOperation));
+        assertNotNull(insertedPO.getId());
+        assertTrue(insertedPO.getId() > 0);
+        assertTrue(insertedPO.getName() == "test");
+        assertTrue(insertedPO.getDescription() == "test");
+        assertTrue(insertedPO.getDuration() == 10);
+        assertTrue(insertedPO.getOperationNumber() == 1);
+        assertTrue(insertedPO.getProduct().getId() == 1);
+        assertTrue(insertedPO.getResourceType().getId() == 1);
+        assertTrue(insertedPO.getGroup().getGroupId() == 1);
     }
 }

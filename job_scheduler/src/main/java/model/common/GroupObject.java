@@ -37,7 +37,7 @@ public abstract class GroupObject {
         this.group = group;
     }
 
-    @Column(name = "CREATED_ON", insertable = false, updatable = false)
+    @Column(name = "CREATED_ON")
     public LocalDateTime getCreatedOn() {
         return createdOn;
     }
@@ -46,12 +46,23 @@ public abstract class GroupObject {
         this.createdOn = createdOn;
     }
 
-    @Column(name = "EDITED_ON", insertable = false, updatable = false)
+    @Column(name = "EDITED_ON")
     public LocalDateTime getEditedOn() {
         return editedOn;
     }
 
     public void setEditedOn(LocalDateTime editedOn) {
         this.editedOn = editedOn;
+    }
+
+    @PrePersist
+    public void setDates() {
+        createdOn = LocalDateTime.now();
+        editedOn = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void setEditedOn() {
+        editedOn = LocalDateTime.now();
     }
 }

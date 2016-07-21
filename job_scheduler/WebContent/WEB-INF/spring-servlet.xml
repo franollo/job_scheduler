@@ -10,7 +10,7 @@
         http://www.springframework.org/schema/context 
         http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:component-scan base-package="main.java.com.controllers"/>
+    <context:component-scan base-package="main.java.controllers"/>
     <mvc:annotation-driven/>
     <mvc:default-servlet-handler/>
 </beans>

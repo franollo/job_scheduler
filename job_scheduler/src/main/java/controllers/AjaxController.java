@@ -1,11 +1,14 @@
 package main.java.controllers;
 
+import com.mysql.jdbc.SQLError;
 import main.java.dao.model.OrderDAO;
 import main.java.dao.model.ProductOperationDAO;
 import main.java.dao.model.UserDAO;
 import main.java.model.*;
+import org.hibernate.exception.GenericJDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ParseException;
+import org.springframework.orm.hibernate4.HibernateJdbcException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  */
 
 @RestController
-@RequestMapping("/save")
+@RequestMapping("/data")
 public class AjaxController {
 
     @Autowired
@@ -263,30 +266,46 @@ public class AjaxController {
     @RequestMapping(value = "/person", method = RequestMethod.POST)
     public
     @ResponseBody
-    void deleteResource() {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName();
-        System.out.println("spring: " + name);
-        User user = userDAO.getUserByLogin(name);
-        System.out.println("imię: " + user.getFirstName());
+    void deleteResource(HttpServletResponse response) {
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        String name = auth.getName();
+//        System.out.println("spring: " + name);
+//        User user = userDAO.getUserByLogin(name);
+//        System.out.println("imię: " + user.getFirstName());
+//        Group group = new Group();
+//        group.setGroupId(1);
+//        Product product = new Product();
+//        ResourceType resourceType = new ResourceType();
+//        ProductOperation productOperation = new ProductOperation();
+//        product.setId(1);
+//        product.setName("rower");
+//        product.setDescription("rower szosowy");
+//        resourceType.setId(1);
+//        resourceType.setName("tokarki");
+//        productOperation.setName("spring");
+//        productOperation.setDescription("test JPA");
+//        productOperation.setDuration(10);
+//        productOperation.setProduct(product);
+//        productOperation.setResourceType(resourceType);
+//        productOperation.setGroup(group);
+//        productOperationDAO.insert(productOperation);
+//        System.out.println("id: " + productOperation.getId());
+       // personDao.sayHey();
         Group group = new Group();
         group.setGroupId(1);
         Product product = new Product();
         ResourceType resourceType = new ResourceType();
         ProductOperation productOperation = new ProductOperation();
         product.setId(1);
-        product.setName("rower");
-        product.setDescription("rower szosowy");
+        product.setName("test");
+        product.setDescription("test");
         resourceType.setId(1);
-        resourceType.setName("tokarki");
-        productOperation.setName("spring");
-        productOperation.setDescription("test JPA");
+        resourceType.setName("test");
+        productOperation.setDescription("test");
         productOperation.setDuration(10);
         productOperation.setProduct(product);
         productOperation.setResourceType(resourceType);
         productOperation.setGroup(group);
         productOperationDAO.insert(productOperation);
-        System.out.println("id: " + productOperation.getId());
-       // personDao.sayHey();
     }
 }
