@@ -1,6 +1,5 @@
 package main.java.controllers;
 
-import com.mysql.jdbc.SQLError;
 import main.java.dao.model.OrderDAO;
 import main.java.dao.model.ProductOperationDAO;
 import main.java.dao.model.UserDAO;
@@ -8,12 +7,10 @@ import main.java.model.*;
 import org.hibernate.exception.GenericJDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.expression.ParseException;
-import org.springframework.orm.hibernate4.HibernateJdbcException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 
@@ -266,31 +263,7 @@ public class AjaxController {
     @RequestMapping(value = "/person", method = RequestMethod.POST)
     public
     @ResponseBody
-    void deleteResource(HttpServletResponse response) {
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-//        String name = auth.getName();
-//        System.out.println("spring: " + name);
-//        User user = userDAO.getUserByLogin(name);
-//        System.out.println("imię: " + user.getFirstName());
-//        Group group = new Group();
-//        group.setGroupId(1);
-//        Product product = new Product();
-//        ResourceType resourceType = new ResourceType();
-//        ProductOperation productOperation = new ProductOperation();
-//        product.setId(1);
-//        product.setName("rower");
-//        product.setDescription("rower szosowy");
-//        resourceType.setId(1);
-//        resourceType.setName("tokarki");
-//        productOperation.setName("spring");
-//        productOperation.setDescription("test JPA");
-//        productOperation.setDuration(10);
-//        productOperation.setProduct(product);
-//        productOperation.setResourceType(resourceType);
-//        productOperation.setGroup(group);
-//        productOperationDAO.insert(productOperation);
-//        System.out.println("id: " + productOperation.getId());
-       // personDao.sayHey();
+    void deleteResource() {
         Group group = new Group();
         group.setGroupId(1);
         Product product = new Product();
@@ -302,10 +275,18 @@ public class AjaxController {
         resourceType.setId(1);
         resourceType.setName("test");
         productOperation.setDescription("test");
+        productOperation.setName("test");
         productOperation.setDuration(10);
         productOperation.setProduct(product);
         productOperation.setResourceType(resourceType);
         productOperation.setGroup(group);
-        productOperationDAO.insert(productOperation);
+        //productOperationDAO.insert(productOperation);
+        productOperationDAO.doSth(productOperation);
+    }
+
+    @ExceptionHandler(GenericJDBCException.class)
+    public void handleSQLErrors(HttpServletResponse response, Exception e) {
+        e.printStackTrace();
+        response.setStatus(400);
     }
 }

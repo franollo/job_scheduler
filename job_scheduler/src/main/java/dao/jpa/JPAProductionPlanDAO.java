@@ -1,15 +1,10 @@
 package main.java.dao.jpa;
 
 import main.java.dao.model.ProductionPlanDAO;
-import main.java.model.Product;
-import main.java.model.ProductOperation;
 import main.java.model.ProductionPlan;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.NoResultException;
-import javax.persistence.TypedQuery;
 
 /**
  * Created by Marcin Frankowski on 15.07.16.
@@ -32,22 +27,4 @@ public class JPAProductionPlanDAO extends JPADAO implements ProductionPlanDAO {
     public void delete(ProductionPlan productionPlan) {
         entityManager.remove(productionPlan);
     }
-
-//    @Override
-//    public boolean checkGroupId(int productionPlanId, int groupId) {
-//        String queryString = "SELECT pp.productionPlanId " +
-//                "FROM ProductionPlan pp " +
-//                "WHERE pp.productionPlanId = :productionPlanId " +
-//                "AND pp.group.groupId = :groupId";
-//        TypedQuery<Integer> query = entityManager.createQuery(queryString, Integer.class);
-//        try {
-//            query.setParameter("productionPlanId", productionPlanId)
-//                    .setParameter("groupId", groupId)
-//                    .getSingleResult();
-//        }
-//        catch(NoResultException e) {
-//            return false;
-//        }
-//        return true;
-//    }
 }

@@ -28,7 +28,7 @@ public class ProductOperation extends GroupObject {
         this.operationNumber = operationNumber;
     }
 
-    @Column(name = "NAME", insertable = false, updatable = false)
+    @Column(name = "NAME")
     public String getName() {
         return name;
     }
