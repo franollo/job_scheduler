@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "ITEMS")
+@AttributeOverride(name = "id", column = @Column(name = "ITEM_ID"))
 public class Item extends GroupObject {
     private LocalDateTime start;
     private LocalDateTime end;

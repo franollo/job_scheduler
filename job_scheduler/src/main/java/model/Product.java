@@ -9,7 +9,6 @@ import java.util.Set;
 @Table(name = "PRODUCTS")
 @AttributeOverride(name = "id", column = @Column(name = "PRODUCT_ID"))
 public class Product extends GroupObject {
- //   private int productId;
     private String name;
     private String description;
     private String attribute1;
@@ -17,17 +16,6 @@ public class Product extends GroupObject {
     private String attribute3;
     private Set<ProductOperation> productOperations;
     private Set<OrderProduct> orderProducts;
-
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "PRODUCT_ID")
-//    public int getProductId() {
-//        return productId;
-//    }
-//
-//    public void setProductId(int productId) {
-//        this.productId = productId;
-//    }
 
     @Column(name = "NAME")
     public String getName() {

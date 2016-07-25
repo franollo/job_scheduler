@@ -1,6 +1,7 @@
 package main.java.dao.jpa;
 
 import main.java.dao.model.UserDAO;
+import main.java.exceptions.ObjectAuthorizationException;
 import main.java.model.User;
 import main.java.model.common.GroupObject;
 import org.springframework.stereotype.Repository;
@@ -28,7 +29,10 @@ public class JPAUserDAO extends JPADAO implements UserDAO {
     }
 
     @Override
-    public boolean hasPermission(GroupObject groupObject, User user) {
+    public void hasPermission(GroupObject groupObject, User user) throws ObjectAuthorizationException {
+        if(groupObject.getId() == null) {
+            return;
+        }
         String className = groupObject.getClass().getSimpleName();
         String queryString = "SELECT go.id " +
                 "FROM " + className + " go " +
@@ -40,8 +44,12 @@ public class JPAUserDAO extends JPADAO implements UserDAO {
                     .setParameter("groupId", user.getGroup().getGroupId())
                     .getSingleResult();
         } catch (NoResultException e) {
-            return false;
+            throw new ObjectAuthorizationException("User [" +
+                    user.getUsername() +
+                    "] is not authorized to modify [" +
+                    className +
+                    "] with [id] = " +
+                    groupObject.getId());
         }
-        return true;
     }
 }

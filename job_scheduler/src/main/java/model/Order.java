@@ -8,24 +8,13 @@ import java.util.Set;
 
 @Entity
 @Table(name = "ORDERS")
+@AttributeOverride(name = "id", column = @Column(name = "ORDER_ID"))
 public class Order extends GroupObject {
-  //  private int orderId;
     private String name;
     private String description;
     private LocalDateTime dueDate;
     private ProductionPlan productionPlan;
     private Set<OrderProduct> orderProducts;
-//
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "ORDER_ID")
-//    public int getOrderId() {
-//        return orderId;
-//    }
-//
-//    public void setOrderId(int orderId) {
-//        this.orderId = orderId;
-//    }
 
     @Column(name = "NAME")
     public String getName() {

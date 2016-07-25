@@ -7,24 +7,13 @@ import java.util.Set;
 
 @Entity
 @Table(name = "RESOURCES")
+@AttributeOverride(name = "id", column = @Column(name = "RESOURCE_ID"))
 public class Resource extends GroupObject {
- //   private int resourceId;
     private String name;
     private String description;
     private int costPerHour;
     private int efficiency;
     private Set<Item> items;
-
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "RESOURCE_ID")
-//    public int getResourceId() {
-//        return resourceId;
-//    }
-//
-//    public void setResourceId(int resourceId) {
-//        this.resourceId = resourceId;
-//    }
 
     @Column(name = "NAME")
     public String getName() {

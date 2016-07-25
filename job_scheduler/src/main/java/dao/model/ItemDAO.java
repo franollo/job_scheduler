@@ -1,11 +1,15 @@
 package main.java.dao.model;
 
 import main.java.model.Item;
+import main.java.model.User;
+
+import java.util.List;
 
 public interface ItemDAO {
     public void insert(Item item);
     public void update(Item item);
     public void delete(Item item);
+    public List<Item> getUserItems(User user);
   //  public boolean checkGroupId(int itemId, int groupId);
 
 //    public void createNewItem(Item item, int orderId, int itemId);

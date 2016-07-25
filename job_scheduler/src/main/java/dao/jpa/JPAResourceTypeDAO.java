@@ -1,7 +1,7 @@
 package main.java.dao.jpa;
 
-import main.java.dao.model.ResourceDAO;
-import main.java.model.Resource;
+import main.java.dao.model.ResourceTypeDAO;
+import main.java.model.ResourceType;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,19 +12,19 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository("resourceTypeDAO")
 @Transactional(propagation = Propagation.REQUIRED)
-public class JPAResourceTypeDAO extends JPADAO implements ResourceDAO {
+public class JPAResourceTypeDAO extends JPADAO implements ResourceTypeDAO {
     @Override
-    public void insert(Resource resource) {
-        entityManager.persist(resource);
+    public void insert(ResourceType resourceType) {
+        entityManager.persist(resourceType);
     }
 
     @Override
-    public void update(Resource resource) {
-        entityManager.merge(resource);
+    public void update(ResourceType resourceType) {
+        entityManager.merge(resourceType);
     }
 
     @Override
-    public void delete(Resource resource) {
-        entityManager.remove(resource);
+    public void delete(ResourceType resourceType) {
+        entityManager.remove(resourceType);
     }
 }

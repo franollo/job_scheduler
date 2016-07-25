@@ -57,9 +57,21 @@
         <constructor-arg value="RealmName"/>
     </bean>
 
+    <bean id="itemDAO" class="main.java.dao.jpa.JPAItemDAO" />
+
     <bean id="orderDAO" class="main.java.dao.jpa.JPAOrderDAO" />
 
+    <bean id="orderProduct" class="main.java.dao.jpa.JPAOrderProductDAO" />
+
+    <bean id="productDAO" class="main.java.dao.jpa.JPAProductDAO" />
+
+    <bean id="productionPlanDAO" class="main.java.dao.jpa.JPAProductionPlanDAO" />
+
     <bean id="productOperationDAO" class="main.java.dao.jpa.JPAProductOperationDAO" />
+
+    <bean id="resourceDAO" class="main.java.dao.jpa.JPAResourceDAO" />
+
+    <bean id="resourceTypeDAO" class="main.java.dao.jpa.JPAResourceTypeDAO" />
 
     <bean id="hibernateUserDAO" class="main.java.dao.jpa.JPAUserDAO" />
 </beans>

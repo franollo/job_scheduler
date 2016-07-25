@@ -11,24 +11,13 @@ import java.util.Set;
  */
 @Entity
 @Table(name = "PRODUCTION_PLANS")
+@AttributeOverride(name = "id", column = @Column(name = "PRODUCTION_PLAN_ID"))
 public class ProductionPlan extends GroupObject {
- //   private int productionPlanId;
     private String name;
     private LocalDateTime start;
     private LocalDateTime end;
     private Set<Item> items;
     private Set<Order> orders;
-
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "PRODUCTION_PLAN_ID")
-//    public int getProductionPlanId() {
-//        return productionPlanId;
-//    }
-//
-//    public void setProductionPlanId(int productionPlanId) {
-//        this.productionPlanId = productionPlanId;
-//    }
 
     @Column(name = "NAME")
     public String getName() {
@@ -73,5 +62,9 @@ public class ProductionPlan extends GroupObject {
 
     public void setOrders(Set<Order> orders) {
         this.orders = orders;
+    }
+
+    public void process() {
+
     }
 }
