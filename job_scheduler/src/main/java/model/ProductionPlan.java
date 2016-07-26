@@ -3,8 +3,10 @@ package main.java.model;
 import main.java.model.common.GroupObject;
 
 import javax.persistence.*;
+import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.time.temporal.ChronoField;
+import java.util.*;
 
 /**
  * Created by Marcin Frankowski on 12.07.2016.
@@ -65,6 +67,49 @@ public class ProductionPlan extends GroupObject {
     }
 
     public void process() {
+        Map<Integer, LocalDateTime> endDates = new HashMap<>();
+        Map<Integer, LocalDateTime> endDates2 = new HashMap<>();
+        Map<Integer, LocalDateTime> startDates = new HashMap<>();
+        LocalDateTime dateTime = start;
 
+
+        Item item = new Item();
+        for(Order order : this.getOrders()) {
+            for(OrderProduct orderProduct : order.getOrderProducts()) {
+                for(ProductOperation productOperation : orderProduct.getProduct().getProductOperations()) {
+                    if(!endDates.containsKey(productOperation.getResource().getId())) {
+                        endDates2.put(productOperation.getResource().getId(), dateTime);
+                    }
+                }
+            }
+        }
+
+        for (Order order : this.getOrders()) {
+            for (OrderProduct orderProduct : order.getOrderProducts()) {
+                for (ProductOperation productOperation : orderProduct.getProduct().getProductOperations()) {
+                    startDates.put(productOperation.getResource().getId(), dateTime);
+                    item.setResource(productOperation.getResource());
+                    item.setGroup(this.getGroup());
+                    item.setProductionPlan(this);
+                    item.setStart(dateTime);
+                    dateTime = dateTime.plus(productOperation.getDuration(), ChronoField.MILLI_OF_SECOND.getBaseUnit());
+                    endDates.put(productOperation.getResource().getId(), dateTime);
+                    item.setEnd(dateTime);
+                    items.add(item);
+                }
+                long diff = Long.MAX_VALUE;
+                for (Map.Entry<Integer, LocalDateTime> entry : endDates2.entrySet()) {
+                    if (startDates.containsKey(entry.getKey())) {
+                        long diffTmp = Duration.between(startDates.get(entry.getKey()), entry.getValue()).toMillis();
+                        if (diffTmp < diff) {
+                            diff = diffTmp;
+                        }
+                    }
+                }
+                dateTime = dateTime.minusNanos(diff);
+                endDates2 = endDates;
+                startDates.clear();
+            }
+        }
     }
 }

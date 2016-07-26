@@ -17,6 +17,7 @@ public class ProductOperation extends GroupObject {
     private int duration;
     private int preparationDuration;
     private ResourceType resourceType;
+    private Resource resource;
     private Product product;
 
     @Column(name = "OPERATION_NUMBER")
@@ -62,6 +63,16 @@ public class ProductOperation extends GroupObject {
 
     public void setPreparationDuration(int preparationDuration) {
         this.preparationDuration = preparationDuration;
+    }
+
+    @ManyToOne
+    @JoinColumn(name = "RESOURCE_ID")
+    public Resource getResource() {
+        return resource;
+    }
+
+    public void setResource(Resource resource) {
+        this.resource = resource;
     }
 
     @ManyToOne
