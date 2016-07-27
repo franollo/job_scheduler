@@ -16,9 +16,9 @@ public class ProductOperation extends GroupObject {
     private String description;
     private int duration;
     private int preparationDuration;
-    private ResourceType resourceType;
-    private Resource resource;
-    private Product product;
+    private int resourceTypeId;
+    private int productId;
+    private int resourceId;
 
     @Column(name = "OPERATION_NUMBER")
     public int getOperationNumber() {
@@ -65,34 +65,31 @@ public class ProductOperation extends GroupObject {
         this.preparationDuration = preparationDuration;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "RESOURCE_ID")
-    public Resource getResource() {
-        return resource;
+    @Column(name = "RESOURCE_TYPE_ID")
+    public int getResourceTypeId() {
+        return resourceTypeId;
     }
 
-    public void setResource(Resource resource) {
-        this.resource = resource;
+    public void setResourceTypeId(int resourceTypeId) {
+        this.resourceTypeId = resourceTypeId;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "RESOURCE_TYPE_ID")
-    public ResourceType getResourceType() {
-        return resourceType;
+    @Column(name = "PRODUCT_ID")
+    public int getProductId() {
+        return productId;
     }
 
-    public void setResourceType(ResourceType resourceType) {
-        this.resourceType = resourceType;
+    public void setProductId(int productId) {
+        this.productId = productId;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "PRODUCT_ID")
-    public Product getProduct() {
-        return product;
+    @Transient
+    public int getResourceId() {
+        return resourceId;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setResourceId(int resourceId) {
+        this.resourceId = resourceId;
     }
 }
 

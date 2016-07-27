@@ -12,8 +12,8 @@ public class Item extends GroupObject {
     private LocalDateTime start;
     private LocalDateTime end;
     private LocalDateTime preparationStart;
-    private Resource resource;
-    private ProductionPlan productionPlan;
+    private int resourceId;
+    private int productionPlanId;
 
     @Column(name = "START")
     public LocalDateTime getStart() {
@@ -42,23 +42,21 @@ public class Item extends GroupObject {
         this.preparationStart = preparationStart;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "RESOURCE_ID")
-    public Resource getResource() {
-        return resource;
+    @Column(name = "RESOURCE_ID")
+    public int getResourceId() {
+        return resourceId;
     }
 
-    public void setResource(Resource resource) {
-        this.resource = resource;
+    public void setResourceId(int resourceId) {
+        this.resourceId = resourceId;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "PRODUCTION_PLAN_ID")
-    public ProductionPlan getProductionPlan() {
-        return productionPlan;
+    @Column(name = "PRODUCTION_PLAN_ID")
+    public int getProductionPlanId() {
+        return productionPlanId;
     }
 
-    public void setProductionPlan(ProductionPlan productionPlan) {
-        this.productionPlan = productionPlan;
+    public void setProductionPlanId(int productionPlanId) {
+        this.productionPlanId = productionPlanId;
     }
 }

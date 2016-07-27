@@ -13,7 +13,7 @@ public class Order extends GroupObject {
     private String name;
     private String description;
     private LocalDateTime dueDate;
-    private ProductionPlan productionPlan;
+    int productionPlanId;
     private Set<OrderProduct> orderProducts;
 
     @Column(name = "NAME")
@@ -43,14 +43,13 @@ public class Order extends GroupObject {
         this.dueDate = dueDate;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "PRODUCTION_PLAN_ID")
-    public ProductionPlan getProductionPlan() {
-        return productionPlan;
+    @Column(name = "PRODUCTION_PLAN_ID")
+    public int getProductionPlanId() {
+        return productionPlanId;
     }
 
-    public void setProductionPlan(ProductionPlan productionPlan) {
-        this.productionPlan = productionPlan;
+    public void setProductionPlanId(int productionPlanId) {
+        this.productionPlanId = productionPlanId;
     }
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "order")

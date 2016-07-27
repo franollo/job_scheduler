@@ -14,6 +14,7 @@ public class Resource extends GroupObject {
     private int costPerHour;
     private int efficiency;
     private Set<Item> items;
+    private int resourceTypeId;
 
     @Column(name = "NAME")
     public String getName() {
@@ -51,12 +52,22 @@ public class Resource extends GroupObject {
         this.efficiency = efficiency;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "resource")
+    @OneToMany
+    @JoinColumn(name = "RESOURCE_ID", referencedColumnName = "RESOURCE_ID")
     public Set<Item> getItems() {
         return items;
     }
 
     public void setItems(Set<Item> items) {
         this.items = items;
+    }
+
+    @Column(name = "RESOURCE_TYPE_ID")
+    public int getResourceTypeId() {
+        return resourceTypeId;
+    }
+
+    public void setResourceTypeId(int resourceTypeId) {
+        this.resourceTypeId = resourceTypeId;
     }
 }

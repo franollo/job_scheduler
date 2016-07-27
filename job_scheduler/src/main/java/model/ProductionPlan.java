@@ -48,7 +48,8 @@ public class ProductionPlan extends GroupObject {
         this.end = end;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "productionPlan")
+    @OneToMany
+    @JoinColumn(name = "PRODUCTION_PLAN_ID", referencedColumnName = "PRODUCTION_PLAN_ID")
     public Set<Item> getItems() {
         return items;
     }
@@ -57,7 +58,8 @@ public class ProductionPlan extends GroupObject {
         this.items = items;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "productionPlan")
+    @OneToMany
+    @JoinColumn(name = "PRODUCTION_PLAN_ID", referencedColumnName = "PRODUCTION_PLAN_ID")
     public Set<Order> getOrders() {
         return orders;
     }
@@ -77,8 +79,8 @@ public class ProductionPlan extends GroupObject {
         for(Order order : this.getOrders()) {
             for(OrderProduct orderProduct : order.getOrderProducts()) {
                 for(ProductOperation productOperation : orderProduct.getProduct().getProductOperations()) {
-                    if(!endDates.containsKey(productOperation.getResource().getId())) {
-                        endDates2.put(productOperation.getResource().getId(), dateTime);
+                    if(!endDates.containsKey(productOperation.getResourceId())) {
+                        endDates2.put(productOperation.getResourceId(), dateTime);
                     }
                 }
             }
@@ -87,13 +89,13 @@ public class ProductionPlan extends GroupObject {
         for (Order order : this.getOrders()) {
             for (OrderProduct orderProduct : order.getOrderProducts()) {
                 for (ProductOperation productOperation : orderProduct.getProduct().getProductOperations()) {
-                    startDates.put(productOperation.getResource().getId(), dateTime);
-                    item.setResource(productOperation.getResource());
+                    startDates.put(productOperation.getResourceId(), dateTime);
+                    item.setResourceId(productOperation.getResourceId());
                     item.setGroup(this.getGroup());
-                    item.setProductionPlan(this);
+                    item.setProductionPlanId(this.getId());
                     item.setStart(dateTime);
                     dateTime = dateTime.plus(productOperation.getDuration(), ChronoField.MILLI_OF_SECOND.getBaseUnit());
-                    endDates.put(productOperation.getResource().getId(), dateTime);
+                    endDates.put(productOperation.getResourceId(), dateTime);
                     item.setEnd(dateTime);
                     items.add(item);
                 }

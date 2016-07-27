@@ -11,6 +11,7 @@ import java.util.Set;
 public class ResourceType extends GroupObject {
     private String name;
     private Set<ProductOperation> productOperations;
+    private Set<Resource> resources;
 
     @Column(name = "NAME")
     public String getName() {
@@ -21,12 +22,23 @@ public class ResourceType extends GroupObject {
         this.name = name;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "resourceType")
+    @OneToMany
+    @JoinColumn(name = "RESOURCE_TYPE_ID", referencedColumnName = "RESOURCE_TYPE_ID")
     public Set<ProductOperation> getProductOperations() {
         return productOperations;
     }
 
     public void setProductOperations(Set<ProductOperation> productOperations) {
         this.productOperations = productOperations;
+    }
+
+    @OneToMany
+    @JoinColumn(name = "RESOURCE_TYPE_ID", referencedColumnName = "RESOURCE_TYPE_ID")
+    public Set<Resource> getResources() {
+        return resources;
+    }
+
+    public void setResources(Set<Resource> resources) {
+        this.resources = resources;
     }
 }

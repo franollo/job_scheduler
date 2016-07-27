@@ -1,11 +1,15 @@
 package main.java.dao.model;
 
 import main.java.model.Resource;
+import main.java.model.User;
+
+import java.util.List;
 
 public interface ResourceDAO {
     public void insert(Resource resource);
     public void update(Resource resource);
     public void delete(Resource resource);
+    public List<Resource> getUsersResources(User user);
  //   public boolean checkGroupId(int resourceId, int groupId);
 
 //    public Resource getByID(int resourceID);

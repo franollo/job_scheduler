@@ -9,7 +9,6 @@ import org.hibernate.exception.GenericJDBCException;
  */
 
 public interface ProductOperationDAO {
-    public <T extends GroupObject> T doSth(T type);
     public ProductOperation insert(ProductOperation productOperation);
     public void update(ProductOperation productOperation);
     public void delete(ProductOperation productOperation);

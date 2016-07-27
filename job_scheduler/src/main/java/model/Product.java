@@ -62,7 +62,8 @@ public class Product extends GroupObject {
         this.attribute3 = attribute3;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
+    @OneToMany
+    @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")
     public Set<ProductOperation> getProductOperations() {
         return productOperations;
     }

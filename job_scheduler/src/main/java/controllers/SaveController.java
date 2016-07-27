@@ -265,10 +265,9 @@ public class SaveController {
         productOperation.setDescription("test");
         productOperation.setName("test");
         productOperation.setDuration(10);
-        productOperation.setProduct(product);
-        productOperation.setResourceType(resourceType);
+        productOperation.setProductId(1);
+        productOperation.setResourceTypeId(1);
         productOperation.setGroup(group);
         //productOperationDAO.insert(productOperation);
-        productOperationDAO.doSth(productOperation);
     }
 }

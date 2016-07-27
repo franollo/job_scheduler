@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/getdata")
-public class GetDataController {
+public class GetController {
 //    @Autowired
 //    private JdbcResourceDAO resourceDAO;
 //

@@ -16,11 +16,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class JPAProductOperationDAO extends JPADAO implements ProductOperationDAO {
 
     @Override
-    public <T extends GroupObject> T doSth(T type) {
-        return entityManager.merge(type);
-    }
-
-    @Override
     public ProductOperation insert(ProductOperation productOperation) {
         return entityManager.merge(productOperation);
     }

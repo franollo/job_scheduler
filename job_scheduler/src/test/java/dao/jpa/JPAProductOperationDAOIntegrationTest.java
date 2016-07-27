@@ -28,20 +28,13 @@ public class JPAProductOperationDAOIntegrationTest {
     public void performTest() {
         Group group = new Group();
         group.setGroupId(1);
-        Product product = new Product();
-        ResourceType resourceType = new ResourceType();
         ProductOperation productOperation = new ProductOperation();
-        product.setId(1);
-        product.setName("test");
-        product.setDescription("test");
-        resourceType.setId(1);
-        resourceType.setName("test");
         productOperation.setName("test");
         productOperation.setDescription("test");
         productOperation.setDuration(10);
         productOperation.setOperationNumber(1);
-        productOperation.setProduct(product);
-        productOperation.setResourceType(resourceType);
+        productOperation.setProductId(1);
+        productOperation.setResourceTypeId(1);
         productOperation.setGroup(group);
         try {
             productOperationDAO.insert(productOperation);
