@@ -1,15 +1,77 @@
 package main.java.controllers;
 
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import main.java.dao.model.*;
+import main.java.model.*;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.expression.ParseException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * @author Marcin Frankowski
  */
 
 @RestController
-@RequestMapping("/getdata")
+@RequestMapping("/get")
 public class GetController {
+    @Autowired
+    private OrderDAO orderDAO;
+
+    @Autowired
+    private ProductDAO productDAO;
+
+    @Autowired
+    private ProductionPlanDAO productionPlanDAO;
+
+    @Autowired
+    private ResourceTypeDAO resourceTypeDAO;
+
+    @Autowired
+    private UserDAO userDAO;
+
+    @RequestMapping(value = "/orders", method = RequestMethod.GET)
+    public @ResponseBody List<Order> orders() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userDAO.getUserByLogin(auth.getName());
+        return orderDAO.getUserOrders(user);
+    }
+
+    @RequestMapping(value = "/resources", method = RequestMethod.GET)
+    public @ResponseBody List<ResourceType> resources() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userDAO.getUserByLogin(auth.getName());
+        return resourceTypeDAO.getUsersResourceTypes(user);
+    }
+
+    @RequestMapping(value = "/productionplans", method = RequestMethod.GET)
+    public @ResponseBody List<ProductionPlan> productionPlans() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userDAO.getUserByLogin(auth.getName());
+        return productionPlanDAO.getUsersProductionPlans(user);
+    }
+
+    @RequestMapping(value = "/productionplan/{productionPlanId}", method = RequestMethod.GET)
+    public @ResponseBody ProductionPlan productionPlan(@PathVariable int productionPlanId) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userDAO.getUserByLogin(auth.getName());
+        userDAO.hasPermission(new ProductionPlan(productionPlanId), user);
+        return productionPlanDAO.getProductionPlan(productionPlanId);
+    }
+
+    @RequestMapping(value = "/products", method = RequestMethod.GET)
+    public @ResponseBody List<Product> products() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userDAO.getUserByLogin(auth.getName());
+        return productDAO.getUsersProducts(user);
+    }
+
+
+
+
+
 //    @Autowired
 //    private JdbcResourceDAO resourceDAO;
 //

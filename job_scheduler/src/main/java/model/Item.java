@@ -12,8 +12,8 @@ public class Item extends GroupObject {
     private LocalDateTime start;
     private LocalDateTime end;
     private LocalDateTime preparationStart;
-    private int resourceId;
-    private int productionPlanId;
+    private Integer resourceId;
+    private Integer productionPlanId;
 
     @Column(name = "START")
     public LocalDateTime getStart() {
@@ -43,20 +43,20 @@ public class Item extends GroupObject {
     }
 
     @Column(name = "RESOURCE_ID")
-    public int getResourceId() {
+    public Integer getResourceId() {
         return resourceId;
     }
 
-    public void setResourceId(int resourceId) {
+    public void setResourceId(Integer resourceId) {
         this.resourceId = resourceId;
     }
 
     @Column(name = "PRODUCTION_PLAN_ID")
-    public int getProductionPlanId() {
+    public Integer getProductionPlanId() {
         return productionPlanId;
     }
 
-    public void setProductionPlanId(int productionPlanId) {
+    public void setProductionPlanId(Integer productionPlanId) {
         this.productionPlanId = productionPlanId;
     }
 }

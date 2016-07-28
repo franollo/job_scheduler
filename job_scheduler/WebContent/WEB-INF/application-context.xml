@@ -74,4 +74,6 @@
     <bean id="resourceTypeDAO" class="main.java.dao.jpa.JPAResourceTypeDAO" />
 
     <bean id="hibernateUserDAO" class="main.java.dao.jpa.JPAUserDAO" />
+
+    <bean id="customObjectMapper" class="main.java.utils.CustomObjectMapper"/>
 </beans>

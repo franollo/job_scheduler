@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "GROUPS")
 public class Group {
-    private int groupId;
+    private Integer groupId;
     private String name;
     private LocalDateTime createdOn;
     private LocalDateTime editedOn;
@@ -20,11 +20,11 @@ public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "GROUP_ID")
-    public int getGroupId() {
+    public Integer getGroupId() {
         return groupId;
     }
 
-    public void setGroupId(int groupId) {
+    public void setGroupId(Integer groupId) {
         this.groupId = groupId;
     }
 

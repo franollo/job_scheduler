@@ -57,8 +57,8 @@ function mainController($document,
     }
     
     function newPerson() {
-        var person = {id: null, name: 'Marcin', email: 'mail@mail'};
-        dataService.newPerson(person);
+        var productionPlan = dataService.newPerson(1);
+        console.log(productionPlan);
     }
 
     function deleteJob(job) {

@@ -25,8 +25,8 @@ function dataService($http) {
         return post("data/neworder", order);
     }
 
-    function newPerson(order) {
-        return post("data/person", order);
+    function newPerson(id) {
+        return get("get/productionplan/" + id);
     }
 
     function updateOrder(order) {

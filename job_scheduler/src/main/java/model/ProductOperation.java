@@ -11,21 +11,21 @@ import javax.persistence.*;
 @Table(name="PRODUCT_OPERATIONS")
 @AttributeOverride(name = "id", column = @Column(name = "PRODUCT_OPERATION_ID"))
 public class ProductOperation extends GroupObject {
-    private int operationNumber;
+    private Integer operationNumber;
     private String name;
     private String description;
-    private int duration;
-    private int preparationDuration;
-    private int resourceTypeId;
-    private int productId;
-    private int resourceId;
+    private Integer duration;
+    private Integer preparationDuration;
+    private Integer resourceTypeId;
+    private Integer productId;
+    private Integer resourceId;
 
     @Column(name = "OPERATION_NUMBER")
-    public int getOperationNumber() {
+    public Integer getOperationNumber() {
         return operationNumber;
     }
 
-    public void setOperationNumber(int operationNumber) {
+    public void setOperationNumber(Integer operationNumber) {
         this.operationNumber = operationNumber;
     }
 
@@ -48,47 +48,47 @@ public class ProductOperation extends GroupObject {
     }
 
     @Column(name = "DURATION")
-    public int getDuration() {
+    public Integer getDuration() {
         return duration;
     }
 
-    public void setDuration(int duration) {
+    public void setDuration(Integer duration) {
         this.duration = duration;
     }
 
     @Column(name = "PREPARATION_DURATION")
-    public int getPreparationDuration() {
+    public Integer getPreparationDuration() {
         return preparationDuration;
     }
 
-    public void setPreparationDuration(int preparationDuration) {
+    public void setPreparationDuration(Integer preparationDuration) {
         this.preparationDuration = preparationDuration;
     }
 
     @Column(name = "RESOURCE_TYPE_ID")
-    public int getResourceTypeId() {
+    public Integer getResourceTypeId() {
         return resourceTypeId;
     }
 
-    public void setResourceTypeId(int resourceTypeId) {
+    public void setResourceTypeId(Integer resourceTypeId) {
         this.resourceTypeId = resourceTypeId;
     }
 
     @Column(name = "PRODUCT_ID")
-    public int getProductId() {
+    public Integer getProductId() {
         return productId;
     }
 
-    public void setProductId(int productId) {
+    public void setProductId(Integer productId) {
         this.productId = productId;
     }
 
     @Transient
-    public int getResourceId() {
+    public Integer getResourceId() {
         return resourceId;
     }
 
-    public void setResourceId(int resourceId) {
+    public void setResourceId(Integer resourceId) {
         this.resourceId = resourceId;
     }
 }

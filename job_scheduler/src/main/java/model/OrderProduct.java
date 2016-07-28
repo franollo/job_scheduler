@@ -1,5 +1,10 @@
 package main.java.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import org.omg.CORBA.ServerRequest;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -15,6 +20,8 @@ public class OrderProduct implements Serializable{
     private int amount;
 
     @Id
+    //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id")//, scope=ServerRequest.class)
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "ORDER_ID")
     public Order getOrder() {
@@ -26,6 +33,8 @@ public class OrderProduct implements Serializable{
     }
 
     @Id
+    //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id")//, scope=ServerRequest.class)
+    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "PRODUCT_ID")
     public Product getProduct() {

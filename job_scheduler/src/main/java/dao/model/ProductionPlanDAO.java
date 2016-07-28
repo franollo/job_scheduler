@@ -13,4 +13,5 @@ public interface ProductionPlanDAO {
     public void update(ProductionPlan productionPlan);
     public void delete(ProductionPlan productionPlan);
     public List<ProductionPlan> getUsersProductionPlans(User user);
+    public ProductionPlan getProductionPlan(int id);
 }

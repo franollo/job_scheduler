@@ -11,10 +11,10 @@ import java.util.Set;
 public class Resource extends GroupObject {
     private String name;
     private String description;
-    private int costPerHour;
-    private int efficiency;
+    private Integer costPerHour;
+    private Integer efficiency;
     private Set<Item> items;
-    private int resourceTypeId;
+    private Integer resourceTypeId;
 
     @Column(name = "NAME")
     public String getName() {
@@ -35,20 +35,20 @@ public class Resource extends GroupObject {
     }
 
     @Column(name = "COST_PER_HOUR")
-    public int getCostPerHour() {
+    public Integer getCostPerHour() {
         return costPerHour;
     }
 
-    public void setCostPerHour(int costPerHour) {
+    public void setCostPerHour(Integer costPerHour) {
         this.costPerHour = costPerHour;
     }
 
     @Column(name = "EFFICIENCY")
-    public int getEfficiency() {
+    public Integer getEfficiency() {
         return efficiency;
     }
 
-    public void setEfficiency(int efficiency) {
+    public void setEfficiency(Integer efficiency) {
         this.efficiency = efficiency;
     }
 
@@ -63,11 +63,11 @@ public class Resource extends GroupObject {
     }
 
     @Column(name = "RESOURCE_TYPE_ID")
-    public int getResourceTypeId() {
+    public Integer getResourceTypeId() {
         return resourceTypeId;
     }
 
-    public void setResourceTypeId(int resourceTypeId) {
+    public void setResourceTypeId(Integer resourceTypeId) {
         this.resourceTypeId = resourceTypeId;
     }
 }

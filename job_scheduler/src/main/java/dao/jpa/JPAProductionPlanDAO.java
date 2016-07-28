@@ -2,6 +2,7 @@ package main.java.dao.jpa;
 
 import main.java.dao.model.ProductionPlanDAO;
 import main.java.model.Order;
+import main.java.model.Product;
 import main.java.model.ProductionPlan;
 import main.java.model.User;
 import org.springframework.stereotype.Repository;
@@ -36,7 +37,14 @@ public class JPAProductionPlanDAO extends JPADAO implements ProductionPlanDAO {
 
     @Override
     public List<ProductionPlan> getUsersProductionPlans(User user) {
-        String queryString = "SELECT pp from ProductionPlan pp inner join User u " +
+        String queryString = "SELECT pp.id," +
+                "pp.name," +
+                "pp.start," +
+                "pp.end," +
+                "pp.createdOn," +
+                "pp.editedOn," +
+                "pp.orders " +
+                "from ProductionPlan pp inner join User u " +
                 "on pp.group.groupId = u.group.groupId " +
                 "where u.username = :username";
         TypedQuery<ProductionPlan> query = entityManager.createQuery(queryString, ProductionPlan.class);
@@ -45,5 +53,10 @@ public class JPAProductionPlanDAO extends JPADAO implements ProductionPlanDAO {
         } catch (NoResultException e) {
             return null;
         }
+    }
+
+    @Override
+    public ProductionPlan getProductionPlan(int id) {
+        return entityManager.find(ProductionPlan.class, id);
     }
 }

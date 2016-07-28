@@ -1,6 +1,8 @@
 package main.java.model;
 
 import main.java.model.common.GroupObject;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.time.Duration;
@@ -20,6 +22,12 @@ public class ProductionPlan extends GroupObject {
     private LocalDateTime end;
     private Set<Item> items;
     private Set<Order> orders;
+
+    public ProductionPlan() {}
+
+    public ProductionPlan(int productionPlanId) {
+        setId(productionPlanId);
+    }
 
     @Column(name = "NAME")
     public String getName() {
@@ -48,6 +56,7 @@ public class ProductionPlan extends GroupObject {
         this.end = end;
     }
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany
     @JoinColumn(name = "PRODUCTION_PLAN_ID", referencedColumnName = "PRODUCTION_PLAN_ID")
     public Set<Item> getItems() {
@@ -58,6 +67,7 @@ public class ProductionPlan extends GroupObject {
         this.items = items;
     }
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany
     @JoinColumn(name = "PRODUCTION_PLAN_ID", referencedColumnName = "PRODUCTION_PLAN_ID")
     public Set<Order> getOrders() {

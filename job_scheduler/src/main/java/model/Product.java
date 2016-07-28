@@ -1,6 +1,9 @@
 package main.java.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import main.java.model.common.GroupObject;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -62,6 +65,7 @@ public class Product extends GroupObject {
         this.attribute3 = attribute3;
     }
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany
     @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")
     public Set<ProductOperation> getProductOperations() {
@@ -72,7 +76,10 @@ public class Product extends GroupObject {
         this.productOperations = productOperations;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "product")
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @JsonBackReference
+    @OneToMany
+    @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")
     public Set<OrderProduct> getOrderProducts() {
         return orderProducts;
     }
