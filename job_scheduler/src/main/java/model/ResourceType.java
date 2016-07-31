@@ -1,6 +1,9 @@
 package main.java.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import main.java.model.common.GroupObject;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.util.Set;
@@ -22,6 +25,7 @@ public class ResourceType extends GroupObject {
         this.name = name;
     }
 
+    @JsonBackReference
     @OneToMany
     @JoinColumn(name = "RESOURCE_TYPE_ID", referencedColumnName = "RESOURCE_TYPE_ID")
     public Set<ProductOperation> getProductOperations() {
@@ -32,6 +36,7 @@ public class ResourceType extends GroupObject {
         this.productOperations = productOperations;
     }
 
+    @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany
     @JoinColumn(name = "RESOURCE_TYPE_ID", referencedColumnName = "RESOURCE_TYPE_ID")
     public Set<Resource> getResources() {

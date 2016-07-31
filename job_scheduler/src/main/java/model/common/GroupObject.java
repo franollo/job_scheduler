@@ -1,8 +1,5 @@
 package main.java.model.common;
 
-import main.java.model.Group;
-import main.java.utils.LocalDateTimeAttributeConverter;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -13,7 +10,7 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 public abstract class GroupObject {
     private Integer id;
-    private Group group;
+    private Integer groupId;
     private LocalDateTime createdOn;
     private LocalDateTime editedOn;
 
@@ -27,14 +24,13 @@ public abstract class GroupObject {
         this.id = id;
     }
 
-    @ManyToOne
-    @JoinColumn(name = "GROUP_ID")
-    public Group getGroup() {
-        return group;
+    @Column(name = "GROUP_ID")
+    public Integer getGroupId() {
+        return groupId;
     }
 
-    public void setGroup(Group group) {
-        this.group = group;
+    public void setGroupId(Integer groupId) {
+        this.groupId = groupId;
     }
 
     @Column(name = "CREATED_ON")

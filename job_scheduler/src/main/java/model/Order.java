@@ -16,7 +16,7 @@ public class Order extends GroupObject {
     private String name;
     private String description;
     private LocalDateTime dueDate;
-    Integer productionPlanId;
+    private Integer productionPlanId;
     private Set<OrderProduct> orderProducts;
 
     @Column(name = "NAME")
@@ -56,7 +56,6 @@ public class Order extends GroupObject {
     }
 
     @LazyCollection(LazyCollectionOption.FALSE)
-    @JsonBackReference
     @OneToMany
     @JoinColumn(name = "ORDER_ID", referencedColumnName = "ORDER_ID")
     public Set<OrderProduct> getOrderProducts() {

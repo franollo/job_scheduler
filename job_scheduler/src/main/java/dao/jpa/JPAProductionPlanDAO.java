@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.util.List;
 
@@ -37,17 +38,13 @@ public class JPAProductionPlanDAO extends JPADAO implements ProductionPlanDAO {
 
     @Override
     public List<ProductionPlan> getUsersProductionPlans(User user) {
-        String queryString = "SELECT pp.id," +
-                "pp.name," +
-                "pp.start," +
-                "pp.end," +
-                "pp.createdOn," +
-                "pp.editedOn," +
-                "pp.orders " +
-                "from ProductionPlan pp inner join User u " +
-                "on pp.group.groupId = u.group.groupId " +
+//        String queryString = "SELECT NEW ProductionPlan(pp.id, pp.name, pp.start, pp.end, pp.createdOn, pp.editedOn) " +
+//                "from ProductionPlan pp join Group g on pp.groupId = g.groupId " +
+//                "where exists (select u.username from User u where u.groupId = g.groupId and u.username = :username)";
+        String queryString = "SELECT NEW ProductionPlan(pp.id, pp.name, pp.start, pp.end, pp.createdOn, pp.editedOn) " +
+                "from ProductionPlan pp inner join User u on pp.groupId = u.groupId " +
                 "where u.username = :username";
-        TypedQuery<ProductionPlan> query = entityManager.createQuery(queryString, ProductionPlan.class);
+        Query query = entityManager.createQuery(queryString);
         try {
             return query.setParameter("username", user.getUsername()).getResultList();
         } catch (NoResultException e) {

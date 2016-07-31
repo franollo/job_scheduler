@@ -37,7 +37,7 @@ function timelineService() {
     function init(elementId) {
         setTimeout(function () {
             container = document.getElementById(elementId);
-            timeline = new vis.Timeline(container, items, groups, options);
+            timeline = new vis.Timeline(container, items,/* groups,*/ options);
         }, 10);
     }
 

@@ -1,5 +1,6 @@
 package main.java.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import main.java.model.common.GroupObject;
 
 import javax.persistence.*;
@@ -53,6 +54,7 @@ public class Resource extends GroupObject {
     }
 
     @OneToMany
+    @JsonBackReference
     @JoinColumn(name = "RESOURCE_ID", referencedColumnName = "RESOURCE_ID")
     public Set<Item> getItems() {
         return items;

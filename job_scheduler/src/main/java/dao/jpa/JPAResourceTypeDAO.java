@@ -37,7 +37,7 @@ public class JPAResourceTypeDAO extends JPADAO implements ResourceTypeDAO {
     @Override
     public List<ResourceType> getUsersResourceTypes(User user) {
         String queryString = "SELECT rt from ResourceType rt inner join User u " +
-                "on rt.group.groupId = u.group.groupId " +
+                "on rt.groupId = u.groupId " +
                 "where u.username = :username";
         TypedQuery<ResourceType> query = entityManager.createQuery(queryString, ResourceType.class);
         try {

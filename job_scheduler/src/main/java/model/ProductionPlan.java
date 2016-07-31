@@ -1,6 +1,7 @@
 package main.java.model;
 
 import main.java.model.common.GroupObject;
+import main.java.utils.LocalDateTimeAttributeConverter;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -27,6 +28,15 @@ public class ProductionPlan extends GroupObject {
 
     public ProductionPlan(int productionPlanId) {
         setId(productionPlanId);
+    }
+
+    public ProductionPlan(int id, String name, LocalDateTime start, LocalDateTime end, LocalDateTime createdOn, LocalDateTime editedOn) {
+        setId(id);
+        setName(name);
+        setStart(start);
+        setEnd(end);
+        setCreatedOn(createdOn);
+        setEditedOn(editedOn);
     }
 
     @Column(name = "NAME")
@@ -101,7 +111,7 @@ public class ProductionPlan extends GroupObject {
                 for (ProductOperation productOperation : orderProduct.getProduct().getProductOperations()) {
                     startDates.put(productOperation.getResourceId(), dateTime);
                     item.setResourceId(productOperation.getResourceId());
-                    item.setGroup(this.getGroup());
+                    item.setGroupId(this.getGroupId());
                     item.setProductionPlanId(this.getId());
                     item.setStart(dateTime);
                     dateTime = dateTime.plus(productOperation.getDuration(), ChronoField.MILLI_OF_SECOND.getBaseUnit());

@@ -41,7 +41,7 @@ public class JPAUserDAO extends JPADAO implements UserDAO {
         TypedQuery<Integer> query = entityManager.createQuery(queryString, Integer.class);
         try {
             query.setParameter("id", groupObject.getId())
-                    .setParameter("groupId", user.getGroup().getGroupId())
+                    .setParameter("groupId", user.getGroupId())
                     .getSingleResult();
         } catch (NoResultException e) {
             throw new ObjectAuthorizationException("User [" +

@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -101,6 +102,12 @@ public class SaveController {
         userDAO.hasPermission(resourceType, user);
         resourceTypeDAO.insert(resourceType);
     }
+
+    @RequestMapping(value = "/localdatetime", method = RequestMethod.POST)
+    public @ResponseBody void resourcetype(@RequestBody LocalDateTime localDateTime) throws ParseException {
+        System.out.println(localDateTime);
+    }
+
 
 //    @RequestMapping(value = "/addjob", method = RequestMethod.POST)
 //    public
@@ -267,7 +274,7 @@ public class SaveController {
         productOperation.setDuration(10);
         productOperation.setProductId(1);
         productOperation.setResourceTypeId(1);
-        productOperation.setGroup(group);
+        productOperation.setGroupId(1);
         //productOperationDAO.insert(productOperation);
     }
 }

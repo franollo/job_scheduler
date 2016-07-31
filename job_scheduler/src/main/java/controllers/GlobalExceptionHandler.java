@@ -24,4 +24,9 @@ public class GlobalExceptionHandler {
         e.printStackTrace();
         response.setStatus(401);
     }
+
+    @ExceptionHandler(RuntimeException.class)
+    public void xx(Exception e) {
+        e.printStackTrace();
+    }
 }

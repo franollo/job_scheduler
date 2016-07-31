@@ -12,6 +12,8 @@ function loginController(authService, $location) {
     vm.logout = authService.logout;
     vm.badCredentials = false;
 
+    signIn();
+
     function signIn() {
         if (vm.rememberMe == false) {
             authService.performLogin(vm.credentials.username, vm.credentials.password)

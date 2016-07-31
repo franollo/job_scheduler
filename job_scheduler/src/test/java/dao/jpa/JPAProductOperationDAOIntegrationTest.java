@@ -26,8 +26,6 @@ public class JPAProductOperationDAOIntegrationTest {
 
     @Test
     public void performTest() {
-        Group group = new Group();
-        group.setGroupId(1);
         ProductOperation productOperation = new ProductOperation();
         productOperation.setName("test");
         productOperation.setDescription("test");
@@ -35,7 +33,7 @@ public class JPAProductOperationDAOIntegrationTest {
         productOperation.setOperationNumber(1);
         productOperation.setProductId(1);
         productOperation.setResourceTypeId(1);
-        productOperation.setGroup(group);
+        productOperation.setGroupId(1);
         try {
             productOperationDAO.insert(productOperation);
         }

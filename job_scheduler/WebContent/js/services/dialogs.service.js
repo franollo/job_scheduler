@@ -2,7 +2,7 @@ angular
     .module('app')
     .service('dialogsService', dialogsService);
 
-function dialogsService() {
+function dialogsService(dataService) {
     this.DialogController1 = function ($scope, $mdDialog, dataToPass) {
         $scope.dragControlListeners = {
             containment: '#board',//optional param.
@@ -121,11 +121,11 @@ function dialogsService() {
         }
     }
 
-    this.openOrderController = function ($scope, $mdDialog) {
-        var parentThis = this;
-        $scope.orders = [];
-        $scope.selectedOrderId;
-        data.getOrders().then(function (data) {
+    this.openProductionPlanController = function ($scope, $mdDialog) {
+        var vm = this;
+        vm.productionPlans = [];
+        vm.selectedPlanId = 0;
+        dataService.getProductionPlans().then(function (data) {
             for (var i = 0; i < data.length; i++) {
                 if (!$scope.$$phase) {
                     logic(data[i]);
@@ -133,22 +133,22 @@ function dialogsService() {
                     $timeout(logic(data[i]));
                 }
             }
-            console.log($scope.orders);
+            console.log(vm.productionPlans);
         });
         $scope.answer = function () {
-            $mdDialog.hide($scope.selectedOrderId);
-        }
+            $mdDialog.hide($scope.selectedPlanId);
+        };
 
         $scope.cancel = function () {
             $mdDialog.cancel();
-        }
+        };
 
         function logic(item) {
-            $scope.orders.push(item);
+            vm.productionPlans.push(item);
         }
 
         $scope.select = function (id) {
-            $scope.selectedOrderId = id;
+            vm.selectedPlanId = id;
         }
     }
 }

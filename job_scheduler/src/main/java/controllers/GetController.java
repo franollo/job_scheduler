@@ -68,6 +68,12 @@ public class GetController {
         return productDAO.getUsersProducts(user);
     }
 
+    @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
+    public @ResponseBody User userInfo() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return userDAO.getUserByLogin(auth.getName());
+    }
+
 
 
 

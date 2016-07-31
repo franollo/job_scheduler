@@ -24,63 +24,121 @@ function mainController($document,
     vm.snapping = true;
     vm.timelineLocked = false;
     vm.timelineCurrentTime = true;
+    vm.getProducts = getProducts;
+    vm.getResources = getResources;
+    vm.getOrders = getOrders;
+    vm.getProductionPlans = getProductionPlans;
+    vm.getProductionPlan = getProductionPlan;
+    vm.getUserInfo = getUserInfo;
+    vm.logout = logout;
     vm.toggleToolbar = toggleToolbar;
-    vm.deleteJob = deleteJob;
-    vm.deleteResource = deleteResource;
-    vm.updateJob = updateJob;
-    vm.updateResource = updateResource;
-    vm.focusTimeline = focusTimeline;
-    vm.toggleSnappingTimeline = toggleSnappingTimeline;
-    vm.showCurrentTime = showCurrentTime;
     vm.toggleLockTimeline = toggleLockTimeline;
+    vm.showCurrentTime = showCurrentTime;
+    vm.toggleSnappingTimeline = toggleSnappingTimeline;
+    vm.focusTimeline = focusTimeline;
+    vm.spliceJobs = spliceJobs;
+    vm.spliceResources = spliceResources;
+    vm.fireError = fireError;
+    vm.undo = undo;
+    vm.redo = redo;
+    vm.showSimpleToast = showSimpleToast;
     vm.dialogAddJob = dialogAddJob;
     vm.dialogAddResource = dialogAddResource;
     vm.dialogNewOrder = dialogNewOrder;
     vm.dialogAddJobsToOrder = dialogAddJobsToOrder;
     vm.dialogEditOrder = dialogEditOrder;
-    vm.dialogOpenOrder = dialogOpenOrder;
-    vm.logout = logout;
-    vm.undo = undo;
-    vm.redo = redo;
-    vm.newPerson = newPerson;
+    vm.dialogOpenProductionPlan = dialogOpenProductionPlan;
     vm.resources = [];
-    vm.jobs = [];
+    vm.products = [];
     vm.orders = [];
+    vm.productionPlans = [];
+    vm.productionPlan = {};
     vm.user = {};
     vm.selectedIndex = 1;
     vm.showToolbar = true;
 
     timelineService.init("js-timeline");
 
-    function toggleToolbar() {
-        vm.showToolbar = !vm.showToolbar;
+    /**
+     * DATA
+     */
+
+    function putProducts(data) {
+        vm.resources = data;
+    }
+
+    function putResources(data) {
+        vm.products = data;
+    }
+
+    function putOrders(data) {
+        vm.orders = data;
+    }
+
+    function putProductionPlans(data) {
+        vm.productionPlans = data;
+    }
+
+    function putProductionPlan(data) {
+        vm.productionPlan = data;
+    }
+
+    function putUser(data) {
+        vm.user = data;
     }
     
-    function newPerson() {
-        var productionPlan = dataService.newPerson(1);
-        console.log(productionPlan);
-    }
-
-    function deleteJob(job) {
-        spliceJobs(job);
-        dataService.deleteJob(job)
+    function getProducts() {
+        dataService.getProducts()
+            .then(putProducts)
             .catch(fireError);
     }
 
-    function deleteResource(resource) {
-        spliceResources(resource);
-        dataService.deleteResource(resource)
+    function getResources() {
+        dataService.getResources()
+            .then(putResources)
             .catch(fireError);
     }
 
-    function updateJob(job) {
-        dataService.updateJob(job)
+    function getOrders() {
+        dataService.getOrders()
+            .then(putOrders)
             .catch(fireError);
     }
 
-    function updateResource(resource) {
-        dataService.updateResource(resource)
+    function getProductionPlans() {
+        dataService.getProductionPlans()
+            .then(putProductionPlans)
             .catch(fireError);
+    }
+
+    function getProductionPlan(productionPlanId) {
+        dataService.getProductionPlan(productionPlanId)
+            .then(putProductionPlan)
+            .catch(fireError);
+    }
+    
+    function getUserInfo() {
+        dataService.getUserInfo()
+            .then(putUser)
+            .catch(fireError);
+    }
+
+    function logout() {
+        authService.logout().then(function () {
+            vm.log = "";
+            vm.nam = "";
+            vm.sur = "";
+            vm.error = "";
+            vm.authenticated = authService.authenticated;
+        });
+    }
+
+    /**
+     * TIMELINE
+     */
+    
+    function toggleToolbar() {
+        vm.showToolbar = !vm.showToolbar;
     }
 
     function toggleLockTimeline() {
@@ -117,32 +175,10 @@ function mainController($document,
         timelineService.focus();
     }
 
-    function saveResources(data) {
-        vm.resources = data;
-    }
-
-    function saveJobs(data) {
-        vm.jobs = data;
-    }
-
-    function saveOrders(data) {
-        vm.orders = data;
-    }
-
-    function saveUser(data) {
-        vm.user = data;
-    }
-
-    function saveOrder(data) {
-        items.clear();
-        groups.clear();
-        items.add(data.items);
-        groups.add(data.groups);
-        vm.order = data.order;
-        timeline.fit({animation: true});
-        showSimpleToast("Data loaded succesfully")
-    }
-
+    /**
+     * UTILS
+     */
+    
     function spliceJobs(job) {
         vm.jobs.splice(vm.jobs.indexOf(job), 1);
     }
@@ -163,43 +199,13 @@ function mainController($document,
     function redo() {
         bufferService.redo(timelineService.getItems());
     }
-
-    function getJobs() {
-        dataService.getJobs()
-            .then(saveJobs)
-            .catch(fireError);
-    }
-
-    function getOrders() {
-        dataService.getOrders()
-            .then(saveOrders)
-            .catch(fireError);
-    }
-
-    function getResources() {
-        dataService.getResources()
-            .then(saveResources)
-            .catch(fireError);
-    }
-
-    function whoAmI() {
-        dataService.whoAmI()
-            .then(saveUser)
-            .catch(fireError);
-    }
-
-    function logout() {
-        authService.logout().then(function () {
-            vm.log = "";
-            vm.nam = "";
-            vm.sur = "";
-            vm.error = "";
-            vm.authenticated = authService.authenticated;
-        });
-    }
+    
+    
+    /**
+     * DIALOGS AND TOASTS
+     */
 
     function showSimpleToast(text) {
-        //noinspection JSUnresolvedFunction
         $mdToast.show(
             $mdToast.simple()
                 .textContent(text)
@@ -283,17 +289,17 @@ function mainController($document,
         });
     }
 
-    function dialogOpenOrder() {
+    function dialogOpenProductionPlan() {
         $mdDialog.show({
-            controller: dialogsService.openOrderController,
+            controller: dialogsService.openProductionPlanController,
             controllerAs: 'ctrl',
-            templateUrl: 'html/dialogs/open_order.html',
+            templateUrl: 'html/dialogs/open_production_plan.html',
             parent: angular.element(document.body),
             clickOutsideToClose: true
         }).then(function (answer) {
-            dataService.openOrder(answer)
-                .then(saveOrder)
-                .catch(fireError);
+            // dataService.openOrder(answer)
+            //     .then(saveOrder)
+            //     .catch(fireError);
         });
     }
 

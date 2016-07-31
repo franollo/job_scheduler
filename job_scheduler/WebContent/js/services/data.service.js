@@ -4,89 +4,87 @@ angular
 
 function dataService($http) {
     var vm = this;
-    vm.whoAmI = whoAmI;
-    vm.newOrder = newOrder;
-    vm.updateOrder = updateOrder;
-    vm.updateItem = updateItem;
-    vm.newJob = newJob;
-    vm.deleteJob = deleteJob;
-    vm.updateJob = updateJob;
-    vm.deleteResource = deleteResource;
-    vm.updateResource = updateResource;
-    vm.addJobOrder = addJobOrder;
-    vm.newResource = newResource;
+    vm.saveResource = saveResource;
+    vm.saveProductionPlan = saveProductionPlan;
+    vm.saveProduct = saveProduct;
+    vm.saveOrder = saveOrder;
+    vm.saveItem = saveItem;
+    vm.removeResource = removeResource;
+    vm.removeProductionPlan = removeProductionPlan;
+    vm.removeProduct = removeProduct;
+    vm.removeOrder = removeOrder;
+    vm.removeItem = removeItem;
     vm.getResources = getResources;
-    vm.getJobs = getJobs;
+    vm.getProductionPlans = getProductionPlans;
+    vm.getProductionPlan = getProductionPlan;
+    vm.getProducts = getProducts;
     vm.getOrders = getOrders;
-    vm.openOrder = openOrder;
-    vm.errorTest = errorTest;
-    vm.newPerson = newPerson;
-    function newOrder(order) {
-        return post("data/neworder", order);
+    vm.getUserInfo = getUserInfo;
+
+    function saveResource(resource) {
+        return post("save/resource", resource);
     }
 
-    function newPerson(id) {
-        return get("get/productionplan/" + id);
+    function saveProductionPlan(productionPlan) {
+        return post("save/productionplan", productionPlan);
     }
 
-    function updateOrder(order) {
-        return post("data/updateorder", order);
+    function saveProduct(product) {
+        return post("save/product", product);
     }
 
-    function updateItem(item) {
-        return post("data/updateitem", item);
+    function saveOrder(order) {
+        return post("save/order", order);
     }
 
-    function newJob(job) {
-        return post("data/newjob", job);
+    function saveItem(item) {
+        return post("save/item", item);
     }
 
-    function deleteJob(job) {
-        return post("data/deletejob", job);
+    function removeResource(resource) {
+        return post("remove/resource", resource);
     }
 
-    function updateJob(job) {
-        return post("data/updatejob", job);
+    function removeProductionPlan(productionPlan) {
+        return post("remove/productionplan", productionPlan);
     }
 
-    function deleteResource(resource) {
-        return post("data/deleteresource", resource);
+    function removeProduct(product) {
+        return post("remove/product", product);
     }
 
-    function updateResource(resource) {
-        return post("data/updateresource", resource);
+    function removeOrder(order) {
+        return post("remove/order", order);
     }
 
-    function addJobOrder(job) {
-        return post("data/addjob", job);
-    }
-
-    function newResource(resource) {
-        return post("data/newresource", resource);
+    function removeItem(item) {
+        return post("remove/item", item);
     }
 
     function getResources() {
-        return get("getdata/resources");
+        return get("get/resources");
     }
 
-    function getJobs() {
-        return get("getdata/jobs");
+    function getProductionPlans() {
+        var plans = get("get/productionplans");
+        console.log(plans);
+        return plans;
+    }
+
+    function getProductionPlan(productionPlanId) {
+        return get("get/productionplan" + productionPlanId);
+    }
+
+    function getProducts() {
+        return get("get/products");
     }
 
     function getOrders() {
-        return get("getdata/orders");
+        return get("get/orders");
     }
 
-    function whoAmI() {
-        return get("getdata/userinfo");
-    }
-
-    function openOrder(orderId) {
-        return get("getdata/order?" + orderId);
-    }
-
-    function errorTest() {
-        return get("http://localhost:3000/posts/2");
+    function getUserInfo() {
+        return get("get/userinfo");
     }
 
     function post(URL, data) {

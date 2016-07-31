@@ -37,7 +37,7 @@ public class JPAProductDAO extends JPADAO implements ProductDAO {
     @Override
     public List<Product> getUsersProducts(User user) {
         String queryString = "SELECT p from Product p inner join User u " +
-                "on p.group.groupId = u.group.groupId " +
+                "on p.groupId = u.groupId " +
                 "where u.username = :username";
         TypedQuery<Product> query = entityManager.createQuery(queryString, Product.class);
         try {

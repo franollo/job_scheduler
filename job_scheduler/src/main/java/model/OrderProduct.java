@@ -20,8 +20,6 @@ public class OrderProduct implements Serializable{
     private int amount;
 
     @Id
-    //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id")//, scope=ServerRequest.class)
-    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "ORDER_ID")
     public Order getOrder() {
@@ -33,8 +31,6 @@ public class OrderProduct implements Serializable{
     }
 
     @Id
-    //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property="id")//, scope=ServerRequest.class)
-    @JsonManagedReference
     @ManyToOne
     @JoinColumn(name = "PRODUCT_ID")
     public Product getProduct() {

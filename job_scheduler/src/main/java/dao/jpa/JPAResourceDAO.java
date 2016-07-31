@@ -37,7 +37,7 @@ public class JPAResourceDAO extends JPADAO implements ResourceDAO {
     @Override
     public List<Resource> getUsersResources(User user) {
         String queryString = "SELECT r from Resource r inner join User u " +
-                "on r.group.groupId = u.group.groupId " +
+                "on r.groupId = u.groupId " +
                 "where u.username = :username";
         TypedQuery<Resource> query = entityManager.createQuery(queryString, Resource.class);
         try {
