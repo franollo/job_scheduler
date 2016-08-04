@@ -37,7 +37,7 @@ public class JPAUserDAO extends JPADAO implements UserDAO {
         String queryString = "SELECT go.id " +
                 "FROM " + className + " go " +
                 "WHERE go.id = :id " +
-                "AND go.group.groupId = :groupId";
+                "AND go.groupId = :groupId";
         TypedQuery<Integer> query = entityManager.createQuery(queryString, Integer.class);
         try {
             query.setParameter("id", groupObject.getId())

@@ -3,29 +3,67 @@
         <div class="md-toolbar-tools">
             <h2>Open Production Plan</h2>
             <span flex></span>
-            <md-button class="md-icon-button" ng-click="cancel()">
+            <md-button class="md-icon-button" ng-click="ctrl.cancel()">
                 <i class="material-icons md-18">close</i>
             </md-button>
         </div>
     </md-toolbar>
 
-    <md-dialog-content layout-padding style="max-width:800px;max-height:810px; min-width:550px ">
-        <div class="radioDemo2 radioButtondemoMultiColumn">
-            <md-grid-list md-cols="3" md-gutter="1em" md-row-height="4:1">
-                <md-grid-tile ng-class="ctrl.selectedPlanId == plan.id ? 'selected' : 'custom'"
-                              ng-repeat='plan in ctrl.productionPlans' ng-click="select(plan.id)">
-                    {{plan.name}}, {{plan.id}}
-                </md-grid-tile>
-            </md-grid-list>
+    <md-dialog-content layout-padding style="max-width:800px;max-height:810px; min-width:800px ">
+        <div>
+            <div layout='row' layout-padding layout-align="start center">
+                <h4 class="no-margin" flex="30">Name</h4>
+                <h4 class="no-margin" flex="50">Description</h4>
+                <h4 class="no-margin" flex="20">Created</h4>
+                <h4 class="no-margin" flex="20">Edited</h4>
+            </div>
+            <md-divider></md-divider>
+            <div ng-repeat='plan in ctrl.productionPlans' layout="column">
+                <div class="pointer" layout='row'
+                     ng-hide="ctrl.selectedPlanId == plan.id"
+                     layout-padding layout-align="start center"
+                     ng-click="ctrl.select(plan.id)">
+                    <div flex="30">
+                        {{plan.name}}
+                    </div>
+                    <div flex="50">
+                        {{plan.description}}
+                    </div>
+                    <div flex="20">
+                        {{plan.createdOn | date : 'dd.MM.yy HH:mm'}}
+                    </div>
+                    <div flex="20">
+                        {{plan.editedOn | date : 'dd.MM.yy HH:mm'}}
+                    </div>
+                </div>
+                <div class="pointer" layout='row'
+                     ng-show="ctrl.selectedPlanId == plan.id"
+                     md-colors="{background: 'accent'}"
+                     layout-padding layout-align="start center">
+                    <div flex="30">
+                        {{plan.name}}
+                    </div>
+                    <div flex="50">
+                        {{plan.description}}
+                    </div>
+                    <div flex="20">
+                        {{plan.createdOn | date : 'dd.MM.yy HH:mm'}}
+                    </div>
+                    <div flex="20">
+                        {{plan.editedOn | date : 'dd.MM.yy HH:mm'}}
+                    </div>
+                </div>
+            </div>
+            <md-divider></md-divider>
         </div>
     </md-dialog-content>
 
     <md-dialog-actions layout="row">
         <span flex></span>
-        <md-button class="md-raised md-accent" ng-click="cancel()">
+        <md-button class="md-raised md-accent" ng-click="ctrl.cancel()">
             cancel
         </md-button>
-        <md-button class="md-raised md-accent" ng-click="answer()">
+        <md-button class="md-raised md-accent" ng-click="ctrl.answer()">
             open
         </md-button>
     </md-dialog-actions>

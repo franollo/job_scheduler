@@ -8,7 +8,7 @@ import java.util.List;
 public interface ItemDAO {
     public void insert(Item item);
     public void update(Item item);
-    public void delete(Item item);
+    public void remove(Item item);
     public List<Item> getUserItems(User user);
   //  public boolean checkGroupId(int itemId, int groupId);
 

@@ -8,5 +8,5 @@ import main.java.model.OrderProduct;
 public interface OrderProductDAO {
     public void insert(OrderProduct orderProduct);
     public void update(OrderProduct orderProduct);
-    public void delete(OrderProduct orderProduct);
+    public void remove(OrderProduct orderProduct);
 }

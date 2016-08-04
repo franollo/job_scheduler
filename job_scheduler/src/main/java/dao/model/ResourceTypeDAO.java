@@ -11,6 +11,6 @@ import java.util.List;
 public interface ResourceTypeDAO {
     public void insert(ResourceType resourceType);
     public void update(ResourceType resourceType);
-    public void delete(ResourceType resourceType);
+    public void remove(ResourceType resourceType);
     public List<ResourceType> getUsersResourceTypes(User user);
 }

@@ -29,7 +29,7 @@ public class JPAOrderDAO extends JPADAO implements OrderDAO {
     }
 
     @Override
-    public void delete(Order order) {
+    public void remove(Order order) {
         entityManager.remove(order);
     }
 

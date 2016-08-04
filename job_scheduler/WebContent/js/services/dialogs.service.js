@@ -3,7 +3,10 @@ angular
     .service('dialogsService', dialogsService);
 
 function dialogsService(dataService) {
-    this.DialogController1 = function ($scope, $mdDialog, dataToPass) {
+    var vm = this;
+    vm.openProductionPlanController = openProductionPlanController;
+
+        this.DialogController1 = function ($scope, $mdDialog, dataToPass) {
         $scope.dragControlListeners = {
             containment: '#board',//optional param.
             allowDuplicates: true //optional param allows duplicates to be dropped.
@@ -121,8 +124,11 @@ function dialogsService(dataService) {
         }
     }
 
-    this.openProductionPlanController = function ($scope, $mdDialog) {
+    function openProductionPlanController($scope, $mdDialog) {
         var vm = this;
+        vm.answer = answer;
+        vm.cancel = cancel;
+        vm.select = select;
         vm.productionPlans = [];
         vm.selectedPlanId = 0;
         dataService.getProductionPlans().then(function (data) {
@@ -135,19 +141,20 @@ function dialogsService(dataService) {
             }
             console.log(vm.productionPlans);
         });
-        $scope.answer = function () {
-            $mdDialog.hide($scope.selectedPlanId);
-        };
-
-        $scope.cancel = function () {
-            $mdDialog.cancel();
-        };
 
         function logic(item) {
             vm.productionPlans.push(item);
         }
 
-        $scope.select = function (id) {
+        function answer() {
+            $mdDialog.hide(vm.selectedPlanId);
+        }
+
+        function cancel() {
+            $mdDialog.cancel();
+        }
+
+        function select(id) {
             vm.selectedPlanId = id;
         }
     }

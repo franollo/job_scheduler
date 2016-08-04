@@ -11,6 +11,6 @@ import java.util.List;
 public interface ProductDAO {
     public void insert(Product product);
     public void update(Product product);
-    public void delete(Product product);
+    public void remove(Product product);
     public List<Product> getUsersProducts(User user);
 }

@@ -30,7 +30,7 @@ public class JPAItemDAO extends JPADAO implements ItemDAO {
     }
 
     @Override
-    public void delete(Item item) {
+    public void remove(Item item) {
         entityManager.remove(item);
     }
 

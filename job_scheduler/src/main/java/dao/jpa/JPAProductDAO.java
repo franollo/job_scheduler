@@ -30,7 +30,7 @@ public class JPAProductDAO extends JPADAO implements ProductDAO {
     }
 
     @Override
-    public void delete(Product product) {
+    public void remove(Product product) {
         entityManager.remove(entityManager.find(Product.class, product.getId()));
     }
 

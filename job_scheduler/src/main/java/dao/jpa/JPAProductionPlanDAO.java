@@ -32,15 +32,12 @@ public class JPAProductionPlanDAO extends JPADAO implements ProductionPlanDAO {
     }
 
     @Override
-    public void delete(ProductionPlan productionPlan) {
+    public void remove(ProductionPlan productionPlan) {
         entityManager.remove(productionPlan);
     }
 
     @Override
     public List<ProductionPlan> getUsersProductionPlans(User user) {
-//        String queryString = "SELECT NEW ProductionPlan(pp.id, pp.name, pp.start, pp.end, pp.createdOn, pp.editedOn) " +
-//                "from ProductionPlan pp join Group g on pp.groupId = g.groupId " +
-//                "where exists (select u.username from User u where u.groupId = g.groupId and u.username = :username)";
         String queryString = "SELECT NEW ProductionPlan(pp.id, pp.name, pp.start, pp.end, pp.createdOn, pp.editedOn) " +
                 "from ProductionPlan pp inner join User u on pp.groupId = u.groupId " +
                 "where u.username = :username";

@@ -30,7 +30,7 @@ public class JPAResourceTypeDAO extends JPADAO implements ResourceTypeDAO {
     }
 
     @Override
-    public void delete(ResourceType resourceType) {
+    public void remove(ResourceType resourceType) {
         entityManager.remove(resourceType);
     }
 

@@ -24,7 +24,7 @@ public class JPAOrderProductDAO extends JPADAO implements OrderProductDAO {
     }
 
     @Override
-    public void delete(OrderProduct orderProduct) {
+    public void remove(OrderProduct orderProduct) {
         entityManager.persist(orderProduct);
     }
 }

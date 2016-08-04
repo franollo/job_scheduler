@@ -8,7 +8,7 @@ import java.util.List;
 public interface OrderDAO {
     public void insert(Order order);
     public void update(Order order);
-    public void delete(Order order);
+    public void remove(Order order);
     public List<Order> getUserOrders(User user);
   //  public boolean hasPermission(User user, Order order);
 //    public int createNewOrder(Order order, String username);

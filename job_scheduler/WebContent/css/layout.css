@@ -48,7 +48,7 @@
     bottom: 0;
     left: 0;
     right: 0;
-    background-image: url(../common/background.jpg);
+    /*background-image: url(../common/background.jpg);*/
     background-size: cover;
 }
 
@@ -172,50 +172,14 @@
     border: 0;
 }
 
-.md-toolbar-tools {
-    font-size: 25px;
-    padding-top: 5px;
+.js-toolbar-tools {
+    font-size: 25px !important;
+    padding-top: 5px !important;
     height: 35px !important;
 }
 
-.radioButtondemoMultiColumn .md-checked {
-    background-color: #ECFAFB;
-    border-radius: 2px;
-}
-
-.radioButtondemoMultiColumn .row {
-    border-bottom: 1px dashed #ddd;
-}
-
-.radioButtondemoMultiColumn div.row:last-child {
-    border-bottom: 0 dashed #ddd;
-}
-
-.custom {
-    background-color: #fff;
-    -webkit-box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.35);
-    -moz-box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.35);
-    box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.35);
-    cursor: default;
-}
-
-.selected {
-    background-color: #33691E;
-    -webkit-box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.35);
-    -moz-box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.35);
-    box-shadow: 1px 1px 5px 0 rgba(0, 0, 0, 0.35);
-    cursor: default;
-}
-
-.radioButtondemoMultiColumn md-grid-tile figure:active {
-    background-color: #33691E;
-    outline: none;
-    border: 0;
-}
-
-.radioButtondemoMultiColumn md-grid-tile:focus {
-    outline: none;
-    border: 0;
+.pointer {
+    cursor: pointer;
 }
 
 .no-margin {

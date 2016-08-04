@@ -45,7 +45,7 @@ public class RemoveController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
         userDAO.hasPermission(item, user);
-        itemDAO.delete(item);
+        itemDAO.remove(item);
     }
 
     @RequestMapping(value = "/order", method = RequestMethod.POST)
@@ -53,7 +53,7 @@ public class RemoveController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
         userDAO.hasPermission(order, user);
-        orderDAO.delete(order);
+        orderDAO.remove(order);
     }
 
     @RequestMapping(value = "/product", method = RequestMethod.POST)
@@ -61,7 +61,7 @@ public class RemoveController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
         userDAO.hasPermission(product, user);
-        productDAO.delete(product);
+        productDAO.remove(product);
     }
 
     @RequestMapping(value = "/productionplan", method = RequestMethod.POST)
@@ -69,7 +69,7 @@ public class RemoveController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
         userDAO.hasPermission(productionPlan, user);
-        productionPlanDAO.delete(productionPlan);
+        productionPlanDAO.remove(productionPlan);
     }
 
     @RequestMapping(value = "/productoperation", method = RequestMethod.POST)
@@ -85,7 +85,7 @@ public class RemoveController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
         userDAO.hasPermission(resource, user);
-        resourceDAO.delete(resource);
+        resourceDAO.remove(resource);
     }
 
     @RequestMapping(value = "/resourcetype", method = RequestMethod.POST)
@@ -93,6 +93,6 @@ public class RemoveController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
         userDAO.hasPermission(resourceType, user);
-        resourceTypeDAO.delete(resourceType);
+        resourceTypeDAO.remove(resourceType);
     }
 }
