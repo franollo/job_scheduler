@@ -66,13 +66,11 @@ function dataService($http) {
     }
 
     function getProductionPlans() {
-        var plans = get("get/productionplans");
-        console.log(plans);
-        return plans;
+        return get("get/productionplans");
     }
 
     function getProductionPlan(productionPlanId) {
-        return get("get/productionplan" + productionPlanId);
+        return get("get/productionplan/" + productionPlanId);
     }
 
     function getProducts() {

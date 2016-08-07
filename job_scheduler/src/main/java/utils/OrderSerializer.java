@@ -34,19 +34,18 @@ public class OrderSerializer extends StdSerializer<Order> {
             jsonGenerator.writeObjectField("groupId", order.getGroupId());
             jsonGenerator.writeArrayFieldStart("products");
             for(OrderProduct orderProduct : order.getOrderProducts()) {
-                for(int i = 0; i < orderProduct.getAmount(); i++) {
-                    jsonGenerator.writeStartObject();
-                        jsonGenerator.writeObjectField("id", orderProduct.getProduct().getId());
-                        jsonGenerator.writeObjectField("name", orderProduct.getProduct().getName());
-                        jsonGenerator.writeObjectField("description", orderProduct.getProduct().getDescription());
-                        jsonGenerator.writeObjectField("attribute1", orderProduct.getProduct().getAttribute1());
-                        jsonGenerator.writeObjectField("attribute2", orderProduct.getProduct().getAttribute2());
-                        jsonGenerator.writeObjectField("attribute3", orderProduct.getProduct().getAttribute3());
-                        jsonGenerator.writeObjectField("createdOn", orderProduct.getProduct().getCreatedOn());
-                        jsonGenerator.writeObjectField("editedOn", orderProduct.getProduct().getEditedOn());
-                        jsonGenerator.writeObjectField("groupId", orderProduct.getProduct().getGroupId());
-                    jsonGenerator.writeEndObject();
-                }
+                jsonGenerator.writeStartObject();
+                    jsonGenerator.writeObjectField("id", orderProduct.getProduct().getId());
+                    jsonGenerator.writeObjectField("name", orderProduct.getProduct().getName());
+                    jsonGenerator.writeObjectField("description", orderProduct.getProduct().getDescription());
+                    jsonGenerator.writeObjectField("attribute1", orderProduct.getProduct().getAttribute1());
+                    jsonGenerator.writeObjectField("attribute2", orderProduct.getProduct().getAttribute2());
+                    jsonGenerator.writeObjectField("attribute3", orderProduct.getProduct().getAttribute3());
+                    jsonGenerator.writeObjectField("amount", orderProduct.getAmount());
+                    jsonGenerator.writeObjectField("createdOn", orderProduct.getProduct().getCreatedOn());
+                    jsonGenerator.writeObjectField("editedOn", orderProduct.getProduct().getEditedOn());
+                    jsonGenerator.writeObjectField("groupId", orderProduct.getProduct().getGroupId());
+                jsonGenerator.writeEndObject();
             }
             jsonGenerator.writeEndArray();
         jsonGenerator.writeEndObject();

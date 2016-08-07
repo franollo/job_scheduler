@@ -48,6 +48,12 @@ function mainController($document,
     vm.dialogAddJobsToOrder = dialogAddJobsToOrder;
     vm.dialogEditOrder = dialogEditOrder;
     vm.dialogOpenProductionPlan = dialogOpenProductionPlan;
+    vm.extendOrder = extendOrder;
+    vm.openOrdersWorkspace = openOrdersWorkspace;
+    vm.openProductsWorkspace = openProductsWorkspace;
+    vm.openResourcesWorkspace = openResourcesWorkspace;
+    vm.closeWorkspace = closeWorkspace;
+    vm.extendedOrderId = 0;
     vm.resources = [];
     vm.products = [];
     vm.orders = [];
@@ -56,8 +62,51 @@ function mainController($document,
     vm.user = {};
     vm.selectedIndex = 1;
     vm.showToolbar = true;
+    vm.showWorkspace = {
+        'productionPlan' : true,
+        'orders' : false,
+        'products' : false,
+        'resources' : false
+    };
 
     timelineService.init("js-timeline");
+    dataService.getProductionPlan(1)
+        .then(putProductionPlan)
+        .catch(fireError);
+
+    /**
+     * WORKSPACE TOGGLE
+     */
+
+    function openOrdersWorkspace() {
+        setFalseWorkspace();
+        vm.showWorkspace.orders = true;
+    }
+
+    function openProductsWorkspace() {
+        setFalseWorkspace();
+        vm.showWorkspace.products = true;
+    }
+
+    function openResourcesWorkspace() {
+        setFalseWorkspace();
+        vm.showWorkspace.resources = true;
+    }
+
+    function setFalseWorkspace() {
+        vm.showWorkspace.productionPlan = false;
+        vm.showWorkspace.orders = false;
+        vm.showWorkspace.products = false;
+        vm.showWorkspace.resources = false;
+    }
+
+    function closeWorkspace() {
+        vm.showWorkspace.productionPlan = true;
+        vm.showWorkspace.orders = false;
+        vm.showWorkspace.products = false;
+        vm.showWorkspace.resources = false;
+    }
+
 
     /**
      * DATA
@@ -81,6 +130,7 @@ function mainController($document,
 
     function putProductionPlan(data) {
         vm.productionPlan = data;
+        console.log(vm.productionPlan);
     }
 
     function putUser(data) {
@@ -176,9 +226,22 @@ function mainController($document,
     }
 
     /**
+     * Orders tab
+     */
+
+    function extendOrder(id) {
+        if(vm.extendedOrderId != id) {
+            vm.extendedOrderId = id;
+        }
+        else {
+            vm.extendedOrderId = 0;
+        }
+    }
+
+    /**
      * UTILS
      */
-    
+
     function spliceJobs(job) {
         vm.jobs.splice(vm.jobs.indexOf(job), 1);
     }
@@ -297,23 +360,9 @@ function mainController($document,
             parent: angular.element(document.body),
             clickOutsideToClose: true
         }).then(function (answer) {
-            // dataService.openOrder(answer)
-            //     .then(saveOrder)
-            //     .catch(fireError);
+            dataService.getProductionPlan(answer)
+                .then(putProductionPlan)
+                .catch(fireError);
         });
     }
-
-    //    vm.test = [];
-
-    // function saveTest(data) {
-    //     vm.test = data;
-    //     console.log(data);
-    // }
-
-    // vm.errorTest = function () {
-    //     dataService.errorTest()
-    //         .then(saveTest)
-    //         .catch(fireError)
-    // };
-
 }

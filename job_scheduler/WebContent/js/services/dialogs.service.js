@@ -139,7 +139,6 @@ function dialogsService(dataService) {
                     $timeout(logic(data[i]));
                 }
             }
-            console.log(vm.productionPlans);
         });
 
         function logic(item) {

@@ -1,4 +1,4 @@
-#js-workspace {
+.js-main-workspace {
     background-color: white;
     position: absolute;
     top: 10px;
@@ -6,17 +6,11 @@
     right: 10px;
     bottom: 10px;
     box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.25);
-    -webkit-border-bottom-right-radius: 2px;
-    -webkit-border-bottom-left-radius: 2px;
-    -moz-border-radius-bottomright: 2px;
-    -moz-border-radius-bottomleft: 2px;
-    border-bottom-right-radius: 2px;
-    border-bottom-left-radius: 2px;
 }
 
 #js-timeline {
     position: absolute;
-    top: 0;
+    top: 30px;
     left: 0;
     right: 0;
     bottom: 0;
@@ -28,6 +22,7 @@
     left: 0;
     right: 0;
     bottom: 20px;
+    top: 70px;
     -webkit-transition: height 100ms linear;
     -moz-transition: height 100ms linear;
     -o-transition: height 100ms linear;
@@ -136,14 +131,6 @@
     background-color: #9E9E9E;
 }
 
-.small {
-    top: 70px;
-}
-
-.big {
-    top: 100px;
-}
-
 .js-button {
     height: 22px;
     width: 22px;
@@ -195,6 +182,17 @@
     padding-top: 1px;
 }
 
+.js-edit-buttons-toolbar {
+    padding-top: 2px;
+    padding-left: 16px;
+    padding-right: 16px;
+    height: 30px;
+    display: inline-block;
+    -webkit-border-bottom-right-radius: 10px;
+    -moz-border-radius-bottomright: 10px;
+    border-bottom-right-radius: 10px;
+}
+
 .sub-list {
     -webkit-box-shadow: inset 0 -1px 2px 1px rgba(0, 0, 0, 0.35);
     -moz-box-shadow: inset 0 -1px 2px 1px rgba(0, 0, 0, 0.35);
@@ -212,8 +210,13 @@ md-menu-bar md-menu {
 md-toolbar.js-toolbar {
     min-height: 30px !important;
     height: 30px !important;
-    padding-left: 70px;
+    padding-left: 16px;
     padding-top: 4px;
+}
+
+md-toolbar.js-toolbar-workspace {
+    min-height: 30px !important;
+    height: 30px !important;
 }
 
 md-toolbar.js-bottom-toolbar {

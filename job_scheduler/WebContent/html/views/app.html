@@ -54,17 +54,17 @@
                     </md-menu>
                     <md-menu>
                         <button class="menu-button" ng-click="$mdOpenMenu()">
-                            Order
+                            Edit
                         </button>
                         <md-menu-content>
                             <md-menu-item>
-                                <md-button ng-click="ctrl.dialogEditOrder()">Edit</md-button>
+                                <md-button ng-click="ctrl.openOrdersWorkspace()">Orders</md-button>
                             </md-menu-item>
                             <md-menu-item>
-                                <md-button ng-click="ctrl.dialogAddJobsToOrder()">Add jobs</md-button>
+                                <md-button ng-click="ctrl.openProductsWorkspace()">Products</md-button>
                             </md-menu-item>
                             <md-menu-item>
-                                <md-button ng-click="ctrl.showNewOrder($event)">Delete job</md-button>
+                                <md-button ng-click="ctrl.openResourcesWorkspace()">Resources</md-button>
                             </md-menu-item>
                             <md-menu-item>
                                 <md-button ng-click="ctrl.showNewOrder($event)">Arrange</md-button>
@@ -101,7 +101,7 @@
                     </md-menu>
                     <md-menu>
                         <button class="menu-button" ng-click="$mdOpenMenu()">
-                            Jobs
+                            Products
                         </button>
                         <md-menu-content>
                             <md-menu-item>
@@ -134,208 +134,217 @@
             </div>
         </div>
     </md-toolbar>
-    <md-toolbar class="js-toolbar" layout="row" ng-show="ctrl.showToolbar">
-        <div class="js-button" ng-click="ctrl.newPerson()">
-            <i class="material-icons md-18">undo</i>
-        </div>
-        <div class="js-button" ng-click="ctrl.undo()">
-            <md-tooltip md-direction="bottom" md-delay="1000">
-                Undo
-            </md-tooltip>
-            <i class="material-icons md-18">undo</i>
-        </div>
-        <div class="js-button" ng-click="ctrl.redo()">
-            <md-tooltip md-direction="bottom" md-delay="1000">
-                Redo
-            </md-tooltip>
-            <i class="material-icons md-18">redo</i>
-        </div>
-        <div class="js-button" ng-click="ctrl.toggleLockTimeline()">
-            <md-tooltip md-direction="bottom" md-delay="1000">
-                Lock timeline
-            </md-tooltip>
-            <i class="material-icons md-18">{{timelineLocked ? 'lock_outline' : 'lock_open'}}</i>
-        </div>
-        <div class="js-button" ng-click="ctrl.focusTimeline()">
-            <md-tooltip md-direction="bottom" md-delay="1000">
-                Fit timeline
-            </md-tooltip>
-            <i class="material-icons md-18-90deg">vertical_align_center</i>
-        </div>
-        <div class="js-button" ng-click="ctrl.toggleSnappingTimeline()">
-            <md-tooltip md-direction="bottom" md-delay="1000">
-                Snap to time
-            </md-tooltip>
-            <i class="material-icons md-18">keyboard_tab</i>
-        </div>
-        <div class="js-button" ng-click="ctrl.showCurrentTime()">
-            <md-tooltip md-direction="bottom" md-delay="1000">
-                Current time
-            </md-tooltip>
-            <i class="material-icons md-18">access_time</i>
-        </div>
-        <div class="js-button" ng-click="ctrl.addJobsToOrder()">
-            <md-tooltip md-direction="bottom" md-delay="1000">
-                Add job to order
-            </md-tooltip>
-            <i class="material-icons md-18">add</i>
-        </div>
-    </md-toolbar>
-    <div id="js-page-container" ng-class="{'big':ctrl.showToolbar, 'small':!ctrl.showToolbar}">
-        <div id="js-workspace" class="tabsdemoStaticTabs">
+    <div id="js-page-container">
+        <div id="js-production-plan" class="js-main-workspace" ng-show="ctrl.showWorkspace.productionPlan">
             <md-tabs class="md-accent main-tabs" md-align-tabs="bottom" md-stretch-tabs='always'>
                 <md-tab>
                     <md-tab-label>
-                        Timeline
+                        Schedule
                     </md-tab-label>
                     <md-tab-body>
+                        <md-toolbar class="js-toolbar" layout="row" ng-show="ctrl.showToolbar">
+                            <div class="js-button" ng-click="ctrl.newPerson()">
+                                <i class="material-icons md-18">undo</i>
+                            </div>
+                            <div class="js-button" ng-click="ctrl.undo()">
+                                <md-tooltip md-direction="bottom" md-delay="1000">
+                                    Undo
+                                </md-tooltip>
+                                <i class="material-icons md-18">undo</i>
+                            </div>
+                            <div class="js-button" ng-click="ctrl.redo()">
+                                <md-tooltip md-direction="bottom" md-delay="1000">
+                                    Redo
+                                </md-tooltip>
+                                <i class="material-icons md-18">redo</i>
+                            </div>
+                            <div class="js-button" ng-click="ctrl.toggleLockTimeline()">
+                                <md-tooltip md-direction="bottom" md-delay="1000">
+                                    Lock timeline
+                                </md-tooltip>
+                                <i class="material-icons md-18">{{timelineLocked ? 'lock_outline' : 'lock_open'}}</i>
+                            </div>
+                            <div class="js-button" ng-click="ctrl.focusTimeline()">
+                                <md-tooltip md-direction="bottom" md-delay="1000">
+                                    Fit timeline
+                                </md-tooltip>
+                                <i class="material-icons md-18-90deg">vertical_align_center</i>
+                            </div>
+                            <div class="js-button" ng-click="ctrl.toggleSnappingTimeline()">
+                                <md-tooltip md-direction="bottom" md-delay="1000">
+                                    Snap to time
+                                </md-tooltip>
+                                <i class="material-icons md-18">keyboard_tab</i>
+                            </div>
+                            <div class="js-button" ng-click="ctrl.showCurrentTime()">
+                                <md-tooltip md-direction="bottom" md-delay="1000">
+                                    Current time
+                                </md-tooltip>
+                                <i class="material-icons md-18">access_time</i>
+                            </div>
+                            <div class="js-button" ng-click="ctrl.addJobsToOrder()">
+                                <md-tooltip md-direction="bottom" md-delay="1000">
+                                    Add job to order
+                                </md-tooltip>
+                                <i class="material-icons md-18">add</i>
+                            </div>
+                        </md-toolbar>
                         <div id="js-timeline" print-section></div>
                     </md-tab-body>
                 </md-tab>
                 <md-tab>
-                    <md-tab-label>Jobs</md-tab-label>
+                    <md-tabl-label>
+                        Orders
+                    </md-tabl-label>
                     <md-tab-body>
-                        <div class="radioDemo2 radioButtondemoMultiColumn">
-                            <div layout='row' layout-padding layout-align="start center">
-                                <h4 class="no-margin" flex="30">Name</h4>
-                                <h4 class="no-margin" flex="45">Description</h4>
-                                <h4 class="no-margin" flex="10">Sequence</h4>
-                            </div>
-                            <md-divider></md-divider>
-                            <md-radio-group ng-model="selectedIndex">
-                                <div ng-repeat='job in ctrl.jobs' class="row" layout-align="center start">
-                                    <div layout="column">
-                                        <div layout='row' layout-padding layout-align="start center"
-                                             ng-hide="job.jobId==editIndex">
-                                            <md-radio-button flex="30" ng-value="job.jobId" class="md-primary"
-                                                             style="margin:0">
-                                                {{job.name}}
-                                            </md-radio-button>
-                                            <div flex="45">
-                                                {{job.description}}
-                                            </div>
-                                            <div flex="10">
-                                                {{job.order}}
-                                            </div>
-                                            <div flex="15" ng-show="job.jobId==selectedIndex">
-                                                <md-button class="md-fab md-primary md-mini"
-                                                           ng-click="editIndex=selectedIndex">
-                                                    <i class="material-icons md-24">mode_edit</i>
-                                                </md-button>
-                                                <md-button class="md-fab md-primary md-mini"
-                                                           ng-click="ctrl.deleteJob(job)">
-                                                    <i class="material-icons md-24">delete</i>
-                                                </md-button>
-                                                <md-button class="md-fab md-primary md-mini"
-                                                           ng-click="job.showMore=true" ng-hide="job.showMore">
-                                                    <i class="material-icons md-24">keyboard_arrow_down</i>
-                                                </md-button>
-                                                <md-button class="md-fab md-primary md-mini"
-                                                           ng-click="job.showMore=false" ng-show="job.showMore">
-                                                    <i class="material-icons md-24">keyboard_arrow_up</i>
-                                                </md-button>
-                                            </div>
-                                        </div>
-                                        <div layout='row' layout-padding layout-align="start center"
-                                             ng-show="job.jobId==editIndex">
-                                            <md-input-container flex="30">
-                                                <label>Job name</label>
-                                                <input type="text" ng-model="job.name">
-                                            </md-input-container>
-
-                                            <md-input-container flex="65">
-                                                <label>Description</label>
-                                                <input type="text" ng-model="job.description">
-                                            </md-input-container>
-                                            <div flex="5">
-                                                <md-button class="md-fab md-primary md-mini"
-                                                           ng-click="editIndex=nic; updateJob(job)">
-                                                    <i class="material-icons md-24">done</i>
-                                                </md-button>
-                                            </div>
-                                        </div>
-                                        <div class="sub-list">
-                                            <div layout='row'
-                                                 layout-padding
-                                                 layout-align="start center"
-                                                 ng-repeat='task in job.tasks'
-                                                 ng-show="job.showMore">
-                                                <div flex="50">
-                                                    {{task.resource.name}}
-                                                </div>
-                                                <div flex="50">
-                                                    {{task.resource.secondsDuration}}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </md-radio-group>
-                            <md-divider></md-divider>
+                        <div layout='row' layout-padding layout-align="start center">
+                            <h4 class="no-margin" flex="20">Name</h4>
+                            <h4 class="no-margin" flex="50">Description</h4>
+                            <h4 class="no-margin" flex="10">Due date</h4>
+                            <h4 class="no-margin" flex="10">Created</h4>
+                            <h4 class="no-margin" flex="10">Edited</h4>
                         </div>
-                    </md-tab-body>
-                </md-tab>
-                <md-tab>
-                    <md-tab-label>Resources</md-tab-label>
-                    <md-tab-body>
-                        <div class="radioDemo2 radioButtondemoMultiColumn">
-                            <div layout='row' layout-padding layout-align="start center">
-                                <h4 class="no-margin" flex="30">Name</h4>
-                                <h4 class="no-margin" flex="60">Description</h4>
-                            </div>
+                        <div ng-repeat='order in ctrl.productionPlan.orders' layout="column">
                             <md-divider></md-divider>
-                            <md-radio-group ng-model="selectedIndex2">
-                                <div ng-repeat='res in ctrl.resources' class="row" layout-align="center start">
-                                    <div layout="column">
-                                        <div layout='row' layout-padding layout-align="start center"
-                                             ng-hide="res.resourceId==editIndex">
-                                            <md-radio-button flex="30" ng-value="res.resourceId" class="md-primary"
-                                                             style="margin:0px">
-                                                {{res.name}}
-                                            </md-radio-button>
-                                            <div flex="60">
-                                                {{res.description}}
+                            <div class="pointer"
+                                 layout='row'
+                                 layout-padding
+                                 layout-align="start center"
+                                 ng-click="ctrl.extendOrder(order.id)">
+                                <div flex="20">
+                                    {{order.name}}
+                                </div>
+                                <div flex="50">
+                                    {{order.description}}
+                                </div>
+                                <div flex="10">
+                                    {{order.dueDate | date : 'dd.MM.yy HH:mm'}}
+                                </div>
+                                <div flex="10">
+                                    {{order.createdOn | date : 'dd.MM.yy HH:mm'}}
+                                </div>
+                                <div flex="10">
+                                    {{order.editedOn | date : 'dd.MM.yy HH:mm'}}
+                                </div>
+                            </div>
+                            <div layout="row"
+                                 layout-align="center start">
+                                <div layout="column"
+                                     flex="80"
+                                     ng-show="ctrl.extendedOrderId == order.id">
+                                    <div layout='row'
+                                         layout-padding
+                                         layout-align="center center">
+                                        <h5 class="no-margin" flex="35">Name</h5>
+                                        <h5 class="no-margin" flex="50">Description</h5>
+                                        <h5 class="no-margin" flex="15">Amount</h5>
+                                    </div>
+                                    <div ng-repeat="product in order.products"
+                                         layout="column">
+                                        <md-divider></md-divider>
+                                        <div layout='row'
+                                             layout-padding
+                                             layout-align="center center">
+                                            <div flex="35">
+                                                {{product.name}}
                                             </div>
-                                            <div flex="10" ng-show="res.resourceId==selectedIndex2">
-                                                <md-button class="md-fab md-primary md-mini"
-                                                           ng-click="editIndex=selectedIndex2">
-                                                    <i class="material-icons md-24">mode_edit</i>
-                                                </md-button>
-                                                <md-button class="md-fab md-primary md-mini"
-                                                           ng-click="deleteResource(res)">
-                                                    <i class="material-icons md-24">delete</i>
-                                                </md-button>
+                                            <div flex="50">
+                                                {{product.description}}
                                             </div>
-                                        </div>
-                                        <div layout='row' layout-padding layout-align="start center"
-                                             ng-show="res.resourceId==editIndex">
-                                            <md-input-container flex="30">
-                                                <label>Resource name</label>
-                                                <input type="text" ng-model="res.name">
-                                            </md-input-container>
-
-                                            <md-input-container flex="65">
-                                                <label>Description</label>
-                                                <input type="text" ng-model="res.description">
-                                            </md-input-container>
-                                            <div flex="5">
-                                                <md-button class="md-fab md-primary md-mini"
-                                                           ng-click="editIndex=nic; updateResource(res)">
-                                                    <i class="material-icons md-24">done</i>
-                                                </md-button>
+                                            <div flex="15">
+                                                {{product.amount}}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </md-radio-group>
-                            <md-divider></md-divider>
+                            </div>
                         </div>
                     </md-tab-body>
                 </md-tab>
             </md-tabs>
         </div>
+        <div id="js-orders" class="js-main-workspace" ng-show="ctrl.showWorkspace.orders">
+            <md-toolbar class="js-toolbar-workspace">
+                <div class="md-toolbar-tools">
+                    <h2>Edit Orders</h2>
+                    <span flex></span>
+                    <md-button class="md-icon-button" ng-click="ctrl.closeWorkspace()">
+                        <i class="material-icons md-18">close</i>
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <div class="js-edit-buttons-toolbar" layout="row" md-colors="{background: 'primary'}">
+                <div layout="row" layout-align="start center">
+                    <div class="js-button" ng-click="ctrl.undo()">
+                        <md-tooltip md-direction="bottom" md-delay="1000">
+                            add new
+                        </md-tooltip>
+                        <i class="material-icons md-18">add</i>
+                    </div>
+                    <div class="js-button" ng-click="ctrl.undo()">
+                        <md-tooltip md-direction="bottom" md-delay="1000">
+                            delete selected
+                        </md-tooltip>
+                        <i class="material-icons md-18">delete</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="js-products" class="js-main-workspace" ng-show="ctrl.showWorkspace.products">
+            <md-toolbar class="js-toolbar-workspace">
+                <div class="md-toolbar-tools">
+                    <h2>Edit Products</h2>
+                    <span flex></span>
+                    <md-button class="md-icon-button" ng-click="ctrl.closeWorkspace()">
+                        <i class="material-icons md-18">close</i>
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <div class="js-edit-buttons-toolbar" layout="row" md-colors="{background: 'primary'}">
+                <div layout="row" layout-align="start center">
+                    <div class="js-button" ng-click="ctrl.undo()">
+                        <md-tooltip md-direction="bottom" md-delay="1000">
+                            add new
+                        </md-tooltip>
+                        <i class="material-icons md-18">add</i>
+                    </div>
+                    <div class="js-button" ng-click="ctrl.undo()">
+                        <md-tooltip md-direction="bottom" md-delay="1000">
+                            delete selected
+                        </md-tooltip>
+                        <i class="material-icons md-18">delete</i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="js-resources" class="js-main-workspace" ng-show="ctrl.showWorkspace.resources">
+            <md-toolbar class="js-toolbar-workspace">
+                <div class="md-toolbar-tools">
+                    <h2>Edit Resources</h2>
+                    <span flex></span>
+                    <md-button class="md-icon-button" ng-click="ctrl.closeWorkspace()">
+                        <i class="material-icons md-18">close</i>
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <div class="js-edit-buttons-toolbar" layout="row" md-colors="{background: 'primary'}">
+                <div layout="row" layout-align="start center">
+                    <div class="js-button" ng-click="ctrl.undo()">
+                        <md-tooltip md-direction="bottom" md-delay="1000">
+                            add new
+                        </md-tooltip>
+                        <i class="material-icons md-18">add</i>
+                    </div>
+                    <div class="js-button" ng-click="ctrl.undo()">
+                        <md-tooltip md-direction="bottom" md-delay="1000">
+                            delete selected
+                        </md-tooltip>
+                        <i class="material-icons md-18">delete</i>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    <
     <md-toolbar class="js-bottom-toolbar">
         <div ng-hide="ctrl.authenticated">
             <h5 class="no-margin">You are not logged in</h5>
