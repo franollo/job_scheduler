@@ -27,6 +27,6 @@ public class JPAOrderDAOIntegrationTest {
     public void performTest() {
         User user = new User();
         user.setUsername("admin");
-        List<Order> orderList = orderDAO.getUserOrders(user);
+        List<Order> orderList = orderDAO.getUsersOrders(user);
     }
 }

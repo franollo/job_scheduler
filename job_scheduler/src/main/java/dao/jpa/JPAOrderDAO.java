@@ -34,7 +34,7 @@ public class JPAOrderDAO extends JPADAO implements OrderDAO {
     }
 
     @Override
-    public List<Order> getUserOrders(User user) {
+    public List<Order> getUsersOrders(User user) {
         String queryString = "SELECT o from Order o inner join User u " +
                 "on o.groupId = u.groupId " +
                 "where u.username = :username";

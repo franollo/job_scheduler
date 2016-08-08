@@ -36,7 +36,7 @@ public class GetController {
     public @ResponseBody List<Order> orders() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
-        return orderDAO.getUserOrders(user);
+        return orderDAO.getUsersOrders(user);
     }
 
     @RequestMapping(value = "/resources", method = RequestMethod.GET)

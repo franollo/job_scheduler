@@ -167,6 +167,7 @@
 
 .pointer {
     cursor: pointer;
+    outline: none;
 }
 
 .no-margin {
@@ -174,18 +175,17 @@
 }
 
 .md-button.md-fab.md-mini {
-    line-height: 3rem;
     width: 35px;
-    height: 34px;
-    padding-left: 5px;
-    padding-right: 5px;
-    padding-top: 1px;
+    height: 35px;
+    margin: 0 !important;
+    padding: 0 !important;
 }
 
 .js-edit-buttons-toolbar {
     padding-top: 2px;
     padding-left: 16px;
     padding-right: 16px;
+    margin-bottom: 4px;
     height: 30px;
     display: inline-block;
     -webkit-border-bottom-right-radius: 10px;
@@ -236,4 +236,8 @@ md-datepicker {
 
 md-tooltip.md-content {
     background-color: rgba(70, 70, 70, 0.90);
+}
+
+md-checkbox {
+    margin-bottom: 0px;
 }

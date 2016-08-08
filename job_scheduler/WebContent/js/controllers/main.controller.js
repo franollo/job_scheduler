@@ -24,9 +24,6 @@ function mainController($document,
     vm.snapping = true;
     vm.timelineLocked = false;
     vm.timelineCurrentTime = true;
-    vm.getProducts = getProducts;
-    vm.getResources = getResources;
-    vm.getOrders = getOrders;
     vm.getProductionPlans = getProductionPlans;
     vm.getProductionPlan = getProductionPlan;
     vm.getUserInfo = getUserInfo;
@@ -46,7 +43,6 @@ function mainController($document,
     vm.dialogAddResource = dialogAddResource;
     vm.dialogNewOrder = dialogNewOrder;
     vm.dialogAddJobsToOrder = dialogAddJobsToOrder;
-    vm.dialogEditOrder = dialogEditOrder;
     vm.dialogOpenProductionPlan = dialogOpenProductionPlan;
     vm.extendOrder = extendOrder;
     vm.openOrdersWorkspace = openOrdersWorkspace;
@@ -73,6 +69,8 @@ function mainController($document,
     dataService.getProductionPlan(1)
         .then(putProductionPlan)
         .catch(fireError);
+
+
 
     /**
      * WORKSPACE TOGGLE
@@ -112,18 +110,6 @@ function mainController($document,
      * DATA
      */
 
-    function putProducts(data) {
-        vm.resources = data;
-    }
-
-    function putResources(data) {
-        vm.products = data;
-    }
-
-    function putOrders(data) {
-        vm.orders = data;
-    }
-
     function putProductionPlans(data) {
         vm.productionPlans = data;
     }
@@ -135,24 +121,6 @@ function mainController($document,
 
     function putUser(data) {
         vm.user = data;
-    }
-    
-    function getProducts() {
-        dataService.getProducts()
-            .then(putProducts)
-            .catch(fireError);
-    }
-
-    function getResources() {
-        dataService.getResources()
-            .then(putResources)
-            .catch(fireError);
-    }
-
-    function getOrders() {
-        dataService.getOrders()
-            .then(putOrders)
-            .catch(fireError);
     }
 
     function getProductionPlans() {
@@ -332,21 +300,6 @@ function mainController($document,
             clickOutsideToClose: true
         }).then(function (answer) {
             dataService.addJobOrder(answer[0])
-                .then(saveOrder)
-                .catch(fireError);
-        });
-    }
-
-    function dialogEditOrder() {
-        $mdDialog.show({
-            locals: {dataToPass: vm.order},
-            controller: dialogsService.editOrderController,
-            controllerAs: 'ctrl',
-            templateUrl: 'html/dialogs/edit_order.html',
-            parent: angular.element(document.body),
-            clickOutsideToClose: true
-        }).then(function (answer) {
-            dataService.updateOrder(answer)
                 .then(saveOrder)
                 .catch(fireError);
         });

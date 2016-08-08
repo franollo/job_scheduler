@@ -91,16 +91,10 @@ function dialogsService(dataService) {
         };
     }
 
-    this.editOrderController = function ($scope, $mdDialog, dataToPass) {
+    this.editOrderController = function ($scope, $mdDialog, data) {
         var parentThis = this;
-        $scope.order = dataToPass;
-        console.log($scope.order);
-        this.startTime = new Date($scope.order.startDate);
-        this.startDate = new Date($scope.order.startDate);
+        $scope.order = data;
         $scope.answer = function () {
-            var start = new Date(parentThis.startDate.getFullYear(), parentThis.startDate.getMonth(), parentThis.startDate.getDate(),
-                parentThis.startTime.getHours(), parentThis.startTime.getMinutes(), parentThis.startTime.getSeconds());
-            $scope.order.startDate = start;
             $mdDialog.hide($scope.order);
         }
 

@@ -1,7 +1,6 @@
 package main.java.dao.jpa;
 
 import main.java.dao.model.ProductDAO;
-import main.java.model.Order;
 import main.java.model.Product;
 import main.java.model.User;
 import org.springframework.stereotype.Repository;

@@ -197,7 +197,10 @@
                         Orders
                     </md-tabl-label>
                     <md-tab-body>
-                        <div layout='row' layout-padding layout-align="start center">
+                        <div layout='row'
+                             layout-padding
+                             layout-align="start center"
+                             md-colors="{background: 'accent-200'}">
                             <h4 class="no-margin" flex="20">Name</h4>
                             <h4 class="no-margin" flex="50">Description</h4>
                             <h4 class="no-margin" flex="10">Due date</h4>
@@ -263,7 +266,11 @@
                 </md-tab>
             </md-tabs>
         </div>
-        <div id="js-orders" class="js-main-workspace" ng-show="ctrl.showWorkspace.orders">
+
+        <div id="js-orders"
+             class="js-main-workspace"
+             ng-controller="ordersController as orderCtrl"
+             ng-show="ctrl.showWorkspace.orders">
             <md-toolbar class="js-toolbar-workspace">
                 <div class="md-toolbar-tools">
                     <h2>Edit Orders</h2>
@@ -285,12 +292,109 @@
                         <md-tooltip md-direction="bottom" md-delay="1000">
                             delete selected
                         </md-tooltip>
-                        <i class="material-icons md-18">delete</i>
+                        <i class="material-icons md-18">delete_sweep</i>
+                    </div>
+                </div>
+            </div>
+            <md-divider></md-divider>
+            <div layout='row'
+                 layout-padding
+                 layout-align="end center"
+                 md-colors="{background: 'accent-200'}">
+                <md-checkbox aria-label="Select All"
+                             ng-checked="orderCtrl.isChecked()"
+                             md-indeterminate="orderCtrl.isIndeterminate()"
+                             ng-click="orderCtrl.toggleAll()">
+                </md-checkbox>
+                <div flex="90"
+                     layout='row'>
+                    <h4 class="no-margin" flex="20">Name</h4>
+                    <h4 class="no-margin" flex="50">Description</h4>
+                    <h4 class="no-margin" flex="10">Due date</h4>
+                    <h4 class="no-margin" flex="10">Created</h4>
+                    <h4 class="no-margin" flex="10">Edited</h4>
+                </div>
+                <div flex></div>
+            </div>
+            <div ng-repeat='order in orderCtrl.orders' layout="column">
+                <md-divider></md-divider>
+                <div layout="row"
+                     layout-padding
+                     layout-align="end center">
+                    <md-checkbox ng-checked="orderCtrl.exists(order)"
+                                 ng-click="orderCtrl.toggle(order)">
+                    </md-checkbox>
+                    <div class="pointer"
+                         flex="90"
+                         layout='row'
+                         ng-click="orderCtrl.extendOrder(order.id)">
+                        <div flex="20">
+                            {{order.name}}
+                        </div>
+                        <div flex="50">
+                            {{order.description}}
+                        </div>
+                        <div flex="10">
+                            {{order.dueDate | date : 'dd.MM.yy HH:mm'}}
+                        </div>
+                        <div flex="10">
+                            {{order.createdOn | date : 'dd.MM.yy HH:mm'}}
+                        </div>
+                        <div flex="10">
+                            {{order.editedOn | date : 'dd.MM.yy HH:mm'}}
+                        </div>
+                    </div>
+                    <div flex layout="row" style="padding: 0">
+                        <div>
+                            <md-button class="md-fab md-primary md-mini"
+                                       ng-click="orderCtrl.editOrder(order)">
+                                <i class="material-icons md-24">mode_edit</i>
+                            </md-button>
+                            <md-button class="md-fab md-primary md-mini"
+                                       ng-click="orderCtrl.removeOrder(order)">
+                                <i class="material-icons md-24">delete</i>
+                            </md-button>
+                        </div>
+                    </div>
+                </div>
+                <div layout="row"
+                     layout-align="center start">
+                    <div layout="column"
+                         flex="80"
+                         ng-show="orderCtrl.extendedOrderId == order.id">
+                        <div layout='row'
+                             layout-padding
+                             layout-align="center center">
+                            <h5 class="no-margin" flex="35">Name</h5>
+                            <h5 class="no-margin" flex="50">Description</h5>
+                            <h5 class="no-margin" flex="15">Amount</h5>
+                        </div>
+                        <div ng-repeat="product in order.products"
+                             layout="column">
+                            <md-divider></md-divider>
+                            <div layout='row'
+                                 layout-padding
+                                 layout-align="center center">
+                                <div flex="35">
+                                    {{product.name}}
+                                </div>
+                                <div flex="50">
+                                    {{product.description}}
+                                </div>
+                                <div flex="15">
+                                    {{product.amount}}
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div id="js-products" class="js-main-workspace" ng-show="ctrl.showWorkspace.products">
+
+        <div id="js-products"
+             class="js-main-workspace"
+             ng-controller="productsController as prodCtrl"
+             ng-show="ctrl.showWorkspace.products">
             <md-toolbar class="js-toolbar-workspace">
                 <div class="md-toolbar-tools">
                     <h2>Edit Products</h2>
@@ -312,12 +416,17 @@
                         <md-tooltip md-direction="bottom" md-delay="1000">
                             delete selected
                         </md-tooltip>
-                        <i class="material-icons md-18">delete</i>
+                        <i class="material-icons md-18">delete_sweep</i>
                     </div>
                 </div>
             </div>
+            <md-divider></md-divider>
         </div>
-        <div id="js-resources" class="js-main-workspace" ng-show="ctrl.showWorkspace.resources">
+
+        <div id="js-resources"
+             class="js-main-workspace"
+             ng-controller="resourcesController as resCtrl"
+             ng-show="ctrl.showWorkspace.resources">
             <md-toolbar class="js-toolbar-workspace">
                 <div class="md-toolbar-tools">
                     <h2>Edit Resources</h2>
@@ -339,11 +448,13 @@
                         <md-tooltip md-direction="bottom" md-delay="1000">
                             delete selected
                         </md-tooltip>
-                        <i class="material-icons md-18">delete</i>
+                        <i class="material-icons md-18">delete_sweep</i>
                     </div>
                 </div>
             </div>
+            <md-divider></md-divider>
         </div>
+
     </div>
     <md-toolbar class="js-bottom-toolbar">
         <div ng-hide="ctrl.authenticated">

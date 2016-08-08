@@ -9,17 +9,5 @@ public interface OrderDAO {
     public void insert(Order order);
     public void update(Order order);
     public void remove(Order order);
-    public List<Order> getUserOrders(User user);
-  //  public boolean hasPermission(User user, Order order);
-//    public int createNewOrder(Order order, String username);
-//
-//    public List<Order> getUserOrders(String name);
-//
-//    public Order getOrder(int orderId);
-//
-//    public void updateOrder(Order order, String username);
-//
-//    public int getOrderInUseId(String name);
-//
-//    Date getStartDate(String name);
+    public List<Order> getUsersOrders(User user);
 }
