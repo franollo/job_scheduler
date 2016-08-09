@@ -88,11 +88,14 @@ public class SaveController {
     }
 
     @RequestMapping(value = "/resource", method = RequestMethod.POST)
-    public @ResponseBody void resource(@RequestBody Resource resource) throws ParseException {
+    public @ResponseBody Resource resource(@RequestBody Resource resource) throws ParseException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
-        userDAO.hasPermission(resource, user);
-        resourceDAO.insert(resource);
+        resource.setGroupId(user.getGroupId());
+        if(resource.getId() != null) {
+            userDAO.hasPermission(resource, user);
+        }
+        return resourceDAO.save(resource);
     }
 
     @RequestMapping(value = "/resourcetype", method = RequestMethod.POST)

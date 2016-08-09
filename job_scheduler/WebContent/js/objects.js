@@ -3,11 +3,14 @@
  */
 
 function ResourceType(name, description) {
-    this.id = null;
     this.name = name;
     this.description = description;
-    this.resources = null;
-    this.groupId = null;
-    this.createdOn = null;
-    this.editedOn = null;
+}
+
+function Resource(name, description, costPerHour, efficiency, resourceTypeId) {
+    this.name = name;
+    this.description = description;
+    this.costPerHour = costPerHour;
+    this.efficiency = efficiency;
+    this.resourceTypeId = resourceTypeId;
 }

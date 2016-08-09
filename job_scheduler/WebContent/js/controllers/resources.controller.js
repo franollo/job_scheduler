@@ -26,9 +26,12 @@ function resourcesController($document,
     vm.removeResource = removeResource;
     vm.newResourceType = newResourceType;
     vm.newResource = newResource;
+    vm.extendResType = extendResType;
+    vm.extendedResTypeId = 0;
     vm.resourceTypes = [];
     vm.selectedProducts = [];
-    vm.idToRemove = 0;
+    vm.idToRemoveType = 0;
+    vm.idToRemoveRes = 0;
 
     dataService.getResources()
         .then(putResources)
@@ -76,34 +79,32 @@ function resourcesController($document,
 
     function editResourceType(resourceType) {
         openDialogEditResType(resourceType);
-        console.log("EDIT TYPE");
     }
 
-    function editResource(order) {
-        console.log("EDIT");
+    function editResource(resource) {
+        openDialogEditRes(resource);
     }
 
     function removeResourceType(resourceType) {
-        vm.idToRemove = resourceType.id;
-        openDialogDeleteConfirm();
-        console.log("REMOVE ONE TYPE");
+        vm.idToRemoveType = resourceType.id;
+        openDialogDeleteTypeConfirm();
     }
 
     function removeResourceTypes(order) {
         console.log("REMOVE MANY TYPES");
     }
 
-    function removeResource() {
-        console.log("REMOVE RES");
+    function removeResource(resource) {
+        vm.idToRemoveRes = resource.id;
+        openDialogDeleteResConfirm();
     }
 
     function newResourceType() {
-        console.log("NEW TYPE");
         openDialogNewResType();
     }
 
     function newResource() {
-        console.log("NEW");
+        openDialogNewRes();
     }
 
     function openDialogNewResType() {
@@ -116,6 +117,21 @@ function resourcesController($document,
         }).then(function (answer) {
             dataService.saveResourceType(answer)
                 .then(addResourceType)
+                .catch(fireError);
+        });
+    }
+
+    function openDialogNewRes() {
+        $mdDialog.show({
+            locals: {resourceTypes: vm.resourceTypes},
+            controller: dialogsService.newResourceCtrl,
+            controllerAs: 'ctrl',
+            templateUrl: 'html/dialogs/new_resource.html',
+            parent: angular.element(document.body),
+            clickOutsideToClose: true
+        }).then(function (answer) {
+            dataService.saveResource(answer)
+                .then(addResource)
                 .catch(fireError);
         });
     }
@@ -135,35 +151,112 @@ function resourcesController($document,
         });
     }
 
-    function openDialogDeleteConfirm() {
+    function openDialogEditRes(resource) {
+        $mdDialog.show({
+            locals: {resource: resource},
+            controller: dialogsService.editResourceCtrl,
+            controllerAs: 'ctrl',
+            templateUrl: 'html/dialogs/edit_resource.html',
+            parent: angular.element(document.body),
+            clickOutsideToClose: true
+        }).then(function (answer) {
+            dataService.saveResource(answer)
+                .then(updateResource)
+                .catch(fireError);
+        });
+    }
+
+    function openDialogDeleteTypeConfirm() {
         var confirm = $mdDialog.confirm()
             .title('Do you want to delete this resource type?')
+            .textContent('Related resources and products operations will be removed')
             .ok('yes')
             .cancel('cancel');
         $mdDialog.show(confirm).then(function() {
-            removeHelper();
+            removeHelperType();
         });
-    };
+    }
 
-    function removeHelper() {
-        dataService.removeResourceType(vm.idToRemove)
+    function openDialogDeleteResConfirm() {
+        var confirm = $mdDialog.confirm()
+            .title('Do you want to delete this resource?')
+            .ok('yes')
+            .cancel('cancel');
+        $mdDialog.show(confirm).then(function() {
+            removeHelperResource();
+        });
+    }
+
+    function removeHelperType() {
+        dataService.removeResourceType(vm.idToRemoveType)
             .then(cutResourceType)
             .catch(fireError);
     }
 
+    function removeHelperResource() {
+        dataService.removeResource(vm.idToRemoveRes)
+            .then(cutResource)
+            .catch(fireError);
+    }
+
+    function addResource(data) {
+        var index = vm.resourceTypes.map(function(e) {return e.id;}).indexOf(data.resourceTypeId);
+        if(index > 0) {
+            vm.resourceTypes[index].resources.push(data);
+        }
+    }
+
     function addResourceType(data) {
-        console.log(data);
         vm.resourceTypes.push(data);
     }
 
     function updateResourceType(data) {
         var index = vm.resourceTypes.map(function(e) {return e.id;}).indexOf(data.id);
-        vm.resourceTypes[index] = data;
+        if(index > 0) {
+            vm.resourceTypes[index] = data;
+        }
+    }
+
+    function updateResource(data) {
         console.log(data);
+        console.log(vm.resourceTypes);
+        var index;
+        for (var i = 0; i < vm.resourceTypes.length; i++) {
+            index = vm.resourceTypes[i].resources.map(function (e) { return e.id;}).indexOf(data.id);
+            console.log(index);
+            if (index > 0) {
+                console.log(vm.resourceTypes[i].resources[index])
+                vm.resourceTypes[i].resources[index] = data;
+                console.log(vm.resourceTypes[i].resources[index])
+                break;
+            }
+        }
     }
 
     function cutResourceType(data) {
         var index = vm.resourceTypes.map(function(e) {return e.id;}).indexOf(data);
-        vm.resourceTypes.splice(index, 1);
+        if(index > 0) {
+            vm.resourceTypes.splice(index, 1);
+        }
+    }
+
+    function cutResource(data) {
+        var index;
+        for (var i = 0; i < vm.resourceTypes.length; i++) {
+            index = vm.resourceTypes[i].resources.map(function(e) {return e.id;}).indexOf(data);
+            if(index > 0) {
+                vm.resourceTypes[i].resources.splice(index, 1);
+                break;
+            }
+        }
+    }
+
+    function extendResType(id) {
+        if(vm.extendedResTypeId != id) {
+            vm.extendedResTypeId = id;
+        }
+        else {
+            vm.extendedResTypeId = 0;
+        }
     }
 }

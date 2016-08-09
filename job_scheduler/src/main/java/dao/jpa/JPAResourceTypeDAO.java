@@ -1,6 +1,7 @@
 package main.java.dao.jpa;
 
 import main.java.dao.model.ResourceTypeDAO;
+import main.java.model.ProductOperation;
 import main.java.model.Resource;
 import main.java.model.ResourceType;
 import main.java.model.User;
@@ -32,6 +33,14 @@ public class JPAResourceTypeDAO extends JPADAO implements ResourceTypeDAO {
     @Override
     public void remove(Integer id) {
         entityManager.remove(entityManager.find(ResourceType.class, id));
+    }
+
+    @Override
+    public void multipleRemove(List<Integer> ids) {
+        entityManager
+                .createQuery("delete from ResourceType rt where rt.id in (:ids)")
+                .setParameter("ids", ids)
+                .executeUpdate();
     }
 
     @Override

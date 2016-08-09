@@ -20,8 +20,8 @@ import java.util.List;
 @Transactional(propagation = Propagation.REQUIRED)
 public class JPAResourceDAO extends JPADAO implements ResourceDAO {
     @Override
-    public void insert(Resource resource) {
-        entityManager.persist(resource);
+    public Resource save(Resource resource) {
+        return entityManager.merge(resource);
     }
 
     @Override
@@ -31,7 +31,15 @@ public class JPAResourceDAO extends JPADAO implements ResourceDAO {
 
     @Override
     public void remove(Resource resource) {
-        entityManager.remove(resource);
+        entityManager.remove(entityManager.find(Resource.class, resource.getId()));
+    }
+
+    @Override
+    public void multipleRemove(List<Integer> ids) {
+        entityManager
+                .createQuery("delete from Resource r where r.id in (:ids)")
+                .setParameter("ids", ids)
+                .executeUpdate();
     }
 
     @Override

@@ -55,7 +55,7 @@ public class Resource extends GroupObject {
 
     @OneToMany
     @JsonBackReference
-    @JoinColumn(name = "RESOURCE_ID", referencedColumnName = "RESOURCE_ID")
+    @JoinColumn(name = "RESOURCE_ID", referencedColumnName = "RESOURCE_ID", updatable = false)
     public Set<Item> getItems() {
         return items;
     }
@@ -64,7 +64,7 @@ public class Resource extends GroupObject {
         this.items = items;
     }
 
-    @Column(name = "RESOURCE_TYPE_ID")
+    @Column(name = "RESOURCE_TYPE_ID", updatable = false)
     public Integer getResourceTypeId() {
         return resourceTypeId;
     }

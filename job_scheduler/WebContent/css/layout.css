@@ -207,6 +207,10 @@
     height: 35px !important;
 }
 
+.exp-container {
+    height: 48px;
+}
+
 md-menu-bar md-menu {
     height: 35px !important;
 }

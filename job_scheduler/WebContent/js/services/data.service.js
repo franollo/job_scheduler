@@ -47,8 +47,8 @@ function dataService($http) {
         return post("save/item", item);
     }
 
-    function removeResource(resource) {
-        return post("remove/resource", resource);
+    function removeResource(id) {
+        return get("remove/resource/" + id);
     }
 
     function removeResourceType(id) {

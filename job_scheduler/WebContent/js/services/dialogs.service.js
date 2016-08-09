@@ -53,6 +53,40 @@ function dialogsService(dataService) {
         }
     };
 
+    this.newResourceCtrl = function ($mdDialog, resourceTypes) {
+        var vm = this;
+        vm.resourceTypes = resourceTypes;
+        vm.name = '';
+        vm.description = '';
+        vm.costPerHour = '';
+        vm.efficiency = '';
+        vm.resourceTypeId = '';
+        vm.cancel = cancel;
+        vm.answer = answer;
+        function answer() {
+            $mdDialog.hide(new Resource(vm.name, vm.description, vm.costPerHour, vm.efficiency, vm.resourceTypeId));
+        }
+
+        function cancel() {
+            $mdDialog.cancel();
+        }
+    };
+
+    this.editResourceCtrl = function ($mdDialog, resource) {
+        var vm = this;
+        vm.resource = {};
+        angular.copy(resource, vm.resource);
+        vm.cancel = cancel;
+        vm.answer = answer;
+        function answer() {
+            $mdDialog.hide(vm.resource);
+        }
+
+        function cancel() {
+            $mdDialog.cancel();
+        }
+    };
+
     this.editResourceTypeCtrl = function ($mdDialog, resourceType) {
         var vm = this;
         vm.resourceType = {};

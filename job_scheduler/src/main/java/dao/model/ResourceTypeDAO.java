@@ -12,5 +12,6 @@ public interface ResourceTypeDAO {
     public ResourceType save(ResourceType resourceType);
     public void update(ResourceType resourceType);
     public void remove(Integer id);
+    public void multipleRemove(List<Integer> ids);
     public List<ResourceType> getUsersResourceTypes(User user);
 }

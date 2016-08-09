@@ -80,12 +80,15 @@ public class RemoveController {
         productOperationDAO.delete(productOperation);
     }
 
-    @RequestMapping(value = "/resource", method = RequestMethod.POST)
-    public @ResponseBody void resource(@RequestBody Resource resource) throws ParseException {
+    @RequestMapping(value = "/resource/{resourceId}", method = RequestMethod.GET)
+    public @ResponseBody Integer resource(@PathVariable int resourceId) throws ParseException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
+        Resource resource = new Resource();
+        resource.setId(resourceId);
         userDAO.hasPermission(resource, user);
         resourceDAO.remove(resource);
+        return resourceId;
     }
 
     @RequestMapping(value = "/resourcetype/{resourceTypeId}", method = RequestMethod.GET)

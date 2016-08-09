@@ -2,7 +2,7 @@
     <form>
         <md-toolbar>
             <div class="md-toolbar-tools">
-                <h2>Create new resource</h2>
+                <h2>Edit resource</h2>
                 <span flex></span>
                 <md-button class="md-icon-button" ng-click="ctrl.cancel()">
                     <i class="material-icons md-18">close</i>
@@ -16,38 +16,29 @@
                     <div layout="row">
                         <md-input-container flex>
                             <label>Resource name</label>
-                            <input type="text" ng-model="ctrl.name"
+                            <input type="text" ng-model="ctrl.resource.name"
                                    ng-change=""
                                    ng-model-options="{debounce: 750}">
                         </md-input-container>
-                        <md-input-container flex>
-                            <label>Description</label>
-                            <input type="text" ng-model="ctrl.description"
-                                   ng-change=""
-                                   ng-model-options="{debounce: 750}">
-                        </md-input-container>
-                    </div>
-                    <div layout="row">
                         <md-input-container flex="25">
                             <label>Cost per hour</label>
-                            <input type="number" ng-model="ctrl.costPerHour"
+                            <input type="number" ng-model="ctrl.resource.costPerHour"
                                    ng-change=""
                                    ng-model-options="{debounce: 750}">
                         </md-input-container>
                         <md-input-container flex="25">
                             <label>efficiency</label>
-                            <input type="number" ng-model="ctrl.efficiency"
+                            <input type="number" ng-model="ctrl.resource.efficiency"
                                    ng-change=""
                                    ng-model-options="{debounce: 750}">
                         </md-input-container>
-                        <md-input-container flex="50">
-                            <label>Resource Type</label>
-                            <md-select ng-model="ctrl.resourceTypeId">
-                                <md-option ng-value="resourceType.id"
-                                           ng-repeat="resourceType in ctrl.resourceTypes">
-                                    {{resourceType.name}}
-                                </md-option>
-                            </md-select>
+                    </div>
+                    <div layout="row">
+                        <md-input-container flex>
+                            <label>Description</label>
+                            <input type="text" ng-model="ctrl.resource.description"
+                                   ng-change=""
+                                   ng-model-options="{debounce: 750}">
                         </md-input-container>
                     </div>
                 </div>

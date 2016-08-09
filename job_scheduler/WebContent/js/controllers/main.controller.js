@@ -116,7 +116,6 @@ function mainController($document,
 
     function putProductionPlan(data) {
         vm.productionPlan = data;
-        console.log(vm.productionPlan);
     }
 
     function putUser(data) {

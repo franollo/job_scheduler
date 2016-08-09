@@ -48,7 +48,7 @@ public class ResourceType extends GroupObject {
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany
-    @JoinColumn(name = "RESOURCE_TYPE_ID", referencedColumnName = "RESOURCE_TYPE_ID")
+    @JoinColumn(name = "RESOURCE_TYPE_ID", referencedColumnName = "RESOURCE_TYPE_ID", updatable = false)
     public Set<Resource> getResources() {
         return resources;
     }

@@ -597,7 +597,7 @@
                     <div class="pointer"
                          flex="90"
                          layout='row'
-                         ng-click="prodCtrl.extendOrder(product.id)">
+                         ng-click="resCtrl.extendResType(resourceType.id)">
                         <div flex="20">
                             {{resourceType.name}}
                         </div>
@@ -624,8 +624,63 @@
                         </div>
                     </div>
                 </div>
+                <md-divider ng-show="resCtrl.extendedResTypeId == resourceType.id"></md-divider>
+                <div layout="row"
+                     layout-align="center start"
+                     ng-show="resCtrl.extendedResTypeId == resourceType.id">
+                    <div layout="column" flex="90">
+                        <div layout='row'
+                             layout-padding
+                             layout-align="start center"
+                             md-colors="{background: 'accent-100'}">
+                            <h5 class="no-margin" flex="20">Name</h5>
+                            <h5 class="no-margin" flex="30">Description</h5>
+                            <h5 class="no-margin" flex="10">Cost per hour</h5>
+                            <h5 class="no-margin" flex="10">efficiency</h5>
+                            <h5 class="no-margin" flex="15">Created</h5>
+                            <h5 class="no-margin" flex="15">Edited</h5>
+                            <h5 class="no-margin" flex="10"></h5>
+                        </div>
+                        <div ng-repeat="resource in resourceType.resources"
+                             layout="column">
+                            <md-divider></md-divider>
+                            <div layout='row'
+                                 layout-padding
+                                 layout-align="start center">
+                                <div flex="20">
+                                    {{resource.name}}
+                                </div>
+                                <div flex="30">
+                                    {{resource.description}}
+                                </div>
+                                <div flex="10">
+                                    {{resource.costPerHour}}
+                                </div>
+                                <div flex="10">
+                                    {{resource.efficiency}}
+                                </div>
+                                <div flex="15">
+                                    {{resource.createdOn | date : 'dd.MM.yy HH:mm'}}
+                                </div>
+                                <div flex="15">
+                                    {{resource.editedOn | date : 'dd.MM.yy HH:mm'}}
+                                </div>
+                                <div flex="10">
+                                    <md-button class="md-fab md-accent md-mini"
+                                               ng-click="resCtrl.editResource(resource)">
+                                        <i class="material-icons md-24">mode_edit</i>
+                                    </md-button>
+                                    <md-button class="md-fab md-accent md-mini"
+                                               ng-click="resCtrl.removeResource(resource)">
+                                        <i class="material-icons md-24">delete</i>
+                                    </md-button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-
     </div>
     <!--<md-toolbar class="js-bottom-toolbar">-->
         <!--<div ng-hide="ctrl.authenticated">-->

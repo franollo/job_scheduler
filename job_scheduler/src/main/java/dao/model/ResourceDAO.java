@@ -6,9 +6,10 @@ import main.java.model.User;
 import java.util.List;
 
 public interface ResourceDAO {
-    public void insert(Resource resource);
+    public Resource save(Resource resource);
     public void update(Resource resource);
     public void remove(Resource resource);
+    public void multipleRemove(List<Integer> ids);
     public List<Resource> getUsersResources(User user);
  //   public boolean checkGroupId(int resourceId, int groupId);
 
