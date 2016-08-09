@@ -5,11 +5,13 @@ angular
 function dataService($http) {
     var vm = this;
     vm.saveResource = saveResource;
+    vm.saveResourceType = saveResourceType;
     vm.saveProductionPlan = saveProductionPlan;
     vm.saveProduct = saveProduct;
     vm.saveOrder = saveOrder;
     vm.saveItem = saveItem;
     vm.removeResource = removeResource;
+    vm.removeResourceType = removeResourceType;
     vm.removeProductionPlan = removeProductionPlan;
     vm.removeProduct = removeProduct;
     vm.removeOrder = removeOrder;
@@ -23,6 +25,10 @@ function dataService($http) {
 
     function saveResource(resource) {
         return post("save/resource", resource);
+    }
+
+    function saveResourceType(resourceType) {
+        return post("save/resourcetype", resourceType);
     }
 
     function saveProductionPlan(productionPlan) {
@@ -43,6 +49,10 @@ function dataService($http) {
 
     function removeResource(resource) {
         return post("remove/resource", resource);
+    }
+
+    function removeResourceType(id) {
+        return get("remove/resourcetype/" + id);
     }
 
     function removeProductionPlan(productionPlan) {

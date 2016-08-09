@@ -41,7 +41,7 @@ public class JPAProductOperationDAOIntegrationTest {
             System.out.println("GOTCHA!");
         }
 //
-//        ProductOperation insertedPO = productOperationDAO.find(productOperationDAO.insert(productOperation));
+//        ProductOperation insertedPO = productOperationDAO.find(productOperationDAO.save(productOperation));
 //        assertNotNull(insertedPO.getId());
 //        assertTrue(insertedPO.getId() > 0);
 //        assertTrue(insertedPO.getName() == "test");

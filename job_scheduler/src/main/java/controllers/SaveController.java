@@ -96,11 +96,14 @@ public class SaveController {
     }
 
     @RequestMapping(value = "/resourcetype", method = RequestMethod.POST)
-    public @ResponseBody void resourcetype(@RequestBody ResourceType resourceType) throws ParseException {
+    public @ResponseBody ResourceType resourcetype(@RequestBody ResourceType resourceType) throws ParseException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
-        userDAO.hasPermission(resourceType, user);
-        resourceTypeDAO.insert(resourceType);
+        resourceType.setGroupId(user.getGroupId());
+        if(resourceType.getId() != null) {
+            userDAO.hasPermission(resourceType, user);
+        }
+        return resourceTypeDAO.save(resourceType);
     }
 
     @RequestMapping(value = "/localdatetime", method = RequestMethod.POST)
@@ -275,6 +278,6 @@ public class SaveController {
         productOperation.setProductId(1);
         productOperation.setResourceTypeId(1);
         productOperation.setGroupId(1);
-        //productOperationDAO.insert(productOperation);
+        //productOperationDAO.save(productOperation);
     }
 }

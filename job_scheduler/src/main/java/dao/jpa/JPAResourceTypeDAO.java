@@ -20,8 +20,8 @@ import java.util.List;
 @Transactional(propagation = Propagation.REQUIRED)
 public class JPAResourceTypeDAO extends JPADAO implements ResourceTypeDAO {
     @Override
-    public void insert(ResourceType resourceType) {
-        entityManager.persist(resourceType);
+    public ResourceType save(ResourceType resourceType) {
+        return entityManager.merge(resourceType);
     }
 
     @Override
@@ -30,8 +30,8 @@ public class JPAResourceTypeDAO extends JPADAO implements ResourceTypeDAO {
     }
 
     @Override
-    public void remove(ResourceType resourceType) {
-        entityManager.remove(resourceType);
+    public void remove(Integer id) {
+        entityManager.remove(entityManager.find(ResourceType.class, id));
     }
 
     @Override

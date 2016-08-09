@@ -13,6 +13,7 @@ import java.util.Set;
 @AttributeOverride(name = "id", column = @Column(name = "RESOURCE_TYPE_ID"))
 public class ResourceType extends GroupObject {
     private String name;
+    private String description;
     private Set<ProductOperation> productOperations;
     private Set<Resource> resources;
 
@@ -25,9 +26,18 @@ public class ResourceType extends GroupObject {
         this.name = name;
     }
 
+    @Column(name = "DESCRIPTION")
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @JsonBackReference
     @OneToMany
-    @JoinColumn(name = "RESOURCE_TYPE_ID", referencedColumnName = "RESOURCE_TYPE_ID")
+    @JoinColumn(name = "RESOURCE_TYPE_ID", referencedColumnName = "RESOURCE_TYPE_ID", updatable = false)
     public Set<ProductOperation> getProductOperations() {
         return productOperations;
     }

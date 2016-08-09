@@ -88,11 +88,14 @@ public class RemoveController {
         resourceDAO.remove(resource);
     }
 
-    @RequestMapping(value = "/resourcetype", method = RequestMethod.POST)
-    public @ResponseBody void resourcetype(@RequestBody ResourceType resourceType) throws ParseException {
+    @RequestMapping(value = "/resourcetype/{resourceTypeId}", method = RequestMethod.GET)
+    public @ResponseBody Integer resourcetype(@PathVariable int resourceTypeId) throws ParseException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
+        ResourceType resourceType = new ResourceType();
+        resourceType.setId(resourceTypeId);
         userDAO.hasPermission(resourceType, user);
-        resourceTypeDAO.remove(resourceType);
+        resourceTypeDAO.remove(resourceTypeId);
+        return resourceTypeId;
     }
 }

@@ -1,3 +1,4 @@
+use db_scheduler;
 insert into groups(group_id, name) values (1, 'grupa testowa');
 insert into users(user_id, username, password, first_name, last_name, email, enabled, group_id) 
 values(1, 'admin', 's3cret', 'Marcin', 'Frankowski', 'marcinfrank1@gmail.com',1, 1);

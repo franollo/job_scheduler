@@ -50,7 +50,7 @@ function mainController($document,
     vm.openResourcesWorkspace = openResourcesWorkspace;
     vm.closeWorkspace = closeWorkspace;
     vm.extendedOrderId = 0;
-    vm.resources = [];
+    vm.resourceTypes = [];
     vm.products = [];
     vm.orders = [];
     vm.productionPlans = [];
@@ -62,7 +62,7 @@ function mainController($document,
         'productionPlan' : true,
         'orders' : false,
         'products' : false,
-        'resources' : false
+        'resourceTypes' : false
     };
 
     timelineService.init("js-timeline");
@@ -88,21 +88,21 @@ function mainController($document,
 
     function openResourcesWorkspace() {
         setFalseWorkspace();
-        vm.showWorkspace.resources = true;
+        vm.showWorkspace.resourceTypes = true;
     }
 
     function setFalseWorkspace() {
         vm.showWorkspace.productionPlan = false;
         vm.showWorkspace.orders = false;
         vm.showWorkspace.products = false;
-        vm.showWorkspace.resources = false;
+        vm.showWorkspace.resourceTypes = false;
     }
 
     function closeWorkspace() {
         vm.showWorkspace.productionPlan = true;
         vm.showWorkspace.orders = false;
         vm.showWorkspace.products = false;
-        vm.showWorkspace.resources = false;
+        vm.showWorkspace.resourceTypes = false;
     }
 
 
@@ -215,7 +215,7 @@ function mainController($document,
     }
 
     function spliceResources(resource) {
-        vm.resources.splice(vm.resources.indexOf(resource), 1);
+        vm.resourceTypes.splice(vm.resourceTypes.indexOf(resource), 1);
     }
 
     function fireError(error) {
@@ -248,7 +248,7 @@ function mainController($document,
 
     function dialogAddJob() {
         $mdDialog.show({
-            locals: {dataToPass: vm.resources},
+            locals: {dataToPass: vm.resourceTypes},
             controller: dialogsService.DialogController1,
             controllerAs: 'ctrl',
             templateUrl: 'html/dialogs/add_job.html',

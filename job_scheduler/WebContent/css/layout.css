@@ -133,13 +133,13 @@
 
 .js-button {
     height: 22px;
-    width: 22px;
+    padding: 2px;
     background-color: transparent;
     -webkit-border-radius: 2px;
     -moz-border-radius: 2px;
     border-radius: 2px;
     margin-right: 4px;
-    display: flex;
+    display:flex;
     align-items: center;
     justify-content: center;
 }
@@ -157,6 +157,10 @@
 .js-button:focus {
     outline: none;
     border: 0;
+}
+.js-button-label {
+    margin-left: 2px;
+    margin-right: 2px;
 }
 
 .js-toolbar-tools {

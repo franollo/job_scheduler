@@ -16,6 +16,11 @@ function productsController($mdDialog,
     vm.exists = exists;
     vm.isChecked = isChecked;
     vm.isIndeterminate = isIndeterminate;
+    vm.editProduct = editProduct
+    vm.removeProduct = removeProduct
+    vm.removeProducts = removeProducts
+    vm.newProduct = newProduct
+
     vm.products = [];
     vm.selectedProducts = [];
 
@@ -61,5 +66,21 @@ function productsController($mdDialog,
 
     function isIndeterminate() {
         return (vm.selectedProducts.length !== 0 && vm.selectedProducts.length !== vm.products.length );
+    }
+
+    function editProduct(product) {
+        console.log("EDIT");
+    }
+
+    function removeProduct(product) {
+        console.log("REMOVE ONE");
+    }
+
+    function removeProducts() {
+        console.log("REMOVE MANY");
+    }
+
+    function newProduct() {
+        console.log("NEW");
     }
 }

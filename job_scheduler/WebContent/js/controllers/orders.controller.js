@@ -21,6 +21,8 @@ function ordersController($document,
     vm.isIndeterminate = isIndeterminate;
     vm.editOrder = editOrder;
     vm.removeOrder = removeOrder;
+    vm.removeOrders = removeOrders;
+    vm.newOrder = newOrder;
     vm.extendedOrderId = 0;
     vm.orders = [];
     vm.selectedProducts = [];
@@ -28,7 +30,6 @@ function ordersController($document,
     dataService.getOrders()
         .then(putOrders)
         .catch(fireError);
-
 
     function putOrders(data) {
         vm.orders = data;
@@ -80,11 +81,20 @@ function ordersController($document,
     }
 
     function editOrder(order) {
+        console.log("EDIT");
         openDialogEditOrder(order);
     }
 
     function removeOrder(order) {
+        console.log("REMOVE ONE");
+    }
 
+    function removeOrders() {
+        console.log("REMOVE MANY");
+    }
+
+    function newOrder() {
+        console.log("NEW");
     }
 
     function openDialogEditOrder(order) {

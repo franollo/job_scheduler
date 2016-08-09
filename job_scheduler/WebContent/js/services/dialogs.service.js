@@ -38,36 +38,35 @@ function dialogsService(dataService) {
     }
 
 
-    this.newOrderController = function ($scope, $mdDialog, dataToPass) {
-        var parentThis = this;
-        this.jobs = dataToPass;
-        this.selected = [];
-        this.startTime = new Date();
-        this.startDate = new Date();
-        this.startTime.setMilliseconds(0);
-        this.startDate.setMilliseconds(0);
-        $scope.answer = function () {
-            var start = new Date(parentThis.startDate.getFullYear(), parentThis.startDate.getMonth(), parentThis.startDate.getDate(),
-                parentThis.startTime.getHours(), parentThis.startTime.getMinutes(), parentThis.startTime.getSeconds());
-            $scope.order.startDate = start;
-            $scope.order.endDate = start;
-            $scope.order.jobs = parentThis.selected;
-            $mdDialog.hide($scope.order);
+    this.newResourceTypeCtrl = function ($mdDialog) {
+        var vm = this;
+        vm.name = '';
+        vm.description = '';
+        vm.cancel = cancel;
+        vm.answer = answer;
+        function answer() {
+            $mdDialog.hide(new ResourceType(vm.name, vm.description));
         }
 
-        $scope.cancel = function () {
-            console.log('cancel');
+        function cancel() {
             $mdDialog.cancel();
         }
-        $scope.toggle = function (item, list) {
-            var idx = list.indexOf(item);
-            if (idx > -1) list.splice(idx, 1);
-            else list.push(item);
-        };
-        $scope.exists = function (item, list) {
-            return list.indexOf(item) > -1;
-        };
-    }
+    };
+
+    this.editResourceTypeCtrl = function ($mdDialog, resourceType) {
+        var vm = this;
+        vm.resourceType = {};
+        angular.copy(resourceType, vm.resourceType);
+        vm.cancel = cancel;
+        vm.answer = answer;
+        function answer() {
+            $mdDialog.hide(vm.resourceType);
+        }
+
+        function cancel() {
+            $mdDialog.cancel();
+        }
+    };
 
     this.addJobOrderController = function ($scope, $mdDialog, dataToPass) {
         var parentThis = this;

@@ -1,0 +1,44 @@
+<md-dialog>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Edit resource type</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="ctrl.cancel()">
+                    <i class="material-icons md-18">close</i>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <div layout="column">
+                    <div layout="row">
+                        <md-input-container flex>
+                            <label>Resource type name</label>
+                            <input type="text" ng-model="ctrl.resourceType.name"
+                                   ng-change=""
+                                   ng-model-options="{debounce: 750}">
+                        </md-input-container>
+                        <md-input-container flex>
+                            <label>Description</label>
+                            <input type="text" ng-model="ctrl.resourceType.description"
+                                   ng-change=""
+                                   ng-model-options="{debounce: 750}">
+                        </md-input-container>
+                    </div>
+                </div>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button class="md-raised md-accent" ng-click="ctrl.cancel()">
+                cancel
+            </md-button>
+            <md-button class="md-raised md-accent" ng-click="ctrl.answer()">
+                save
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

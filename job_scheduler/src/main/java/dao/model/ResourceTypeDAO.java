@@ -9,8 +9,8 @@ import java.util.List;
  * Created by Marcin Frankowski on 15.07.16.
  */
 public interface ResourceTypeDAO {
-    public void insert(ResourceType resourceType);
+    public ResourceType save(ResourceType resourceType);
     public void update(ResourceType resourceType);
-    public void remove(ResourceType resourceType);
+    public void remove(Integer id);
     public List<ResourceType> getUsersResourceTypes(User user);
 }

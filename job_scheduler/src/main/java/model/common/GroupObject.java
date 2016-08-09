@@ -16,6 +16,7 @@ public abstract class GroupObject {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(updatable = false)
     public Integer getId() {
         return id;
     }
@@ -24,7 +25,7 @@ public abstract class GroupObject {
         this.id = id;
     }
 
-    @Column(name = "GROUP_ID")
+    @Column(name = "GROUP_ID",  updatable = false)
     public Integer getGroupId() {
         return groupId;
     }
@@ -33,7 +34,7 @@ public abstract class GroupObject {
         this.groupId = groupId;
     }
 
-    @Column(name = "CREATED_ON")
+    @Column(name = "CREATED_ON", updatable = false)
     public LocalDateTime getCreatedOn() {
         return createdOn;
     }
