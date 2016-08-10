@@ -8,6 +8,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * @author Marcin Frankowski
  */
@@ -44,7 +46,7 @@ public class RemoveController {
     public @ResponseBody void item(@RequestBody Item item) throws ParseException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
-        userDAO.hasPermission(item, user);
+        userDAO.confirmPermission(Item.class, item.getId(), user);
         itemDAO.remove(item);
     }
 
@@ -52,7 +54,7 @@ public class RemoveController {
     public @ResponseBody void order(@RequestBody Order order) throws ParseException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
-        userDAO.hasPermission(order, user);
+        userDAO.confirmPermission(Order.class, order.getId(), user);
         orderDAO.remove(order);
     }
 
@@ -60,7 +62,7 @@ public class RemoveController {
     public @ResponseBody void product(@RequestBody Product product) throws ParseException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
-        userDAO.hasPermission(product, user);
+        userDAO.confirmPermission(Product.class, product.getId(), user);
         productDAO.remove(product);
     }
 
@@ -68,7 +70,7 @@ public class RemoveController {
     public @ResponseBody void productionPlan(@RequestBody ProductionPlan productionPlan) throws ParseException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
-        userDAO.hasPermission(productionPlan, user);
+        userDAO.confirmPermission(ProductionPlan.class, productionPlan.getId(), user);
         productionPlanDAO.remove(productionPlan);
     }
 
@@ -76,7 +78,7 @@ public class RemoveController {
     public @ResponseBody void productOperation(@RequestBody ProductOperation productOperation) throws ParseException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
-        userDAO.hasPermission(productOperation, user);
+        userDAO.confirmPermission(ProductOperation.class, productOperation.getId(), user);
         productOperationDAO.delete(productOperation);
     }
 
@@ -86,19 +88,39 @@ public class RemoveController {
         User user = userDAO.getUserByLogin(auth.getName());
         Resource resource = new Resource();
         resource.setId(resourceId);
-        userDAO.hasPermission(resource, user);
+        userDAO.confirmPermission(Resource.class, resourceId, user);
         resourceDAO.remove(resource);
         return resourceId;
     }
 
     @RequestMapping(value = "/resourcetype/{resourceTypeId}", method = RequestMethod.GET)
-    public @ResponseBody Integer resourcetype(@PathVariable int resourceTypeId) throws ParseException {
+    public @ResponseBody Integer resourceType(@PathVariable int resourceTypeId) throws ParseException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
         ResourceType resourceType = new ResourceType();
         resourceType.setId(resourceTypeId);
-        userDAO.hasPermission(resourceType, user);
+        userDAO.confirmPermission(ResourceType.class, resourceType.getId(), user);
         resourceTypeDAO.remove(resourceTypeId);
         return resourceTypeId;
     }
+
+    @RequestMapping(value = "/resources", method = RequestMethod.POST)
+    public @ResponseBody List<Integer> resources(@RequestBody List<Integer> resourceIds) throws ParseException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userDAO.getUserByLogin(auth.getName());
+        userDAO.confirmPermission(Resource.class, resourceIds, user);
+        resourceDAO.multipleRemove(resourceIds);
+        return resourceIds;
+    }
+
+    @RequestMapping(value = "/resourcetypes", method = RequestMethod.POST)
+    public @ResponseBody List<Integer> resourceTypes(@RequestBody List<Integer> resourceTypeIds) throws ParseException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userDAO.getUserByLogin(auth.getName());
+        userDAO.confirmPermission(ResourceType.class, resourceTypeIds, user);
+        resourceTypeDAO.multipleRemove(resourceTypeIds);
+        return resourceTypeIds;
+    }
+
+
 }

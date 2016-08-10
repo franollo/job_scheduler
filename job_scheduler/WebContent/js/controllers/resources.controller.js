@@ -29,7 +29,7 @@ function resourcesController($document,
     vm.extendResType = extendResType;
     vm.extendedResTypeId = 0;
     vm.resourceTypes = [];
-    vm.selectedProducts = [];
+    vm.selectedResources = [];
     vm.idToRemoveType = 0;
     vm.idToRemoveRes = 0;
 
@@ -48,33 +48,33 @@ function resourcesController($document,
     }
 
     function exists(item) {
-        return vm.selectedProducts.indexOf(item) > -1;
+        return vm.selectedResources.indexOf(item) > -1;
     }
 
     function toggleAll() {
-        if(vm.selectedProducts.length === vm.resourceTypes.length) {
-            vm.selectedProducts = [];
-        } else if (vm.selectedProducts.length === 0 || vm.selectedProducts.length > 0) {
-            vm.selectedProducts = vm.resourceTypes.slice(0);
+        if(vm.selectedResources.length === vm.resourceTypes.length) {
+            vm.selectedResources = [];
+        } else if (vm.selectedResources.length === 0 || vm.selectedResources.length > 0) {
+            vm.selectedResources = vm.resourceTypes.slice(0);
         }
     }
     
     function toggle(item) {
-        var idx = vm.selectedProducts.indexOf(item);
+        var idx = vm.selectedResources.indexOf(item);
         if(idx > -1) {
-            vm.selectedProducts.splice(idx, 1);
+            vm.selectedResources.splice(idx, 1);
         }
         else {
-            vm.selectedProducts.push(item);
+            vm.selectedResources.push(item);
         }
     }
 
     function isChecked() {
-        return vm.selectedProducts.length === vm.resourceTypes.length
+        return vm.selectedResources.length === vm.resourceTypes.length
     }
 
     function isIndeterminate() {
-        return (vm.selectedProducts.length !== 0 && vm.selectedProducts.length !== vm.resourceTypes.length );
+        return (vm.selectedResources.length !== 0 && vm.selectedResources.length !== vm.resourceTypes.length );
     }
 
     function editResourceType(resourceType) {
@@ -90,8 +90,8 @@ function resourcesController($document,
         openDialogDeleteTypeConfirm();
     }
 
-    function removeResourceTypes(order) {
-        console.log("REMOVE MANY TYPES");
+    function removeResourceTypes() {
+        openDialogDeleteMultTypeConfirm();
     }
 
     function removeResource(resource) {
@@ -177,6 +177,17 @@ function resourcesController($document,
         });
     }
 
+    function openDialogDeleteMultTypeConfirm() {
+        var confirm = $mdDialog.confirm()
+            .title('Do you want to delete selected resource types?')
+            .textContent('Related resources and products operations will be removed')
+            .ok('yes')
+            .cancel('cancel');
+        $mdDialog.show(confirm).then(function() {
+            removeHelperMultType();
+        });
+    }
+
     function openDialogDeleteResConfirm() {
         var confirm = $mdDialog.confirm()
             .title('Do you want to delete this resource?')
@@ -193,6 +204,16 @@ function resourcesController($document,
             .catch(fireError);
     }
 
+    function removeHelperMultType() {
+        var idsToRemove = [];
+        for(var i = 0; i < vm.selectedResources.length; i++) {
+            idsToRemove.push(vm.selectedResources[i].id)
+        }
+        dataService.removeResourceTypes(idsToRemove)
+            .then(cutResourceTypes)
+            .catch(fireError);
+    }
+
     function removeHelperResource() {
         dataService.removeResource(vm.idToRemoveRes)
             .then(cutResource)
@@ -201,7 +222,7 @@ function resourcesController($document,
 
     function addResource(data) {
         var index = vm.resourceTypes.map(function(e) {return e.id;}).indexOf(data.resourceTypeId);
-        if(index > 0) {
+        if(index >= 0) {
             vm.resourceTypes[index].resources.push(data);
         }
     }
@@ -212,22 +233,17 @@ function resourcesController($document,
 
     function updateResourceType(data) {
         var index = vm.resourceTypes.map(function(e) {return e.id;}).indexOf(data.id);
-        if(index > 0) {
+        if(index >= 0) {
             vm.resourceTypes[index] = data;
         }
     }
 
     function updateResource(data) {
-        console.log(data);
-        console.log(vm.resourceTypes);
         var index;
         for (var i = 0; i < vm.resourceTypes.length; i++) {
             index = vm.resourceTypes[i].resources.map(function (e) { return e.id;}).indexOf(data.id);
-            console.log(index);
-            if (index > 0) {
-                console.log(vm.resourceTypes[i].resources[index])
+            if (index >= 0) {
                 vm.resourceTypes[i].resources[index] = data;
-                console.log(vm.resourceTypes[i].resources[index])
                 break;
             }
         }
@@ -235,8 +251,19 @@ function resourcesController($document,
 
     function cutResourceType(data) {
         var index = vm.resourceTypes.map(function(e) {return e.id;}).indexOf(data);
-        if(index > 0) {
+        if(index >= 0) {
             vm.resourceTypes.splice(index, 1);
+            vm.idToRemoveType = 0;
+        }
+    }
+
+    function cutResourceTypes(data) {
+        for(var i = 0; i < data.length; i++) {
+            var index = vm.resourceTypes.map(function(e) {return e.id;}).indexOf(data[i]);
+            if(index >= 0) {
+                vm.resourceTypes.splice(index, 1);
+                vm.selectedResources = [];
+            }
         }
     }
 
@@ -244,8 +271,9 @@ function resourcesController($document,
         var index;
         for (var i = 0; i < vm.resourceTypes.length; i++) {
             index = vm.resourceTypes[i].resources.map(function(e) {return e.id;}).indexOf(data);
-            if(index > 0) {
+            if(index >= 0) {
                 vm.resourceTypes[i].resources.splice(index, 1);
+                vm.idToRemoveRes = 0;
                 break;
             }
         }

@@ -25,7 +25,7 @@ function ordersController($document,
     vm.newOrder = newOrder;
     vm.extendedOrderId = 0;
     vm.orders = [];
-    vm.selectedProducts = [];
+    vm.selectedResources = [];
 
     dataService.getOrders()
         .then(putOrders)
@@ -51,33 +51,33 @@ function ordersController($document,
     }
 
     function exists(item) {
-        return vm.selectedProducts.indexOf(item) > -1;
+        return vm.selectedResources.indexOf(item) > -1;
     }
 
     function toggleAll() {
-        if(vm.selectedProducts.length === vm.orders.length) {
-            vm.selectedProducts = [];
-        } else if (vm.selectedProducts.length === 0 || vm.selectedProducts.length > 0) {
-            vm.selectedProducts = vm.orders.slice(0);
+        if(vm.selectedResources.length === vm.orders.length) {
+            vm.selectedResources = [];
+        } else if (vm.selectedResources.length === 0 || vm.selectedResources.length > 0) {
+            vm.selectedResources = vm.orders.slice(0);
         }
     }
     
     function toggle(item) {
-        var idx = vm.selectedProducts.indexOf(item);
+        var idx = vm.selectedResources.indexOf(item);
         if(idx > -1) {
-            vm.selectedProducts.splice(idx, 1);
+            vm.selectedResources.splice(idx, 1);
         }
         else {
-            vm.selectedProducts.push(item);
+            vm.selectedResources.push(item);
         }
     }
 
     function isChecked() {
-        return vm.selectedProducts.length === vm.orders.length
+        return vm.selectedResources.length === vm.orders.length
     }
 
     function isIndeterminate() {
-        return (vm.selectedProducts.length !== 0 && vm.selectedProducts.length !== vm.orders.length );
+        return (vm.selectedResources.length !== 0 && vm.selectedResources.length !== vm.orders.length );
     }
 
     function editOrder(order) {

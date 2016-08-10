@@ -49,7 +49,7 @@ public class SaveController {
     public @ResponseBody void item(@RequestBody Item item) throws ParseException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
-        userDAO.hasPermission(item, user);
+        userDAO.confirmPermission(Item.class, item.getId(), user);
         itemDAO.insert(item);
     }
 
@@ -57,7 +57,7 @@ public class SaveController {
     public @ResponseBody void order(@RequestBody Order order) throws ParseException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
-        userDAO.hasPermission(order, user);
+        userDAO.confirmPermission(Order.class, order.getId(), user);
         orderDAO.insert(order);
     }
 
@@ -65,7 +65,7 @@ public class SaveController {
     public @ResponseBody void product(@RequestBody Product product) throws ParseException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
-        userDAO.hasPermission(product, user);
+        userDAO.confirmPermission(Product.class, product.getId(), user);
         productDAO.insert(product);
     }
 
@@ -73,7 +73,7 @@ public class SaveController {
     public @ResponseBody List<Item> productionPlan(@RequestBody ProductionPlan productionPlan) throws ParseException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
-        userDAO.hasPermission(productionPlan, user);
+        userDAO.confirmPermission(ProductionPlan.class, productionPlan.getId(), user);
         productionPlan.process();
         productionPlanDAO.insert(productionPlan);
         return new ArrayList<>(productionPlan.getItems());
@@ -83,7 +83,7 @@ public class SaveController {
     public @ResponseBody void productOperation(@RequestBody ProductOperation productOperation) throws ParseException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
-        userDAO.hasPermission(productOperation, user);
+        userDAO.confirmPermission(ProductOperation.class, productOperation.getId(), user);
         productOperationDAO.insert(productOperation);
     }
 
@@ -92,9 +92,7 @@ public class SaveController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
         resource.setGroupId(user.getGroupId());
-        if(resource.getId() != null) {
-            userDAO.hasPermission(resource, user);
-        }
+        userDAO.confirmPermission(Resource.class, resource.getId(), user);
         return resourceDAO.save(resource);
     }
 
@@ -103,9 +101,7 @@ public class SaveController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
         resourceType.setGroupId(user.getGroupId());
-        if(resourceType.getId() != null) {
-            userDAO.hasPermission(resourceType, user);
-        }
+        userDAO.confirmPermission(ResourceType.class, resourceType.getId(), user);
         return resourceTypeDAO.save(resourceType);
     }
 

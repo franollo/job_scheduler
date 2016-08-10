@@ -12,6 +12,8 @@ function dataService($http) {
     vm.saveItem = saveItem;
     vm.removeResource = removeResource;
     vm.removeResourceType = removeResourceType;
+    vm.removeResources = removeResources;
+    vm.removeResourceTypes = removeResourceTypes;
     vm.removeProductionPlan = removeProductionPlan;
     vm.removeProduct = removeProduct;
     vm.removeOrder = removeOrder;
@@ -53,6 +55,14 @@ function dataService($http) {
 
     function removeResourceType(id) {
         return get("remove/resourcetype/" + id);
+    }
+
+    function removeResources(ids) {
+        return post("remove/resources", ids);
+    }
+
+    function removeResourceTypes(ids) {
+        return post("remove/resourcetypes", ids);
     }
 
     function removeProductionPlan(productionPlan) {

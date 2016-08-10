@@ -9,7 +9,11 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.lang.reflect.Field;
+import java.util.List;
+import java.util.Queue;
 
 @Repository("userDAO")
 @Transactional(propagation = Propagation.REQUIRED)
@@ -29,27 +33,49 @@ public class JPAUserDAO extends JPADAO implements UserDAO {
     }
 
     @Override
-    public void hasPermission(GroupObject groupObject, User user) throws ObjectAuthorizationException {
-        if(groupObject.getId() == null) {
+    public void confirmPermission(Class<? extends GroupObject> objectClass, Integer idToCheck, User user) throws ObjectAuthorizationException {
+        if(idToCheck == null) {
             return;
         }
-        String className = groupObject.getClass().getSimpleName();
-        String queryString = "SELECT go.id " +
+        String className = objectClass.getSimpleName();
+        String queryString = "SELECT count(go.id) " +
                 "FROM " + className + " go " +
                 "WHERE go.id = :id " +
                 "AND go.groupId = :groupId";
-        TypedQuery<Integer> query = entityManager.createQuery(queryString, Integer.class);
-        try {
-            query.setParameter("id", groupObject.getId())
-                    .setParameter("groupId", user.getGroupId())
-                    .getSingleResult();
-        } catch (NoResultException e) {
+        Query query = entityManager.createQuery(queryString);
+        Object object = query.setParameter("id", idToCheck)
+                .setParameter("groupId", user.getGroupId()).getSingleResult();
+        if((long)object != 1) {
             throw new ObjectAuthorizationException("User [" +
                     user.getUsername() +
                     "] is not authorized to modify [" +
-                    className +
+                    className + "s" +
                     "] with [id] = " +
-                    groupObject.getId());
+                    idToCheck);
         }
     }
+
+    @Override
+    public void confirmPermission(Class<? extends GroupObject> objectClass, List<Integer> idsToCheck, User user) throws ObjectAuthorizationException {
+        if(idsToCheck.isEmpty() == true) {
+            return;
+        }
+        String className = objectClass.getSimpleName();
+        String queryString = "SELECT count(distinct go.id) " +
+                "FROM " + className + " go " +
+                "WHERE go.id in(:ids) " +
+                "AND go.groupId = :groupId";
+        Query query = entityManager.createQuery(queryString);
+        Object object = query.setParameter("ids", idsToCheck)
+                .setParameter("groupId", user.getGroupId()).getSingleResult();
+        if((long)object != (long)idsToCheck.size()) {
+            throw new ObjectAuthorizationException("User [" +
+                    user.getUsername() +
+                    "] is not authorized to modify [" +
+                    className + "s" +
+                    "] with [id] in (" +
+                    idsToCheck.toString() + ")");
+        }
+    }
+
 }

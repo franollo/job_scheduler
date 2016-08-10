@@ -207,8 +207,20 @@
     height: 35px !important;
 }
 
+.js-list {
+    position: absolute;
+    top: 65px;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+
 .exp-container {
     height: 48px;
+}
+
+.md-subheader ._md-subheader-inner {
+    padding: 0;
 }
 
 md-menu-bar md-menu {
@@ -244,8 +256,4 @@ md-datepicker {
 
 md-tooltip.md-content {
     background-color: rgba(70, 70, 70, 0.90);
-}
-
-md-checkbox {
-    margin-bottom: 0px;
 }

@@ -3,7 +3,6 @@ package main.java.controllers;
 import main.java.dao.model.*;
 import main.java.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.expression.ParseException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -57,7 +56,7 @@ public class GetController {
     public @ResponseBody ProductionPlan productionPlan(@PathVariable int productionPlanId) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
-        userDAO.hasPermission(new ProductionPlan(productionPlanId), user);
+        userDAO.confirmPermission(ProductionPlan.class, productionPlanId, user);
         return productionPlanDAO.getProductionPlan(productionPlanId);
     }
 

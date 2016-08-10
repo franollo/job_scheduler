@@ -22,7 +22,7 @@ function productsController($mdDialog,
     vm.newProduct = newProduct
 
     vm.products = [];
-    vm.selectedProducts = [];
+    vm.selectedResources = [];
 
     dataService.getProducts()
         .then(putProducts)
@@ -39,33 +39,33 @@ function productsController($mdDialog,
     }
 
     function exists(item) {
-        return vm.selectedProducts.indexOf(item) > -1;
+        return vm.selectedResources.indexOf(item) > -1;
     }
 
     function toggleAll() {
-        if(vm.selectedProducts.length === vm.products.length) {
-            vm.selectedProducts = [];
-        } else if (vm.selectedProducts.length === 0 || vm.selectedProducts.length > 0) {
-            vm.selectedProducts = vm.products.slice(0);
+        if(vm.selectedResources.length === vm.products.length) {
+            vm.selectedResources = [];
+        } else if (vm.selectedResources.length === 0 || vm.selectedResources.length > 0) {
+            vm.selectedResources = vm.products.slice(0);
         }
     }
     
     function toggle(item) {
-        var idx = vm.selectedProducts.indexOf(item);
+        var idx = vm.selectedResources.indexOf(item);
         if(idx > -1) {
-            vm.selectedProducts.splice(idx, 1);
+            vm.selectedResources.splice(idx, 1);
         }
         else {
-            vm.selectedProducts.push(item);
+            vm.selectedResources.push(item);
         }
     }
 
     function isChecked() {
-        return vm.selectedProducts.length === vm.products.length
+        return vm.selectedResources.length === vm.products.length
     }
 
     function isIndeterminate() {
-        return (vm.selectedProducts.length !== 0 && vm.selectedProducts.length !== vm.products.length );
+        return (vm.selectedResources.length !== 0 && vm.selectedResources.length !== vm.products.length );
     }
 
     function editProduct(product) {
