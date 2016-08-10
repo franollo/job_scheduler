@@ -181,8 +181,11 @@
 .md-button.md-fab.md-mini {
     width: 35px;
     height: 35px;
-    margin: 0 !important;
-    padding: 0 !important;
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-right: 6px;
+    margin-left: 0;
+    padding: 0;
 }
 
 .js-edit-buttons-toolbar {
@@ -221,6 +224,24 @@
 
 .md-subheader ._md-subheader-inner {
     padding: 0;
+}
+
+.md-subheader .md-subheader-inner {
+    padding: 0;
+}
+
+._md-subheader-wrapper._md-sticky-clone {
+    z-index: 21;
+}
+
+.md-subheader-wrapper ._md-sticky-clone {
+    z-index: 21;
+}
+
+
+
+md-list-item .md-list-item-inner>md-checkbox, md-list-item>md-checkbox {
+    margin-right: 15px;
 }
 
 md-menu-bar md-menu {

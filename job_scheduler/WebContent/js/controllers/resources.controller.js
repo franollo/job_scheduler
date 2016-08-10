@@ -33,6 +33,10 @@ function resourcesController($document,
     vm.idToRemoveType = 0;
     vm.idToRemoveRes = 0;
 
+    vm.doSth = function() {
+        console.log("STH");
+    };
+
     dataService.getResources()
         .then(putResources)
         .catch(fireError);

@@ -578,61 +578,55 @@
             </div>
             <md-divider></md-divider>
             <md-content class="js-list">
-                <md-list>
                     <md-subheader md-colors="{background: 'accent-200'}">
                         <md-list-item>
                             <md-checkbox aria-label="label"
-                                         ng-checked="resCtrl.isChecked()"
-                                         md-indeterminate="resCtrl.isIndeterminate()"
-                                         ng-click="resCtrl.toggleAll()">
+                                     ng-checked="resCtrl.isChecked()"
+                                     md-indeterminate="resCtrl.isIndeterminate()"
+                                     ng-click="resCtrl.toggleAll()">
                             </md-checkbox>
-                            <div flex="90"
-                                 layout='row'>
-                                <h4 class="no-margin" flex="30">Name</h4>
-                                <h4 class="no-margin" flex="50">Description</h4>
-                                <h4 class="no-margin" flex="10">Created</h4>
-                                <h4 class="no-margin" flex="10">Edited</h4>
+                            <div flex="85" layout="row">
+                                <h4 class="no-margin" flex="25">Name</h4>
+                                <h4 class="no-margin" flex="25">Description</h4>
+                                <h4 class="no-margin" flex="25">Created</h4>
+                                <h4 class="no-margin" flex="25">Edited</h4>
                             </div>
-                            <div flex></div>
                         </md-list-item>
                     </md-subheader>
                     <md-divider></md-divider>
-                        <md-list-item ng-repeat="resourceType in resCtrl.resourceTypes">
+                    <md-list>
+                        <md-list-item ng-repeat="resourceType in resCtrl.resourceTypes"
+                                        ng-click="resCtrl.doSth()">
                             <md-checkbox aria-label="label"
                                          ng-checked="resCtrl.exists(resourceType)"
                                          ng-click="resCtrl.toggle(resourceType)">
                             </md-checkbox>
-                            <div flex="90"
-                                 layout='row'>
-                                <div flex="30">
+                            <div flex="85" layout="row">
+                                <div flex="25">
                                     {{resourceType.name}}
                                 </div>
-                                <div flex="50">
+                                <div flex="25">
                                     {{resourceType.description}}
                                 </div>
-                                <div flex="10">
+                                <div flex="25">
                                     {{resourceType.createdOn | date : 'dd.MM.yy HH:mm'}}
                                 </div>
-                                <div flex="10">
+                                <div flex="25">
                                     {{resourceType.editedOn | date : 'dd.MM.yy HH:mm'}}
                                 </div>
                             </div>
-                            <div flex layout="row" style="padding: 0">
-                                <div>
-                                    <md-button class="md-fab md-primary md-mini"
-                                               ng-click="resCtrl.editResourceType(resourceType)">
-                                        <i class="material-icons md-24">mode_edit</i>
-                                    </md-button>
-                                    <md-button class="md-fab md-primary md-mini"
-                                               ng-click="resCtrl.removeResourceType(resourceType)">
-                                        <i class="material-icons md-24">delete</i>
-                                    </md-button>
-                                </div>
-                            </div>
+                            <span flex></span>
+                            <md-button class="md-fab md-primary md-mini"
+                                       ng-click="resCtrl.editResourceType(resourceType)">
+                                <i class="material-icons md-24">mode_edit</i>
+                            </md-button>
+                            <md-button class="md-fab md-primary md-mini"
+                                       ng-click="resCtrl.removeResourceType(resourceType)">
+                                <i class="material-icons md-24">delete</i>
+                            </md-button>
                             <md-divider></md-divider>
                         </md-list-item>
                     </md-list>
-
 
                         <!--<div class="scrollable">-->
                             <!--<div ng-repeat='resourceType in resCtrl.resourceTypes' layout="column">-->
