@@ -25,7 +25,7 @@ function ordersController($document,
     vm.newOrder = newOrder;
     vm.extendedOrderId = 0;
     vm.orders = [];
-    vm.selectedResources = [];
+    vm.selectedOrders = [];
 
     dataService.getOrders()
         .then(putOrders)
@@ -51,33 +51,33 @@ function ordersController($document,
     }
 
     function exists(item) {
-        return vm.selectedResources.indexOf(item) > -1;
+        return vm.selectedOrders.indexOf(item) > -1;
     }
 
     function toggleAll() {
-        if(vm.selectedResources.length === vm.orders.length) {
-            vm.selectedResources = [];
-        } else if (vm.selectedResources.length === 0 || vm.selectedResources.length > 0) {
-            vm.selectedResources = vm.orders.slice(0);
+        if(vm.selectedOrders.length === vm.orders.length) {
+            vm.selectedOrders = [];
+        } else if (vm.selectedOrders.length === 0 || vm.selectedOrders.length > 0) {
+            vm.selectedOrders = vm.orders.slice(0);
         }
     }
     
     function toggle(item) {
-        var idx = vm.selectedResources.indexOf(item);
+        var idx = vm.selectedOrders.indexOf(item);
         if(idx > -1) {
-            vm.selectedResources.splice(idx, 1);
+            vm.selectedOrders.splice(idx, 1);
         }
         else {
-            vm.selectedResources.push(item);
+            vm.selectedOrders.push(item);
         }
     }
 
     function isChecked() {
-        return vm.selectedResources.length === vm.orders.length
+        return vm.selectedOrders.length === vm.orders.length
     }
 
     function isIndeterminate() {
-        return (vm.selectedResources.length !== 0 && vm.selectedResources.length !== vm.orders.length );
+        return (vm.selectedOrders.length !== 0 && vm.selectedOrders.length !== vm.orders.length );
     }
 
     function editOrder(order) {
@@ -108,5 +108,17 @@ function ordersController($document,
         }).then(function (answer) {
 
         });
+    }
+
+    function extendOrder(id) {
+        var index = vm.orders.map(function(e) {return e.id;}).indexOf(id);
+        if(vm.orders[index].products.length > 0) {
+            if(vm.extendedOrderId != id) {
+                vm.extendedOrderId = id;
+            }
+            else {
+                vm.extendedOrderId = 0;
+            }
+        }
     }
 }

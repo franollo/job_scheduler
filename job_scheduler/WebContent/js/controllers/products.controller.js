@@ -20,9 +20,11 @@ function productsController($mdDialog,
     vm.removeProduct = removeProduct
     vm.removeProducts = removeProducts
     vm.newProduct = newProduct
+    vm.extendProduct = extendProduct;
 
     vm.products = [];
-    vm.selectedResources = [];
+    vm.selectedOrders = [];
+    vm.extendedProductId = 0;
 
     dataService.getProducts()
         .then(putProducts)
@@ -39,33 +41,33 @@ function productsController($mdDialog,
     }
 
     function exists(item) {
-        return vm.selectedResources.indexOf(item) > -1;
+        return vm.selectedOrders.indexOf(item) > -1;
     }
 
     function toggleAll() {
-        if(vm.selectedResources.length === vm.products.length) {
-            vm.selectedResources = [];
-        } else if (vm.selectedResources.length === 0 || vm.selectedResources.length > 0) {
-            vm.selectedResources = vm.products.slice(0);
+        if(vm.selectedOrders.length === vm.products.length) {
+            vm.selectedOrders = [];
+        } else if (vm.selectedOrders.length === 0 || vm.selectedOrders.length > 0) {
+            vm.selectedOrders = vm.products.slice(0);
         }
     }
     
     function toggle(item) {
-        var idx = vm.selectedResources.indexOf(item);
+        var idx = vm.selectedOrders.indexOf(item);
         if(idx > -1) {
-            vm.selectedResources.splice(idx, 1);
+            vm.selectedOrders.splice(idx, 1);
         }
         else {
-            vm.selectedResources.push(item);
+            vm.selectedOrders.push(item);
         }
     }
 
     function isChecked() {
-        return vm.selectedResources.length === vm.products.length
+        return vm.selectedOrders.length === vm.products.length
     }
 
     function isIndeterminate() {
-        return (vm.selectedResources.length !== 0 && vm.selectedResources.length !== vm.products.length );
+        return (vm.selectedOrders.length !== 0 && vm.selectedOrders.length !== vm.products.length );
     }
 
     function editProduct(product) {
@@ -82,5 +84,17 @@ function productsController($mdDialog,
 
     function newProduct() {
         console.log("NEW");
+    }
+
+    function extendProduct(id) {
+        var index = vm.products.map(function(e) {return e.id;}).indexOf(id);
+        if(vm.products[index].productOperations.length > 0) {
+            if(vm.extendedProductId != id) {
+                vm.extendedProductId = id;
+            }
+            else {
+                vm.extendedProductId = 0;
+            }
+        }
     }
 }
