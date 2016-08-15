@@ -32,7 +32,7 @@ public class JPAProductOperationDAOIntegrationTest {
         productOperation.setDuration(10);
         productOperation.setOperationNumber(1);
         productOperation.setProductId(1);
-        productOperation.setResourceTypeId(1);
+       // productOperation.setResourceId(1);
         productOperation.setGroupId(1);
         try {
             productOperationDAO.insert(productOperation);

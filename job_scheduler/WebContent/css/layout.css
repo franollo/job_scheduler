@@ -230,6 +230,16 @@
     bottom: 0;
 }
 
+.js-big-dialog {
+    max-height:850px;
+    min-width:1000px
+}
+
+.js-small-dialog {
+    max-height:850px;
+    min-width:600px
+}
+
 .exp-container {
     height: 48px;
 }

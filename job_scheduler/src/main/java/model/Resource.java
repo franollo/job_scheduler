@@ -15,6 +15,7 @@ public class Resource extends GroupObject {
     private Integer costPerHour;
     private Integer efficiency;
     private Set<Item> items;
+    private Set<ProductOperation> productOperations;
     private Integer resourceTypeId;
 
     @Column(name = "NAME")
@@ -62,6 +63,17 @@ public class Resource extends GroupObject {
 
     public void setItems(Set<Item> items) {
         this.items = items;
+    }
+
+    @JsonBackReference
+    @OneToMany(mappedBy="resource")
+   // @JoinColumn(name = "RESOURCE_ID", referencedColumnName = "RESOURCE_ID", updatable = false)
+    public Set<ProductOperation> getProductOperations() {
+        return productOperations;
+    }
+
+    public void setProductOperations(Set<ProductOperation> productOperations) {
+        this.productOperations = productOperations;
     }
 
     @Column(name = "RESOURCE_TYPE_ID", updatable = false)

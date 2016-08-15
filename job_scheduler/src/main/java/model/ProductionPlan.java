@@ -89,49 +89,49 @@ public class ProductionPlan extends GroupObject {
     }
 
     public void process() {
-        Map<Integer, LocalDateTime> endDates = new HashMap<>();
-        Map<Integer, LocalDateTime> endDates2 = new HashMap<>();
-        Map<Integer, LocalDateTime> startDates = new HashMap<>();
-        LocalDateTime dateTime = start;
-
-
-        Item item = new Item();
-        for(Order order : this.getOrders()) {
-            for(OrderProduct orderProduct : order.getOrderProducts()) {
-                for(ProductOperation productOperation : orderProduct.getProduct().getProductOperations()) {
-                    if(!endDates.containsKey(productOperation.getResourceId())) {
-                        endDates2.put(productOperation.getResourceId(), dateTime);
-                    }
-                }
-            }
-        }
-
-        for (Order order : this.getOrders()) {
-            for (OrderProduct orderProduct : order.getOrderProducts()) {
-                for (ProductOperation productOperation : orderProduct.getProduct().getProductOperations()) {
-                    startDates.put(productOperation.getResourceId(), dateTime);
-                    item.setResourceId(productOperation.getResourceId());
-                    item.setGroupId(this.getGroupId());
-                    item.setProductionPlanId(this.getId());
-                    item.setStart(dateTime);
-                    dateTime = dateTime.plus(productOperation.getDuration(), ChronoField.MILLI_OF_SECOND.getBaseUnit());
-                    endDates.put(productOperation.getResourceId(), dateTime);
-                    item.setEnd(dateTime);
-                    items.add(item);
-                }
-                long diff = Long.MAX_VALUE;
-                for (Map.Entry<Integer, LocalDateTime> entry : endDates2.entrySet()) {
-                    if (startDates.containsKey(entry.getKey())) {
-                        long diffTmp = Duration.between(startDates.get(entry.getKey()), entry.getValue()).toMillis();
-                        if (diffTmp < diff) {
-                            diff = diffTmp;
-                        }
-                    }
-                }
-                dateTime = dateTime.minusNanos(diff);
-                endDates2 = endDates;
-                startDates.clear();
-            }
-        }
+//        Map<Integer, LocalDateTime> endDates = new HashMap<>();
+//        Map<Integer, LocalDateTime> endDates2 = new HashMap<>();
+//        Map<Integer, LocalDateTime> startDates = new HashMap<>();
+//        LocalDateTime dateTime = start;
+//
+//
+//        Item item = new Item();
+//        for(Order order : this.getOrders()) {
+//            for(OrderProduct orderProduct : order.getOrderProducts()) {
+//                for(ProductOperation productOperation : orderProduct.getProduct().getProductOperations()) {
+//                    if(!endDates.containsKey(productOperation.getResourceId())) {
+//                        endDates2.put(productOperation.getResourceId(), dateTime);
+//                    }
+//                }
+//            }
+//        }
+//
+//        for (Order order : this.getOrders()) {
+//            for (OrderProduct orderProduct : order.getOrderProducts()) {
+//                for (ProductOperation productOperation : orderProduct.getProduct().getProductOperations()) {
+//                    startDates.put(productOperation.getResourceId(), dateTime);
+//                    item.setResourceId(productOperation.getResourceId());
+//                    item.setGroupId(this.getGroupId());
+//                    item.setProductionPlanId(this.getId());
+//                    item.setStart(dateTime);
+//                    dateTime = dateTime.plus(productOperation.getDuration(), ChronoField.MILLI_OF_SECOND.getBaseUnit());
+//                    endDates.put(productOperation.getResourceId(), dateTime);
+//                    item.setEnd(dateTime);
+//                    items.add(item);
+//                }
+//                long diff = Long.MAX_VALUE;
+//                for (Map.Entry<Integer, LocalDateTime> entry : endDates2.entrySet()) {
+//                    if (startDates.containsKey(entry.getKey())) {
+//                        long diffTmp = Duration.between(startDates.get(entry.getKey()), entry.getValue()).toMillis();
+//                        if (diffTmp < diff) {
+//                            diff = diffTmp;
+//                        }
+//                    }
+//                }
+//                dateTime = dateTime.minusNanos(diff);
+//                endDates2 = endDates;
+//                startDates.clear();
+//            }
+//        }
     }
 }

@@ -71,7 +71,7 @@ function productsController($mdDialog,
     }
 
     function editProduct(product) {
-        console.log("EDIT");
+        openDialogEditProduct(mainController.resourceTypes, product);
     }
 
     function removeProduct(product) {
@@ -83,7 +83,12 @@ function productsController($mdDialog,
     }
 
     function newProduct() {
-        console.log("NEW");
+        openDialogNewProduct(mainController.resourceTypes);
+    }
+
+    function addProduct(data) {
+        console.log(data);
+        vm.products.push(data);
     }
 
     function extendProduct(id) {
@@ -96,5 +101,37 @@ function productsController($mdDialog,
                 vm.extendedProductId = 0;
             }
         }
+    }
+
+    function openDialogNewProduct(resourceTypes) {
+        $mdDialog.show({
+            locals: {resourceTypes: resourceTypes},
+            controller: dialogsService.newProductCtrl,
+            controllerAs: 'ctrl',
+            templateUrl: 'html/dialogs/new_product.html',
+            parent: angular.element(document.body),
+            clickOutsideToClose: true
+        }).then(function (answer) {
+            console.log(answer);
+            dataService.saveProduct(answer)
+                .then(addProduct)
+                .catch(fireError);
+        });
+    }
+
+    function openDialogEditProduct(resourceTypes, product) {
+        $mdDialog.show({
+            locals: {resourceTypes: resourceTypes, product: product},
+            controller: dialogsService.editProductCtrl,
+            controllerAs: 'ctrl',
+            templateUrl: 'html/dialogs/edit_product.html',
+            parent: angular.element(document.body),
+            clickOutsideToClose: true
+        }).then(function (answer) {
+            // console.log(answer);
+            // dataService.saveProduct(answer)
+            //     .then(addProduct)
+            //     .catch(fireError);
+        });
     }
 }

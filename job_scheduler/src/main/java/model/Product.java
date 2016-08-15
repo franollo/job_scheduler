@@ -66,7 +66,7 @@ public class Product extends GroupObject {
     }
 
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")
     public Set<ProductOperation> getProductOperations() {
         return productOperations;

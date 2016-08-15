@@ -14,7 +14,7 @@ import java.util.Set;
 public class ResourceType extends GroupObject {
     private String name;
     private String description;
-    private Set<ProductOperation> productOperations;
+
     private Set<Resource> resources;
 
     @Column(name = "NAME")
@@ -33,17 +33,6 @@ public class ResourceType extends GroupObject {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    @JsonBackReference
-    @OneToMany
-    @JoinColumn(name = "RESOURCE_TYPE_ID", referencedColumnName = "RESOURCE_TYPE_ID", updatable = false)
-    public Set<ProductOperation> getProductOperations() {
-        return productOperations;
-    }
-
-    public void setProductOperations(Set<ProductOperation> productOperations) {
-        this.productOperations = productOperations;
     }
 
     @LazyCollection(LazyCollectionOption.FALSE)

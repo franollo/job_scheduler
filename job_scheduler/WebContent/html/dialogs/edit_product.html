@@ -1,0 +1,134 @@
+<md-dialog>
+    <md-toolbar>
+        <div class="md-toolbar-tools">
+            <h2>Edit product</h2>
+            <span flex></span>
+            <md-button class="md-icon-button" ng-click="ctrl.cancel()">
+                <i class="material-icons md-18">close</i>
+            </md-button>
+        </div>
+    </md-toolbar>
+
+    <md-dialog-content ng-class="{true: 'js-small-dialog', false: 'js-big-dialog'}[ctrl.style=='standard']">
+        <md-tabs md-dynamic-height md-border-bottom>
+            <md-tab label="product properties" md-on-select="ctrl.setStyle('standard')">
+                <div flex layout="row" layout-padding>
+                    <md-content>
+                        <div layout="column">
+                            <div layout="row">
+                                <md-input-container flex>
+                                    <label>Product name</label>
+                                    <input type="text" ng-model="ctrl.product.name"
+                                           ng-model-options="{debounce: 750}">
+                                </md-input-container>
+                                <md-input-container flex>
+                                    <label>Description</label>
+                                    <input type="text" ng-model="ctrl.product.description"
+                                           ng-model-options="{debounce: 750}">
+                                </md-input-container>
+                            </div>
+                            <div layout="row">
+                                <md-input-container flex>
+                                    <label>Attribute 1</label>
+                                    <input type="text" ng-model="ctrl.product.attribute1"
+                                           ng-model-options="{debounce: 750}">
+                                </md-input-container>
+                                <md-input-container flex>
+                                    <label>Attribute 2</label>
+                                    <input type="text" ng-model="ctrl.product.attribute2"
+                                           ng-model-options="{debounce: 750}">
+                                </md-input-container>
+                                <md-input-container flex>
+                                    <label>Attribute 3</label>
+                                    <input type="text" ng-model="ctrl.product.attribute3"
+                                           ng-model-options="{debounce: 750}">
+                                </md-input-container>
+                            </div>
+                            <md-list-item>
+                                <p> Synchronous operations </p>
+                                <md-checkbox class="md-secondary" ng-model="ctrl.synchronous"></md-checkbox>
+                            </md-list-item>
+                        </div>
+                    </md-content>
+                </div>
+            </md-tab>
+            <md-tab label="product operations" md-on-select="ctrl.setStyle('big')">
+                <md-content layout="column">
+                    <md-subheader>
+                        <div layout="column">
+                            <div class="js-side-padding"
+                                 layout="row"
+                                 md-colors="{background: 'accent-200'}">
+                                <h4 class="js-margin-16" flex="20">Name</h4>
+                                <h4 class="js-margin-16" flex="40">Description</h4>
+                                <h4 class="js-margin-16" flex="10">Duration</h4>
+                                <h4 class="js-margin-16" flex="10">Preparation</h4>
+                                <h4 class="js-margin-16" flex="20">Resource</h4>
+                                <span style="width: 40px"></span>
+                            </div>
+                            <md-divider></md-divider>
+                            <div class="js-side-padding"
+                                 layout="row"
+                                 md-colors="{background: 'primary-200'}">
+                                <input style="border: 0; background: transparent" type="text" ng-model="ctrl.name" flex="20"
+                                       ng-model-options="{debounce: 750}">
+                                <input style="border: 0; background: transparent" type="text" ng-model="ctrl.description" flex="40"
+                                       ng-model-options="{debounce: 750}">
+                                <input style="border: 0; background: transparent; min-width: 60px" type="text" step="1" size="8" ng-model="ctrl.duration" flex="10"
+                                       ng-model-options="{debounce: 750}">
+                                <input style="border: 0; background: transparent; min-width: 60px" type="text" step="1" size="8" ng-model="ctrl.prepDuration" flex="10"
+                                       ng-model-options="{debounce: 750}">
+                                <md-select ng-model="ctrl.resource" flex="20" style="margin: 0">
+                                    <div ng-repeat="resourceType in ctrl.resourceTypes">
+                                        <md-option ng-value="resource"
+                                                   ng-repeat="resource in resourceType.resources">
+                                            {{resource.name}}
+                                        </md-option>
+                                    </div>
+                                </md-select>
+                                <md-button class="md-icon-button" ng-click="ctrl.addProductOperation()">
+                                    <md-icon class="material-icons md-24" >add</md-icon>
+                                </md-button>
+                            </div>
+                        </div>
+                    </md-subheader>
+                    <md-divider></md-divider>
+                    <div ng-repeat="productOperation in ctrl.product.productOperations"
+                         layout="column">
+                        <div class="js-side-padding" layout="row" layout-align="start center">
+                            <div flex="20">
+                                {{productOperation.name}}
+                            </div>
+                            <div flex="40">
+                                {{productOperation.description}}
+                            </div>
+                            <div flex="10">
+                                {{productOperation.duration}}
+                            </div>
+                            <div flex="10">
+                                {{productOperation.preparationDuration}}
+                            </div>
+                            <div flex="20">
+                                {{productOperation.resource.name}}
+                            </div>
+                            <md-button class="md-icon-button" ng-click="ctrl.removeProductOperation(productOperation)">
+                                <md-icon class="material-icons md-24" >remove</md-icon>
+                            </md-button>
+                        </div>
+                        <md-divider></md-divider>
+                    </div>
+                </md-content>
+            </md-tab>
+        </md-tabs>
+        <md-divider></md-divider>
+    </md-dialog-content>
+    <md-dialog-actions layout="row">
+        <span flex></span>
+        <md-button class="md-primary" ng-click="ctrl.cancel()">
+            cancel
+        </md-button>
+        <md-button class="md-primary" ng-click="ctrl.answer()">
+            save
+        </md-button>
+    </md-dialog-actions>
+</md-dialog>

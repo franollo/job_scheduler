@@ -62,11 +62,12 @@ public class SaveController {
     }
 
     @RequestMapping(value = "/product", method = RequestMethod.POST)
-    public @ResponseBody void product(@RequestBody Product product) throws ParseException {
+    public @ResponseBody Product product(@RequestBody Product product) throws ParseException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
         userDAO.confirmPermission(Product.class, product.getId(), user);
-        productDAO.insert(product);
+        product.setGroupId(user.getGroupId());
+        return productDAO.save(product);
     }
 
     @RequestMapping(value = "/productionplan", method = RequestMethod.POST)
@@ -275,7 +276,7 @@ public class SaveController {
         productOperation.setName("test");
         productOperation.setDuration(10);
         productOperation.setProductId(1);
-        productOperation.setResourceTypeId(1);
+        //productOperation.setResourceId(1);
         productOperation.setGroupId(1);
         //productOperationDAO.save(productOperation);
     }
