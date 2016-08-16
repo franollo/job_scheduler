@@ -131,7 +131,7 @@ public class SaveController {
         productOperation.setDescription("test");
         productOperation.setName("test");
         //productOperation.setDuration(10);
-        productOperation.setProductId(1);
+        //productOperation.setProductId(1);
         //productOperation.setResourceId(1);
         productOperation.setGroupId(1);
         //productOperationDAO.save(productOperation);

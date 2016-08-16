@@ -93,6 +93,8 @@ function dialogsService(dataService) {
         vm.addProductOperation = addProductOperation;
         vm.setStyle = setStyle;
         vm.findResource = findResource;
+        vm.moveUp = moveUp;
+        vm.moveDown = moveDown;
 
         function setStyle(style) {
             vm.style = style;
@@ -108,7 +110,14 @@ function dialogsService(dataService) {
         }
         
         function answer() {
-            $mdDialog.hide(new Product(vm.productName, vm.productDescription, vm.productAttr1, vm.productAttr2, vm.productAttr3, vm.productOperations));
+            var product = new Product(
+                vm.productName,
+                vm.productDescription,
+                vm.productAttr1,
+                vm.productAttr2,
+                vm.productAttr3,
+                vm.productOperations);
+            $mdDialog.hide(JSON.parse(angular.toJson(product)));
         }
 
         function cancel() {
@@ -142,6 +151,8 @@ function dialogsService(dataService) {
         vm.removeProductOperation = removeProductOperation;
         vm.setStyle = setStyle;
         vm.findResource = findResource;
+        vm.moveUp = moveUp;
+        vm.moveDown = moveDown;
 
         function setStyle(style) {
             vm.style = style;
@@ -173,9 +184,42 @@ function dialogsService(dataService) {
             }
         }
 
+        function moveUp(item) {
+            var index = vm.product.productOperations.map(function(e) {return e.$$hashKey;}).indexOf(item.$$hashKey);
+            if(index <= 0) {
+                return;
+            }
+            else {
+                var operation = vm.product.productOperations[index-1];
+                vm.product.productOperations[index-1] = vm.product.productOperations[index];
+                vm.product.productOperations[index] = operation;
+            }
+        }
+
+        function moveDown(item) {
+            var index = vm.product.productOperations.map(function(e) {return e.$$hashKey;}).indexOf(item.$$hashKey);
+            if(index < 0 || index == vm.product.productOperations.length-1) {
+                return;
+            }
+            else {
+                var operation = vm.product.productOperations[index+1];
+                vm.product.productOperations[index+1] = vm.product.productOperations[index];
+                vm.product.productOperations[index] = operation;
+            }
+        }
+
         function answer() {
-            console.log(JSON.parse(angular.toJson(vm.product)));
-            $mdDialog.hide(JSON.parse(angular.toJson(vm.product)));
+            var product = new Product(
+                vm.product.name,
+                vm.product.description,
+                vm.product.attribute1,
+                vm.product.attribute3,
+                vm.product.attribute3,
+                vm.product.productOperations)
+            product.setId(vm.product.id);
+            product.setCreatedOn(vm.product.createdOn);
+            product.setEditedOn(vm.product.editedOn);
+            $mdDialog.hide(JSON.parse(angular.toJson(product)));
         }
 
         function cancel() {

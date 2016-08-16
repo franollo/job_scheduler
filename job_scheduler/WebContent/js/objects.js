@@ -30,7 +30,20 @@ function Product(name, description, attribute1, attribute2, attribute3, productO
     this.attribute2 = attribute2;
     this.attribute3 = attribute3;
     this.productOperations = productOperations;
-    productOperations.forEach(function (productOperation) {
-        delete productOperation.$$hashKey;
-    });
+    this.id = null;
+    this.createdOn = null;
+    this.editedOn = null;
+    for(var i = 0; i < productOperations.length; i++) {
+        productOperations[i].operationNumber = i;
+    }
+    this.setId = function(id) {
+        this.id = id;
+    };
+    this.setCreatedOn = function(createdOn) {
+        this.createdOn = createdOn;
+    };
+    this.setEditedOn = function(editedOn) {
+        this.editedOn = editedOn;
+    };
 }
+

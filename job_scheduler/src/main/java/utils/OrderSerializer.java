@@ -30,8 +30,6 @@ public class OrderSerializer extends StdSerializer<Order> {
             jsonGenerator.writeObjectField("dueDate", order.getDueDate());
             jsonGenerator.writeObjectField("createdOn", order.getCreatedOn());
             jsonGenerator.writeObjectField("editedOn", order.getEditedOn());
-            jsonGenerator.writeObjectField("productionPlanId", order.getProductionPlanId());
-            jsonGenerator.writeObjectField("groupId", order.getGroupId());
             jsonGenerator.writeArrayFieldStart("products");
             for(OrderProduct orderProduct : order.getOrderProducts()) {
                 jsonGenerator.writeStartObject();
@@ -44,7 +42,6 @@ public class OrderSerializer extends StdSerializer<Order> {
                     jsonGenerator.writeObjectField("amount", orderProduct.getAmount());
                     jsonGenerator.writeObjectField("createdOn", orderProduct.getProduct().getCreatedOn());
                     jsonGenerator.writeObjectField("editedOn", orderProduct.getProduct().getEditedOn());
-                    jsonGenerator.writeObjectField("groupId", orderProduct.getProduct().getGroupId());
                 jsonGenerator.writeEndObject();
             }
             jsonGenerator.writeEndArray();

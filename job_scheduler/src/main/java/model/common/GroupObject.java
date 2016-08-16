@@ -1,5 +1,7 @@
 package main.java.model.common;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -25,6 +27,7 @@ public abstract class GroupObject {
         this.id = id;
     }
 
+    @JsonIgnore
     @Column(name = "GROUP_ID",  updatable = false)
     public Integer getGroupId() {
         return groupId;

@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -23,17 +25,7 @@ import java.util.Set;
 public class JPAProductDAO extends JPADAO implements ProductDAO {
     @Override
     public Product save(Product product) {
-        Set<ProductOperation> productOperations = product.getProductOperations();
-        product.setProductOperations(null);
-        Product mergeProduct = entityManager.merge(product);
-        for(ProductOperation productOperation : productOperations) {
-            if(productOperation.getId() == null) {
-                productOperation.setProductId(mergeProduct.getId());
-                entityManager.merge(productOperation);
-            }
-        }
-        mergeProduct.setProductOperations(productOperations);
-        return mergeProduct;
+        return entityManager.merge(product);
     }
 
     @Override
@@ -53,7 +45,16 @@ public class JPAProductDAO extends JPADAO implements ProductDAO {
                 "where u.username = :username";
         TypedQuery<Product> query = entityManager.createQuery(queryString, Product.class);
         try {
-            return query.setParameter("username", user.getUsername()).getResultList();
+            List<Product> products = query.setParameter("username", user.getUsername()).getResultList();
+            for(Product product : products) {
+                Collections.sort(product.getProductOperations(), new Comparator<ProductOperation>() {
+                    @Override
+                    public int compare(ProductOperation o1, ProductOperation o2) {
+                        return o1.getOperationNumber() - o2.getOperationNumber();
+                    }
+                });
+            }
+            return products;
         } catch (NoResultException e) {
             return null;
         }

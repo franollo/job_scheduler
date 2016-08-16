@@ -1,6 +1,5 @@
 package main.java.model;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import main.java.model.common.GroupObject;
 
 import javax.persistence.*;
@@ -19,7 +18,6 @@ public class ProductOperation extends GroupObject {
     private Duration duration;
     private Duration preparationDuration;
     private Integer resourceId;
-    private Integer productId;
 
     @Column(name = "OPERATION_NUMBER")
     public Integer getOperationNumber() {
@@ -73,15 +71,6 @@ public class ProductOperation extends GroupObject {
 
     public void setResourceId(Integer resourceId) {
         this.resourceId = resourceId;
-    }
-
-    @Column(name = "PRODUCT_ID")
-    public Integer getProductId() {
-        return productId;
-    }
-
-    public void setProductId(Integer productId) {
-        this.productId = productId;
     }
 }
 

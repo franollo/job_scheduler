@@ -6,6 +6,7 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -17,7 +18,7 @@ public class Product extends GroupObject {
     private String attribute1;
     private String attribute2;
     private String attribute3;
-    private Set<ProductOperation> productOperations;
+    private List<ProductOperation> productOperations;
     private Set<OrderProduct> orderProducts;
 
     @Column(name = "NAME")
@@ -66,13 +67,13 @@ public class Product extends GroupObject {
     }
 
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")
-    public Set<ProductOperation> getProductOperations() {
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "PRODUCT_ID", nullable = false)
+    public List<ProductOperation> getProductOperations() {
         return productOperations;
     }
 
-    public void setProductOperations(Set<ProductOperation> productOperations) {
+    public void setProductOperations(List<ProductOperation> productOperations) {
         this.productOperations = productOperations;
     }
 
