@@ -91,6 +91,13 @@ function productsController($mdDialog,
         vm.products.push(data);
     }
 
+    function replaceProdut(data) {
+        var index = vm.products.map(function(e) {return e.id;}).indexOf(data.id);
+        if(index >= 0) {
+            vm.products[index] = data;
+        }
+    }
+
     function extendProduct(id) {
         var index = vm.products.map(function(e) {return e.id;}).indexOf(id);
         if(vm.products[index].productOperations.length > 0) {
@@ -112,7 +119,6 @@ function productsController($mdDialog,
             parent: angular.element(document.body),
             clickOutsideToClose: true
         }).then(function (answer) {
-            console.log(answer);
             dataService.saveProduct(answer)
                 .then(addProduct)
                 .catch(fireError);
@@ -128,10 +134,9 @@ function productsController($mdDialog,
             parent: angular.element(document.body),
             clickOutsideToClose: true
         }).then(function (answer) {
-            // console.log(answer);
-            // dataService.saveProduct(answer)
-            //     .then(addProduct)
-            //     .catch(fireError);
+            dataService.saveProduct(answer)
+                .then(replaceProdut)
+                .catch(fireError);
         });
     }
 }

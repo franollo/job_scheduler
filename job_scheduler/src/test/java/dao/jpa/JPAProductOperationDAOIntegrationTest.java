@@ -1,5 +1,6 @@
 package test.java.dao.jpa;
 
+import main.java.dao.model.ProductDAO;
 import main.java.dao.model.ProductOperationDAO;
 import main.java.model.*;
 import org.hibernate.exception.GenericJDBCException;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Set;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
@@ -22,24 +25,20 @@ import static org.junit.Assert.assertTrue;
 @Transactional
 public class JPAProductOperationDAOIntegrationTest {
     @Autowired
-    private ProductOperationDAO productOperationDAO;
+    private ProductDAO productDAO;
 
     @Test
     public void performTest() {
-        ProductOperation productOperation = new ProductOperation();
-        productOperation.setName("test");
-        productOperation.setDescription("test");
-        productOperation.setDuration(10);
-        productOperation.setOperationNumber(1);
-        productOperation.setProductId(1);
-       // productOperation.setResourceId(1);
-        productOperation.setGroupId(1);
-        try {
-            productOperationDAO.insert(productOperation);
-        }
-        catch (GenericJDBCException e) {
-            System.out.println("GOTCHA!");
-        }
+        Product product = new Product();
+        product.setName("unit_test");
+        product.setGroupId(1);
+        Set<ProductOperation> productOperationSet;
+        ProductOperation po1 = new ProductOperation();
+        ProductOperation po2 = new ProductOperation();
+        po1.setName("unit_test_po1");
+        po2.setName("unit_test_po2");
+//        productOperationSet.add(po1);
+//        productOperationSet.add(po2);
 //
 //        ProductOperation insertedPO = productOperationDAO.find(productOperationDAO.save(productOperation));
 //        assertNotNull(insertedPO.getId());

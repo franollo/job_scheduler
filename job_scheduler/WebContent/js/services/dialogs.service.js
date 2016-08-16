@@ -92,13 +92,14 @@ function dialogsService(dataService) {
         vm.answer = answer;
         vm.addProductOperation = addProductOperation;
         vm.setStyle = setStyle;
+        vm.findResource = findResource;
 
         function setStyle(style) {
             vm.style = style;
         }
 
         function addProductOperation() {
-            vm.productOperations.push(new ProductOperation(vm.name, vm.description, vm.duration, vm.prepDuration, vm.resource));
+            vm.productOperations.push(new ProductOperation(vm.name, vm.description, vm.duration, vm.prepDuration, vm.resource.id));
             vm.name = '';
             vm.description = '';
             vm.duration = '00:00:00';
@@ -113,12 +114,22 @@ function dialogsService(dataService) {
         function cancel() {
             $mdDialog.cancel();
         }
+
+        function findResource(id) {
+            for (var i = 0; i < vm.resourceTypes.length; i++) {
+                var index = vm.resourceTypes[i].resources.map(function(e) {return e.id;}).indexOf(id);
+                if(index >= 0) {
+                    return vm.resourceTypes[i].resources[index];
+                }
+            }
+        }
     };
 
     this.editProductCtrl = function ($mdDialog, resourceTypes, product) {
         var vm = this;
         vm.resourceTypes = resourceTypes;
-        vm.product = product;
+        vm.product = {};
+        angular.copy(product, vm.product);
         vm.style = 'standard';
         vm.name = '';
         vm.description = '';
@@ -130,6 +141,7 @@ function dialogsService(dataService) {
         vm.addProductOperation = addProductOperation;
         vm.removeProductOperation = removeProductOperation;
         vm.setStyle = setStyle;
+        vm.findResource = findResource;
 
         function setStyle(style) {
             vm.style = style;
@@ -143,7 +155,7 @@ function dialogsService(dataService) {
         }
 
         function addProductOperation() {
-            vm.product.productOperations.push(new ProductOperation(vm.name, vm.description, vm.duration, vm.prepDuration, vm.resource));
+            vm.product.productOperations.push(new ProductOperation(vm.name, vm.description, vm.duration, vm.prepDuration, vm.resource.id));
             console.log(vm.product.productOperations);
             vm.name = '';
             vm.description = '';
@@ -152,50 +164,18 @@ function dialogsService(dataService) {
             vm.resource = {};
         }
 
-        function answer() {
-            vm.product.productOperations.forEach(function (productOperation) {
-                productOperation.resourceId = productOperation.resource.id;
-                delete productOperation.resource;
-                delete productOperation.$$hashKey;
-                switch (productOperation.duration.length) {
-                    case 2:
-                        productOperation.duration = Number(productOperation.duration);
-                        break;
-                    case 5:
-                        var seconds = Number(productOperation.duration.slice(3, 5));
-                        var minutes = Number(productOperation.duration.slice(0, 2));
-                        productOperation.duration = seconds + 60 * minutes;
-                        break;
-                    case 8:
-                        var seconds = Number(productOperation.duration.slice(6, 8));
-                        var minutes = Number(productOperation.duration.slice(3, 5));
-                        var hours = Number(productOperation.duration.slice(0, 2));
-                        productOperation.duration = seconds + 60 * minutes + 360 * hours;
-                        break;
-                    default:
-                        productOperation.duration = 0;
+        function findResource(id) {
+            for (var i = 0; i < vm.resourceTypes.length; i++) {
+                var index = vm.resourceTypes[i].resources.map(function(e) {return e.id;}).indexOf(id);
+                if(index >= 0) {
+                    return vm.resourceTypes[i].resources[index];
                 }
+            }
+        }
 
-                switch (productOperation.preparationDuration.length) {
-                    case 2:
-                        productOperation.preparationDuration = Number(productOperation.preparationDuration);
-                        break;
-                    case 5:
-                        var seconds = Number(productOperation.preparationDuration.slice(3, 5));
-                        var minutes = Number(productOperation.preparationDuration.slice(0, 2));
-                        productOperation.preparationDuration = seconds + 60 * minutes;
-                        break;
-                    case 8:
-                        var seconds = Number(productOperation.preparationDuration.slice(6, 8));
-                        var minutes = Number(productOperation.preparationDuration.slice(3, 5));
-                        var hours = Number(productOperation.preparationDuration.slice(0, 2));
-                        productOperation.preparationDuration = seconds + 60 * minutes + 360 * hours;
-                        break;
-                    default:
-                        productOperation.preparationDuration = 0;
-                }
-            });
-            $mdDialog.hide(vm.product);
+        function answer() {
+            console.log(JSON.parse(angular.toJson(vm.product)));
+            $mdDialog.hide(JSON.parse(angular.toJson(vm.product)));
         }
 
         function cancel() {

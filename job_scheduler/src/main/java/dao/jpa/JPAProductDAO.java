@@ -3,6 +3,7 @@ package main.java.dao.jpa;
 import main.java.dao.model.ProductDAO;
 import main.java.model.Product;
 import main.java.model.ProductOperation;
+import main.java.model.Resource;
 import main.java.model.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -26,8 +27,10 @@ public class JPAProductDAO extends JPADAO implements ProductDAO {
         product.setProductOperations(null);
         Product mergeProduct = entityManager.merge(product);
         for(ProductOperation productOperation : productOperations) {
-            productOperation.setProductId(mergeProduct.getId());
-            productOperation.setGroupId(mergeProduct.getGroupId());
+            if(productOperation.getId() == null) {
+                productOperation.setProductId(mergeProduct.getId());
+                entityManager.merge(productOperation);
+            }
         }
         mergeProduct.setProductOperations(productOperations);
         return mergeProduct;

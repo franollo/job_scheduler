@@ -109,7 +109,7 @@
                                 {{productOperation.preparationDuration}}
                             </div>
                             <div flex="20">
-                                {{productOperation.resource.name}}
+                                {{ctrl.findResource(productOperation.resourceId).name}}
                             </div>
                             <md-button class="md-icon-button" ng-click="resCtrl.removeResource(resource)">
                                 <md-icon class="material-icons md-24" >remove</md-icon>

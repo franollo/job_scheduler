@@ -1,6 +1,8 @@
 package main.java.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import main.java.model.common.GroupObject;
 
 import javax.persistence.*;
@@ -9,6 +11,7 @@ import java.util.Set;
 @Entity
 @Table(name = "RESOURCES")
 @AttributeOverride(name = "id", column = @Column(name = "RESOURCE_ID"))
+@JsonIdentityInfo(generator=ObjectIdGenerators.PropertyGenerator.class, property="id")
 public class Resource extends GroupObject {
     private String name;
     private String description;
@@ -55,7 +58,7 @@ public class Resource extends GroupObject {
     }
 
     @OneToMany
-    @JsonBackReference
+    @JsonBackReference(value="items")
     @JoinColumn(name = "RESOURCE_ID", referencedColumnName = "RESOURCE_ID", updatable = false)
     public Set<Item> getItems() {
         return items;
@@ -65,9 +68,9 @@ public class Resource extends GroupObject {
         this.items = items;
     }
 
-    @JsonBackReference
-    @OneToMany(mappedBy="resource")
-   // @JoinColumn(name = "RESOURCE_ID", referencedColumnName = "RESOURCE_ID", updatable = false)
+    @OneToMany
+    @JsonBackReference(value="productOperations")
+    @JoinColumn(name = "RESOURCE_ID", referencedColumnName = "RESOURCE_ID", updatable = false)
     public Set<ProductOperation> getProductOperations() {
         return productOperations;
     }

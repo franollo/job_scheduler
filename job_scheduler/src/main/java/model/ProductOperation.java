@@ -1,8 +1,10 @@
 package main.java.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import main.java.model.common.GroupObject;
 
 import javax.persistence.*;
+import java.time.Duration;
 
 /**
  * Created by Marcin Frankowski on 12.07.2016.
@@ -14,11 +16,10 @@ public class ProductOperation extends GroupObject {
     private Integer operationNumber;
     private String name;
     private String description;
-    private Integer duration;
-    private Integer preparationDuration;
-    private Resource resource;
+    private Duration duration;
+    private Duration preparationDuration;
+    private Integer resourceId;
     private Integer productId;
-    //private Integer resourceId;
 
     @Column(name = "OPERATION_NUMBER")
     public Integer getOperationNumber() {
@@ -48,31 +49,30 @@ public class ProductOperation extends GroupObject {
     }
 
     @Column(name = "DURATION")
-    public Integer getDuration() {
+    public Duration getDuration() {
         return duration;
     }
 
-    public void setDuration(Integer duration) {
+    public void setDuration(Duration duration) {
         this.duration = duration;
     }
 
     @Column(name = "PREPARATION_DURATION")
-    public Integer getPreparationDuration() {
+    public Duration getPreparationDuration() {
         return preparationDuration;
     }
 
-    public void setPreparationDuration(Integer preparationDuration) {
+    public void setPreparationDuration(Duration preparationDuration) {
         this.preparationDuration = preparationDuration;
     }
 
-    @ManyToOne(fetch=FetchType.EAGER)
-    @JoinColumn(name="RESOURCE_ID")
-    public Resource getResource() {
-        return resource;
+    @Column(name="RESOURCE_ID")
+    public Integer getResourceId() {
+        return resourceId;
     }
 
-    public void setResource(Resource resource) {
-        this.resource = resource;
+    public void setResourceId(Integer resourceId) {
+        this.resourceId = resourceId;
     }
 
     @Column(name = "PRODUCT_ID")
@@ -83,15 +83,6 @@ public class ProductOperation extends GroupObject {
     public void setProductId(Integer productId) {
         this.productId = productId;
     }
-
-//    @Column(name = "RESOURCE_ID")
-//    public Integer getResourceId() {
-//        return resourceId;
-//    }
-//
-//    public void setResourceId(Integer resourceId) {
-//        this.resourceId = resourceId;
-//    }
 }
 
 

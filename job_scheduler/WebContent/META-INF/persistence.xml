@@ -3,5 +3,6 @@
              version="1.0">
     <persistence-unit name="applicationPersistenceUnit" transaction-type="RESOURCE_LOCAL" >
         <class>main.java.utils.LocalDateTimeAttributeConverter</class>
+        <class>main.java.utils.DurationAttributeConverter</class>
     </persistence-unit>
 </persistence>
