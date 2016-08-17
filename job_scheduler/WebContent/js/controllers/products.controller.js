@@ -3,27 +3,33 @@ angular
     .controller('productsController', productsController);
 
 productsController.$inject = [
+    '$document',
     '$mdDialog',
     'dataService',
     'dialogsService'];
 
-function productsController($mdDialog,
+function productsController($document,
+                            $mdDialog,
                             dataService,
                             dialogsService) {
     var vm = this;
+    var document = $document[0];
     vm.toggleAll = toggleAll;
     vm.toggle = toggle;
     vm.exists = exists;
     vm.isChecked = isChecked;
     vm.isIndeterminate = isIndeterminate;
-    vm.editProduct = editProduct
-    vm.removeProduct = removeProduct
-    vm.removeProducts = removeProducts
-    vm.newProduct = newProduct
+    vm.editProduct = editProduct;
+    vm.removeProduct = removeProduct;
+    vm.removeProducts = removeProducts;
+    vm.newProduct = newProduct;
     vm.extendProduct = extendProduct;
+    vm.fireError = fireError;
+    vm.findResource = findResource;
+    vm.idToRemove = 0;
 
     vm.products = [];
-    vm.selectedOrders = [];
+    vm.selectedProducts = [];
     vm.extendedProductId = 0;
 
     dataService.getProducts()
@@ -36,38 +42,37 @@ function productsController($mdDialog,
     }
 
     function fireError(error) {
-        console.error("AN ERROR OCCURED");
-        console.log(error);
+        dialogsService.showErrorToast(error.status);
     }
 
     function exists(item) {
-        return vm.selectedOrders.indexOf(item) > -1;
+        return vm.selectedProducts.indexOf(item) > -1;
     }
 
     function toggleAll() {
-        if(vm.selectedOrders.length === vm.products.length) {
-            vm.selectedOrders = [];
-        } else if (vm.selectedOrders.length === 0 || vm.selectedOrders.length > 0) {
-            vm.selectedOrders = vm.products.slice(0);
+        if(vm.selectedProducts.length === vm.products.length) {
+            vm.selectedProducts = [];
+        } else if (vm.selectedProducts.length === 0 || vm.selectedProducts.length > 0) {
+            vm.selectedProducts = vm.products.slice(0);
         }
     }
     
     function toggle(item) {
-        var idx = vm.selectedOrders.indexOf(item);
+        var idx = vm.selectedProducts.indexOf(item);
         if(idx > -1) {
-            vm.selectedOrders.splice(idx, 1);
+            vm.selectedProducts.splice(idx, 1);
         }
         else {
-            vm.selectedOrders.push(item);
+            vm.selectedProducts.push(item);
         }
     }
 
     function isChecked() {
-        return vm.selectedOrders.length === vm.products.length
+        return vm.selectedProducts.length === vm.products.length
     }
 
     function isIndeterminate() {
-        return (vm.selectedOrders.length !== 0 && vm.selectedOrders.length !== vm.products.length );
+        return (vm.selectedProducts.length !== 0 && vm.selectedProducts.length !== vm.products.length );
     }
 
     function editProduct(product) {
@@ -75,11 +80,12 @@ function productsController($mdDialog,
     }
 
     function removeProduct(product) {
-        console.log("REMOVE ONE");
+        vm.idToRemove = product.id;
+        openDialogDeleteProduct()
     }
 
     function removeProducts() {
-        console.log("REMOVE MANY");
+        openDialogDeleteMultProduct();
     }
 
     function newProduct() {
@@ -138,5 +144,70 @@ function productsController($mdDialog,
                 .then(replaceProdut)
                 .catch(fireError);
         });
+    }
+
+    function openDialogDeleteProduct() {
+        var confirm = $mdDialog.confirm()
+            .title('Do you want to delete this product?')
+            .textContent('Related product operations operations will be removed')
+            .ok('yes')
+            .cancel('cancel');
+        $mdDialog.show(confirm).then(function() {
+            removeHelper();
+        });
+    }
+
+    function openDialogDeleteMultProduct() {
+        var confirm = $mdDialog.confirm()
+            .title('Do you want to delete selected products?')
+            .textContent('Related products operations operations will be removed')
+            .ok('yes')
+            .cancel('cancel');
+        $mdDialog.show(confirm).then(function() {
+            removeHelperMult();
+        });
+    }
+
+    function removeHelper() {
+        dataService.removeProduct(vm.idToRemove)
+            .then(cutProduct)
+            .catch(fireError);
+    }
+
+    function removeHelperMult() {
+        var idsToRemove = [];
+        for(var i = 0; i < vm.selectedProducts.length; i++) {
+            idsToRemove.push(vm.selectedProducts[i].id)
+        }
+        dataService.removeProducts(idsToRemove)
+            .then(cutProducts)
+            .catch(fireError);
+    }
+
+    function cutProduct(data) {
+        var index = vm.products.map(function(e) {return e.id;}).indexOf(data);
+        if(index >= 0) {
+            vm.products.splice(index, 1);
+            vm.idToRemove = 0;
+        }
+    }
+
+    function cutProducts(data) {
+        for(var i = 0; i < data.length; i++) {
+            var index = vm.products.map(function(e) {return e.id;}).indexOf(data[i]);
+            if(index >= 0) {
+                vm.products.splice(index, 1);
+                vm.selectedProducts = [];
+            }
+        }
+    }
+
+    function findResource(id) {
+        for (var i = 0; i < mainController.resourceTypes.length; i++) {
+            var index = mainController.resourceTypes[i].resources.map(function(e) {return e.id;}).indexOf(id);
+            if(index >= 0) {
+                return mainController.resourceTypes[i].resources[index];
+            }
+        }
     }
 }

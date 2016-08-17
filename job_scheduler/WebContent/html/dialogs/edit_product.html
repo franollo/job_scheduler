@@ -11,44 +11,42 @@
     <md-dialog-content>
         <md-tabs md-dynamic-height md-border-bottom>
             <md-tab label="product properties" md-on-select="ctrl.setStyle('standard')">
-                <div flex layout="row" layout-padding>
-                    <md-content>
-                        <div layout="column">
-                            <div layout="row">
-                                <md-input-container flex>
-                                    <label>Product name</label>
-                                    <input type="text" ng-model="ctrl.product.name"
-                                           ng-model-options="{debounce: 750}">
-                                </md-input-container>
-                                <md-input-container flex>
-                                    <label>Description</label>
-                                    <input type="text" ng-model="ctrl.product.description"
-                                           ng-model-options="{debounce: 750}">
-                                </md-input-container>
-                            </div>
-                            <div layout="row">
-                                <md-input-container flex>
-                                    <label>Attribute 1</label>
-                                    <input type="text" ng-model="ctrl.product.attribute1"
-                                           ng-model-options="{debounce: 750}">
-                                </md-input-container>
-                                <md-input-container flex>
-                                    <label>Attribute 2</label>
-                                    <input type="text" ng-model="ctrl.product.attribute2"
-                                           ng-model-options="{debounce: 750}">
-                                </md-input-container>
-                                <md-input-container flex>
-                                    <label>Attribute 3</label>
-                                    <input type="text" ng-model="ctrl.product.attribute3"
-                                           ng-model-options="{debounce: 750}">
-                                </md-input-container>
-                            </div>
-                            <md-list-item>
-                                <p> Synchronous operations </p>
-                                <md-checkbox class="md-secondary" ng-model="ctrl.synchronous"></md-checkbox>
-                            </md-list-item>
+                <div class="md-dialog-content">
+                    <div layout="column">
+                        <div layout="row">
+                            <md-input-container flex>
+                                <label>Product name</label>
+                                <input type="text" ng-model="ctrl.product.name"
+                                       ng-model-options="{debounce: 750}">
+                            </md-input-container>
+                            <md-input-container flex>
+                                <label>Description</label>
+                                <input type="text" ng-model="ctrl.product.description"
+                                       ng-model-options="{debounce: 750}">
+                            </md-input-container>
                         </div>
-                    </md-content>
+                        <div layout="row">
+                            <md-input-container flex>
+                                <label>Attribute 1</label>
+                                <input type="text" ng-model="ctrl.product.attribute1"
+                                       ng-model-options="{debounce: 750}">
+                            </md-input-container>
+                            <md-input-container flex>
+                                <label>Attribute 2</label>
+                                <input type="text" ng-model="ctrl.product.attribute2"
+                                       ng-model-options="{debounce: 750}">
+                            </md-input-container>
+                            <md-input-container flex>
+                                <label>Attribute 3</label>
+                                <input type="text" ng-model="ctrl.product.attribute3"
+                                       ng-model-options="{debounce: 750}">
+                            </md-input-container>
+                        </div>
+                        <md-list-item>
+                            <p> Synchronous operations </p>
+                            <md-checkbox class="md-secondary" ng-model="ctrl.synchronous"></md-checkbox>
+                        </md-list-item>
+                    </div>
                 </div>
             </md-tab>
             <md-tab label="product operations" md-on-select="ctrl.setStyle('big')">

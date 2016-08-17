@@ -14,5 +14,5 @@ values (1, '2016-01-01 00:00:00', '2016-01-01 00:00:10', 1, 1);
 insert into orders(name, description, production_plan_id, group_id) 
 values ('Zamówienie', 'Opis zamówienia', 1, 1);
 insert into order_products values (1, 1, 3, 1);
-insert into product_operations (name, description, product_id, resource_id, group_id) 
-values ('Operacja', 'Opis operaracji', 1, 1, 1);
+insert into product_operations (name, description, duration, product_id, resource_id, group_id) 
+values ('Operacja', 'Opis operaracji', 14, 1, 1, 1);

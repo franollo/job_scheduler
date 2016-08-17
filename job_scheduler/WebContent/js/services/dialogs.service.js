@@ -2,43 +2,20 @@ angular
     .module('app')
     .service('dialogsService', dialogsService);
 
-function dialogsService(dataService) {
+function dialogsService(dataService, $mdToast) {
     var vm = this;
     vm.openProductionPlanController = openProductionPlanController;
+    vm.showErrorToast = showErrorToast;
+    vm.newResourceTypeCtrl = newResourceTypeCtrl;
+    vm.editResourceTypeCtrl = editResourceTypeCtrl;
+    vm.newResourceCtrl = newResourceCtrl;
+    vm.editResourceCtrl = editResourceCtrl;
+    vm.newProductCtrl = newProductCtrl;
+    vm.editProductCtrl = editProductCtrl;
+    vm.newOrderCtrl = newOrderCtrl;
+    vm.editOrderCtrl = editOrderCtrl;
 
-        this.DialogController1 = function ($scope, $mdDialog, dataToPass) {
-        $scope.dragControlListeners = {
-            containment: '#board',//optional param.
-            allowDuplicates: true //optional param allows duplicates to be dropped.
-        };
-        this.tasks = dataToPass;
-        var sth = false;
-        $scope.answer = function () {
-            $scope.job.tasks = JSON.parse(JSON.stringify($scope.selected));
-            $mdDialog.hide({"job": $scope.job});
-            $scope.job = {};
-            $scope.selected = [];
-        }
-
-        $scope.cancel = function () {
-            $scope.job = {};
-            $scope.selected = [];
-            $mdDialog.cancel();
-        }
-        $scope.toggle = function (item, list) {
-            var idx = list.indexOf(item);
-            if (idx > -1) list.splice(idx, 1);
-            else list.push(item);
-        };
-        $scope.exists = function (item, list) {
-            return list.indexOf(item) > -1;
-        };
-        $scope.selected = [];
-        $scope.job = {};
-    }
-
-
-    this.newResourceTypeCtrl = function ($mdDialog) {
+    function newResourceTypeCtrl($mdDialog) {
         var vm = this;
         vm.name = '';
         vm.description = '';
@@ -51,9 +28,24 @@ function dialogsService(dataService) {
         function cancel() {
             $mdDialog.cancel();
         }
-    };
+    }
 
-    this.newResourceCtrl = function ($mdDialog, resourceTypes) {
+    function editResourceTypeCtrl($mdDialog, resourceType) {
+        var vm = this;
+        vm.resourceType = {};
+        angular.copy(resourceType, vm.resourceType);
+        vm.cancel = cancel;
+        vm.answer = answer;
+        function answer() {
+            $mdDialog.hide(vm.resourceType);
+        }
+
+        function cancel() {
+            $mdDialog.cancel();
+        }
+    }
+
+    function newResourceCtrl($mdDialog, resourceTypes) {
         var vm = this;
         vm.resourceTypes = resourceTypes;
         vm.name = '';
@@ -71,9 +63,24 @@ function dialogsService(dataService) {
         function cancel() {
             $mdDialog.cancel();
         }
-    };
+    }
 
-    this.newProductCtrl = function ($mdDialog, resourceTypes) {
+    function editResourceCtrl($mdDialog, resource) {
+        var vm = this;
+        vm.resource = {};
+        angular.copy(resource, vm.resource);
+        vm.cancel = cancel;
+        vm.answer = answer;
+        function answer() {
+            $mdDialog.hide(vm.resource);
+        }
+
+        function cancel() {
+            $mdDialog.cancel();
+        }
+    }
+
+    function newProductCtrl($mdDialog, resourceTypes) {
         var vm = this;
         vm.resourceTypes = resourceTypes;
         vm.productOperations = [];
@@ -95,6 +102,38 @@ function dialogsService(dataService) {
         vm.findResource = findResource;
         vm.moveUp = moveUp;
         vm.moveDown = moveDown;
+        vm.removeProductOperation = removeProductOperation;
+
+        function removeProductOperation(productOperation) {
+            var index = vm.productOperations.map(function(e) {return e.$$hashKey}).indexOf(productOperation.$$hashKey);
+            if(index >= 0) {
+                vm.productOperations.splice(index, 1);
+            }
+        }
+
+        function moveUp(item) {
+            var index = vm.productOperations.map(function(e) {return e.$$hashKey;}).indexOf(item.$$hashKey);
+            if(index <= 0) {
+                return;
+            }
+            else {
+                var operation = vm.productOperations[index-1];
+                vm.productOperations[index-1] = vm.productOperations[index];
+                vm.productOperations[index] = operation;
+            }
+        }
+
+        function moveDown(item) {
+            var index = vm.productOperations.map(function(e) {return e.$$hashKey;}).indexOf(item.$$hashKey);
+            if(index < 0 || index == vm.productOperations.length-1) {
+                return;
+            }
+            else {
+                var operation = vm.productOperations[index+1];
+                vm.productOperations[index+1] = vm.productOperations[index];
+                vm.productOperations[index] = operation;
+            }
+        }
 
         function setStyle(style) {
             vm.style = style;
@@ -108,7 +147,7 @@ function dialogsService(dataService) {
             vm.prepDuration = '00:00:00';
             vm.resource = {};
         }
-        
+
         function answer() {
             var product = new Product(
                 vm.productName,
@@ -132,9 +171,9 @@ function dialogsService(dataService) {
                 }
             }
         }
-    };
+    }
 
-    this.editProductCtrl = function ($mdDialog, resourceTypes, product) {
+    function editProductCtrl($mdDialog, resourceTypes, product) {
         var vm = this;
         vm.resourceTypes = resourceTypes;
         vm.product = {};
@@ -167,7 +206,6 @@ function dialogsService(dataService) {
 
         function addProductOperation() {
             vm.product.productOperations.push(new ProductOperation(vm.name, vm.description, vm.duration, vm.prepDuration, vm.resource.id));
-            console.log(vm.product.productOperations);
             vm.name = '';
             vm.description = '';
             vm.duration = '00:00:00';
@@ -225,83 +263,62 @@ function dialogsService(dataService) {
         function cancel() {
             $mdDialog.cancel();
         }
-    };
+    }
 
-    this.editResourceCtrl = function ($mdDialog, resource) {
+    function newOrderCtrl($mdDialog, products) {
         var vm = this;
-        vm.resource = {};
-        angular.copy(resource, vm.resource);
-        vm.cancel = cancel;
+        vm.products = products;
+        vm.name = '';
+        vm.description = '';
+        vm.dueDate = '';
+        vm.dueTime = '';
+        vm.orderProducts = [];
         vm.answer = answer;
+        vm.cancel = cancel;
+
+
         function answer() {
-            $mdDialog.hide(vm.resource);
+            var dueDate = new Date();
+            dueDate.setYear(vm.dueDate.getFullYear());
+            dueDate.setMonth(vm.dueDate.getMonth());
+            dueDate.setDate(vm.dueDate.getDate());
+            dueDate.setHours(vm.dueTime.getHours() + vm.dueDate.getTimezoneOffset() / (-60));
+            dueDate.setMinutes(vm.dueTime.getMinutes());
+            dueDate.setSeconds(vm.dueTime.getSeconds());
+            dueDate = dueDate.toISOString().slice(0, 19);
+            var order = new Order(
+                vm.name,
+                vm.description,
+                dueDate,
+                vm.orderProducts);
+            $mdDialog.hide(JSON.parse(angular.toJson(order)));
         }
 
         function cancel() {
             $mdDialog.cancel();
         }
-    };
+    }
 
-    this.editResourceTypeCtrl = function ($mdDialog, resourceType) {
+    function editOrderCtrl($mdDialog, order) {
         var vm = this;
-        vm.resourceType = {};
-        angular.copy(resourceType, vm.resourceType);
-        vm.cancel = cancel;
+        vm.order = {};
+        angular.copy(order, vm.order);
         vm.answer = answer;
+        vm.cancel = cancel;
+
         function answer() {
-            $mdDialog.hide(vm.resourceType);
+            var order = new Order(
+                vm.order.name,
+                vm.order.description,
+                vm.order.dueDate,
+                vm.order.orderProducts);
+            order.setId(vm.order.id);
+            order.setCreatedOn(vm.order.createdOn);
+            order.setEditedOn(vm.order.editedOn);
+            $mdDialog.hide(order);
         }
 
         function cancel() {
-            $mdDialog.cancel();
-        }
-    };
-
-    this.addJobOrderController = function ($scope, $mdDialog, dataToPass) {
-        var parentThis = this;
-        this.jobs = dataToPass;
-        this.selected = [];
-        $scope.answer = function () {
-            $mdDialog.hide(parentThis.selected);
-        }
-
-        $scope.cancel = function () {
-            console.log('cancel');
-            $mdDialog.cancel();
-        }
-        $scope.toggle = function (item, list) {
-            var idx = list.indexOf(item);
-            if (idx > -1) list.splice(idx, 1);
-            else list.push(item);
-        };
-        $scope.exists = function (item, list) {
-            return list.indexOf(item) > -1;
-        };
-    }
-
-    this.editOrderController = function ($scope, $mdDialog, data) {
-        var parentThis = this;
-        $scope.order = data;
-        $scope.answer = function () {
-            $mdDialog.hide($scope.order);
-        }
-
-        $scope.cancel = function () {
-            $mdDialog.cancel();
-        }
-    }
-
-    this.DialogController4 = function ($scope, $mdDialog) {
-        var parentThis = this;
-        this.resourceName = "";
-        this.description = "";
-        $scope.answer = function () {
-            $mdDialog.hide({
-                "name": parentThis.resourceName,
-                "description": parentThis.description
-            });
-        }
-        $scope.cancel = function () {
             $mdDialog.cancel();
         }
     }
@@ -338,5 +355,14 @@ function dialogsService(dataService) {
         function select(id) {
             vm.selectedPlanId = id;
         }
+    }
+
+    function showErrorToast(errorCode) {
+        var toast = $mdToast.simple()
+            .textContent("HTTP " + errorCode + " error occured! Your changes have not been saved")
+            .position('top right')
+            .hideDelay(5000)
+            .theme('md-warn');
+        $mdToast.show(toast);
     }
 }

@@ -1,6 +1,7 @@
 package main.java.controllers;
 
 import main.java.exceptions.ObjectAuthorizationException;
+import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.GenericJDBCException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -13,20 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler(GenericJDBCException.class)
+    @ExceptionHandler({GenericJDBCException.class, ConstraintViolationException.class})
     public void handleGenericJDBCException(HttpServletResponse response, Exception e) {
-        e.printStackTrace();
         response.setStatus(400);
     }
 
     @ExceptionHandler(ObjectAuthorizationException.class)
     public void handleObjectAuthorizationException(HttpServletResponse response, Exception e) {
-        e.printStackTrace();
         response.setStatus(401);
-    }
-
-    @ExceptionHandler(RuntimeException.class)
-    public void xx(Exception e) {
-        e.printStackTrace();
     }
 }

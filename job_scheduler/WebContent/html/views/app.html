@@ -143,7 +143,7 @@
                     </md-tab-label>
                     <md-tab-body>
                         <md-toolbar class="js-toolbar" layout="row" ng-show="ctrl.showToolbar">
-                            <div class="js-button" ng-click="ctrl.newPerson()">
+                            <div class="js-button" ng-click="ctrl.fireError(401)">
                                 <i class="material-icons md-18">undo</i>
                             </div>
                             <div class="js-button" ng-click="ctrl.undo()">
@@ -451,6 +451,52 @@
                                 <md-icon class="material-icons md-24">delete</md-icon>
                             </md-button>
                         </md-list-item>
+                        <md-content class="sub-list" style="margin: 16px" ng-show="prodCtrl.extendedProductId == product.id">
+                            <md-subheader ng-click="prodCtrl.extendProduct(product.id)">
+                                <div layout="column">
+                                    <div class="js-side-padding"
+                                         layout="row"
+                                         layout-align="center center"
+                                         md-colors="{background: 'accent-300'}">
+                                        <h2 class="js-margin-16">{{product.name}} operations</h2>
+                                    </div>
+                                    <md-divider></md-divider>
+                                    <div class="js-side-padding"
+                                         layout="row"
+                                         md-colors="{background: 'accent-200'}">
+                                        <h4 class="js-margin-16" flex="20">Name</h4>
+                                        <h4 class="js-margin-16" flex="40">Description</h4>
+                                        <h4 class="js-margin-16" flex="10">Duration</h4>
+                                        <h4 class="js-margin-16" flex="10">Preparation</h4>
+                                        <h4 class="js-margin-16" flex="20">Resource</h4>
+                                    </div>
+                                </div>
+                            </md-subheader>
+                            <md-divider></md-divider>
+                            <div ng-repeat="productOperation in product.productOperations"
+                                 layout="column">
+                                <div class="js-side-padding"
+                                     layout='row'
+                                     layout-align="start center">
+                                    <div flex="20">
+                                        {{productOperation.name}}
+                                    </div>
+                                    <div flex="40">
+                                        {{productOperation.description}}
+                                    </div>
+                                    <div flex="10">
+                                        {{productOperation.duration}}
+                                    </div>
+                                    <div flex="10">
+                                        {{productOperation.preparationDuration}}
+                                    </div>
+                                    <div flex="20">
+                                        {{prodCtrl.findResource(productOperation.resourceId).name}}
+                                    </div>
+                                </div>
+                                <md-divider></md-divider>
+                            </div>
+                        </md-content>
                         <md-divider></md-divider>
                     </div>
                 </md-list>

@@ -21,6 +21,7 @@ function ProductOperation(name, description, duration, prepDuration, resourceId)
     this.duration = duration;
     this.preparationDuration = prepDuration;
     this.resourceId = resourceId;
+    this.sequential = true;
 }
 
 function Product(name, description, attribute1, attribute2, attribute3, productOperations) {
@@ -33,9 +34,22 @@ function Product(name, description, attribute1, attribute2, attribute3, productO
     this.id = null;
     this.createdOn = null;
     this.editedOn = null;
-    for(var i = 0; i < productOperations.length; i++) {
-        productOperations[i].operationNumber = i;
-    }
+    this.setId = function(id) {
+        this.id = id;
+    };
+    this.setCreatedOn = function(createdOn) {
+        this.createdOn = createdOn;
+    };
+    this.setEditedOn = function(editedOn) {
+        this.editedOn = editedOn;
+    };
+}
+
+function Order(name, description, dueDate, orderProducts) {
+    this.name = name;
+    this.description = description;
+    this.dueDate = dueDate;
+    this.orderProducts = orderProducts;
     this.setId = function(id) {
         this.id = id;
     };

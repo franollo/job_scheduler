@@ -58,12 +58,24 @@ public class RemoveController {
         orderDAO.remove(order);
     }
 
-    @RequestMapping(value = "/product", method = RequestMethod.POST)
-    public @ResponseBody void product(@RequestBody Product product) throws ParseException {
+    @RequestMapping(value = "/product/{productId}", method = RequestMethod.GET)
+    public @ResponseBody Integer product(@PathVariable int productId) throws ParseException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
-        userDAO.confirmPermission(Product.class, product.getId(), user);
+        Product product = new Product();
+        product.setId(productId);
+        userDAO.confirmPermission(Product.class, productId, user);
         productDAO.remove(product);
+        return productId;
+    }
+
+    @RequestMapping(value = "/products", method = RequestMethod.POST)
+    public @ResponseBody List<Integer> products(@RequestBody List<Integer> productIds) throws ParseException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userDAO.getUserByLogin(auth.getName());
+        userDAO.confirmPermission(Product.class, productIds, user);
+        productDAO.multipleRemove(productIds);
+        return productIds;
     }
 
     @RequestMapping(value = "/productionplan", method = RequestMethod.POST)
@@ -93,6 +105,15 @@ public class RemoveController {
         return resourceId;
     }
 
+    @RequestMapping(value = "/resources", method = RequestMethod.POST)
+    public @ResponseBody List<Integer> resources(@RequestBody List<Integer> resourceIds) throws ParseException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userDAO.getUserByLogin(auth.getName());
+        userDAO.confirmPermission(Resource.class, resourceIds, user);
+        resourceDAO.multipleRemove(resourceIds);
+        return resourceIds;
+    }
+
     @RequestMapping(value = "/resourcetype/{resourceTypeId}", method = RequestMethod.GET)
     public @ResponseBody Integer resourceType(@PathVariable int resourceTypeId) throws ParseException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -102,15 +123,6 @@ public class RemoveController {
         userDAO.confirmPermission(ResourceType.class, resourceType.getId(), user);
         resourceTypeDAO.remove(resourceTypeId);
         return resourceTypeId;
-    }
-
-    @RequestMapping(value = "/resources", method = RequestMethod.POST)
-    public @ResponseBody List<Integer> resources(@RequestBody List<Integer> resourceIds) throws ParseException {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userDAO.getUserByLogin(auth.getName());
-        userDAO.confirmPermission(Resource.class, resourceIds, user);
-        resourceDAO.multipleRemove(resourceIds);
-        return resourceIds;
     }
 
     @RequestMapping(value = "/resourcetypes", method = RequestMethod.POST)

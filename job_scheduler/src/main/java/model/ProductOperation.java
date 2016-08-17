@@ -17,6 +17,7 @@ public class ProductOperation extends GroupObject {
     private String description;
     private Duration duration;
     private Duration preparationDuration;
+    private boolean sequential;
     private Integer resourceId;
 
     @Column(name = "OPERATION_NUMBER")
@@ -62,6 +63,15 @@ public class ProductOperation extends GroupObject {
 
     public void setPreparationDuration(Duration preparationDuration) {
         this.preparationDuration = preparationDuration;
+    }
+
+    @Column(name = "SEQUENTIAL")
+    public boolean isSequential() {
+        return sequential;
+    }
+
+    public void setSequential(boolean sequential) {
+        this.sequential = sequential;
     }
 
     @Column(name="RESOURCE_ID")

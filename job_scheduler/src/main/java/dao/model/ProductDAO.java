@@ -12,5 +12,6 @@ public interface ProductDAO {
     public Product save(Product product);
     public void update(Product product);
     public void remove(Product product);
+    public void multipleRemove(List<Integer> ids);
     public List<Product> getUsersProducts(User user);
 }

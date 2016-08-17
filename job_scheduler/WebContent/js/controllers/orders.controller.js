@@ -25,20 +25,19 @@ function ordersController($document,
     vm.newOrder = newOrder;
     vm.extendedOrderId = 0;
     vm.orders = [];
-    vm.selectedOrders = [];
+    vm.selectedProducts = [];
 
     dataService.getOrders()
         .then(putOrders)
         .catch(fireError);
 
+    function fireError(error) {
+        dialogsService.showErrorToast(error.status);
+    }
+
     function putOrders(data) {
         vm.orders = data;
         mainController.orders = vm.orders;
-    }
-
-    function fireError(error) {
-        console.error("AN ERROR OCCURED");
-        console.log(error);
     }
 
     function extendOrder(id) {
@@ -51,33 +50,33 @@ function ordersController($document,
     }
 
     function exists(item) {
-        return vm.selectedOrders.indexOf(item) > -1;
+        return vm.selectedProducts.indexOf(item) > -1;
     }
 
     function toggleAll() {
-        if(vm.selectedOrders.length === vm.orders.length) {
-            vm.selectedOrders = [];
-        } else if (vm.selectedOrders.length === 0 || vm.selectedOrders.length > 0) {
-            vm.selectedOrders = vm.orders.slice(0);
+        if(vm.selectedProducts.length === vm.orders.length) {
+            vm.selectedProducts = [];
+        } else if (vm.selectedProducts.length === 0 || vm.selectedProducts.length > 0) {
+            vm.selectedProducts = vm.orders.slice(0);
         }
     }
     
     function toggle(item) {
-        var idx = vm.selectedOrders.indexOf(item);
+        var idx = vm.selectedProducts.indexOf(item);
         if(idx > -1) {
-            vm.selectedOrders.splice(idx, 1);
+            vm.selectedProducts.splice(idx, 1);
         }
         else {
-            vm.selectedOrders.push(item);
+            vm.selectedProducts.push(item);
         }
     }
 
     function isChecked() {
-        return vm.selectedOrders.length === vm.orders.length
+        return vm.selectedProducts.length === vm.orders.length
     }
 
     function isIndeterminate() {
-        return (vm.selectedOrders.length !== 0 && vm.selectedOrders.length !== vm.orders.length );
+        return (vm.selectedProducts.length !== 0 && vm.selectedProducts.length !== vm.orders.length );
     }
 
     function editOrder(order) {
@@ -94,19 +93,36 @@ function ordersController($document,
     }
 
     function newOrder() {
+        openDialogNewOrder();
         console.log("NEW");
     }
 
     function openDialogEditOrder(order) {
         $mdDialog.show({
-            locals: {data: order},
-            controller: dialogsService.editOrderController,
+            locals: {order: order},
+            controller: dialogsService.editOrderCtrl,
             controllerAs: 'ctrl',
             templateUrl: 'html/dialogs/edit_order.html',
             parent: angular.element(document.body),
             clickOutsideToClose: true
         }).then(function (answer) {
 
+        });
+    }
+
+    function openDialogNewOrder() {
+        $mdDialog.show({
+            locals: {products: mainController.products},
+            controller: dialogsService.newOrderCtrl,
+            controllerAs: 'ctrl',
+            templateUrl: 'html/dialogs/new_order.html',
+            parent: angular.element(document.body),
+            clickOutsideToClose: true
+        }).then(function (answer) {
+            console.log(answer);
+            dataService.saveOrder(answer)
+                .then(putOrder)
+                .catch(fireError);
         });
     }
 
@@ -120,5 +136,9 @@ function ordersController($document,
                 vm.extendedOrderId = 0;
             }
         }
+    }
+
+    function putOrder(order) {
+        vm.orders.push(order);
     }
 }

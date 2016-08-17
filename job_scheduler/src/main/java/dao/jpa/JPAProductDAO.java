@@ -3,7 +3,6 @@ package main.java.dao.jpa;
 import main.java.dao.model.ProductDAO;
 import main.java.model.Product;
 import main.java.model.ProductOperation;
-import main.java.model.Resource;
 import main.java.model.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -14,7 +13,6 @@ import javax.persistence.TypedQuery;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Marcin Frankowski on 15.07.16.
@@ -39,6 +37,14 @@ public class JPAProductDAO extends JPADAO implements ProductDAO {
     }
 
     @Override
+    public void multipleRemove(List<Integer> ids) {
+        entityManager
+                .createQuery("delete from Product p where p.id in (:ids)")
+                .setParameter("ids", ids)
+                .executeUpdate();
+    }
+
+    @Override
     public List<Product> getUsersProducts(User user) {
         String queryString = "SELECT p from Product p inner join User u " +
                 "on p.groupId = u.groupId " +
@@ -50,7 +56,18 @@ public class JPAProductDAO extends JPADAO implements ProductDAO {
                 Collections.sort(product.getProductOperations(), new Comparator<ProductOperation>() {
                     @Override
                     public int compare(ProductOperation o1, ProductOperation o2) {
-                        return o1.getOperationNumber() - o2.getOperationNumber();
+                        if(o1.getOperationNumber() == null && o2.getOperationNumber() == null) {
+                            return 0;
+                        }
+                        else if(o1.getOperationNumber() == null && o2.getOperationNumber() != null) {
+                            return -1;
+                        }
+                        else if(o1.getOperationNumber() != null && o2.getOperationNumber() == null) {
+                            return  1;
+                        }
+                        else {
+                            return o1.getOperationNumber() - o2.getOperationNumber();
+                        }
                     }
                 });
             }

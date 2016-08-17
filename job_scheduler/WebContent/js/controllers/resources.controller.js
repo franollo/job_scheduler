@@ -29,7 +29,7 @@ function resourcesController($document,
     vm.extendResType = extendResType;
     vm.extendedResTypeId = 0;
     vm.resourceTypes = [];
-    vm.selectedOrders = [];
+    vm.selectedResourceTypes = [];
     vm.idToRemoveType = 0;
     vm.idToRemoveRes = 0;
 
@@ -48,33 +48,33 @@ function resourcesController($document,
     }
 
     function exists(item) {
-        return vm.selectedOrders.indexOf(item) > -1;
+        return vm.selectedResourceTypes.indexOf(item) > -1;
     }
 
     function toggleAll() {
-        if(vm.selectedOrders.length === vm.resourceTypes.length) {
-            vm.selectedOrders = [];
-        } else if (vm.selectedOrders.length === 0 || vm.selectedOrders.length > 0) {
-            vm.selectedOrders = vm.resourceTypes.slice(0);
+        if(vm.selectedResourceTypes.length === vm.resourceTypes.length) {
+            vm.selectedResourceTypes = [];
+        } else if (vm.selectedResourceTypes.length === 0 || vm.selectedResourceTypes.length > 0) {
+            vm.selectedResourceTypes = vm.resourceTypes.slice(0);
         }
     }
     
     function toggle(item) {
-        var idx = vm.selectedOrders.indexOf(item);
+        var idx = vm.selectedResourceTypes.indexOf(item);
         if(idx > -1) {
-            vm.selectedOrders.splice(idx, 1);
+            vm.selectedResourceTypes.splice(idx, 1);
         }
         else {
-            vm.selectedOrders.push(item);
+            vm.selectedResourceTypes.push(item);
         }
     }
 
     function isChecked() {
-        return vm.selectedOrders.length === vm.resourceTypes.length
+        return vm.selectedResourceTypes.length === vm.resourceTypes.length
     }
 
     function isIndeterminate() {
-        return (vm.selectedOrders.length !== 0 && vm.selectedOrders.length !== vm.resourceTypes.length );
+        return (vm.selectedResourceTypes.length !== 0 && vm.selectedResourceTypes.length !== vm.resourceTypes.length );
     }
 
     function editResourceType(resourceType) {
@@ -206,8 +206,8 @@ function resourcesController($document,
 
     function removeHelperMultType() {
         var idsToRemove = [];
-        for(var i = 0; i < vm.selectedOrders.length; i++) {
-            idsToRemove.push(vm.selectedOrders[i].id)
+        for(var i = 0; i < vm.selectedResourceTypes.length; i++) {
+            idsToRemove.push(vm.selectedResourceTypes[i].id)
         }
         dataService.removeResourceTypes(idsToRemove)
             .then(cutResourceTypes)
@@ -262,7 +262,7 @@ function resourcesController($document,
             var index = vm.resourceTypes.map(function(e) {return e.id;}).indexOf(data[i]);
             if(index >= 0) {
                 vm.resourceTypes.splice(index, 1);
-                vm.selectedOrders = [];
+                vm.selectedResourceTypes = [];
             }
         }
     }

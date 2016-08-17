@@ -35,10 +35,8 @@ function mainController($document,
     vm.focusTimeline = focusTimeline;
     vm.spliceJobs = spliceJobs;
     vm.spliceResources = spliceResources;
-    vm.fireError = fireError;
     vm.undo = undo;
     vm.redo = redo;
-    vm.showSimpleToast = showSimpleToast;
     vm.dialogAddJob = dialogAddJob;
     vm.dialogAddResource = dialogAddResource;
     vm.dialogNewOrder = dialogNewOrder;
@@ -217,11 +215,6 @@ function mainController($document,
         vm.resourceTypes.splice(vm.resourceTypes.indexOf(resource), 1);
     }
 
-    function fireError(error) {
-        console.error("AN ERROR OCCURED");
-        console.log(error);
-    }
-
     function undo() {
         bufferService.undo(timelineService.getItems());
     }
@@ -235,14 +228,9 @@ function mainController($document,
      * DIALOGS AND TOASTS
      */
 
-    function showSimpleToast(text) {
-        $mdToast.show(
-            $mdToast.simple()
-                .textContent(text)
-                .position('top right')
-                .hideDelay(3000)
-                .parent(angular.element(document.body))
-        );
+    function fireError(error){
+        console.error(error);
+        dialogsService.showErrorToast(error);
     }
 
     function dialogAddJob() {

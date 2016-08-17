@@ -19,8 +19,8 @@ import java.util.List;
 @Transactional(propagation = Propagation.REQUIRED)
 public class JPAOrderDAO extends JPADAO implements OrderDAO {
     @Override
-    public void insert(Order order) {
-        entityManager.persist(order);
+    public Order save(Order order) {
+        return entityManager.merge(order);
     }
 
     @Override

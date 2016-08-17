@@ -6,6 +6,8 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 
@@ -80,12 +82,42 @@ public class Product extends GroupObject {
     @LazyCollection(LazyCollectionOption.FALSE)
     @JsonBackReference
     @OneToMany
-    @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID")
+    @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID", updatable = false)
     public Set<OrderProduct> getOrderProducts() {
         return orderProducts;
     }
 
     public void setOrderProducts(Set<OrderProduct> orderProducts) {
         this.orderProducts = orderProducts;
+    }
+
+    @PostLoad
+    public void sortOperations() {
+        Collections.sort(productOperations, new Comparator<ProductOperation>() {
+            @Override
+            public int compare(ProductOperation o1, ProductOperation o2) {
+                if(o1.getOperationNumber() == null && o2.getOperationNumber() == null) {
+                    return 0;
+                }
+                else if(o1.getOperationNumber() == null && o2.getOperationNumber() != null) {
+                    return -1;
+                }
+                else if(o1.getOperationNumber() != null && o2.getOperationNumber() == null) {
+                    return  1;
+                }
+                else {
+                    return o1.getOperationNumber() - o2.getOperationNumber();
+                }
+            }
+        });
+    }
+
+    public void orderProductOperations() {
+        int i = 0;
+        for(ProductOperation productOperation : productOperations) {
+            if(productOperation.isSequential() == true) {
+                productOperation.setOperationNumber(i++);
+            }
+        }
     }
 }
