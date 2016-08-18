@@ -55,8 +55,8 @@ public class Order extends GroupObject {
     }
 
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany
-    @JoinColumn(name = "ORDER_ID", referencedColumnName = "ORDER_ID")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name = "ORDER_ID", nullable = false)
     public Set<OrderProduct> getOrderProducts() {
         return orderProducts;
     }

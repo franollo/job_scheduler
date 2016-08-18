@@ -23,9 +23,11 @@ function ordersController($document,
     vm.removeOrder = removeOrder;
     vm.removeOrders = removeOrders;
     vm.newOrder = newOrder;
+    vm.extendOrder = extendOrder;
     vm.extendedOrderId = 0;
     vm.orders = [];
-    vm.selectedProducts = [];
+    vm.idToRemove = 0;
+    vm.selectedOrders = [];
 
     dataService.getOrders()
         .then(putOrders)
@@ -50,51 +52,50 @@ function ordersController($document,
     }
 
     function exists(item) {
-        return vm.selectedProducts.indexOf(item) > -1;
+        return vm.selectedOrders.indexOf(item) > -1;
     }
 
     function toggleAll() {
-        if(vm.selectedProducts.length === vm.orders.length) {
-            vm.selectedProducts = [];
-        } else if (vm.selectedProducts.length === 0 || vm.selectedProducts.length > 0) {
-            vm.selectedProducts = vm.orders.slice(0);
+        if(vm.selectedOrders.length === vm.orders.length) {
+            vm.selectedOrders = [];
+        } else if (vm.selectedOrders.length === 0 || vm.selectedOrders.length > 0) {
+            vm.selectedOrders = vm.orders.slice(0);
         }
     }
     
     function toggle(item) {
-        var idx = vm.selectedProducts.indexOf(item);
+        var idx = vm.selectedOrders.indexOf(item);
         if(idx > -1) {
-            vm.selectedProducts.splice(idx, 1);
+            vm.selectedOrders.splice(idx, 1);
         }
         else {
-            vm.selectedProducts.push(item);
+            vm.selectedOrders.push(item);
         }
     }
 
     function isChecked() {
-        return vm.selectedProducts.length === vm.orders.length
+        return vm.selectedOrders.length === vm.orders.length
     }
 
     function isIndeterminate() {
-        return (vm.selectedProducts.length !== 0 && vm.selectedProducts.length !== vm.orders.length );
+        return (vm.selectedOrders.length !== 0 && vm.selectedOrders.length !== vm.orders.length );
     }
 
     function editOrder(order) {
-        console.log("EDIT");
         openDialogEditOrder(order);
     }
 
     function removeOrder(order) {
-        console.log("REMOVE ONE");
+        vm.idToRemove = order.id;
+        openDialogDeleteOrder();
     }
 
     function removeOrders() {
-        console.log("REMOVE MANY");
+        openDialogDeleteMultProduct();
     }
 
     function newOrder() {
         openDialogNewOrder();
-        console.log("NEW");
     }
 
     function openDialogEditOrder(order) {
@@ -126,6 +127,28 @@ function ordersController($document,
         });
     }
 
+    function openDialogDeleteOrder() {
+        var confirm = $mdDialog.confirm()
+            .title('Do you want to delete this order?')
+            .textContent('It can affect your production plans')
+            .ok('yes')
+            .cancel('cancel');
+        $mdDialog.show(confirm).then(function() {
+            removeHelper();
+        });
+    }
+
+    function openDialogDeleteMultProduct() {
+        var confirm = $mdDialog.confirm()
+            .title('Do you want to delete selected orders?')
+            .textContent('It can affect your production plans')
+            .ok('yes')
+            .cancel('cancel');
+        $mdDialog.show(confirm).then(function() {
+            removeHelperMult();
+        });
+    }
+
     function extendOrder(id) {
         var index = vm.orders.map(function(e) {return e.id;}).indexOf(id);
         if(vm.orders[index].products.length > 0) {
@@ -140,5 +163,40 @@ function ordersController($document,
 
     function putOrder(order) {
         vm.orders.push(order);
+    }
+
+
+    function cutOrder(data) {
+        var index = vm.orders.map(function(e) {return e.id;}).indexOf(data);
+        if(index >= 0) {
+            vm.orders.splice(index, 1);
+            vm.idToRemove = 0;
+        }
+    }
+
+    function cutOrders(data) {
+        for(var i = 0; i < data.length; i++) {
+            var index = vm.orders.map(function(e) {return e.id;}).indexOf(data[i]);
+            if(index >= 0) {
+                vm.orders.splice(index, 1);
+                vm.selectedOrders = [];
+            }
+        }
+    }
+
+    function removeHelper() {
+        dataService.removeOrder(vm.idToRemove)
+            .then(cutOrder)
+            .catch(fireError);
+    }
+
+    function removeHelperMult() {
+        var idsToRemove = [];
+        for(var i = 0; i < vm.selectedOrders.length; i++) {
+            idsToRemove.push(vm.selectedOrders[i].id)
+        }
+        dataService.removeOrders(idsToRemove)
+            .then(cutOrders)
+            .catch(fireError);
     }
 }

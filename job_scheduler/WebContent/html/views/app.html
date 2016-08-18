@@ -326,8 +326,8 @@
                         <md-list-item ng-show="orderCtrl.extendedOrderId != order.id"
                                       ng-click="orderCtrl.extendOrder(order.id)">
                             <md-checkbox aria-label="label"
-                                         ng-checked="orderCtrl.exists(product)"
-                                         ng-click="orderCtrl.toggle(product)">
+                                         ng-checked="orderCtrl.exists(order)"
+                                         ng-click="orderCtrl.toggle(order)">
                             </md-checkbox>
                             <div flex="90" layout="row">
                                 <div flex="20">

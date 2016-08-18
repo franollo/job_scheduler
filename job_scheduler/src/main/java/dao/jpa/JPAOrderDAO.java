@@ -29,8 +29,19 @@ public class JPAOrderDAO extends JPADAO implements OrderDAO {
     }
 
     @Override
-    public void remove(Order order) {
-        entityManager.remove(order);
+    public void remove(int id) {
+        entityManager
+                .createQuery("delete from Order o where o.id = :id")
+                .setParameter("id", id)
+                .executeUpdate();
+    }
+
+    @Override
+    public void multipleRemove(List<Integer> ids) {
+        entityManager
+                .createQuery("delete from Order o where o.id in (:ids)")
+                .setParameter("ids", ids)
+                .executeUpdate();
     }
 
     @Override

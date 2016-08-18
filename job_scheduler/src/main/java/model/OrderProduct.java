@@ -15,20 +15,8 @@ import java.io.Serializable;
 @Entity
 @Table(name = "ORDER_PRODUCTS")
 public class OrderProduct implements Serializable{
-    private Order order;
     private Product product;
     private int amount;
-
-    @Id
-    @ManyToOne
-    @JoinColumn(name = "ORDER_ID")
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
 
     @Id
     @ManyToOne

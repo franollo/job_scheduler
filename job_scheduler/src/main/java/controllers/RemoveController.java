@@ -50,12 +50,22 @@ public class RemoveController {
         itemDAO.remove(item);
     }
 
-    @RequestMapping(value = "/order", method = RequestMethod.POST)
-    public @ResponseBody void order(@RequestBody Order order) throws ParseException {
+    @RequestMapping(value = "/order/{orderId}", method = RequestMethod.GET)
+    public @ResponseBody Integer order(@PathVariable int orderId) throws ParseException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
-        userDAO.confirmPermission(Order.class, order.getId(), user);
-        orderDAO.remove(order);
+        userDAO.confirmPermission(Order.class, orderId, user);
+        orderDAO.remove(orderId);
+        return orderId;
+    }
+
+    @RequestMapping(value = "/orders", method = RequestMethod.POST)
+    public @ResponseBody List<Integer> order(@RequestBody List<Integer> orderIds) throws ParseException {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userDAO.getUserByLogin(auth.getName());
+        userDAO.confirmPermission(Order.class, orderIds, user);
+        orderDAO.multipleRemove(orderIds);
+        return orderIds;
     }
 
     @RequestMapping(value = "/product/{productId}", method = RequestMethod.GET)

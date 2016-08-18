@@ -2,6 +2,8 @@ package test.java.dao.jpa;
 
 import main.java.dao.model.OrderDAO;
 import main.java.model.Order;
+import main.java.model.OrderProduct;
+import main.java.model.Product;
 import main.java.model.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -28,5 +30,9 @@ public class JPAOrderDAOIntegrationTest {
         User user = new User();
         user.setUsername("admin");
         List<Order> orderList = orderDAO.getUsersOrders(user);
+        Product product = new Product();
+        OrderProduct orderProduct = new OrderProduct();
+        product.setId(1);
+
     }
 }

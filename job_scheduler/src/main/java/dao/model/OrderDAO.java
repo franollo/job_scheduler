@@ -8,6 +8,7 @@ import java.util.List;
 public interface OrderDAO {
     public Order save(Order order);
     public void update(Order order);
-    public void remove(Order order);
+    public void remove(int id);
+    public void multipleRemove(List<Integer> ids);
     public List<Order> getUsersOrders(User user);
 }

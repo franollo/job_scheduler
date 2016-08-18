@@ -21,7 +21,7 @@ public class Product extends GroupObject {
     private String attribute2;
     private String attribute3;
     private List<ProductOperation> productOperations;
-    private Set<OrderProduct> orderProducts;
+    //private Set<OrderProduct> orderProducts;
 
     @Column(name = "NAME")
     public String getName() {
@@ -79,17 +79,17 @@ public class Product extends GroupObject {
         this.productOperations = productOperations;
     }
 
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @JsonBackReference
-    @OneToMany
-    @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID", updatable = false)
-    public Set<OrderProduct> getOrderProducts() {
-        return orderProducts;
-    }
-
-    public void setOrderProducts(Set<OrderProduct> orderProducts) {
-        this.orderProducts = orderProducts;
-    }
+//    @LazyCollection(LazyCollectionOption.FALSE)
+//    @JsonBackReference
+//    @OneToMany
+//    @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID", updatable = false)
+//    public Set<OrderProduct> getOrderProducts() {
+//        return orderProducts;
+//    }
+//
+//    public void setOrderProducts(Set<OrderProduct> orderProducts) {
+//        this.orderProducts = orderProducts;
+//    }
 
     @PostLoad
     public void sortOperations() {
