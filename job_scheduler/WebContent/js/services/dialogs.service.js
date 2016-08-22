@@ -5,6 +5,7 @@ angular
 function dialogsService(dataService, $mdToast) {
     var vm = this;
     vm.openProductionPlanController = openProductionPlanController;
+    vm.newProductionPlanController = newProductionPlanController;
     vm.showErrorToast = showErrorToast;
     vm.newResourceTypeCtrl = newResourceTypeCtrl;
     vm.editResourceTypeCtrl = editResourceTypeCtrl;
@@ -275,7 +276,8 @@ function dialogsService(dataService, $mdToast) {
         vm.orderProducts = [];
         vm.answer = answer;
         vm.cancel = cancel;
-
+        vm.addOrderProduct = addOrderProduct;
+        vm.removeOrderProduct = removeOrderProduct;
 
         function answer() {
             var dueDate = new Date();
@@ -297,29 +299,64 @@ function dialogsService(dataService, $mdToast) {
         function cancel() {
             $mdDialog.cancel();
         }
+
+        function addOrderProduct(product, amount) {
+            vm.orderProducts.push(new OrderProduct(product, amount));
+        }
+
+        function removeOrderProduct(orderProduct) {
+            var index = vm.orderProducts.map(function(e) {return e.$$hashKey;}).indexOf(orderProduct.$$hashKey);
+            if(index >= 0) {
+                vm.orderProducts.splice(index, 1);
+            }
+        }
     }
 
-    function editOrderCtrl($mdDialog, order) {
+    function editOrderCtrl($mdDialog, order, products) {
         var vm = this;
+        vm.products = products;
         vm.order = {};
         angular.copy(order, vm.order);
+        vm.dueDate = new Date(new Date(vm.order.dueDate).valueOf() +new Date(vm.order.dueDate).getTimezoneOffset() * 60000);
+        vm.dueTime = new Date(new Date(vm.order.dueDate).valueOf() +new Date(vm.order.dueDate).getTimezoneOffset() * 60000);
         vm.answer = answer;
         vm.cancel = cancel;
+        vm.addOrderProduct = addOrderProduct;
+        vm.removeOrderProduct = removeOrderProduct;
 
         function answer() {
+            var dueDate = new Date();
+            dueDate.setYear(vm.dueDate.getFullYear());
+            dueDate.setMonth(vm.dueDate.getMonth());
+            dueDate.setDate(vm.dueDate.getDate());
+            dueDate.setHours(vm.dueTime.getHours());
+            dueDate.setMinutes(vm.dueTime.getMinutes());
+            dueDate.setSeconds(vm.dueTime.getSeconds());
+            dueDate = dueDate.toISOString().slice(0, 19);
             var order = new Order(
                 vm.order.name,
                 vm.order.description,
-                vm.order.dueDate,
+                dueDate,
                 vm.order.orderProducts);
             order.setId(vm.order.id);
             order.setCreatedOn(vm.order.createdOn);
             order.setEditedOn(vm.order.editedOn);
-            $mdDialog.hide(order);
+            $mdDialog.hide(JSON.parse(angular.toJson(order)));
         }
 
         function cancel() {
             $mdDialog.cancel();
+        }
+
+        function addOrderProduct(product, amount) {
+            vm.order.orderProducts.push(new OrderProduct(product, amount));
+        }
+
+        function removeOrderProduct(orderProduct) {
+            var index = vm.order.orderProducts.map(function(e) {return e.$$hashKey;}).indexOf(orderProduct.$$hashKey);
+            if(index >= 0) {
+                vm.order.orderProducts.splice(index, 1);
+            }
         }
     }
 
@@ -354,6 +391,71 @@ function dialogsService(dataService, $mdToast) {
 
         function select(id) {
             vm.selectedPlanId = id;
+        }
+
+
+    }
+
+    function newProductionPlanController($mdDialog, orders) {
+        var vm = this;
+        vm.orders = orders;
+        vm.selectedOrders = [];
+        vm.name = '';
+        vm.startDate = '';
+        vm.answer = answer;
+        vm.cancel = cancel;
+        vm.select = select;
+        vm.exists = exists;
+        vm.toggleAll = toggleAll;
+        vm.toggle = toggle;
+        vm.isChecked = isChecked;
+        vm.isIndeterminate = isIndeterminate;
+        vm.productionPlans = [];
+        vm.selectedPlanId = 0;
+
+        function answer() {
+            console.log(vm.startDate);
+            console.log(vm.startDate.toISOString());
+            var productionPlan = new ProductionPlan(vm.name, vm.startDate, vm.selectedOrders);
+            $mdDialog.hide(JSON.parse(angular.toJson(productionPlan)));
+        }
+
+        function cancel() {
+            $mdDialog.cancel();
+        }
+
+        function select(id) {
+            vm.selectedPlanId = id;
+        }
+
+        function exists(item) {
+            return vm.selectedOrders.indexOf(item) > -1;
+        }
+
+        function toggleAll() {
+            if(vm.selectedOrders.length === vm.orders.length) {
+                vm.selectedOrders = [];
+            } else if (vm.selectedOrders.length === 0 || vm.selectedOrders.length > 0) {
+                vm.selectedOrders = vm.orders.slice(0);
+            }
+        }
+
+        function toggle(item) {
+            var idx = vm.selectedOrders.indexOf(item);
+            if(idx > -1) {
+                vm.selectedOrders.splice(idx, 1);
+            }
+            else {
+                vm.selectedOrders.push(item);
+            }
+        }
+
+        function isChecked() {
+            return vm.selectedOrders.length === vm.orders.length
+        }
+
+        function isIndeterminate() {
+            return (vm.selectedOrders.length !== 0 && vm.selectedOrders.length !== vm.orders.length );
         }
     }
 

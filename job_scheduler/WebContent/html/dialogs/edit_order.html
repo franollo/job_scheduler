@@ -1,7 +1,7 @@
-<md-dialog>
+<md-dialog style="min-width: 418px">
     <md-toolbar>
         <div class="md-toolbar-tools">
-            <h2>Create new order</h2>
+            <h2>Edit order</h2>
             <span flex></span>
             <md-button class="md-icon-button" ng-click="ctrl.cancel()">
                 <i class="material-icons md-18">close</i>
@@ -17,15 +17,11 @@
                         <div layout="row">
                             <md-input-container flex>
                                 <label>Order name</label>
-                                <input type="text" ng-model="ctrl.name"
-                                       ng-change=""
-                                       ng-model-options="{debounce: 750}">
+                                <input type="text" ng-model="ctrl.order.name">
                             </md-input-container>
                             <md-input-container flex>
                                 <label>Description</label>
-                                <input type="text" ng-model="ctrl.description"
-                                       ng-change=""
-                                       ng-model-options="{debounce: 750}">
+                                <input type="text" ng-model="ctrl.order.description">
                             </md-input-container>
                         </div>
                         <div layout="row">
@@ -40,6 +36,53 @@
                 </div>
             </md-tab>
             <md-tab label="products">
+
+                <md-content style="max-height: 350px">
+                    <md-section>
+                        <md-subheader>
+                            <div layout="column">
+                                <div class="js-side-padding"
+                                     layout="row"
+                                     md-colors="{background: 'accent-200'}">
+                                    <h4 class="js-margin-16" flex="70">Product</h4>
+                                    <h4 class="js-margin-16" flex="30">Ammount</h4>
+                                    <span style="width: 40px"></span>
+                                </div>
+                                <md-divider></md-divider>
+                                <div class="js-side-padding"
+                                     layout="row"
+                                     md-colors="{background: 'primary-200'}">
+                                    <md-select ng-model="product" flex="70" style="margin: 0">
+                                        <md-option ng-value="product"
+                                                   ng-repeat="product in ctrl.products">
+                                            {{product.name}}
+                                        </md-option>
+                                    </md-select>
+                                    <input style="border: 0; background: transparent; min-width: 60px" type="number" step="1" size="8" ng-model="amount" flex="30">
+                                    <md-button class="md-icon-button" ng-click="ctrl.addOrderProduct(product, amount)">
+                                        <md-icon class="material-icons md-24" >add</md-icon>
+                                    </md-button>
+                                </div>
+                            </div>
+                        </md-subheader>
+                        <md-divider></md-divider>
+                        <div ng-repeat="orderProduct in ctrl.order.orderProducts"
+                             layout="column">
+                            <div class="js-side-padding" layout="row" layout-align="start center">
+                                <div flex="70">
+                                    {{orderProduct.product.name}}
+                                </div>
+                                <div flex="30">
+                                    {{orderProduct.amount}}
+                                </div>
+                                <md-button class="md-icon-button" ng-click="ctrl.removeOrderProduct(orderProduct)">
+                                    <md-icon class="material-icons md-24" >remove</md-icon>
+                                </md-button>
+                            </div>
+                            <md-divider></md-divider>
+                        </div>
+                    </md-section>
+                </md-content>
 
             </md-tab>
         </md-tabs>

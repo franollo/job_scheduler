@@ -59,5 +59,19 @@ function Order(name, description, dueDate, orderProducts) {
     this.setEditedOn = function(editedOn) {
         this.editedOn = editedOn;
     };
+    this.setDueDate = function(dueDate) {
+        this.dueDate = dueDate;
+    }
+}
+
+function OrderProduct(product, amount) {
+    this.product = product;
+    this.amount = amount;
+}
+
+function ProductionPlan(name, startDate, orders) {
+    this.name = name;
+    this.start = startDate;
+    this.orders = orders;
 }
 

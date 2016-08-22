@@ -51,27 +51,7 @@ public class JPAProductDAO extends JPADAO implements ProductDAO {
                 "where u.username = :username";
         TypedQuery<Product> query = entityManager.createQuery(queryString, Product.class);
         try {
-            List<Product> products = query.setParameter("username", user.getUsername()).getResultList();
-            for(Product product : products) {
-                Collections.sort(product.getProductOperations(), new Comparator<ProductOperation>() {
-                    @Override
-                    public int compare(ProductOperation o1, ProductOperation o2) {
-                        if(o1.getOperationNumber() == null && o2.getOperationNumber() == null) {
-                            return 0;
-                        }
-                        else if(o1.getOperationNumber() == null && o2.getOperationNumber() != null) {
-                            return -1;
-                        }
-                        else if(o1.getOperationNumber() != null && o2.getOperationNumber() == null) {
-                            return  1;
-                        }
-                        else {
-                            return o1.getOperationNumber() - o2.getOperationNumber();
-                        }
-                    }
-                });
-            }
-            return products;
+            return query.setParameter("username", user.getUsername()).getResultList();
         } catch (NoResultException e) {
             return null;
         }

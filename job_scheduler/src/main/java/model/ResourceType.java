@@ -1,6 +1,5 @@
 package main.java.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import main.java.model.common.GroupObject;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;

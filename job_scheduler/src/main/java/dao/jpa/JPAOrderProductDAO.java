@@ -14,8 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional(propagation = Propagation.REQUIRED)
 public class JPAOrderProductDAO extends JPADAO implements OrderProductDAO {
     @Override
-    public void insert(OrderProduct orderProduct) {
-        entityManager.persist(orderProduct);
+    public OrderProduct save(OrderProduct orderProduct) {
+        return entityManager.merge(orderProduct);
     }
 
     @Override

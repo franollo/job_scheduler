@@ -2,12 +2,12 @@ angular
     .module('app')
     .controller('ordersController', ordersController);
 
-ordersController.$inject = ['$document',
+ordersController.$inject = ['$scope','$document',
                             '$mdDialog',
                             'dataService',
                             'dialogsService'];
 
-function ordersController($document,
+function ordersController($scope, $document,
                           $mdDialog,
                           dataService,
                           dialogsService) {
@@ -30,25 +30,20 @@ function ordersController($document,
     vm.selectedOrders = [];
 
     dataService.getOrders()
-        .then(putOrders)
+        .then(setOrders)
         .catch(fireError);
 
     function fireError(error) {
         dialogsService.showErrorToast(error.status);
     }
 
-    function putOrders(data) {
+    function setOrders(data) {
         vm.orders = data;
-        mainController.orders = vm.orders;
+        $scope.$parent.orders = vm.orders;
     }
 
-    function extendOrder(id) {
-        if(vm.extendedOrderId != id) {
-            vm.extendedOrderId = id;
-        }
-        else {
-            vm.extendedOrderId = 0;
-        }
+    function getOrders() {
+        return vm.orders;
     }
 
     function exists(item) {
@@ -100,20 +95,23 @@ function ordersController($document,
 
     function openDialogEditOrder(order) {
         $mdDialog.show({
-            locals: {order: order},
+            locals: {order: order, products: mainController.products},
             controller: dialogsService.editOrderCtrl,
             controllerAs: 'ctrl',
             templateUrl: 'html/dialogs/edit_order.html',
             parent: angular.element(document.body),
             clickOutsideToClose: true
         }).then(function (answer) {
-
+            console.log(answer);
+            dataService.saveOrder(answer)
+                .then(putOrder)
+                .catch(fireError);
         });
     }
 
     function openDialogNewOrder() {
         $mdDialog.show({
-            locals: {products: mainController.products},
+            locals: {products: dataService.getProducts()},
             controller: dialogsService.newOrderCtrl,
             controllerAs: 'ctrl',
             templateUrl: 'html/dialogs/new_order.html',
@@ -151,7 +149,7 @@ function ordersController($document,
 
     function extendOrder(id) {
         var index = vm.orders.map(function(e) {return e.id;}).indexOf(id);
-        if(vm.orders[index].products.length > 0) {
+        if(vm.orders[index].products != null) {
             if(vm.extendedOrderId != id) {
                 vm.extendedOrderId = id;
             }
@@ -164,7 +162,6 @@ function ordersController($document,
     function putOrder(order) {
         vm.orders.push(order);
     }
-
 
     function cutOrder(data) {
         var index = vm.orders.map(function(e) {return e.id;}).indexOf(data);

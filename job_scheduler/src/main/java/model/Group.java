@@ -1,7 +1,5 @@
 package main.java.model;
 
-import org.springframework.cglib.core.Local;
-
 import javax.persistence.*;
 import java.time.LocalDateTime;
 

@@ -6,7 +6,9 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 @Entity
 @Table(name = "ORDERS")
@@ -16,7 +18,7 @@ public class Order extends GroupObject {
     private String description;
     private LocalDateTime dueDate;
     private Integer productionPlanId;
-    private Set<OrderProduct> orderProducts;
+    private List<OrderProduct> orderProducts;
 
     @Column(name = "NAME")
     public String getName() {
@@ -55,13 +57,32 @@ public class Order extends GroupObject {
     }
 
     @LazyCollection(LazyCollectionOption.FALSE)
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name = "ORDER_ID", nullable = false)
-    public Set<OrderProduct> getOrderProducts() {
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
+    public List<OrderProduct> getOrderProducts() {
         return orderProducts;
     }
 
-    public void setOrderProducts(Set<OrderProduct> orderProducts) {
+    public void setOrderProducts(List<OrderProduct> orderProducts) {
         this.orderProducts = orderProducts;
+    }
+
+    public void addOrderProduct(OrderProduct orderProduct) {
+        orderProduct.setOrder(this);
+        orderProducts.add(orderProduct);
+    }
+
+    public void mergeDuplicatedOrderProducts() {
+        int index;
+        List<OrderProduct> tempList = new ArrayList<>();
+        for(OrderProduct orderProduct : orderProducts) {
+            index = tempList.indexOf(orderProduct);
+            if(index > -1) {
+                tempList.get(index).addAmount(orderProduct.getAmount());
+            }
+            else {
+                tempList.add(orderProduct);
+            }
+        }
+        this.orderProducts = new LinkedList<>(tempList);
     }
 }

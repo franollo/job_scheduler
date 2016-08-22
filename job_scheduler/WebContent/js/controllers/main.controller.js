@@ -3,8 +3,8 @@ angular
     .controller('mainController', mainController);
 
 mainController.$inject = ['$document',
+    '$location',
     '$mdDialog',
-    '$mdToast',
     'authService',
     'dataService',
     'bufferService',
@@ -12,8 +12,8 @@ mainController.$inject = ['$document',
     'timelineService'];
 
 function mainController($document,
+                        $location,
                         $mdDialog,
-                        $mdToast,
                         authService,
                         dataService,
                         bufferService,
@@ -30,6 +30,7 @@ function mainController($document,
     vm.logout = logout;
     vm.toggleToolbar = toggleToolbar;
     vm.toggleLockTimeline = toggleLockTimeline;
+    vm.toogleZoomKey = toogleZoomKey;
     vm.showCurrentTime = showCurrentTime;
     vm.toggleSnappingTimeline = toggleSnappingTimeline;
     vm.focusTimeline = focusTimeline;
@@ -37,19 +38,15 @@ function mainController($document,
     vm.spliceResources = spliceResources;
     vm.undo = undo;
     vm.redo = redo;
-    vm.dialogAddJob = dialogAddJob;
-    vm.dialogAddResource = dialogAddResource;
-    vm.dialogNewOrder = dialogNewOrder;
-    vm.dialogAddJobsToOrder = dialogAddJobsToOrder;
     vm.dialogOpenProductionPlan = dialogOpenProductionPlan;
+    vm.dialogNewProductionPlan = dialogNewProductionPlan;
     vm.extendOrder = extendOrder;
     vm.openOrdersWorkspace = openOrdersWorkspace;
     vm.openProductsWorkspace = openProductsWorkspace;
     vm.openResourcesWorkspace = openResourcesWorkspace;
     vm.closeWorkspace = closeWorkspace;
+    vm.test = test;
     vm.extendedOrderId = 0;
-    vm.resourceTypes = [];
-    vm.products = [];
     vm.orders = [];
     vm.productionPlans = [];
     vm.productionPlan = {};
@@ -64,12 +61,10 @@ function mainController($document,
     };
 
     timelineService.init("js-timeline");
-    dataService.getProductionPlan(1)
-        .then(putProductionPlan)
+    dataService.getProductionPlan(5)
+        .then(productionPlanToVIS)
         .catch(fireError);
-
-
-
+    
     /**
      * WORKSPACE TOGGLE
      */
@@ -120,6 +115,10 @@ function mainController($document,
         vm.user = data;
     }
 
+    function handleLogout(data) {
+        $location.path('/login');
+    }
+
     function getProductionPlans() {
         dataService.getProductionPlans()
             .then(putProductionPlans)
@@ -139,13 +138,9 @@ function mainController($document,
     }
 
     function logout() {
-        authService.logout().then(function () {
-            vm.log = "";
-            vm.nam = "";
-            vm.sur = "";
-            vm.error = "";
-            vm.authenticated = authService.authenticated;
-        });
+        authService.logout()
+            .then(handleLogout)
+            .catch(fireError);
     }
 
     /**
@@ -158,7 +153,7 @@ function mainController($document,
 
     function toggleLockTimeline() {
         vm.timelineLocked = !vm.timelineLocked;
-        if (vm.timelineLocked = false) {
+        if (vm.timelineLocked == false) {
             timelineService.unlock();
         }
         else {
@@ -168,7 +163,7 @@ function mainController($document,
 
     function showCurrentTime() {
         vm.timelineCurrentTime = !vm.timelineCurrentTime;
-        if (vm.timelineCurrentTime = false) {
+        if (vm.timelineCurrentTime == false) {
             timelineService.hideCurrentTime();
         }
         else {
@@ -178,11 +173,21 @@ function mainController($document,
 
     function toggleSnappingTimeline() {
         vm.snapping = !vm.snapping;
-        if (snapping == false) {
+        if (vm.snapping == false) {
             timelineService.disableSnapping();
         }
         else {
             timelineService.enableSnapping();
+        }
+    }
+
+    function toogleZoomKey() {
+        vm.zoomKey = !vm.zoomKey;
+        if(vm.zoomKey == true) {
+            timelineService.zoomableKeyTrue();
+        }
+        else {
+            timelineService.zoomableKeyFalse();
         }
     }
 
@@ -222,7 +227,46 @@ function mainController($document,
     function redo() {
         bufferService.redo(timelineService.getItems());
     }
-    
+
+    function findResource(id) {
+        var resourceTypes = dataService.getResourceTypes();
+        for (var i = 0; i < resourceTypes.length; i++) {
+            var index = resourceTypes[i].resources.map(function(e) {return e.id;}).indexOf(id);
+            if(index >= 0) {
+                return resourceTypes[i].resources[index];
+            }
+        }
+    }
+
+    function findProduct(id) {
+        var products = dataService.getServiceProducts();
+        var index = products.map(function(e) {return e.id;}).indexOf(id);
+        if(index >= 0) {
+            return products[index];
+        }
+    }
+
+    function productionPlanToVIS(data) {
+        vm.productionPlan = data;
+        timelineService.clean();
+        var groups = [];
+        for(var i = 0; i < data.items.length; i++) {
+            if(groups.map(function(e) {return e;}).indexOf(data.items[i].resourceId) < 0) {
+                groups.push(data.items[i].resourceId);
+            }
+            data.items[i].group = data.items[i].resourceId;
+            data.items[i].content = findProduct(data.items[i].productId).name;
+            data.items[i].start = new Date(data.items[i].start);
+            data.items[i].end = new Date(data.items[i].end);
+        }
+        for(var j = 0; j < groups.length; j++) {
+            var resource = findResource(groups[j]);
+            var group = {id: groups[j], content: resource.name, title: resource.description}
+            timelineService.addGroups(group);
+        }
+        timelineService.addItems(data.items);
+        timelineService.focus();
+    }
     
     /**
      * DIALOGS AND TOASTS
@@ -231,65 +275,6 @@ function mainController($document,
     function fireError(error){
         console.error(error);
         dialogsService.showErrorToast(error);
-    }
-
-    function dialogAddJob() {
-        $mdDialog.show({
-            locals: {dataToPass: vm.resourceTypes},
-            controller: dialogsService.DialogController1,
-            controllerAs: 'ctrl',
-            templateUrl: 'html/dialogs/add_job.html',
-            parent: angular.element(document.body),
-            clickOutsideToClose: true
-        }).then(function (answer) {
-            dataService.newJob(answer)
-                .then(getJobs)
-                .catch(fireError);
-        });
-    }
-
-    function dialogAddResource() {
-        $mdDialog.show({
-            controller: dialogsService.DialogController4,
-            controllerAs: 'ctrl',
-            templateUrl: 'html/dialogs/new_resource.html',
-            parent: angular.element(document.body),
-            clickOutsideToClose: true
-        }).then(function (answer) {
-            dataService.newResource(answer)
-                .then(getResources)
-                .catch(fireError);
-        });
-    }
-
-    function dialogNewOrder() {
-        $mdDialog.show({
-            locals: {dataToPass: vm.jobs},
-            controller: dialogsService.newOrderController,
-            controllerAs: 'ctrl',
-            templateUrl: 'html/dialogs/new_order.html',
-            parent: angular.element(document.body),
-            clickOutsideToClose: true
-        }).then(function (answer) {
-            dataService.newOrder(answer)
-                .then(saveOrder)
-                .catch(fireError);
-        });
-    }
-
-    function dialogAddJobsToOrder() {
-        $mdDialog.show({
-            locals: {dataToPass: vm.jobs},
-            controller: dialogsService.addJobOrderController,
-            controllerAs: 'ctrl',
-            templateUrl: 'html/dialogs/add_job_order.html',
-            parent: angular.element(document.body),
-            clickOutsideToClose: true
-        }).then(function (answer) {
-            dataService.addJobOrder(answer[0])
-                .then(saveOrder)
-                .catch(fireError);
-        });
     }
 
     function dialogOpenProductionPlan() {
@@ -301,8 +286,27 @@ function mainController($document,
             clickOutsideToClose: true
         }).then(function (answer) {
             dataService.getProductionPlan(answer)
-                .then(putProductionPlan)
+                .then(productionPlanToVIS)
                 .catch(fireError);
         });
+    }
+
+    function dialogNewProductionPlan() {
+        dataService.getOrders()
+            .then(function(data) {
+                $mdDialog.show({
+                    locals: {orders: data},
+                    controller: dialogsService.newProductionPlanController,
+                    controllerAs: 'ctrl',
+                    templateUrl: 'html/dialogs/new_production_plan.html',
+                    parent: angular.element(document.body),
+                    clickOutsideToClose: true
+                }).then(function (answer) {
+                    dataService.saveProductionPlan(answer)
+                        .then(productionPlanToVIS)
+                        .catch(fireError);
+                });
+            })
+            .catch(fireError);
     }
 }

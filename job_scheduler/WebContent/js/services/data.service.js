@@ -26,6 +26,28 @@ function dataService($http) {
     vm.getProducts = getProducts;
     vm.getOrders = getOrders;
     vm.getUserInfo = getUserInfo;
+    vm.setResourceTypes = setResourceTypes;
+    vm.getResourceTypes = getResourceTypes;
+    vm.setProducts = setProducts;
+    vm.getServiceProducts = getServiceProducts;
+    vm.resourceTypes = [];
+    vm.products = [];
+
+    function setResourceTypes(resourceTypes) {
+        vm.resourceTypes = resourceTypes;
+    }
+
+    function getResourceTypes() {
+        return vm.resourceTypes;
+    }
+
+    function setProducts(products) {
+        vm.products = products;
+    }
+
+    function getServiceProducts() {
+        return vm.products;
+    }
 
     function saveResource(resource) {
         return post("save/resource", resource);

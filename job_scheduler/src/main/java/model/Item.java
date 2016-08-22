@@ -12,8 +12,28 @@ public class Item extends GroupObject {
     private LocalDateTime start;
     private LocalDateTime end;
     private LocalDateTime preparationStart;
+    private String className;
     private Integer resourceId;
+    private Integer productId;
     private Integer productionPlanId;
+
+    public Item(){}
+
+    public Item(LocalDateTime start,
+                LocalDateTime end,
+                String className,
+                Integer resourceId,
+                Integer productId,
+                Integer productionPlanId,
+                Integer groupId) {
+        this.start = start;
+        this.end = end;
+        this.className = className;
+        this.resourceId = resourceId;
+        this.productId = productId;
+        this.productionPlanId = productionPlanId;
+        setGroupId(groupId);
+    }
 
     @Column(name = "START")
     public LocalDateTime getStart() {
@@ -42,6 +62,15 @@ public class Item extends GroupObject {
         this.preparationStart = preparationStart;
     }
 
+    @Column(name = "COLOR")
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String className) {
+        this.className = className;
+    }
+
     @Column(name = "RESOURCE_ID")
     public Integer getResourceId() {
         return resourceId;
@@ -49,6 +78,15 @@ public class Item extends GroupObject {
 
     public void setResourceId(Integer resourceId) {
         this.resourceId = resourceId;
+    }
+
+    @Column(name = "PRODUCT_ID")
+    public Integer getProductId() {
+        return productId;
+    }
+
+    public void setProductId(Integer productId) {
+        this.productId = productId;
     }
 
     @Column(name = "PRODUCTION_PLAN_ID")

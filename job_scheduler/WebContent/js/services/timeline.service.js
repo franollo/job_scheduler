@@ -2,7 +2,7 @@ angular
     .module('app')
     .service('timelineService', timelineService);
 
-function timelineService() {
+function timelineService(dataService) {
     var vm = this;
     vm.init = init;
     vm.lock = lock;
@@ -13,7 +13,13 @@ function timelineService() {
     vm.enableSnapping = enableSnapping;
     vm.getItems = getItems;
     vm.getGroups = getGroups;
+    vm.addItems = addItems;
+    vm.addGroups = addGroups;
     vm.focus = focus;
+    vm.clean = clean;
+    vm.zoomableKeyTrue = zoomableKeyTrue;
+    vm.zoomableKeyFalse = zoomableKeyFalse;
+
 
     var groups = new vis.DataSet();
     var items = new vis.DataSet();
@@ -27,56 +33,74 @@ function timelineService() {
         stack: false,
         multiselect: true,
         groupEditable: true,
+        zoomKey: 'ctrlKey',
         onMove: function (item, callback) {
-            bufferService.push(items.get(item.id));
+            delete item.group;
+            delete item.content;
             callback(item);
-            dataService.updateItem(item);
+            dataService.saveItem(item);
         }
     };
+
+    function addItems(itemsToAdd) {
+        items.add(itemsToAdd);
+    }
+
+    function addGroups(groupsToAdd) {
+        groups.add(groupsToAdd);
+    }
 
     function init(elementId) {
         setTimeout(function () {
             container = document.getElementById(elementId);
-            timeline = new vis.Timeline(container, items,/* groups,*/ options);
+            timeline = new vis.Timeline(container, items, groups, options);
         }, 10);
     }
 
     function lock() {
-        timeline.setOptions({
-            editable: {
-                add: false,
-                updateTime: false,
-                updateGroup: false,
-                remove: false
-            }
-        });
+        options.editable.add = false;
+        options.editable.updateTime = false;
+        options.editable.updateGroup = false;
+        options.editable.remove = false;
+        timeline.setOptions(options);
     }
 
     function unlock() {
-        timeline.setOptions({
-            editable: {
-                add: true,
-                updateTime: true,
-                updateGroup: false,
-                remove: true
-            }
-        });
+        options.editable.add = true;
+        options.editable.updateTime = true;
+        options.editable.updateGroup = false;
+        options.editable.remove = true;
+        timeline.setOptions(options);
     }
 
     function showCurrentTime() {
-        timeline.setOptions({showCurrentTime: true});
+        options.showCurrentTime = true;
+        timeline.setOptions(options);
+    }
+
+    function zoomableKeyTrue() {
+        options.zoomKey = 'ctrlKey';
+        timeline.setOptions(options);
+    }
+
+    function zoomableKeyFalse() {
+        options.zoomKey = '';
+        timeline.setOptions(options);
     }
 
     function hideCurrentTime() {
-        timeline.setOptions({showCurrentTime: false});
+        options.showCurrentTime = false;
+        timeline.setOptions(options);
     }
 
     function disableSnapping() {
-        timeline.setOptions({snap: null})
+        options.snap = null;
+        timeline.setOptions(options);
     }
 
     function enableSnapping() {
-        timeline.setOptions({snap: vis.timeline.TimeStep.snap})
+        options.snap = vis.timeline.TimeStep.snap;
+        timeline.setOptions(options);
     }
 
     function focus() {
@@ -89,6 +113,11 @@ function timelineService() {
 
     function getGroups() {
         return groups;
+    }
+
+    function clean() {
+        groups.clear();
+        items.clear();
     }
 }
 

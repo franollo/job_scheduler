@@ -11,7 +11,7 @@
             </md-toolbar-filler>
             <div>
                 <div class="js-toolbar-tools md-toolbar-tools">
-                    {{ctrl.order.name}}
+                    {{ctrl.productionPlan.name}}
                 </div>
                 <md-menu-bar>
                     <md-menu>
@@ -20,16 +20,10 @@
                         </button>
                         <md-menu-content>
                             <md-menu-item>
-                                <md-button ng-click="ctrl.dialogNewOrder()">New order</md-button>
+                                <md-button ng-click="ctrl.dialogNewProductionPlan(orderCtrl.orders)">New production plan</md-button>
                             </md-menu-item>
                             <md-menu-item>
                                 <md-button ng-click="ctrl.dialogOpenProductionPlan()">Open production plan</md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button ng-click="ctrl.showNewOrder()">Save as</md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button print-btn>Print</md-button>
                             </md-menu-item>
                         </md-menu-content>
                     </md-menu>
@@ -125,10 +119,7 @@
             </div>
             <span flex></span>
             <div layout="" layout-align="end end">
-                <md-button class="md-raised md-primary" ng-click="ctrl.showSignIn()" ng-hide="authenticated">
-                    Sign in
-                </md-button>
-                <md-button class="md-accent md-primary" ng-click="ctrl.logout()" ng-show="authenticated">
+                <md-button class="md-raised md-primary" ng-click="ctrl.logout()">
                     Sign out
                 </md-button>
             </div>
@@ -142,10 +133,7 @@
                         Schedule
                     </md-tab-label>
                     <md-tab-body>
-                        <md-toolbar class="js-toolbar" layout="row" ng-show="ctrl.showToolbar">
-                            <div class="js-button" ng-click="ctrl.fireError(401)">
-                                <i class="material-icons md-18">undo</i>
-                            </div>
+                        <md-toolbar class="js-toolbar" layout="row">
                             <div class="js-button" ng-click="ctrl.undo()">
                                 <md-tooltip md-direction="bottom" md-delay="1000">
                                     Undo
@@ -162,7 +150,7 @@
                                 <md-tooltip md-direction="bottom" md-delay="1000">
                                     Lock timeline
                                 </md-tooltip>
-                                <i class="material-icons md-18">{{timelineLocked ? 'lock_outline' : 'lock_open'}}</i>
+                                <i class="material-icons md-18">{{ctrl.timelineLocked ? 'lock_outline' : 'lock_open'}}</i>
                             </div>
                             <div class="js-button" ng-click="ctrl.focusTimeline()">
                                 <md-tooltip md-direction="bottom" md-delay="1000">
@@ -187,6 +175,12 @@
                                     Add job to order
                                 </md-tooltip>
                                 <i class="material-icons md-18">add</i>
+                            </div>
+                            <div class="js-button" ng-click="ctrl.toogleZoomKey()">
+                                <md-tooltip md-direction="bottom" md-delay="1000">
+                                    Enable/disable soom key
+                                </md-tooltip>
+                                <i class="material-icons md-18">keyboard</i>
                             </div>
                         </md-toolbar>
                         <div id="js-timeline" print-section></div>
@@ -654,12 +648,6 @@
             </md-content>
         </div>
     </div>
-    <!--<md-toolbar class="js-bottom-toolbar">-->
-        <!--<div ng-hide="ctrl.authenticated">-->
-            <!--<h5 class="no-margin">You are not logged in</h5>-->
-        <!--</div>-->
-        <!--<div ng-show="ctrl.authenticated">-->
-            <!--<h5 class="no-margin">Welcome {{ctrl.nam}} {{ctrl.sur}} ({{ctrl.log}})</h5>-->
-        <!--</div>-->
-    <!--</md-toolbar>-->
+    <md-toolbar class="js-bottom-toolbar">
+    </md-toolbar>
 </div>

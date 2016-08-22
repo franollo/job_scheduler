@@ -38,7 +38,7 @@ function productsController($document,
 
     function putProducts(data) {
         vm.products = data;
-        mainController.products = vm.products;
+        dataService.setProducts(vm.products);
     }
 
     function fireError(error) {
@@ -75,10 +75,6 @@ function productsController($document,
         return (vm.selectedProducts.length !== 0 && vm.selectedProducts.length !== vm.products.length );
     }
 
-    function editProduct(product) {
-        openDialogEditProduct(mainController.resourceTypes, product);
-    }
-
     function removeProduct(product) {
         vm.idToRemove = product.id;
         openDialogDeleteProduct()
@@ -88,13 +84,10 @@ function productsController($document,
         openDialogDeleteMultProduct();
     }
 
-    function newProduct() {
-        openDialogNewProduct(mainController.resourceTypes);
-    }
-
     function addProduct(data) {
         console.log(data);
         vm.products.push(data);
+        dataService.setProducts(vm.products);
     }
 
     function replaceProdut(data) {
@@ -102,11 +95,12 @@ function productsController($document,
         if(index >= 0) {
             vm.products[index] = data;
         }
+        dataService.setProducts(vm.products);
     }
 
     function extendProduct(id) {
         var index = vm.products.map(function(e) {return e.id;}).indexOf(id);
-        if(vm.products[index].productOperations.length > 0) {
+        if(vm.products[index].productOperations != null) {
             if(vm.extendedProductId != id) {
                 vm.extendedProductId = id;
             }
@@ -116,7 +110,8 @@ function productsController($document,
         }
     }
 
-    function openDialogNewProduct(resourceTypes) {
+    function newProduct() {
+        var resourceTypes = dataService.getResourceTypes();
         $mdDialog.show({
             locals: {resourceTypes: resourceTypes},
             controller: dialogsService.newProductCtrl,
@@ -131,7 +126,8 @@ function productsController($document,
         });
     }
 
-    function openDialogEditProduct(resourceTypes, product) {
+    function editProduct(product) {
+        var resourceTypes = dataService.getResourceTypes();
         $mdDialog.show({
             locals: {resourceTypes: resourceTypes, product: product},
             controller: dialogsService.editProductCtrl,
@@ -190,6 +186,7 @@ function productsController($document,
             vm.products.splice(index, 1);
             vm.idToRemove = 0;
         }
+        dataService.setProducts(vm.products);
     }
 
     function cutProducts(data) {
@@ -200,13 +197,15 @@ function productsController($document,
                 vm.selectedProducts = [];
             }
         }
+        dataService.setProducts(vm.products);
     }
 
     function findResource(id) {
-        for (var i = 0; i < mainController.resourceTypes.length; i++) {
-            var index = mainController.resourceTypes[i].resources.map(function(e) {return e.id;}).indexOf(id);
+        var resourceTypes = dataService.getResourceTypes();
+        for (var i = 0; i < resourceTypes.length; i++) {
+            var index = resourceTypes[i].resources.map(function(e) {return e.id;}).indexOf(id);
             if(index >= 0) {
-                return mainController.resourceTypes[i].resources[index];
+                return resourceTypes[i].resources[index];
             }
         }
     }

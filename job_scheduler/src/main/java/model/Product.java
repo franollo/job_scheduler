@@ -1,6 +1,5 @@
 package main.java.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import main.java.model.common.GroupObject;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -9,7 +8,6 @@ import javax.persistence.*;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-import java.util.Set;
 
 @Entity
 @Table(name = "PRODUCTS")
@@ -21,7 +19,6 @@ public class Product extends GroupObject {
     private String attribute2;
     private String attribute3;
     private List<ProductOperation> productOperations;
-    //private Set<OrderProduct> orderProducts;
 
     @Column(name = "NAME")
     public String getName() {
@@ -78,18 +75,6 @@ public class Product extends GroupObject {
     public void setProductOperations(List<ProductOperation> productOperations) {
         this.productOperations = productOperations;
     }
-
-//    @LazyCollection(LazyCollectionOption.FALSE)
-//    @JsonBackReference
-//    @OneToMany
-//    @JoinColumn(name = "PRODUCT_ID", referencedColumnName = "PRODUCT_ID", updatable = false)
-//    public Set<OrderProduct> getOrderProducts() {
-//        return orderProducts;
-//    }
-//
-//    public void setOrderProducts(Set<OrderProduct> orderProducts) {
-//        this.orderProducts = orderProducts;
-//    }
 
     @PostLoad
     public void sortOperations() {

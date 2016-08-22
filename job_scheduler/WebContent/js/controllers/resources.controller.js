@@ -2,13 +2,13 @@ angular
     .module('app')
     .controller('resourcesController', resourcesController);
 
-resourcesController.$inject = [
+resourcesController.$inject = ['$scope',
     '$document',
     '$mdDialog',
     'dataService',
     'dialogsService'];
 
-function resourcesController($document,
+function resourcesController($scope, $document,
                              $mdDialog,
                              dataService,
                              dialogsService) {
@@ -39,12 +39,11 @@ function resourcesController($document,
 
     function putResources(data) {
         vm.resourceTypes = data;
-        mainController.resourceTypes = vm.resourceTypes;
+        dataService.setResourceTypes(vm.resourceTypes);
     }
 
     function fireError(error) {
-        console.error("AN ERROR OCCURED");
-        console.log(error);
+        dialogsService.showErrorToast(error.status);
     }
 
     function exists(item) {
@@ -225,10 +224,12 @@ function resourcesController($document,
         if(index >= 0) {
             vm.resourceTypes[index].resources.push(data);
         }
+        dataService.setResourceTypes(vm.resourceTypes);
     }
 
     function addResourceType(data) {
         vm.resourceTypes.push(data);
+        dataService.setResourceTypes(vm.resourceTypes);
     }
 
     function updateResourceType(data) {
@@ -236,6 +237,7 @@ function resourcesController($document,
         if(index >= 0) {
             vm.resourceTypes[index] = data;
         }
+        dataService.setResourceTypes(vm.resourceTypes);
     }
 
     function updateResource(data) {
@@ -247,6 +249,7 @@ function resourcesController($document,
                 break;
             }
         }
+        dataService.setResourceTypes(vm.resourceTypes);
     }
 
     function cutResourceType(data) {
@@ -255,6 +258,7 @@ function resourcesController($document,
             vm.resourceTypes.splice(index, 1);
             vm.idToRemoveType = 0;
         }
+        dataService.setResourceTypes(vm.resourceTypes);
     }
 
     function cutResourceTypes(data) {
@@ -265,6 +269,7 @@ function resourcesController($document,
                 vm.selectedResourceTypes = [];
             }
         }
+        dataService.setResourceTypes(vm.resourceTypes);
     }
 
     function cutResource(data) {
@@ -277,11 +282,12 @@ function resourcesController($document,
                 break;
             }
         }
+        dataService.setResourceTypes(vm.resourceTypes);
     }
 
     function extendResType(id) {
         var index = vm.resourceTypes.map(function(e) {return e.id;}).indexOf(id);
-        if(vm.resourceTypes[index].resources.length > 0) {
+        if(vm.resourceTypes[index].resources != null) {
             if(vm.extendedResTypeId != id) {
                 vm.extendedResTypeId = id;
             }

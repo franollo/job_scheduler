@@ -20,7 +20,7 @@ import java.util.List;
 @Transactional(propagation = Propagation.REQUIRED)
 public class JPAItemDAO extends JPADAO implements ItemDAO {
     @Override
-    public void insert(Item item) {
+    public void save(Item item) {
         entityManager.merge(item);
     }
 
@@ -44,4 +44,14 @@ public class JPAItemDAO extends JPADAO implements ItemDAO {
             return null;
         }
     }
+
+    @Override
+    public void removeByPlanId(Integer productionPlanId) {
+        entityManager
+                .createQuery("delete from Item i where i.productionPlanId in (:productionPlanId)")
+                .setParameter("productionPlanId", productionPlanId)
+                .executeUpdate();
+    }
+
+
 }

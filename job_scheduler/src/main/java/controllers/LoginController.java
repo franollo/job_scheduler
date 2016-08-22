@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.security.Principal;
-import java.util.Collections;
 
 @RestController
 public class LoginController {
@@ -42,17 +41,6 @@ public class LoginController {
             @RequestParam("password") String password,
             HttpServletRequest request,
             HttpServletResponse response) {
-
-        for (String header : Collections.list(request.getHeaderNames())) {
-            System.out.println(header + ": " + request.getHeader(header));
-        }
-        System.out.println("******************************");
-        for (String parameter : Collections.list(request.getParameterNames())) {
-            System.out.println(parameter + ": " + request.getParameter(parameter));
-        }
-        System.out.println("******************************");
-        System.out.println(username + ": " + password);
-
         UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(username, password);
         try {
             Authentication auth = authenticationManager.authenticate(token);

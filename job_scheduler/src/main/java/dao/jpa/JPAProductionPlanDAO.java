@@ -22,8 +22,8 @@ import java.util.List;
 @Transactional(propagation = Propagation.REQUIRED)
 public class JPAProductionPlanDAO extends JPADAO implements ProductionPlanDAO {
     @Override
-    public void insert(ProductionPlan productionPlan) {
-        entityManager.persist(productionPlan);
+    public ProductionPlan save(ProductionPlan productionPlan) {
+        return entityManager.merge(productionPlan);
     }
 
     @Override

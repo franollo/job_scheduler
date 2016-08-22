@@ -25,7 +25,7 @@ public class LocalDateTimeDeserializer extends StdDeserializer<LocalDateTime> {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
         String date = jsonParser.getValueAsString();
         if(date.length() > 19) {
-            date = date.substring(0, 20);
+            date = date.substring(0, 19);
         }
         return LocalDateTime.parse(date, formatter);
     }

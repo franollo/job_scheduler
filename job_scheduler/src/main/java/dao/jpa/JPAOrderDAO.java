@@ -2,6 +2,7 @@ package main.java.dao.jpa;
 
 import main.java.dao.model.OrderDAO;
 import main.java.model.Order;
+import main.java.model.OrderProduct;
 import main.java.model.User;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
@@ -9,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -20,7 +24,39 @@ import java.util.List;
 public class JPAOrderDAO extends JPADAO implements OrderDAO {
     @Override
     public Order save(Order order) {
-        return entityManager.merge(order);
+        if(order.getId() == null) {
+            List<OrderProduct> orderProducts = order.getOrderProducts();
+            order.setOrderProducts(new LinkedList<OrderProduct>());
+            Order mergeOrder = entityManager.merge(order);
+            for(OrderProduct orderProduct : orderProducts) {
+                mergeOrder.addOrderProduct(orderProduct);
+            }
+            return mergeOrder;
+        }
+        else {
+            Order existingOrder = entityManager.find(Order.class, order.getId());
+            existingOrder.setName(order.getName());
+            existingOrder.setDescription(order.getDescription());
+            existingOrder.setDueDate(order.getDueDate());
+            for(OrderProduct orderProduct : order.getOrderProducts()) {
+                int index = existingOrder.getOrderProducts().indexOf(orderProduct);
+                if(index > -1) {
+                    existingOrder.getOrderProducts().get(index).setAmount(orderProduct.getAmount());
+                }
+                else {
+                    existingOrder.addOrderProduct(orderProduct);
+                }
+            }
+            Iterator<OrderProduct> iterator = existingOrder.getOrderProducts().iterator();
+            while(iterator.hasNext()) {
+                OrderProduct orderProduct = iterator.next();
+                int index = order.getOrderProducts().indexOf(orderProduct);
+                if(index == -1) {
+                    iterator.remove();
+                }
+            }
+            return existingOrder;
+        }
     }
 
     @Override

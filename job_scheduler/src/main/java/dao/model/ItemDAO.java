@@ -6,10 +6,11 @@ import main.java.model.User;
 import java.util.List;
 
 public interface ItemDAO {
-    public void insert(Item item);
+    public void save(Item item);
     public void update(Item item);
     public void remove(Item item);
     public List<Item> getUserItems(User user);
+    public void removeByPlanId(Integer productionPlanId);
   //  public boolean checkGroupId(int itemId, int groupId);
 
 //    public void createNewItem(Item item, int orderId, int itemId);

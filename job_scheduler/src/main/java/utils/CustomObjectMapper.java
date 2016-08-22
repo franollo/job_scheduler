@@ -15,7 +15,7 @@ import java.time.LocalDateTime;
 public class CustomObjectMapper extends ObjectMapper {
     public CustomObjectMapper() {
         SimpleModule module = new SimpleModule();
-        module.addSerializer(Order.class, new OrderSerializer());
+       // module.addSerializer(Order.class, new OrderSerializer());
         module.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer());
         module.addSerializer(Duration.class, new DurationSerializer());
         module.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer());

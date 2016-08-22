@@ -9,8 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -46,11 +45,13 @@ public class SaveController {
     private UserDAO userDAO;
 
     @RequestMapping(value = "/item", method = RequestMethod.POST)
-    public @ResponseBody void item(@RequestBody Item item) throws ParseException {
+    public @ResponseBody Item item(@RequestBody Item item) throws ParseException {
+        System.out.println("no elo!");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
         userDAO.confirmPermission(Item.class, item.getId(), user);
-        itemDAO.insert(item);
+        itemDAO.save(item);
+        return item;
     }
 
     @RequestMapping(value = "/order", method = RequestMethod.POST)
@@ -59,6 +60,10 @@ public class SaveController {
         User user = userDAO.getUserByLogin(auth.getName());
         userDAO.confirmPermission(Order.class, order.getId(), user);
         order.setGroupId(user.getGroupId());
+        order.mergeDuplicatedOrderProducts();
+        for(OrderProduct orderProduct : order.getOrderProducts()) {
+            orderProduct.setGroupId(user.getGroupId());
+        }
         return orderDAO.save(order);
     }
 
@@ -76,13 +81,18 @@ public class SaveController {
     }
 
     @RequestMapping(value = "/productionplan", method = RequestMethod.POST)
-    public @ResponseBody List<Item> productionPlan(@RequestBody ProductionPlan productionPlan) throws ParseException {
+    public @ResponseBody ProductionPlan productionPlan(@RequestBody ProductionPlan productionPlan) throws ParseException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userDAO.getUserByLogin(auth.getName());
         userDAO.confirmPermission(ProductionPlan.class, productionPlan.getId(), user);
-        productionPlan.process();
-        productionPlanDAO.insert(productionPlan);
-        return new ArrayList<>(productionPlan.getItems());
+        productionPlan.setGroupId(user.getGroupId());
+        ProductionPlan mergePlan = productionPlanDAO.save(productionPlan);
+        mergePlan.process();
+        itemDAO.removeByPlanId(mergePlan.getId());
+        for(Item item : mergePlan.getItems()) {
+            itemDAO.save(item);
+        }
+        return mergePlan;
     }
 
     @RequestMapping(value = "/productoperation", method = RequestMethod.POST)
@@ -109,33 +119,5 @@ public class SaveController {
         resourceType.setGroupId(user.getGroupId());
         userDAO.confirmPermission(ResourceType.class, resourceType.getId(), user);
         return resourceTypeDAO.save(resourceType);
-    }
-
-    @RequestMapping(value = "/localdatetime", method = RequestMethod.POST)
-    public @ResponseBody void resourcetype(@RequestBody LocalDateTime localDateTime) throws ParseException {
-        System.out.println(localDateTime);
-    }
-
-    @RequestMapping(value = "/person", method = RequestMethod.POST)
-    public
-    @ResponseBody
-    void deleteResource() {
-        Group group = new Group();
-        group.setGroupId(1);
-        Product product = new Product();
-        ResourceType resourceType = new ResourceType();
-        ProductOperation productOperation = new ProductOperation();
-        product.setId(1);
-        product.setName("test");
-        product.setDescription("test");
-        resourceType.setId(1);
-        resourceType.setName("test");
-        productOperation.setDescription("test");
-        productOperation.setName("test");
-        //productOperation.setDuration(10);
-        //productOperation.setProductId(1);
-        //productOperation.setResourceId(1);
-        productOperation.setGroupId(1);
-        //productOperationDAO.save(productOperation);
     }
 }

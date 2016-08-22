@@ -6,6 +6,7 @@ import org.hibernate.exception.GenericJDBCException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.persistence.PersistenceException;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -14,7 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-    @ExceptionHandler({GenericJDBCException.class, ConstraintViolationException.class})
+//    @ExceptionHandler(RuntimeException.class)
+//    public void handleRuntimeException(HttpServletResponse response, Exception e) {
+//        e.printStackTrace();
+//        response.setStatus(500);
+//    }
+
+    @ExceptionHandler({GenericJDBCException.class, ConstraintViolationException.class, PersistenceException.class})
     public void handleGenericJDBCException(HttpServletResponse response, Exception e) {
         response.setStatus(400);
     }
