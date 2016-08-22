@@ -42,7 +42,7 @@ function productsController($document,
     }
 
     function fireError(error) {
-        dialogsService.showErrorToast(error.status);
+        dialogsService.showErrorToast(error);
     }
 
     function exists(item) {

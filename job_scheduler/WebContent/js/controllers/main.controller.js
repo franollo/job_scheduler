@@ -40,31 +40,31 @@ function mainController($document,
     vm.redo = redo;
     vm.dialogOpenProductionPlan = dialogOpenProductionPlan;
     vm.dialogNewProductionPlan = dialogNewProductionPlan;
+    vm.dialogEditProductionPlan = dialogEditProductionPlan;
     vm.extendOrder = extendOrder;
     vm.openOrdersWorkspace = openOrdersWorkspace;
     vm.openProductsWorkspace = openProductsWorkspace;
     vm.openResourcesWorkspace = openResourcesWorkspace;
     vm.closeWorkspace = closeWorkspace;
-    vm.test = test;
+    vm.goToCurrentTime = goToCurrentTime;
+    vm.planOpened = false;
     vm.extendedOrderId = 0;
     vm.orders = [];
     vm.productionPlans = [];
     vm.productionPlan = {};
     vm.user = {};
     vm.selectedIndex = 1;
-    vm.showToolbar = true;
+    vm.zoomKey = false;
     vm.showWorkspace = {
-        'productionPlan' : true,
+        'productionPlan' : vm.planOpened,
+        'productionPlanTool' : true,
         'orders' : false,
         'products' : false,
         'resourceTypes' : false
     };
 
     timelineService.init("js-timeline");
-    dataService.getProductionPlan(5)
-        .then(productionPlanToVIS)
-        .catch(fireError);
-    
+
     /**
      * WORKSPACE TOGGLE
      */
@@ -86,13 +86,15 @@ function mainController($document,
 
     function setFalseWorkspace() {
         vm.showWorkspace.productionPlan = false;
+        vm.showWorkspace.productionPlanTool = false;
         vm.showWorkspace.orders = false;
         vm.showWorkspace.products = false;
         vm.showWorkspace.resourceTypes = false;
     }
 
     function closeWorkspace() {
-        vm.showWorkspace.productionPlan = true;
+        vm.showWorkspace.productionPlan = vm.planOpened;
+        vm.showWorkspace.productionPlanTool = true;
         vm.showWorkspace.orders = false;
         vm.showWorkspace.products = false;
         vm.showWorkspace.resourceTypes = false;
@@ -146,6 +148,10 @@ function mainController($document,
     /**
      * TIMELINE
      */
+
+    function goToCurrentTime() {
+        timelineService.goToTime(new Date());
+    }
     
     function toggleToolbar() {
         vm.showToolbar = !vm.showToolbar;
@@ -247,6 +253,7 @@ function mainController($document,
     }
 
     function productionPlanToVIS(data) {
+        data.start = new Date(data.start);
         vm.productionPlan = data;
         timelineService.clean();
         var groups = [];
@@ -264,6 +271,8 @@ function mainController($document,
             var group = {id: groups[j], content: resource.name, title: resource.description}
             timelineService.addGroups(group);
         }
+        vm.planOpened = true;
+        closeWorkspace();
         timelineService.addItems(data.items);
         timelineService.focus();
     }
@@ -273,13 +282,12 @@ function mainController($document,
      */
 
     function fireError(error){
-        console.error(error);
         dialogsService.showErrorToast(error);
     }
 
     function dialogOpenProductionPlan() {
         $mdDialog.show({
-            controller: dialogsService.openProductionPlanController,
+            controller: dialogsService.openProductionPlanCtrl,
             controllerAs: 'ctrl',
             templateUrl: 'html/dialogs/open_production_plan.html',
             parent: angular.element(document.body),
@@ -296,9 +304,28 @@ function mainController($document,
             .then(function(data) {
                 $mdDialog.show({
                     locals: {orders: data},
-                    controller: dialogsService.newProductionPlanController,
+                    controller: dialogsService.newProductionPlanCtrl,
                     controllerAs: 'ctrl',
                     templateUrl: 'html/dialogs/new_production_plan.html',
+                    parent: angular.element(document.body),
+                    clickOutsideToClose: true
+                }).then(function (answer) {
+                    dataService.saveProductionPlan(answer)
+                        .then(productionPlanToVIS)
+                        .catch(fireError);
+                });
+            })
+            .catch(fireError);
+    }
+
+    function dialogEditProductionPlan() {
+        dataService.getOrders()
+            .then(function(data) {
+                $mdDialog.show({
+                    locals: {orders: data, productionPlan: vm.productionPlan},
+                    controller: dialogsService.editProductionPlanCtrl,
+                    controllerAs: 'ctrl',
+                    templateUrl: 'html/dialogs/edit_production_plan.html',
                     parent: angular.element(document.body),
                     clickOutsideToClose: true
                 }).then(function (answer) {

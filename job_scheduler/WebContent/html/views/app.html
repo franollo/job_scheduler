@@ -4,7 +4,7 @@
     }
 </script>
 <div id="js-body" ng-cloak="">
-    <md-toolbar class="md-menu-toolbar" ng-show="ctrl.showWorkspace.productionPlan">
+    <md-toolbar class="md-menu-toolbar" ng-show="ctrl.showWorkspace.productionPlanTool">
         <div layout="row">
             <md-toolbar-filler layout="" layout-align="center center">
                 <i class="material-icons md-48">sort</i>
@@ -20,7 +20,7 @@
                         </button>
                         <md-menu-content>
                             <md-menu-item>
-                                <md-button ng-click="ctrl.dialogNewProductionPlan(orderCtrl.orders)">New production plan</md-button>
+                                <md-button ng-click="ctrl.dialogNewProductionPlan()">New production plan</md-button>
                             </md-menu-item>
                             <md-menu-item>
                                 <md-button ng-click="ctrl.dialogOpenProductionPlan()">Open production plan</md-button>
@@ -52,6 +52,9 @@
                         </button>
                         <md-menu-content>
                             <md-menu-item>
+                                <md-button ng-click="ctrl.dialogEditProductionPlan()">Production plan</md-button>
+                            </md-menu-item>
+                            <md-menu-item>
                                 <md-button ng-click="ctrl.openOrdersWorkspace()">Orders</md-button>
                             </md-menu-item>
                             <md-menu-item>
@@ -59,15 +62,6 @@
                             </md-menu-item>
                             <md-menu-item>
                                 <md-button ng-click="ctrl.openResourcesWorkspace()">Resources</md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button ng-click="ctrl.showNewOrder($event)">Arrange</md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button ng-click="ctrl.showNewOrder($event)">Lock</md-button>
-                            </md-menu-item>
-                            <md-menu-item>
-                                <md-button ng-click="ctrl.showNewOrder($event)">Share</md-button>
                             </md-menu-item>
                         </md-menu-content>
                     </md-menu>
@@ -133,7 +127,7 @@
                         Schedule
                     </md-tab-label>
                     <md-tab-body>
-                        <md-toolbar class="js-toolbar" layout="row">
+                        <md-toolbar print-hide class="js-toolbar" layout="row">
                             <div class="js-button" ng-click="ctrl.undo()">
                                 <md-tooltip md-direction="bottom" md-delay="1000">
                                     Undo
@@ -154,9 +148,9 @@
                             </div>
                             <div class="js-button" ng-click="ctrl.focusTimeline()">
                                 <md-tooltip md-direction="bottom" md-delay="1000">
-                                    Fit timeline
+                                    Fit timeline to items
                                 </md-tooltip>
-                                <i class="material-icons md-18-90deg">vertical_align_center</i>
+                                <i class="material-icons md-18">zoom_out_map</i>
                             </div>
                             <div class="js-button" ng-click="ctrl.toggleSnappingTimeline()">
                                 <md-tooltip md-direction="bottom" md-delay="1000">
@@ -166,21 +160,33 @@
                             </div>
                             <div class="js-button" ng-click="ctrl.showCurrentTime()">
                                 <md-tooltip md-direction="bottom" md-delay="1000">
-                                    Current time
+                                    Show current time
                                 </md-tooltip>
                                 <i class="material-icons md-18">access_time</i>
                             </div>
-                            <div class="js-button" ng-click="ctrl.addJobsToOrder()">
+                            <div class="js-button" ng-click="ctrl.goToCurrentTime()">
                                 <md-tooltip md-direction="bottom" md-delay="1000">
-                                    Add job to order
+                                    Go to current time
                                 </md-tooltip>
-                                <i class="material-icons md-18">add</i>
+                                <i class="material-icons md-18-90deg">vertical_align_center</i>
                             </div>
                             <div class="js-button" ng-click="ctrl.toogleZoomKey()">
                                 <md-tooltip md-direction="bottom" md-delay="1000">
                                     Enable/disable soom key
                                 </md-tooltip>
                                 <i class="material-icons md-18">keyboard</i>
+                            </div>
+                            <div class="js-button" print-btn>
+                                <md-tooltip md-direction="bottom" md-delay="1000">
+                                    Print visible timeline content
+                                </md-tooltip>
+                                <i class="material-icons md-18">print</i>
+                            </div>
+                            <div class="js-button" ng-click="ctrl.addJobsToOrder()">
+                                <md-tooltip md-direction="bottom" md-delay="1000">
+                                    Add order to plan
+                                </md-tooltip>
+                                <i class="material-icons md-18">add</i>
                             </div>
                         </md-toolbar>
                         <div id="js-timeline" print-section></div>

@@ -73,5 +73,14 @@ function ProductionPlan(name, startDate, orders) {
     this.name = name;
     this.start = startDate;
     this.orders = orders;
+    this.setId = function(id) {
+        this.id = id;
+    };
+    this.setCreatedOn = function(createdOn) {
+        this.createdOn = createdOn;
+    };
+    this.setEditedOn = function(editedOn) {
+        this.editedOn = editedOn;
+    };
 }
 

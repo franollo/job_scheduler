@@ -1,0 +1,66 @@
+<md-dialog>
+    <form>
+        <md-toolbar>
+            <div class="md-toolbar-tools">
+                <h2>Edit production plan</h2>
+                <span flex></span>
+                <md-button class="md-icon-button" ng-click="ctrl.cancel()">
+                    <i class="material-icons md-18">close</i>
+                </md-button>
+            </div>
+        </md-toolbar>
+
+        <md-dialog-content>
+            <div class="md-dialog-content">
+                <div layout="column">
+                    <div layout="row">
+                        <md-input-container flex>
+                            <label>Plan name</label>
+                            <input type="text" ng-model="ctrl.name">
+                        </md-input-container>
+                        <md-input-container flex>
+                            <label>Start date</label>
+                            <input type="datetime-local" ng-model="ctrl.startDate">
+                        </md-input-container>
+                    </div>
+                    <md-content style="max-height: 200px">
+                        <md-section>
+                            <md-subheader md-colors="{background: 'accent-300'}">
+                                <md-list-item>
+                                    <md-checkbox aria-label="label"
+                                                 ng-checked="ctrl.isChecked()"
+                                                 md-indeterminate="ctrl.isIndeterminate()"
+                                                 ng-click="ctrl.toggleAll()">
+                                    </md-checkbox>
+                                    <h4 class="no-margin">Select orders:</h4>
+                                </md-list-item>
+                            </md-subheader>
+                            <md-list>
+                                <div ng-repeat='order in ctrl.orders'>
+                                    <md-list-item>
+                                        <md-checkbox aria-label="label"
+                                                     ng-checked="ctrl.exists(order)"
+                                                     ng-click="ctrl.toggle(order)">
+                                        </md-checkbox>
+                                        <div>{{order.name}}</div>
+                                    </md-list-item>
+                                    <md-divider></md-divider>
+                                </div>
+                            </md-list>
+                        </md-section>
+                    </md-content>
+                </div>
+            </div>
+        </md-dialog-content>
+
+        <md-dialog-actions layout="row">
+            <span flex></span>
+            <md-button class="md-primary" ng-click="ctrl.cancel()">
+                cancel
+            </md-button>
+            <md-button class="md-primary" ng-click="ctrl.answer()">
+                create
+            </md-button>
+        </md-dialog-actions>
+    </form>
+</md-dialog>

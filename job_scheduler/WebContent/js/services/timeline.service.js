@@ -19,6 +19,7 @@ function timelineService(dataService) {
     vm.clean = clean;
     vm.zoomableKeyTrue = zoomableKeyTrue;
     vm.zoomableKeyFalse = zoomableKeyFalse;
+    vm.goToTime = goToTime;
 
 
     var groups = new vis.DataSet();
@@ -33,7 +34,7 @@ function timelineService(dataService) {
         stack: false,
         multiselect: true,
         groupEditable: true,
-        zoomKey: 'ctrlKey',
+        zoomKey: '',
         onMove: function (item, callback) {
             delete item.group;
             delete item.content;
@@ -55,6 +56,10 @@ function timelineService(dataService) {
             container = document.getElementById(elementId);
             timeline = new vis.Timeline(container, items, groups, options);
         }, 10);
+    }
+
+    function goToTime(date) {
+        timeline.moveTo(date);
     }
 
     function lock() {

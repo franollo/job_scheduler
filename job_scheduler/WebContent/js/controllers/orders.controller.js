@@ -34,7 +34,7 @@ function ordersController($scope, $document,
         .catch(fireError);
 
     function fireError(error) {
-        dialogsService.showErrorToast(error.status);
+        dialogsService.showErrorToast(error);
     }
 
     function setOrders(data) {

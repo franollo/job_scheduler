@@ -15,11 +15,11 @@ import javax.servlet.http.HttpServletResponse;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-//    @ExceptionHandler(RuntimeException.class)
-//    public void handleRuntimeException(HttpServletResponse response, Exception e) {
-//        e.printStackTrace();
-//        response.setStatus(500);
-//    }
+    @ExceptionHandler(RuntimeException.class)
+    public void handleRuntimeException(HttpServletResponse response, Exception e) {
+        e.printStackTrace();
+        response.setStatus(500);
+    }
 
     @ExceptionHandler({GenericJDBCException.class, ConstraintViolationException.class, PersistenceException.class})
     public void handleGenericJDBCException(HttpServletResponse response, Exception e) {

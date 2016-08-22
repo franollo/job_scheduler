@@ -1,5 +1,6 @@
 package main.java.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import main.java.model.common.GroupObject;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
@@ -47,6 +48,7 @@ public class Order extends GroupObject {
         this.dueDate = dueDate;
     }
 
+    @JsonIgnore
     @Column(name = "PRODUCTION_PLAN_ID")
     public Integer getProductionPlanId() {
         return productionPlanId;

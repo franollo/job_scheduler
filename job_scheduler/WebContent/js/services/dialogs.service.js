@@ -4,8 +4,9 @@ angular
 
 function dialogsService(dataService, $mdToast) {
     var vm = this;
-    vm.openProductionPlanController = openProductionPlanController;
-    vm.newProductionPlanController = newProductionPlanController;
+    vm.openProductionPlanCtrl = openProductionPlanCtrl;
+    vm.newProductionPlanCtrl = newProductionPlanCtrl;
+    vm.editProductionPlanCtrl = editProductionPlanCtrl;
     vm.showErrorToast = showErrorToast;
     vm.newResourceTypeCtrl = newResourceTypeCtrl;
     vm.editResourceTypeCtrl = editResourceTypeCtrl;
@@ -360,7 +361,7 @@ function dialogsService(dataService, $mdToast) {
         }
     }
 
-    function openProductionPlanController($scope, $mdDialog) {
+    function openProductionPlanCtrl($scope, $mdDialog) {
         var vm = this;
         vm.answer = answer;
         vm.cancel = cancel;
@@ -396,7 +397,7 @@ function dialogsService(dataService, $mdToast) {
 
     }
 
-    function newProductionPlanController($mdDialog, orders) {
+    function newProductionPlanCtrl($mdDialog, orders) {
         var vm = this;
         vm.orders = orders;
         vm.selectedOrders = [];
@@ -414,8 +415,6 @@ function dialogsService(dataService, $mdToast) {
         vm.selectedPlanId = 0;
 
         function answer() {
-            console.log(vm.startDate);
-            console.log(vm.startDate.toISOString());
             var productionPlan = new ProductionPlan(vm.name, vm.startDate, vm.selectedOrders);
             $mdDialog.hide(JSON.parse(angular.toJson(productionPlan)));
         }
@@ -459,9 +458,75 @@ function dialogsService(dataService, $mdToast) {
         }
     }
 
-    function showErrorToast(errorCode) {
+    function editProductionPlanCtrl($mdDialog, orders, productionPlan) {
+        var vm = this;
+        vm.orders = orders;
+        vm.selectedOrders = productionPlan.orders;
+        vm.name = productionPlan.name;
+        vm.startDate = productionPlan.start;
+        vm.answer = answer;
+        vm.cancel = cancel;
+        vm.exists = exists;
+        vm.toggleAll = toggleAll;
+        vm.toggle = toggle;
+        vm.isChecked = isChecked;
+        vm.isIndeterminate = isIndeterminate;
+        vm.selectedPlanId = 0;
+
+        function answer() {
+            var productionPlanSend = new ProductionPlan(vm.name, vm.startDate, vm.selectedOrders);
+            productionPlanSend.setId(productionPlan.id);
+            productionPlanSend.setCreatedOn(productionPlan.createdOn);
+            productionPlanSend.setEditedOn(productionPlan.editedOn);
+            $mdDialog.hide(JSON.parse(angular.toJson(productionPlanSend)));
+        }
+
+        function cancel() {
+            $mdDialog.cancel();
+        }
+
+        function exists(item) {
+            return vm.selectedOrders.map(function(e){return e.id;}).indexOf(item.id) > -1;
+        }
+
+        function toggleAll() {
+            if(vm.selectedOrders.length === vm.orders.length) {
+                vm.selectedOrders = [];
+            } else if (vm.selectedOrders.length === 0 || vm.selectedOrders.length > 0) {
+                vm.selectedOrders = vm.orders.slice(0);
+            }
+        }
+
+        function toggle(item) {
+            var idx = vm.selectedOrders.map(function(e){return e.id;}).indexOf(item.id);
+            if(idx > -1) {
+                vm.selectedOrders.splice(idx, 1);
+            }
+            else {
+                vm.selectedOrders.push(item);
+            }
+            console.log(vm.selectedOrders);
+        }
+
+        function isChecked() {
+            return vm.selectedOrders.length === vm.orders.length
+        }
+
+        function isIndeterminate() {
+            return (vm.selectedOrders.length !== 0 && vm.selectedOrders.length !== vm.orders.length );
+        }
+    }
+
+    function showErrorToast(error) {
+        var message = '';
+        if(error.status == undefined) {
+            message = error.toString();
+        }
+        else {
+            message = "HTTP " + error.status + " error occured! Operation failed."
+        }
         var toast = $mdToast.simple()
-            .textContent("HTTP " + errorCode + " error occured! Your changes have not been saved")
+            .textContent(message)
             .position('top right')
             .hideDelay(5000)
             .theme('md-warn');

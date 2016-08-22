@@ -1,5 +1,5 @@
 var appModule = angular
-    .module('app', ['ngMaterial', 'ngRoute'])
+    .module('app', ['ngMaterial', 'ngRoute', 'AngularPrint'])
     .config(app);
 
 function app($mdThemingProvider, $routeProvider, $httpProvider) {

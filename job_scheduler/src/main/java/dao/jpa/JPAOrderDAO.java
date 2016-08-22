@@ -26,7 +26,7 @@ public class JPAOrderDAO extends JPADAO implements OrderDAO {
     public Order save(Order order) {
         if(order.getId() == null) {
             List<OrderProduct> orderProducts = order.getOrderProducts();
-            order.setOrderProducts(new LinkedList<OrderProduct>());
+            order.setOrderProducts(new LinkedList<>());
             Order mergeOrder = entityManager.merge(order);
             for(OrderProduct orderProduct : orderProducts) {
                 mergeOrder.addOrderProduct(orderProduct);

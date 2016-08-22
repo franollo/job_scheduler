@@ -66,7 +66,7 @@ public class ProductionPlan extends GroupObject {
 
     @LazyCollection(LazyCollectionOption.FALSE)
     @OneToMany
-    @JoinColumn(name = "PRODUCTION_PLAN_ID", referencedColumnName = "PRODUCTION_PLAN_ID")
+    @JoinColumn(name = "PRODUCTION_PLAN_ID", referencedColumnName = "PRODUCTION_PLAN_ID", updatable = false)
     public List<Item> getItems() {
         return items;
     }
