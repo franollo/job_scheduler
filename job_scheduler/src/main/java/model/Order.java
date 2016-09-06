@@ -7,8 +7,6 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 @Entity
@@ -71,20 +69,5 @@ public class Order extends GroupObject {
     public void addOrderProduct(OrderProduct orderProduct) {
         orderProduct.setOrder(this);
         orderProducts.add(orderProduct);
-    }
-
-    public void mergeDuplicatedOrderProducts() {
-        int index;
-        List<OrderProduct> tempList = new ArrayList<>();
-        for(OrderProduct orderProduct : orderProducts) {
-            index = tempList.indexOf(orderProduct);
-            if(index > -1) {
-                tempList.get(index).addAmount(orderProduct.getAmount());
-            }
-            else {
-                tempList.add(orderProduct);
-            }
-        }
-        this.orderProducts = new LinkedList<>(tempList);
     }
 }

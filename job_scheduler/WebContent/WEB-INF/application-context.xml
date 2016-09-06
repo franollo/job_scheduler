@@ -73,7 +73,34 @@
 
     <bean id="resourceTypeDAO" class="main.java.dao.jpa.JPAResourceTypeDAO" />
 
-    <bean id="hibernateUserDAO" class="main.java.dao.jpa.JPAUserDAO" />
+    <bean id="userDAO" class="main.java.dao.jpa.JPAUserDAO" />
 
     <bean id="customObjectMapper" class="main.java.utils.CustomObjectMapper"/>
+
+    <bean id="productsModule" class="main.java.modules.ProductsModule">
+        <constructor-arg name="productDAO" ref="productDAO"/>
+        <constructor-arg name="userDAO" ref="userDAO"/>
+    </bean>
+
+    <bean id="resourcesModule" class="main.java.modules.ResourcesModule">
+        <constructor-arg name="resourceDAO" ref="resourceDAO"/>
+        <constructor-arg name="resourceTypeDAO" ref="resourceTypeDAO"/>
+        <constructor-arg name="userDAO" ref="userDAO"/>
+    </bean>
+
+    <bean id="ordersModule" class="main.java.modules.OrdersModule">
+        <constructor-arg name="orderDAO" ref="orderDAO"/>
+        <constructor-arg name="userDAO" ref="userDAO"/>
+    </bean>
+
+    <bean id="productionPlansModule" class="main.java.modules.ProductionPlansModule">
+        <constructor-arg name="itemDAO" ref="itemDAO"/>
+        <constructor-arg name="productionPlanDAO" ref="productionPlanDAO"/>
+        <constructor-arg name="userDAO" ref="userDAO"/>
+    </bean>
+
+    <bean id="usersModule" class="main.java.modules.UsersModule">
+        <constructor-arg name="userDAO" ref="userDAO"/>
+    </bean>
+
 </beans>

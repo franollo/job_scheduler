@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.security.Principal;
 
 @RestController
 public class LoginController {
@@ -26,14 +25,6 @@ public class LoginController {
 
     @Autowired
     RememberMeServices rememberMeServices;
-
-    @RequestMapping("/user")
-    public Principal user(Principal user) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        String name = auth.getName(); //get logged in username
-        System.out.println("Debug Message from " + name);
-        return user;
-    }
 
     @RequestMapping("/performLogin")
     public void performLogin(

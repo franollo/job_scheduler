@@ -69,7 +69,7 @@ public class OrderProduct implements Serializable{
         return false;
     }
 
-    void addAmount(int toAdd) {
+    public void addAmount(int toAdd) {
         this.amount = this.amount + toAdd;
     }
 }

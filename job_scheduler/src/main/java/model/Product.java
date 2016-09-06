@@ -96,13 +96,4 @@ public class Product extends GroupObject {
             }
         });
     }
-
-    public void orderProductOperations() {
-        int i = 0;
-        for(ProductOperation productOperation : productOperations) {
-            if(productOperation.isSequential() == true) {
-                productOperation.setOperationNumber(i++);
-            }
-        }
-    }
 }

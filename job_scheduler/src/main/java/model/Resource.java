@@ -56,30 +56,6 @@ public class Resource extends GroupObject {
     public void setEfficiency(Integer efficiency) {
         this.efficiency = efficiency;
     }
-//
-//    @OneToMany
-//    @JsonIgnore
-//    //@JsonBackReference(value="items")
-//    @JoinColumn(name = "RESOURCE_ID", referencedColumnName = "RESOURCE_ID", updatable = false)
-//    public Set<Item> getItems() {
-//        return items;
-//    }
-//
-//    public void setItems(Set<Item> items) {
-//        this.items = items;
-//    }
-//
-//    @OneToMany
-//    @JsonIgnore
-//    //@JsonBackReference(value="productOperations")
-//    @JoinColumn(name = "RESOURCE_ID", referencedColumnName = "RESOURCE_ID", updatable = false)
-//    public Set<ProductOperation> getProductOperations() {
-//        return productOperations;
-//    }
-//
-//    public void setProductOperations(Set<ProductOperation> productOperations) {
-//        this.productOperations = productOperations;
-//    }
 
     @Column(name = "RESOURCE_TYPE_ID", updatable = false)
     public Integer getResourceTypeId() {
