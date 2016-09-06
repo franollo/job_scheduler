@@ -20,8 +20,8 @@ import java.util.List;
 @Transactional(propagation = Propagation.REQUIRED)
 public class JPAItemDAO extends JPADAO implements ItemDAO {
     @Override
-    public void save(Item item) {
-        entityManager.merge(item);
+    public Item save(Item item) {
+        return entityManager.merge(item);
     }
 
     @Override

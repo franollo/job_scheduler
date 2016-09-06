@@ -86,4 +86,5 @@ public class ProductionPlan extends GroupObject {
     public void setOrders(Set<Order> orders) {
         this.orders = orders;
     }
+
 }

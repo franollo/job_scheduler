@@ -51,6 +51,9 @@ public class ProductsModule {
     }
 
     private void orderProductOperations(Product product) {
+        if(product.getProductOperations() == null) {
+            return;
+        }
         int i = 0;
         for(ProductOperation productOperation : product.getProductOperations()) {
             if(productOperation.isSequential() == true) {

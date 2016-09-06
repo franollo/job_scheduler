@@ -5,22 +5,22 @@ SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
 
 -- -----------------------------------------------------
--- Schema db_scheduler
+-- Schema db_scheduler_test
 -- -----------------------------------------------------
-DROP SCHEMA IF EXISTS `db_scheduler` ;
+DROP SCHEMA IF EXISTS `db_scheduler_test` ;
 
 -- -----------------------------------------------------
--- Schema db_scheduler
+-- Schema db_scheduler_test
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `db_scheduler` DEFAULT CHARACTER SET utf8 ;
-USE `db_scheduler` ;
+CREATE SCHEMA IF NOT EXISTS `db_scheduler_test` DEFAULT CHARACTER SET utf8 ;
+USE `db_scheduler_test` ;
 
 -- -----------------------------------------------------
--- Table `db_scheduler`.`GROUPS`
+-- Table `db_scheduler_test`.`GROUPS`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `db_scheduler`.`GROUPS` ;
+DROP TABLE IF EXISTS `db_scheduler_test`.`GROUPS` ;
 
-CREATE TABLE IF NOT EXISTS `db_scheduler`.`GROUPS` (
+CREATE TABLE IF NOT EXISTS `db_scheduler_test`.`GROUPS` (
   `GROUP_ID` INT NOT NULL AUTO_INCREMENT,
   `NAME` VARCHAR(64) NULL,
   `CREATED_ON` DATETIME NULL DEFAULT CURRENT_TIMESTAMP,
@@ -30,11 +30,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `db_scheduler`.`PRODUCTS`
+-- Table `db_scheduler_test`.`PRODUCTS`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `db_scheduler`.`PRODUCTS` ;
+DROP TABLE IF EXISTS `db_scheduler_test`.`PRODUCTS` ;
 
-CREATE TABLE IF NOT EXISTS `db_scheduler`.`PRODUCTS` (
+CREATE TABLE IF NOT EXISTS `db_scheduler_test`.`PRODUCTS` (
   `PRODUCT_ID` INT NOT NULL AUTO_INCREMENT,
   `NAME` VARCHAR(64) NULL,
   `DESCRIPTION` VARCHAR(64) NULL,
@@ -48,18 +48,18 @@ CREATE TABLE IF NOT EXISTS `db_scheduler`.`PRODUCTS` (
   INDEX `fk_PRODUCTS_GROUPS1_idx` (`GROUP_ID` ASC),
   CONSTRAINT `fk_PRODUCTS_GROUPS1`
     FOREIGN KEY (`GROUP_ID`)
-    REFERENCES `db_scheduler`.`GROUPS` (`GROUP_ID`)
+    REFERENCES `db_scheduler_test`.`GROUPS` (`GROUP_ID`)
     ON DELETE CASCADE
     ON UPDATE RESTRICT)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `db_scheduler`.`RESOURCE_TYPES`
+-- Table `db_scheduler_test`.`RESOURCE_TYPES`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `db_scheduler`.`RESOURCE_TYPES` ;
+DROP TABLE IF EXISTS `db_scheduler_test`.`RESOURCE_TYPES` ;
 
-CREATE TABLE IF NOT EXISTS `db_scheduler`.`RESOURCE_TYPES` (
+CREATE TABLE IF NOT EXISTS `db_scheduler_test`.`RESOURCE_TYPES` (
   `RESOURCE_TYPE_ID` INT NOT NULL AUTO_INCREMENT,
   `NAME` VARCHAR(64) NULL,
   `DESCRIPTION` VARCHAR(64) NULL,
@@ -70,18 +70,18 @@ CREATE TABLE IF NOT EXISTS `db_scheduler`.`RESOURCE_TYPES` (
   INDEX `fk_RESOURCE_TYPES_GROUPS1_idx` (`GROUP_ID` ASC),
   CONSTRAINT `fk_RESOURCE_TYPES_GROUPS1`
     FOREIGN KEY (`GROUP_ID`)
-    REFERENCES `db_scheduler`.`GROUPS` (`GROUP_ID`)
+    REFERENCES `db_scheduler_test`.`GROUPS` (`GROUP_ID`)
     ON DELETE CASCADE
     ON UPDATE RESTRICT)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `db_scheduler`.`RESOURCES`
+-- Table `db_scheduler_test`.`RESOURCES`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `db_scheduler`.`RESOURCES` ;
+DROP TABLE IF EXISTS `db_scheduler_test`.`RESOURCES` ;
 
-CREATE TABLE IF NOT EXISTS `db_scheduler`.`RESOURCES` (
+CREATE TABLE IF NOT EXISTS `db_scheduler_test`.`RESOURCES` (
   `RESOURCE_ID` INT NOT NULL AUTO_INCREMENT,
   `NAME` VARCHAR(64) NULL,
   `DESCRIPTION` VARCHAR(64) NULL,
@@ -96,23 +96,23 @@ CREATE TABLE IF NOT EXISTS `db_scheduler`.`RESOURCES` (
   INDEX `fk_RESOURCES_GROUPS1_idx` (`GROUP_ID` ASC),
   CONSTRAINT `fk_RESOURCES_RESOURCE_TYPES1`
     FOREIGN KEY (`RESOURCE_TYPE_ID`)
-    REFERENCES `db_scheduler`.`RESOURCE_TYPES` (`RESOURCE_TYPE_ID`)
+    REFERENCES `db_scheduler_test`.`RESOURCE_TYPES` (`RESOURCE_TYPE_ID`)
     ON DELETE CASCADE
     ON UPDATE RESTRICT,
   CONSTRAINT `fk_RESOURCES_GROUPS1`
     FOREIGN KEY (`GROUP_ID`)
-    REFERENCES `db_scheduler`.`GROUPS` (`GROUP_ID`)
+    REFERENCES `db_scheduler_test`.`GROUPS` (`GROUP_ID`)
     ON DELETE CASCADE
     ON UPDATE RESTRICT)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `db_scheduler`.`PRODUCT_OPERATIONS`
+-- Table `db_scheduler_test`.`PRODUCT_OPERATIONS`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `db_scheduler`.`PRODUCT_OPERATIONS` ;
+DROP TABLE IF EXISTS `db_scheduler_test`.`PRODUCT_OPERATIONS` ;
 
-CREATE TABLE IF NOT EXISTS `db_scheduler`.`PRODUCT_OPERATIONS` (
+CREATE TABLE IF NOT EXISTS `db_scheduler_test`.`PRODUCT_OPERATIONS` (
   `PRODUCT_OPERATION_ID` INT NOT NULL AUTO_INCREMENT,
   `OPERATION_NUMBER` INT NULL,
   `NAME` VARCHAR(64) NULL,
@@ -131,28 +131,28 @@ CREATE TABLE IF NOT EXISTS `db_scheduler`.`PRODUCT_OPERATIONS` (
   INDEX `fk_PRODUCT_OPERATIONS_RESOURCES1_idx` (`RESOURCE_ID` ASC),
   CONSTRAINT `fk_PRODUCT_OPERATIONS_PRODUCTS`
     FOREIGN KEY (`PRODUCT_ID`)
-    REFERENCES `db_scheduler`.`PRODUCTS` (`PRODUCT_ID`)
+    REFERENCES `db_scheduler_test`.`PRODUCTS` (`PRODUCT_ID`)
     ON DELETE CASCADE
     ON UPDATE RESTRICT,
   CONSTRAINT `fk_PRODUCT_OPERATIONS_GROUPS1`
     FOREIGN KEY (`GROUP_ID`)
-    REFERENCES `db_scheduler`.`GROUPS` (`GROUP_ID`)
+    REFERENCES `db_scheduler_test`.`GROUPS` (`GROUP_ID`)
     ON DELETE CASCADE
     ON UPDATE RESTRICT,
   CONSTRAINT `fk_PRODUCT_OPERATIONS_RESOURCES1`
     FOREIGN KEY (`RESOURCE_ID`)
-    REFERENCES `db_scheduler`.`RESOURCES` (`RESOURCE_ID`)
+    REFERENCES `db_scheduler_test`.`RESOURCES` (`RESOURCE_ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `db_scheduler`.`USERS`
+-- Table `db_scheduler_test`.`USERS`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `db_scheduler`.`USERS` ;
+DROP TABLE IF EXISTS `db_scheduler_test`.`USERS` ;
 
-CREATE TABLE IF NOT EXISTS `db_scheduler`.`USERS` (
+CREATE TABLE IF NOT EXISTS `db_scheduler_test`.`USERS` (
   `USER_ID` INT NOT NULL AUTO_INCREMENT,
   `USERNAME` VARCHAR(64) NULL,
   `PASSWORD` VARCHAR(64) NULL,
@@ -168,18 +168,18 @@ CREATE TABLE IF NOT EXISTS `db_scheduler`.`USERS` (
   INDEX `fk_USERS_GROUPS1_idx` (`GROUP_ID` ASC),
   CONSTRAINT `fk_USERS_GROUPS1`
     FOREIGN KEY (`GROUP_ID`)
-    REFERENCES `db_scheduler`.`GROUPS` (`GROUP_ID`)
+    REFERENCES `db_scheduler_test`.`GROUPS` (`GROUP_ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `db_scheduler`.`PERSISTENT_LOGINS`
+-- Table `db_scheduler_test`.`PERSISTENT_LOGINS`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `db_scheduler`.`PERSISTENT_LOGINS` ;
+DROP TABLE IF EXISTS `db_scheduler_test`.`PERSISTENT_LOGINS` ;
 
-CREATE TABLE IF NOT EXISTS `db_scheduler`.`PERSISTENT_LOGINS` (
+CREATE TABLE IF NOT EXISTS `db_scheduler_test`.`PERSISTENT_LOGINS` (
   `USERNAME` VARCHAR(64) NOT NULL,
   `SERIES` VARCHAR(64) NOT NULL,
   `TOKEN` VARCHAR(64) NOT NULL,
@@ -189,11 +189,11 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `db_scheduler`.`USER_ROLES`
+-- Table `db_scheduler_test`.`USER_ROLES`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `db_scheduler`.`USER_ROLES` ;
+DROP TABLE IF EXISTS `db_scheduler_test`.`USER_ROLES` ;
 
-CREATE TABLE IF NOT EXISTS `db_scheduler`.`USER_ROLES` (
+CREATE TABLE IF NOT EXISTS `db_scheduler_test`.`USER_ROLES` (
   `USER_ROLE_ID` INT NOT NULL AUTO_INCREMENT,
   `ROLE` VARCHAR(64) NULL,
   `ROLE_DESCRIPTION` VARCHAR(45) NULL,
@@ -202,18 +202,18 @@ CREATE TABLE IF NOT EXISTS `db_scheduler`.`USER_ROLES` (
   INDEX `fk_USER_ROLES_USERS1_idx` (`USER_ID` ASC),
   CONSTRAINT `fk_USER_ROLES_USERS1`
     FOREIGN KEY (`USER_ID`)
-    REFERENCES `db_scheduler`.`USERS` (`USER_ID`)
+    REFERENCES `db_scheduler_test`.`USERS` (`USER_ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `db_scheduler`.`USER_GROUPS`
+-- Table `db_scheduler_test`.`USER_GROUPS`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `db_scheduler`.`USER_GROUPS` ;
+DROP TABLE IF EXISTS `db_scheduler_test`.`USER_GROUPS` ;
 
-CREATE TABLE IF NOT EXISTS `db_scheduler`.`USER_GROUPS` (
+CREATE TABLE IF NOT EXISTS `db_scheduler_test`.`USER_GROUPS` (
   `GROUP_ID` INT NOT NULL,
   `USER_ID` INT NOT NULL,
   INDEX `fk_USER_GROUPS_GROUPS1_idx` (`GROUP_ID` ASC),
@@ -221,23 +221,23 @@ CREATE TABLE IF NOT EXISTS `db_scheduler`.`USER_GROUPS` (
   INDEX `fk_USER_GROUPS_USERS1_idx` (`USER_ID` ASC),
   CONSTRAINT `fk_USER_GROUPS_GROUPS1`
     FOREIGN KEY (`GROUP_ID`)
-    REFERENCES `db_scheduler`.`GROUPS` (`GROUP_ID`)
+    REFERENCES `db_scheduler_test`.`GROUPS` (`GROUP_ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_USER_GROUPS_USERS1`
     FOREIGN KEY (`USER_ID`)
-    REFERENCES `db_scheduler`.`USERS` (`USER_ID`)
+    REFERENCES `db_scheduler_test`.`USERS` (`USER_ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `db_scheduler`.`PRODUCTION_PLANS`
+-- Table `db_scheduler_test`.`PRODUCTION_PLANS`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `db_scheduler`.`PRODUCTION_PLANS` ;
+DROP TABLE IF EXISTS `db_scheduler_test`.`PRODUCTION_PLANS` ;
 
-CREATE TABLE IF NOT EXISTS `db_scheduler`.`PRODUCTION_PLANS` (
+CREATE TABLE IF NOT EXISTS `db_scheduler_test`.`PRODUCTION_PLANS` (
   `PRODUCTION_PLAN_ID` INT NOT NULL AUTO_INCREMENT,
   `NAME` VARCHAR(64) NULL,
   `START` DATETIME NULL,
@@ -249,18 +249,18 @@ CREATE TABLE IF NOT EXISTS `db_scheduler`.`PRODUCTION_PLANS` (
   INDEX `fk_PRODUCTION_PLANS_GROUPS1_idx` (`GROUP_ID` ASC),
   CONSTRAINT `fk_PRODUCTION_PLANS_GROUPS1`
     FOREIGN KEY (`GROUP_ID`)
-    REFERENCES `db_scheduler`.`GROUPS` (`GROUP_ID`)
+    REFERENCES `db_scheduler_test`.`GROUPS` (`GROUP_ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `db_scheduler`.`ORDERS`
+-- Table `db_scheduler_test`.`ORDERS`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `db_scheduler`.`ORDERS` ;
+DROP TABLE IF EXISTS `db_scheduler_test`.`ORDERS` ;
 
-CREATE TABLE IF NOT EXISTS `db_scheduler`.`ORDERS` (
+CREATE TABLE IF NOT EXISTS `db_scheduler_test`.`ORDERS` (
   `ORDER_ID` INT NOT NULL AUTO_INCREMENT,
   `NAME` VARCHAR(64) NULL,
   `DESCRIPTION` VARCHAR(64) NULL,
@@ -274,23 +274,23 @@ CREATE TABLE IF NOT EXISTS `db_scheduler`.`ORDERS` (
   INDEX `fk_ORDERS_GROUPS1_idx` (`GROUP_ID` ASC),
   CONSTRAINT `fk_ORDERS_PRODUCTION_PLANS1`
     FOREIGN KEY (`PRODUCTION_PLAN_ID`)
-    REFERENCES `db_scheduler`.`PRODUCTION_PLANS` (`PRODUCTION_PLAN_ID`)
+    REFERENCES `db_scheduler_test`.`PRODUCTION_PLANS` (`PRODUCTION_PLAN_ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_ORDERS_GROUPS1`
     FOREIGN KEY (`GROUP_ID`)
-    REFERENCES `db_scheduler`.`GROUPS` (`GROUP_ID`)
+    REFERENCES `db_scheduler_test`.`GROUPS` (`GROUP_ID`)
     ON DELETE CASCADE
     ON UPDATE RESTRICT)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `db_scheduler`.`ORDER_PRODUCTS`
+-- Table `db_scheduler_test`.`ORDER_PRODUCTS`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `db_scheduler`.`ORDER_PRODUCTS` ;
+DROP TABLE IF EXISTS `db_scheduler_test`.`ORDER_PRODUCTS` ;
 
-CREATE TABLE IF NOT EXISTS `db_scheduler`.`ORDER_PRODUCTS` (
+CREATE TABLE IF NOT EXISTS `db_scheduler_test`.`ORDER_PRODUCTS` (
   `ORDER_ID` INT NOT NULL,
   `PRODUCT_ID` INT NOT NULL,
   `AMOUNT` INT NULL,
@@ -301,28 +301,28 @@ CREATE TABLE IF NOT EXISTS `db_scheduler`.`ORDER_PRODUCTS` (
   INDEX `fk_ORDER_PRODUCTS_GROUPS1_idx` (`GROUP_ID` ASC),
   CONSTRAINT `fk_ORDER_PRODUCTS_ORDERS1`
     FOREIGN KEY (`ORDER_ID`)
-    REFERENCES `db_scheduler`.`ORDERS` (`ORDER_ID`)
+    REFERENCES `db_scheduler_test`.`ORDERS` (`ORDER_ID`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
   CONSTRAINT `fk_ORDER_PRODUCTS_PRODUCTS1`
     FOREIGN KEY (`PRODUCT_ID`)
-    REFERENCES `db_scheduler`.`PRODUCTS` (`PRODUCT_ID`)
+    REFERENCES `db_scheduler_test`.`PRODUCTS` (`PRODUCT_ID`)
     ON DELETE CASCADE
     ON UPDATE RESTRICT,
   CONSTRAINT `fk_ORDER_PRODUCTS_GROUPS1`
     FOREIGN KEY (`GROUP_ID`)
-    REFERENCES `db_scheduler`.`GROUPS` (`GROUP_ID`)
+    REFERENCES `db_scheduler_test`.`GROUPS` (`GROUP_ID`)
     ON DELETE CASCADE
     ON UPDATE RESTRICT)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `db_scheduler`.`ITEMS`
+-- Table `db_scheduler_test`.`ITEMS`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `db_scheduler`.`ITEMS` ;
+DROP TABLE IF EXISTS `db_scheduler_test`.`ITEMS` ;
 
-CREATE TABLE IF NOT EXISTS `db_scheduler`.`ITEMS` (
+CREATE TABLE IF NOT EXISTS `db_scheduler_test`.`ITEMS` (
   `ITEM_ID` INT NOT NULL AUTO_INCREMENT,
   `PRODUCTION_PLAN_ID` INT NOT NULL,
   `START` DATETIME NULL,
@@ -341,23 +341,23 @@ CREATE TABLE IF NOT EXISTS `db_scheduler`.`ITEMS` (
   INDEX `fk_ITEMS_PRODUCTS1_idx` (`PRODUCT_ID` ASC),
   CONSTRAINT `fk_ITEMS_PRODUCTION_PLANS1`
     FOREIGN KEY (`PRODUCTION_PLAN_ID`)
-    REFERENCES `db_scheduler`.`PRODUCTION_PLANS` (`PRODUCTION_PLAN_ID`)
+    REFERENCES `db_scheduler_test`.`PRODUCTION_PLANS` (`PRODUCTION_PLAN_ID`)
     ON DELETE CASCADE
     ON UPDATE RESTRICT,
   CONSTRAINT `fk_ITEMS_RESOURCES1`
     FOREIGN KEY (`RESOURCE_ID`)
-    REFERENCES `db_scheduler`.`RESOURCES` (`RESOURCE_ID`)
+    REFERENCES `db_scheduler_test`.`RESOURCES` (`RESOURCE_ID`)
     ON DELETE CASCADE
     ON UPDATE RESTRICT,
   CONSTRAINT `fk_ITEMS_GROUPS1`
     FOREIGN KEY (`GROUP_ID`)
-    REFERENCES `db_scheduler`.`GROUPS` (`GROUP_ID`)
+    REFERENCES `db_scheduler_test`.`GROUPS` (`GROUP_ID`)
     ON DELETE CASCADE
     ON UPDATE RESTRICT,
   CONSTRAINT `fk_ITEMS_PRODUCTS1`
     FOREIGN KEY (`PRODUCT_ID`)
-    REFERENCES `db_scheduler`.`PRODUCTS` (`PRODUCT_ID`)
-    ON DELETE CASCADE
+    REFERENCES `db_scheduler_test`.`PRODUCTS` (`PRODUCT_ID`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
