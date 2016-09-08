@@ -74,11 +74,11 @@ function dataService($http) {
     }
 
     function removeResource(id) {
-        return get("remove/resource/" + id);
+        return remove("remove/resource/" + id);
     }
 
     function removeResourceType(id) {
-        return get("remove/resourcetype/" + id);
+        return remove("remove/resourcetype/" + id);
     }
 
     function removeResources(ids) {
@@ -94,7 +94,7 @@ function dataService($http) {
     }
 
     function removeProduct(id) {
-        return get("remove/product/" + id);
+        return remove("remove/product/" + id);
     }
 
     function removeProducts(ids) {
@@ -102,7 +102,7 @@ function dataService($http) {
     }
 
     function removeOrder(id) {
-        return get("remove/order/" + id);
+        return remove("remove/order/" + id);
     }
 
     function removeOrders(ids) {
@@ -114,11 +114,11 @@ function dataService($http) {
     }
 
     function getResources() {
-        return get("get/resources");
+        return get("get/resource");
     }
 
     function getProductionPlans() {
-        return get("get/productionplans");
+        return get("get/productionplan");
     }
 
     function getProductionPlan(productionPlanId) {
@@ -126,15 +126,15 @@ function dataService($http) {
     }
 
     function getProducts() {
-        return get("get/products");
+        return get("get/product");
     }
 
     function getOrders() {
-        return get("get/orders");
+        return get("get/order");
     }
 
     function getUserInfo() {
-        return get("get/userinfo");
+        return get("get/user");
     }
 
     function post(URL, data) {
@@ -153,6 +153,17 @@ function dataService($http) {
     function get(URL) {
         return $http({
             method: 'GET',
+            url: URL
+        }).then(function (data) {
+            return data.data;
+        }).catch(function (error) {
+            throw error;
+        })
+    }
+
+    function remove(URL) {
+        return $http({
+            method: 'DELETE',
             url: URL
         }).then(function (data) {
             return data.data;

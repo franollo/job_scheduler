@@ -15,6 +15,12 @@ import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Queue;
 
+/**
+ * JPA implementation of UserDAO interface
+ * @see main.java.dao.model.UserDAO
+ * @author Marcin Frankowski
+ */
+
 @Repository("userDAO")
 @Transactional(propagation = Propagation.REQUIRED)
 public class JPAUserDAO extends JPADAO implements UserDAO {

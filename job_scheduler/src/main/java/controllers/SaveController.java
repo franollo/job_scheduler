@@ -1,6 +1,5 @@
 package main.java.controllers;
 
-import main.java.dao.model.*;
 import main.java.model.*;
 import main.java.modules.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 /**
+ * RESTful API controller. It handles HTTP POST requests
  * @author Marcin Frankowski
  */
 

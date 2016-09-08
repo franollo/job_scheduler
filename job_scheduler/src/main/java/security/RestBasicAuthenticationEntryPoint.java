@@ -8,6 +8,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Rest basic authentication entry point. It changes Servlet response for http code.
+ * @author Marcin Frankowski
+ */
 
 @Component
 public final class RestBasicAuthenticationEntryPoint extends BasicAuthenticationEntryPoint {

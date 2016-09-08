@@ -8,7 +8,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Created by Marcin Frankowski on 14.07.2016.
+ * JPA implementation of ProductOperationDAO interface
+ * @see main.java.dao.model.ProductOperationDAO
+ * @author Marcin Frankowski
  */
 
 @Repository("productOperationDAO")

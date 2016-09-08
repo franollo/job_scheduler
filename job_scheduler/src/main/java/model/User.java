@@ -4,9 +4,6 @@ import main.java.model.common.GroupObject;
 
 import javax.persistence.*;
 
-/**
- * Created by Marcin Frankowski on 12.07.2016.
- */
 
 @Entity
 @Table(name = "USERS")

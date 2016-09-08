@@ -3,10 +3,6 @@ package main.java.model;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-/**
- * Created by Marcin Frankowski on 14.07.2016.
- */
-
 @Entity
 @Table(name = "GROUPS")
 public class Group {

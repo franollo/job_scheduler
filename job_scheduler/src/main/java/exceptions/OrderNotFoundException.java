@@ -1,8 +1,10 @@
 package main.java.exceptions;
 
 /**
- * Created by Marcin Frankowski on 25.07.2016.
+ * This is an exception that is thrown whenever Order object is not found in database
+ * @author Marcin Frankowski
  */
+
 public class OrderNotFoundException extends RuntimeException {
     public OrderNotFoundException() {
         super();

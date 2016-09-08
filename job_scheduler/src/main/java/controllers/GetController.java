@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
+ * RESTful API controller. It handles HTTP requests with GET metod.
  * @author Marcin Frankowski
  */
 
@@ -31,21 +32,21 @@ public class GetController {
     @Autowired
     private UsersModule usersModule;
 
-    @RequestMapping(value = "/orders", method = RequestMethod.GET)
+    @RequestMapping(value = "/order", method = RequestMethod.GET)
     public @ResponseBody List<Order> orders() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = usersModule.getUser(auth.getName());
         return ordersModule.getUserOrders(user);
     }
 
-    @RequestMapping(value = "/resources", method = RequestMethod.GET)
+    @RequestMapping(value = "/resource", method = RequestMethod.GET)
     public @ResponseBody List<ResourceType> resources() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = usersModule.getUser(auth.getName());
         return resourcesModule.getUserResourceTypes(user);
     }
 
-    @RequestMapping(value = "/productionplans", method = RequestMethod.GET)
+    @RequestMapping(value = "/productionplan", method = RequestMethod.GET)
     public @ResponseBody List<ProductionPlan> productionPlans() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = usersModule.getUser(auth.getName());
@@ -59,14 +60,14 @@ public class GetController {
         return productionPlansModule.getProductionPlan(productionPlanId, user);
     }
 
-    @RequestMapping(value = "/products", method = RequestMethod.GET)
+    @RequestMapping(value = "/product", method = RequestMethod.GET)
     public @ResponseBody List<Product> products() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = usersModule.getUser(auth.getName());
         return productsModule.getUserProducts(user);
     }
 
-    @RequestMapping(value = "/userinfo", method = RequestMethod.GET)
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
     public @ResponseBody User userInfo() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         return usersModule.getUser(auth.getName());

@@ -13,8 +13,11 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
- * Created by Marcin Frankowski on 15.07.16.
+ * JPA implementation of ResourceDAO interface
+ * @see main.java.dao.model.ResourceDAO
+ * @author Marcin Frankowski
  */
+
 
 @Repository("resourceDAO")
 @Transactional(propagation = Propagation.REQUIRED)
@@ -22,11 +25,6 @@ public class JPAResourceDAO extends JPADAO implements ResourceDAO {
     @Override
     public Resource save(Resource resource) {
         return entityManager.merge(resource);
-    }
-
-    @Override
-    public void update(Resource resource) {
-        entityManager.merge(resource);
     }
 
     @Override

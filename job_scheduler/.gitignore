@@ -9,3 +9,7 @@
 /WebContent/.idea/
 /WebContent/libs/
 /job_scheduler.iml
+/javadoc/
+/.project
+/.classpath
+/job_scheduler.iml

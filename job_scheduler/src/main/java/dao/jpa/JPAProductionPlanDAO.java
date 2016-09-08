@@ -15,8 +15,11 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
- * Created by Marcin Frankowski on 15.07.16.
+ * JPA implementation of ProductionPlanDAO interface
+ * @see main.java.dao.model.ProductionPlanDAO
+ * @author Marcin Frankowski
  */
+
 
 @Repository("productionPlanDAO")
 @Transactional(propagation = Propagation.REQUIRED)
@@ -24,11 +27,6 @@ public class JPAProductionPlanDAO extends JPADAO implements ProductionPlanDAO {
     @Override
     public ProductionPlan save(ProductionPlan productionPlan) {
         return entityManager.merge(productionPlan);
-    }
-
-    @Override
-    public void update(ProductionPlan productionPlan) {
-        entityManager.merge(productionPlan);
     }
 
     @Override

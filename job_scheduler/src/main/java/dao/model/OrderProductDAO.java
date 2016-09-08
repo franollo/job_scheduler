@@ -3,8 +3,11 @@ package main.java.dao.model;
 import main.java.model.OrderProduct;
 
 /**
- * Created by Marcin Frankowski on 15.07.16.
+ * DAO interface for OrderProduct class
+ * @see main.java.model.OrderProduct
+ * @author Marcin Frankowski
  */
+
 public interface OrderProductDAO {
     public OrderProduct save(OrderProduct orderProduct);
     public void update(OrderProduct orderProduct);

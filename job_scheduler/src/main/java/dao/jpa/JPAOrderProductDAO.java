@@ -7,7 +7,9 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Created by Marcin Frankowski on 15.07.16.
+ * JPA implementation of OrderProductDAO interface
+ * @see main.java.dao.model.OrderProductDAO
+ * @author Marcin Frankowski
  */
 
 @Repository("orderProductDAO")

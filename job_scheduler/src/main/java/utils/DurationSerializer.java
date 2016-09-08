@@ -9,7 +9,9 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 /**
- * Created by Marcin Frankowski on 29.07.16.
+ * Custom Duration serializer.
+ * It serializes Duration into string number.
+ * @author Marcin Frankowski
  */
 public class DurationSerializer extends StdSerializer<Duration>{
 

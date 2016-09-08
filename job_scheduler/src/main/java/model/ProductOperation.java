@@ -5,9 +5,6 @@ import main.java.model.common.GroupObject;
 import javax.persistence.*;
 import java.time.Duration;
 
-/**
- * Created by Marcin Frankowski on 12.07.2016.
- */
 @Entity
 @Table(name="PRODUCT_OPERATIONS")
 @AttributeOverride(name = "id", column = @Column(name = "PRODUCT_OPERATION_ID"))

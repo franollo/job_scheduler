@@ -6,9 +6,10 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 /**
- * Created by Marcin Frankowski on 19.07.16.
+ * Converts LocalDateTime to Timestamp in order to be able to insert value into database.
+ * Converts Timestamp from database into LocalDateTime.
+ * @author Marcin Frankowski
  */
-
 @Converter(autoApply = true)
 public class LocalDateTimeAttributeConverter implements AttributeConverter<LocalDateTime, Timestamp> {
     @Override

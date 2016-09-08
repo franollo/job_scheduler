@@ -14,9 +14,6 @@ import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Marcin Frankowski on 01.09.16.
- */
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = "classpath:WEB-INF/test/test-context.xml")

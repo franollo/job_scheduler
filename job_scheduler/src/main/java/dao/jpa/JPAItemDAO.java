@@ -13,7 +13,9 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
- * Created by Marcin Frankowski on 15.07.16.
+ * JPA mplementation of ItemDAO interface
+ * @see main.java.dao.model.ItemDAO
+ * @author Marcin Frankowski
  */
 
 @Repository("itemDAO")
@@ -22,11 +24,6 @@ public class JPAItemDAO extends JPADAO implements ItemDAO {
     @Override
     public Item save(Item item) {
         return entityManager.merge(item);
-    }
-
-    @Override
-    public void update(Item item) {
-        entityManager.merge(item);
     }
 
     @Override

@@ -9,7 +9,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Created by Marcin Frankowski on 29.07.16.
+ * Custom Duration serializer.
+ * It serializes LocalDateTime into full ISO date string.
+ * @author Marcin Frankowski
  */
 public class LocalDateTimeSerializer extends StdSerializer<LocalDateTime>{
 

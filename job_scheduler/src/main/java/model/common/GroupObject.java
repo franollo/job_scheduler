@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 /**
- * Created by Marcin Frankowski on 18.07.2016.
+ * Parent class for objects that belong to group
  */
 
 @MappedSuperclass

@@ -9,8 +9,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Created by Marcin Frankowski on 29.07.16.
+ * Custom LocalDateTime deserializer.
+ * It deserializes ISO date string into LocalDateTime object.
+ * @author Marcin Frankowski
  */
+
 public class LocalDateTimeDeserializer extends StdDeserializer<LocalDateTime> {
     public LocalDateTimeDeserializer() {
         this(null);

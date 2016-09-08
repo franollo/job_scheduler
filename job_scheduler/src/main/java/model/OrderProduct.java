@@ -5,9 +5,6 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.*;
 import java.io.Serializable;
 
-/**
- * Created by Marcin Frankowski on 14.07.2016.
- */
 
 @Entity
 @Table(name = "ORDER_PRODUCTS")

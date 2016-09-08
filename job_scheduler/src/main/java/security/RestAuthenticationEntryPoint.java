@@ -8,6 +8,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+
+/**
+ * Rest authentication entry point. It changes Servlet response to http code.
+ * @author Marcin Frankowski
+ */
+
 @Component
 public final class RestAuthenticationEntryPoint implements AuthenticationEntryPoint {
 

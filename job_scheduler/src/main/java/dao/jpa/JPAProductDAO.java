@@ -15,7 +15,9 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
- * Created by Marcin Frankowski on 15.07.16.
+ * JPA implementation of ProductDAO interface
+ * @see main.java.dao.model.ProductDAO
+ * @author Marcin Frankowski
  */
 
 @Repository("productDAO")
@@ -24,11 +26,6 @@ public class JPAProductDAO extends JPADAO implements ProductDAO {
     @Override
     public Product save(Product product) {
         return entityManager.merge(product);
-    }
-
-    @Override
-    public void update(Product product) {
-        entityManager.merge(product);
     }
 
     @Override

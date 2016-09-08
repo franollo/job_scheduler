@@ -14,7 +14,9 @@ import javax.persistence.TypedQuery;
 import java.util.List;
 
 /**
- * Created by Marcin Frankowski on 15.07.16.
+ * JPA implementation of ResourceTypeDAO interface
+ * @see main.java.dao.model.ResourceTypeDAO
+ * @author Marcin Frankowski
  */
 
 @Repository("resourceTypeDAO")
@@ -23,11 +25,6 @@ public class JPAResourceTypeDAO extends JPADAO implements ResourceTypeDAO {
     @Override
     public ResourceType save(ResourceType resourceType) {
         return entityManager.merge(resourceType);
-    }
-
-    @Override
-    public void update(ResourceType resourceType) {
-        entityManager.merge(resourceType);
     }
 
     @Override

@@ -16,6 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+/**
+ * WebServices for user authentication
+ * @author Marcin Frankowski
+ */
+
 @RestController
 public class LoginController {
 

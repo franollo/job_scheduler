@@ -16,7 +16,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by Marcin Frankowski on 15.07.16.
+ * JPA implementation of OrderDAO interface
+ * @see main.java.dao.model.OrderDAO
+ * @author Marcin Frankowski
  */
 
 @Repository("orderDAO")
@@ -57,11 +59,6 @@ public class JPAOrderDAO extends JPADAO implements OrderDAO {
             }
             return existingOrder;
         }
-    }
-
-    @Override
-    public void update(Order order) {
-        entityManager.merge(order);
     }
 
     @Override

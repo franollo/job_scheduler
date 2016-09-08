@@ -1,7 +1,9 @@
 package main.java.dao.model;
 
 /**
- * Created by Marcin Frankowski on 15.07.16.
+ * DAO interface for Group object
+ * @see main.java.model.Group
+ * @author Marcin Frankowski
  */
 public interface GroupDAO {
 }

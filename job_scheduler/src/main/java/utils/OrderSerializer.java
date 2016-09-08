@@ -9,7 +9,8 @@ import main.java.model.OrderProduct;
 import java.io.IOException;
 
 /**
- * Created by Marcin Frankowski on 31.07.16.
+ * Produces json from Order object
+ * @author Marcin Frankowski
  */
 public class OrderSerializer extends StdSerializer<Order> {
 

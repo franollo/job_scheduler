@@ -5,7 +5,8 @@ import javax.persistence.Converter;
 import java.time.Duration;
 
 /**
- * Created by Marcin Frankowski on 16.08.2016.
+ * Converts Duration to number field in database, and number field from database to Duration.
+ * @author Marcin Frankowski
  */
 
 @Converter(autoApply = true)

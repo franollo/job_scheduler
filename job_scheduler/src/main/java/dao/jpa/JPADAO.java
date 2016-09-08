@@ -4,8 +4,10 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
- * Created by Marcin Frankowski on 15.07.16.
+ * Parent class for JPA DAO implementation
+ * @author Marcin Frankowski
  */
+
 public class JPADAO {
     @PersistenceContext
     protected EntityManager entityManager;

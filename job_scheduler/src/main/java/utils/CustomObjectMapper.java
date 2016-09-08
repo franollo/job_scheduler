@@ -10,12 +10,12 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 /**
- * Created by Marcin Frankowski on 28.07.2016.
+ * This class which allows to add custom serializers and deserializers to Jackson
+ * @author Marcin Frankowski
  */
 public class CustomObjectMapper extends ObjectMapper {
     public CustomObjectMapper() {
         SimpleModule module = new SimpleModule();
-       // module.addSerializer(Order.class, new OrderSerializer());
         module.addSerializer(LocalDateTime.class, new LocalDateTimeSerializer());
         module.addSerializer(Duration.class, new DurationSerializer());
         module.addDeserializer(LocalDateTime.class, new LocalDateTimeDeserializer());

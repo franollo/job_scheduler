@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 /**
+ * RESTful API controller. It handles remove requests
  * @author Marcin Frankowski
  */
 
@@ -39,7 +40,7 @@ public class RemoveController {
         productionPlansModule.removeItem(item, user);
     }
 
-    @RequestMapping(value = "/order/{orderId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/order/{orderId}", method = RequestMethod.DELETE)
     public @ResponseBody Integer order(@PathVariable int orderId) throws ParseException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = usersModule.getUser(auth.getName());
@@ -47,13 +48,13 @@ public class RemoveController {
     }
 
     @RequestMapping(value = "/orders", method = RequestMethod.POST)
-    public @ResponseBody List<Integer> order(@RequestBody List<Integer> orderIds) throws ParseException {
+    public @ResponseBody List<Integer> orders(@RequestBody List<Integer> orderIds) throws ParseException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = usersModule.getUser(auth.getName());
         return ordersModule.removeOrders(orderIds, user);
     }
 
-    @RequestMapping(value = "/product/{productId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/product/{productId}", method = RequestMethod.DELETE)
     public @ResponseBody Integer product(@PathVariable int productId) throws ParseException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = usersModule.getUser(auth.getName());
@@ -74,7 +75,7 @@ public class RemoveController {
         productionPlansModule.removeProductionPlan(productionPlan, user);
     }
 
-    @RequestMapping(value = "/resource/{resourceId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/resource/{resourceId}", method = RequestMethod.DELETE)
     public @ResponseBody Integer resource(@PathVariable int resourceId) throws ParseException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = usersModule.getUser(auth.getName());
@@ -88,7 +89,7 @@ public class RemoveController {
         return resourcesModule.removeResources(resourceIds, user);
     }
 
-    @RequestMapping(value = "/resourcetype/{resourceTypeId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/resourcetype/{resourceTypeId}", method = RequestMethod.DELETE)
     public @ResponseBody Integer resourceType(@PathVariable int resourceTypeId) throws ParseException {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = usersModule.getUser(auth.getName());

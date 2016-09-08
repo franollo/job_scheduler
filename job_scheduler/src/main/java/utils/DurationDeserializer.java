@@ -11,7 +11,9 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * Created by Marcin Frankowski on 29.07.16.
+ * Custom Duration deserializer.
+ * It deserializes string into Duration object.
+ * @author Marcin Frankowski
  */
 public class DurationDeserializer extends StdDeserializer<Duration> {
     public DurationDeserializer() {

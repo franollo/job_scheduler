@@ -14,9 +14,6 @@ import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
-/**
- * Created by Marcin Frankowski on 12.07.2016.
- */
 @Entity
 @Table(name = "PRODUCTION_PLANS")
 @AttributeOverride(name = "id", column = @Column(name = "PRODUCTION_PLAN_ID"))

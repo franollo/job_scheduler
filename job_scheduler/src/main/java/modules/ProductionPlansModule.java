@@ -11,21 +11,50 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 /**
- * Created by Marcin Frankowski on 06.09.16.
+ * Module responsible for Production plans processing
+ * @see main.java.model.ProductionPlan
+ * @author Marcin Frankowski
  */
 public class ProductionPlansModule {
+    /**
+     * Production Plan Data Access Objects
+     */
     private ProductionPlanDAO productionPlanDAO;
+
+    /**
+     * Item Data Access Objects
+     */
     private ItemDAO itemDAO;
+
+    /**
+     * User Data Access Objects
+     */
     private UserDAO userDAO;
 
+    /**
+     * Default constructor
+     */
     public ProductionPlansModule() {}
 
+    /**
+     * Constructor which sets Production Plan DAO, Item DAO and User DAO.
+     * Module must be initialized with this constructor to work properlly.
+     * @param productionPlanDAO Production Plan Data Access Object
+     * @param itemDAO Item Data Access Object
+     * @param userDAO User Data Access Object
+     */
     public ProductionPlansModule(ProductionPlanDAO productionPlanDAO, ItemDAO itemDAO, UserDAO userDAO) {
         this.productionPlanDAO = productionPlanDAO;
         this.itemDAO = itemDAO;
         this.userDAO = userDAO;
     }
 
+    /**
+     * Save new or existing Production Plan in system.
+     * @param productionPlan production plan to save
+     * @param user user who wants to save production plan
+     * @return saved production plan
+     */
     public ProductionPlan saveProductionPlan(ProductionPlan productionPlan, User user) {
         userDAO.confirmPermission(ProductionPlan.class, productionPlan.getId(), user);
         productionPlan.setGroupId(user.getGroupId());
@@ -38,31 +67,65 @@ public class ProductionPlansModule {
         return mergePlan;
     }
 
+    /**
+     * Get all production plans to which user has permission.
+     * @param user user who wants to get production plans
+     * @return List of user's production plans
+     */
     public List<ProductionPlan> getUserProductionPlans(User user) {
         return productionPlanDAO.getUsersProductionPlans(user);
     }
 
+    /**
+     * Get specific production plan with given id. It checks if user has permission for this production plan.
+     * @param productionPlanId production plan id
+     * @param user user who wants to get production plan
+     * @return Production plan with given id
+     */
     public ProductionPlan getProductionPlan(Integer productionPlanId, User user) {
         userDAO.confirmPermission(ProductionPlan.class, productionPlanId, user);
         return productionPlanDAO.getProductionPlan(productionPlanId);
     }
 
+    /**
+     * Remove production plan from system.
+     * @param productionPlan production plan to remove
+     * @param user user who wants to remove production plan
+     */
     public void removeProductionPlan(ProductionPlan productionPlan, User user) {
         userDAO.confirmPermission(ProductionPlan.class, productionPlan.getId(), user);
         productionPlanDAO.remove(productionPlan);
     }
 
+    /**
+     * Save new or existing Item in system.
+     * @param item Item to save
+     * @param user user who wants to save item
+     * @return saved item
+     */
     public Item saveItem(Item item, User user) {
         userDAO.confirmPermission(Item.class, item.getId(), user);
         itemDAO.save(item);
         return item;
     }
 
+    /**
+     * Remove item from system.
+     * @param item item to remove
+     * @param user user who wants to remove item
+     */
     public void removeItem(Item item, User user) {
         userDAO.confirmPermission(Item.class, item.getId(), user);
         itemDAO.remove(item);
     }
 
+    /**
+     * this function creates list of items with their position on timeline.
+     * It get each product from production plan's order and sequentially creates item fo each product operation
+     * There is no scheduling. Items are in product's order.
+     * Items are set in productionPlan.
+     * @param productionPlan production plan to process
+     */
     public void process(ProductionPlan productionPlan) {
         String[] classNames = {"red", "orange", "magneta", "blue", "green", "grey", "pink"};
         int index = 0;
@@ -127,6 +190,10 @@ public class ProductionPlansModule {
     }
 
 
+    /**
+     * Like process function, but it puts item in first free gap in timeline
+     * @param productionPlan production plan to process
+     */
     public void fillGaps(ProductionPlan productionPlan) {
         String[] classNames = {"red", "orange", "magneta", "blue", "green", "grey", "pink"};
         Map<Integer, SortedSet<ProductionPlansModule.TimelineGap>> timelineGaps = new HashMap<>();
@@ -192,6 +259,14 @@ public class ProductionPlansModule {
         }
     }
 
+    /**
+     * Help class for fillGaps function. 
+     * Should be moved outside of module
+     */
+
+    /*
+     * TODO move outside
+     */
     private class TimelineGap implements Comparable<ProductionPlansModule.TimelineGap>{
         private LocalDateTime startTime;
         private LocalDateTime endTime;

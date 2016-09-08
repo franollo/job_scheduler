@@ -1,7 +1,8 @@
 package main.java.exceptions;
 
 /**
- * Created by Marcin Frankowski on 25.07.2016.
+ * This is an exception that is thrown whenever Item object is not found in database
+ * @author Marcin Frankowski
  */
 public class ItemNotFoundException extends RuntimeException {
     public ItemNotFoundException() {
