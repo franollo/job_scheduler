@@ -104,7 +104,7 @@ function ordersController($scope, $document,
         }).then(function (answer) {
             console.log(answer);
             dataService.saveOrder(answer)
-                .then(putOrder)
+                .then(updateOrder)
                 .catch(fireError);
         });
     }
@@ -168,6 +168,13 @@ function ordersController($scope, $document,
         if(index >= 0) {
             vm.orders.splice(index, 1);
             vm.idToRemove = 0;
+        }
+    }
+
+    function updateOrder(data) {
+        var index = vm.orders.map(function (e) { return e.id;}).indexOf(data.id);
+        if (index >= 0) {
+            vm.orders[index] = data;
         }
     }
 

@@ -32,21 +32,21 @@ public class GetController {
     @Autowired
     private UsersModule usersModule;
 
-    @RequestMapping(value = "/order", method = RequestMethod.GET)
+    @RequestMapping(value = "/orders", method = RequestMethod.GET)
     public @ResponseBody List<Order> orders() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = usersModule.getUser(auth.getName());
         return ordersModule.getUserOrders(user);
     }
 
-    @RequestMapping(value = "/resource", method = RequestMethod.GET)
+    @RequestMapping(value = "/resources", method = RequestMethod.GET)
     public @ResponseBody List<ResourceType> resources() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = usersModule.getUser(auth.getName());
         return resourcesModule.getUserResourceTypes(user);
     }
 
-    @RequestMapping(value = "/productionplan", method = RequestMethod.GET)
+    @RequestMapping(value = "/productionplans", method = RequestMethod.GET)
     public @ResponseBody List<ProductionPlan> productionPlans() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = usersModule.getUser(auth.getName());
@@ -60,7 +60,7 @@ public class GetController {
         return productionPlansModule.getProductionPlan(productionPlanId, user);
     }
 
-    @RequestMapping(value = "/product", method = RequestMethod.GET)
+    @RequestMapping(value = "/products", method = RequestMethod.GET)
     public @ResponseBody List<Product> products() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = usersModule.getUser(auth.getName());

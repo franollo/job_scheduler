@@ -17,9 +17,6 @@
         <intercept-url pattern="/libs/**" access="permitAll"/>
         <intercept-url pattern="/common/**" access="permitAll"/>
         <intercept-url pattern="/html/views/app.html" access="isAuthenticated()"/>
-        <intercept-url pattern="/save/**" access="isAuthenticated()"/>
-        <intercept-url pattern="/remove/**" access="isAuthenticated()"/>
-        <intercept-url pattern="/get/**" access="isAuthenticated()"/>
         <csrf disabled="true"/>
         <http-basic entry-point-ref="restBasicAuthenticationEntryPoint"/>
     </http>

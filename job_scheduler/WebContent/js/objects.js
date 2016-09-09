@@ -5,6 +5,7 @@
 function ResourceType(name, description) {
     this.name = name;
     this.description = description;
+    this.resources = [];
 }
 
 function Resource(name, description, costPerHour, efficiency, resourceTypeId) {

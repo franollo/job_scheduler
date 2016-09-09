@@ -74,11 +74,11 @@ function dataService($http) {
     }
 
     function removeResource(id) {
-        return remove("remove/resource/" + id);
+        return get("remove/resource/" + id);
     }
 
     function removeResourceType(id) {
-        return remove("remove/resourcetype/" + id);
+        return get("remove/resourcetype/" + id);
     }
 
     function removeResources(ids) {
@@ -94,7 +94,7 @@ function dataService($http) {
     }
 
     function removeProduct(id) {
-        return remove("remove/product/" + id);
+        return get("remove/product/" + id);
     }
 
     function removeProducts(ids) {
@@ -102,7 +102,7 @@ function dataService($http) {
     }
 
     function removeOrder(id) {
-        return remove("remove/order/" + id);
+        return get("remove/order/" + id);
     }
 
     function removeOrders(ids) {
@@ -114,11 +114,11 @@ function dataService($http) {
     }
 
     function getResources() {
-        return get("get/resource");
+        return get("get/resources");
     }
 
     function getProductionPlans() {
-        return get("get/productionplan");
+        return get("get/productionplans");
     }
 
     function getProductionPlan(productionPlanId) {
@@ -126,11 +126,11 @@ function dataService($http) {
     }
 
     function getProducts() {
-        return get("get/product");
+        return get("get/products");
     }
 
     function getOrders() {
-        return get("get/order");
+        return get("get/orders");
     }
 
     function getUserInfo() {
@@ -153,17 +153,6 @@ function dataService($http) {
     function get(URL) {
         return $http({
             method: 'GET',
-            url: URL
-        }).then(function (data) {
-            return data.data;
-        }).catch(function (error) {
-            throw error;
-        })
-    }
-
-    function remove(URL) {
-        return $http({
-            method: 'DELETE',
             url: URL
         }).then(function (data) {
             return data.data;
